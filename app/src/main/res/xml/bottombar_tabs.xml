@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tabs>
+    <tab
+        id="@+id/tab_news"
+        title="消息"
+        inActiveColor="#666666"
+        activeColor="#03a9f4"
+        ></tab>
+    <tab
+        id="@+id/tab_client"
+        title="客户"
+        inActiveColor="#666666"
+        activeColor="#03a9f4"
+        ></tab>
+    <tab
+        id="@+id/tab_work"
+        title="工作"
+        inActiveColor="#666666"
+        activeColor="#03a9f4"
+        ></tab>
+    <tab
+        id="@+id/tab_statement"
+        title="报表"
+        inActiveColor="#666666"
+        activeColor="#03a9f4"
+        ></tab>
+    <tab
+        id="@+id/tab_personal"
+        title="我"
+        inActiveColor="#666666"
+        activeColor="#03a9f4"
+        ></tab>
+</tabs>

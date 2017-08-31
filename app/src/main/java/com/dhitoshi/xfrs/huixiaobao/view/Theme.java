@@ -1,0 +1,65 @@
+package com.dhitoshi.xfrs.huixiaobao.view;
+import android.os.Bundle;
+import android.support.annotation.IdRes;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
+import com.dhitoshi.bottombar.BottomBar;
+import com.dhitoshi.bottombar.OnTabSelectListener;
+import com.dhitoshi.xfrs.huixiaobao.R;
+import com.dhitoshi.xfrs.huixiaobao.adapter.ViewPagerAdapter;
+import com.dhitoshi.xfrs.huixiaobao.common.NoSlidingViewPager;
+import com.dhitoshi.xfrs.huixiaobao.fragment.Client;
+import com.dhitoshi.xfrs.huixiaobao.fragment.News;
+import com.dhitoshi.xfrs.huixiaobao.fragment.Personal;
+import com.dhitoshi.xfrs.huixiaobao.fragment.StateMent;
+import com.dhitoshi.xfrs.huixiaobao.fragment.Work;
+import java.util.ArrayList;
+import java.util.List;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+public class Theme extends AppCompatActivity {
+    @BindView(R.id.theme_viewpager)
+    NoSlidingViewPager themeViewpager;
+    @BindView(R.id.theme_bottomBar)
+    BottomBar themeBottomBar;
+    private List<Fragment> themeFragments;
+    private ViewPagerAdapter adapter;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_theme);
+        ButterKnife.bind(this);
+        initViews();
+        initDatas();
+        initEvents();
+    }
+    //初始化页面控件
+    private void initViews() {
+        getThemeFragments();
+        adapter = new ViewPagerAdapter(getSupportFragmentManager(), themeFragments);
+        themeViewpager.setAdapter(adapter);
+    }
+    //初始化数据
+    private void initDatas() {
+
+    }
+    //初始化页面事件
+    private void initEvents() {
+        themeBottomBar.setOnTabSelectListener(new OnTabSelectListener() {
+            @Override
+            public void onTabSelected(@IdRes int tabId, int position) {
+                themeViewpager.setCurrentItem(position,false);
+            }
+        });
+    }
+    private List<Fragment> getThemeFragments() {
+        themeFragments = new ArrayList<>();
+        themeFragments.add(News.newInstance());
+        themeFragments.add(Client.newInstance());
+        themeFragments.add(Work.newInstance());
+        themeFragments.add(StateMent.newInstance());
+        themeFragments.add(Personal.newInstance());
+        return themeFragments;
+    }
+
+}
