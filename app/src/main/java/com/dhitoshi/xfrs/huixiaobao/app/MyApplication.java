@@ -8,7 +8,7 @@ import com.alibaba.wxlib.util.SysUtil;
  * Created by dxs on 2017/8/31.
  */
 public class MyApplication extends Application {
-
+    //提交
     @Override
     public void onCreate() {
         super.onCreate();
