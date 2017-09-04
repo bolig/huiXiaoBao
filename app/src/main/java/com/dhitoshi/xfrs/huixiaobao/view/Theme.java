@@ -56,8 +56,6 @@ public class Theme extends AppCompatActivity {
         themeFragments = new ArrayList<>();
         themeFragments.add(News.newInstance());
         themeFragments.add(Client.newInstance());
-        themeFragments.add(Work.newInstance());
-        themeFragments.add(StateMent.newInstance());
         themeFragments.add(Personal.newInstance());
         return themeFragments;
     }
