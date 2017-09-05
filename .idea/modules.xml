@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/BottomBar/BottomBar.iml" filepath="$PROJECT_DIR$/BottomBar/BottomBar.iml" />
       <module fileurl="file://$PROJECT_DIR$/Bubbleview/Bubbleview.iml" filepath="$PROJECT_DIR$/Bubbleview/Bubbleview.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Bubbleview/Bubbleview.iml" filepath="$PROJECT_DIR$/Bubbleview/Bubbleview.iml" />
       <module fileurl="file://$PROJECT_DIR$/HuiXiaoBao.iml" filepath="$PROJECT_DIR$/HuiXiaoBao.iml" />
       <module fileurl="file://$PROJECT_DIR$/ImmersionBar/ImmersionBar.iml" filepath="$PROJECT_DIR$/ImmersionBar/ImmersionBar.iml" />
       <module fileurl="file://$PROJECT_DIR$/RefreshLayout/RefreshLayout.iml" filepath="$PROJECT_DIR$/RefreshLayout/RefreshLayout.iml" />
