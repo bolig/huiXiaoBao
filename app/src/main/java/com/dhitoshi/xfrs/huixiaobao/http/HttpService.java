@@ -1,24 +1,22 @@
 package com.dhitoshi.xfrs.huixiaobao.http;
-
+import android.database.Observable;
+import okhttp3.RequestBody;
+import retrofit2.http.Body;
+import retrofit2.http.POST;
 /**
  * Created by dxs on 2017/5/27.
  */
 public interface HttpService {
-//    //获取首页数据
-//    @GET("index.php?s=api/Index/home")
+    //获取地区列表
+//    @GET("area/areaLists")
 //    Observable<Home> getHome(@Query("token") String token, @Query("city_id") int cityId);
-//    //获取腕表连接状态
-//    @GET("index.php?s=api/user/onlineStatus")
-//    Observable<Integer> getOnlineStatus(@Query("token") String token);
-//    //获取省份列表
-//    @GET("index.php?s=api/index/index")
-//    Observable<HtppBean<List<Province>>> getProvince();
-//    //获取服务列表
-//    @GET("index.php?s=api/Index/serviceList")
-//    Observable<Service> getServiceListList(@Query("city_id") int cityid);
-//
-//
-//
-//    @POST("user/submitOrder")
-//    Observable<Integer> submitOrder(@Body RequestBody body);
+    //更改密码
+    @POST("resetPassword")
+    Observable<Integer> resetPassword(@Body RequestBody body);
+    //登录
+    @POST("login")
+    Observable<Integer> login(@Body RequestBody body);
+    //注册
+    @POST("signUp")
+    Observable<Integer> signUp(@Body RequestBody body);
 }
