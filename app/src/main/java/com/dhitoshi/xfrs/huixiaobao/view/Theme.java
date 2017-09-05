@@ -3,6 +3,8 @@ import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+
+import com.dhitoshi.ImmersionBar.ImmersionBar;
 import com.dhitoshi.bottombar.BottomBar;
 import com.dhitoshi.bottombar.OnTabSelectListener;
 import com.dhitoshi.xfrs.huixiaobao.R;
@@ -38,6 +40,8 @@ public class Theme extends AppCompatActivity {
         getThemeFragments();
         adapter = new ViewPagerAdapter(getSupportFragmentManager(), themeFragments);
         themeViewpager.setAdapter(adapter);
+        ImmersionBar.with(this).navigationBarEnable(false)
+                .barColor(R.color.colorPrimary).init();
     }
     //初始化数据
     private void initDatas() {
@@ -51,6 +55,7 @@ public class Theme extends AppCompatActivity {
                 themeViewpager.setCurrentItem(position,false);
             }
         });
+
     }
     private List<Fragment> getThemeFragments() {
         themeFragments = new ArrayList<>();

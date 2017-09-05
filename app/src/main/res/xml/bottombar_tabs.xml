@@ -2,18 +2,21 @@
 <tabs>
     <tab
         id="@+id/tab_news"
+        icon="@mipmap/news"
         title="消息"
         inActiveColor="#999999"
         activeColor="#34B1FF"
         ></tab>
     <tab
         id="@+id/tab_client"
+        icon="@mipmap/client"
         title="客户"
         inActiveColor="#999999"
         activeColor="#34B1FF"
         ></tab>
     <tab
         id="@+id/tab_personal"
+        icon="@mipmap/personal"
         title="我"
         inActiveColor="#999999"
         activeColor="#34B1FF"
