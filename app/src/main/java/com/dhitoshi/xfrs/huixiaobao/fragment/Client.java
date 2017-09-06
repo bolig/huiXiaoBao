@@ -1,4 +1,5 @@
 package com.dhitoshi.xfrs.huixiaobao.fragment;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -15,6 +16,7 @@ import com.dhitoshi.xfrs.huixiaobao.Interface.ClientManage;
 import com.dhitoshi.xfrs.huixiaobao.Interface.MenuItemClick;
 import com.dhitoshi.xfrs.huixiaobao.R;
 import com.dhitoshi.xfrs.huixiaobao.common.PopupMenu;
+import com.dhitoshi.xfrs.huixiaobao.view.AddClient;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +34,7 @@ public class Client extends Fragment implements ClientManage.View{
     private Menu menu;
     private List<Menu> menus;
     private  PopupMenu popupMenu;
+    private Intent it;
     public Client() {
     }
     public static Client newInstance() {
@@ -94,6 +97,8 @@ public class Client extends Fragment implements ClientManage.View{
                     case 0:
                         break;
                     case 1:
+                        it=new Intent(getContext(), AddClient.class);
+                        startActivity(it);
                         break;
                     case 2:
                         break;
