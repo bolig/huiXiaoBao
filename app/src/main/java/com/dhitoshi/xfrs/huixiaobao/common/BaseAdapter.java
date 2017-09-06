@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.dhitoshi.xfrs.huixiaobao.Interface.ItemClick;
+
 import java.util.List;
 
 /**
@@ -18,7 +20,8 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseRecyclerHo
     private Context context;
     private int layoutId;
     private int contentLength;
-
+    //点击事件
+    private ItemClick<T> itemClick;
     public BaseAdapter(List<T> mList, Context context, int layoutId, int contentLength) {
         this.mList = mList;
         this.context = context;
@@ -31,12 +34,23 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseRecyclerHo
         return BaseRecyclerHolder.getBaseRecyclerHolder(view,contentLength,context);
     }
     @Override
-    public void onBindViewHolder(BaseRecyclerHolder holder, int position) {
+    public void onBindViewHolder(BaseRecyclerHolder holder, final int position) {
         covert(holder,mList,position);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(itemClick!=null){
+                    itemClick.onItemClick(view,mList.get(position),position);
+                }
+            }
+        });
     }
     @Override
     public int getItemCount() {
         return mList.size();
+    }
+    public void addItemClickListener(ItemClick<T> itemClick) {
+        this.itemClick = itemClick;
     }
     public  abstract  void covert(BaseRecyclerHolder holder,List<T> mList, int position);
 }

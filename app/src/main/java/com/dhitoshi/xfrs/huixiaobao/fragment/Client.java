@@ -2,14 +2,17 @@ package com.dhitoshi.xfrs.huixiaobao.fragment;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.dhitoshi.xfrs.huixiaobao.Bean.ClientBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.Menu;
 import com.dhitoshi.xfrs.huixiaobao.Interface.ClientManage;
+import com.dhitoshi.xfrs.huixiaobao.Interface.MenuItemClick;
 import com.dhitoshi.xfrs.huixiaobao.R;
 import com.dhitoshi.xfrs.huixiaobao.common.PopupMenu;
 
@@ -28,8 +31,8 @@ public class Client extends Fragment implements ClientManage.View{
     private Drawable drawable;
     private Menu menu;
     private List<Menu> menus;
+    private  PopupMenu popupMenu;
     public Client() {
-
     }
     public static Client newInstance() {
         Client fragment = new Client();
@@ -43,7 +46,10 @@ public class Client extends Fragment implements ClientManage.View{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_client, container, false);
         unbinder = ButterKnife.bind(this, view);
+        initViews();
         return view;
+    }
+    private void initViews() {
     }
     @Override
     public void onDestroyView() {
@@ -66,8 +72,42 @@ public class Client extends Fragment implements ClientManage.View{
     }
     //弹出菜单
     private void popupMenu() {
-        initMenuData();
-        PopupMenu.Build(menus, getContext(),clientMenu).init();
+        if(null==popupMenu){
+            initMenuData();
+            popupMenu=PopupMenu.Build(menus, getContext(),clientMenu).init();
+            initMenuClick(popupMenu);
+            popupMenu.show();
+        }else{
+            if(!popupMenu.isShowing()){
+                popupMenu.show();
+            }else{
+                popupMenu.dismisss();
+            }
+        }
+    }
+    //菜单点击事件
+    private void initMenuClick(PopupMenu popupMenu) {
+        popupMenu.addMenuItemClickListener(new MenuItemClick<Menu>() {
+            @Override
+            public void onMenuItemClick(Menu menu, int position) {
+                switch (position){
+                    case 0:
+                        break;
+                    case 1:
+                        break;
+                    case 2:
+                        break;
+                    case 3:
+                        break;
+                    case 4:
+                        break;
+                    case 5:
+                        break;
+                    case 6:
+                        break;
+                }
+            }
+        });
     }
     //初始化菜单数据
     private void initMenuData() {
@@ -101,7 +141,7 @@ public class Client extends Fragment implements ClientManage.View{
         menu = new Menu("导入通讯录", drawable);
         menus.add(menu);
     }
-
+    //获取客户列表
     @Override
     public void getClientList(List<ClientBean> clientBeens) {
 

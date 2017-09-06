@@ -8,5 +8,5 @@ public interface HttpResult<T> {
     //请求成功回调
     void OnSuccess(T t);
     //请求失败回调
-    void  OnFail();
+    void  OnFail(String msg);
 }
