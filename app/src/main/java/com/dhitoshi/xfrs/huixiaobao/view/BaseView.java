@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 import com.dhitoshi.ImmersionBar.ImmersionBar;
 import com.dhitoshi.xfrs.huixiaobao.R;
@@ -47,5 +48,19 @@ public class BaseView extends AppCompatActivity {
                break;
        }
        return true;
+    }
+    //设置title
+    public void  setTitle(String s){
+        title.setText(s);
+    }
+    //设置右边文字
+    public void setRightText(String right){
+        rightText.setVisibility(View.VISIBLE);
+        rightText.setText(right);
+    }
+    //设置右边图标
+    public  void setRightIcon(int resourceId){
+        rightIcon.setVisibility(View.VISIBLE);
+        rightIcon.setImageResource(resourceId);
     }
 }

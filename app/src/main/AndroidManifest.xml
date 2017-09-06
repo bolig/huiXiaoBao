@@ -20,7 +20,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".view.Chat" />
-        <activity android:name=".view.AddClient"></activity>
+        <activity android:name=".view.AddClient" />
+        <activity android:name=".view.ClientInfo"></activity>
     </application>
 
 </manifest>

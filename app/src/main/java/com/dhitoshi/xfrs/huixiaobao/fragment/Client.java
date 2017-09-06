@@ -12,10 +12,12 @@ import android.widget.Toast;
 
 import com.dhitoshi.xfrs.huixiaobao.Bean.ClientBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.Menu;
+import com.dhitoshi.xfrs.huixiaobao.Bean.ScreenBean;
 import com.dhitoshi.xfrs.huixiaobao.Interface.ClientManage;
 import com.dhitoshi.xfrs.huixiaobao.Interface.MenuItemClick;
 import com.dhitoshi.xfrs.huixiaobao.R;
 import com.dhitoshi.xfrs.huixiaobao.common.PopupMenu;
+import com.dhitoshi.xfrs.huixiaobao.presenter.ClientPresenter;
 import com.dhitoshi.xfrs.huixiaobao.view.AddClient;
 
 import java.util.ArrayList;
@@ -53,6 +55,8 @@ public class Client extends Fragment implements ClientManage.View{
         return view;
     }
     private void initViews() {
+        ClientPresenter clientPresenter=new ClientPresenter(this);
+        clientPresenter.getSelectCustomer();
     }
     @Override
     public void onDestroyView() {
@@ -150,5 +154,10 @@ public class Client extends Fragment implements ClientManage.View{
     @Override
     public void getClientList(List<ClientBean> clientBeens) {
 
+    }
+    //获取筛选条件信息
+    @Override
+    public void getSelectCustomer(ScreenBean screenBean) {
+        Log.e("TAG","客户类型数量:"+screenBean.getCustomer_type().size());
     }
 }
