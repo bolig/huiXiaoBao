@@ -1,5 +1,4 @@
 package com.dhitoshi.xfrs.huixiaobao.fragment;
-
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,7 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.dhitoshi.xfrs.huixiaobao.Bean.ClientBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.Menu;
+import com.dhitoshi.xfrs.huixiaobao.Interface.ClientManage;
 import com.dhitoshi.xfrs.huixiaobao.R;
 import com.dhitoshi.xfrs.huixiaobao.common.PopupMenu;
 
@@ -19,9 +20,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
-
 //客户页面
-public class Client extends Fragment {
+public class Client extends Fragment implements ClientManage.View{
     Unbinder unbinder;
     @BindView(R.id.client_menu)
     ImageView clientMenu;
@@ -31,30 +31,25 @@ public class Client extends Fragment {
     public Client() {
 
     }
-
     public static Client newInstance() {
         Client fragment = new Client();
         return fragment;
     }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_client, container, false);
         unbinder = ButterKnife.bind(this, view);
         return view;
     }
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
     }
-
     @OnClick({R.id.client_menu, R.id.client_role, R.id.client_type, R.id.client_sort})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -69,13 +64,11 @@ public class Client extends Fragment {
                 break;
         }
     }
-
     //弹出菜单
     private void popupMenu() {
         initMenuData();
         PopupMenu.Build(menus, getContext(),clientMenu).init();
     }
-
     //初始化菜单数据
     private void initMenuData() {
         menus = new ArrayList<>();
@@ -107,5 +100,10 @@ public class Client extends Fragment {
         drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
         menu = new Menu("导入通讯录", drawable);
         menus.add(menu);
+    }
+
+    @Override
+    public void getClientList(List<ClientBean> clientBeens) {
+
     }
 }
