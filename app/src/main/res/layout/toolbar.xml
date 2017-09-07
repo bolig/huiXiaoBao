@@ -20,8 +20,9 @@
         android:layout_height="match_parent"
         android:layout_gravity="right"
         android:gravity="center"
-        android:text="123"
-        android:padding="15dp"
+        android:textSize="15dp"
+        android:paddingRight="15dp"
+        android:paddingLeft="15dp"
         android:textColor="@android:color/white"
         android:visibility="gone"
         />

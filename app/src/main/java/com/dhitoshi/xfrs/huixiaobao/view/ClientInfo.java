@@ -140,6 +140,26 @@ public class ClientInfo extends BaseView {
             case 0:
                 popupMenu();
                 break;
+            case 1:
+                it=new Intent(this,AddSpend.class);
+                startActivity(it);
+                break;
+            case 2:
+                it=new Intent(this,AddVisit.class);
+                startActivity(it);
+                break;
+            case 3:
+                it=new Intent(this,AddRelation.class);
+                startActivity(it);
+                break;
+            case 4:
+                it=new Intent(this,AddGift.class);
+                startActivity(it);
+                break;
+            case 5:
+                it=new Intent(this,AddMeeting.class);
+                startActivity(it);
+                break;
         }
     }
 }

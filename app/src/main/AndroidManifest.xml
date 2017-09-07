@@ -19,9 +19,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.Chat"  />
+        <activity android:name=".view.Chat" />
         <activity android:name=".view.AddClient" />
-        <activity android:name=".view.ClientInfo"></activity>
+        <activity android:name=".view.ClientInfo" />
+        <activity android:name=".view.AddSpend" />
+        <activity android:name=".view.AddVisit" />
+        <activity android:name=".view.AddRelation" />
+        <activity android:name=".view.AddGift" />
+        <activity android:name=".view.AddMeeting"></activity>
     </application>
 
 </manifest>

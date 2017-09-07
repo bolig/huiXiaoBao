@@ -11,6 +11,7 @@ import com.dhitoshi.xfrs.huixiaobao.Bean.ScreenBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.SpendBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.UserRole;
 import com.dhitoshi.xfrs.huixiaobao.Bean.VisitBean;
+
 import java.util.List;
 import io.reactivex.Observable;
 import okhttp3.RequestBody;
@@ -48,7 +49,7 @@ public interface HttpService {
     Observable<HttpBean<Object>> getListForSpending();
     //获取参会记录列表
     @GET("customer/meeting/list")
-    Observable<HttpBean<PageBean<MeetBean>>> getMeetingLists(@Query("userid") String userid,@Query("page") String page);
+    Observable<HttpBean<PageBean<MeetBean>>> getMeetingLists(@Query("userid") String userid, @Query("page") String page);
     //获取社会关系列表
     @GET("customer/relation_select/list")
     Observable<HttpBean<PageBean<RelationBean>>> getRelationLists(@Query("userid") String userid, @Query("page") String page);
