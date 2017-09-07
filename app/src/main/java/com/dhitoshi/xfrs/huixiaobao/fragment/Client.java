@@ -96,11 +96,11 @@ public class Client extends Fragment implements ClientManage.View {
     //筛选角色
     private void screenRole() {
         if(screen_oldPosition==0){
-            roleText.setCompoundDrawables(null,null,null,defualt);
+            roleText.setCompoundDrawables(null,null,defualt,null);
             roleText.setTextColor(Color.parseColor("#666666"));
             screen_oldPosition=-1;
         }else{
-            roleText.setCompoundDrawables(null,null,null,drawable);
+            roleText.setCompoundDrawables(null,null,drawable,null);
             roleText.setTextColor(Color.parseColor("#34B1FF"));
             screen_oldPosition=0;
         }
@@ -108,11 +108,11 @@ public class Client extends Fragment implements ClientManage.View {
     //筛选类型
     private void screenRoleType() {
         if(screen_oldPosition==1){
-            typeText.setCompoundDrawables(null,null,null,defualt);
+            typeText.setCompoundDrawables(null,null,defualt,null);
             typeText.setTextColor(Color.parseColor("#666666"));
             screen_oldPosition=-1;
         }else{
-            typeText.setCompoundDrawables(null,null,null,drawable);
+            typeText.setCompoundDrawables(null,null,drawable,null);
             typeText.setTextColor(Color.parseColor("#34B1FF"));
             screen_oldPosition=1;
         }
@@ -120,11 +120,11 @@ public class Client extends Fragment implements ClientManage.View {
     //筛选排序
     private void screenType() {
         if(screen_oldPosition==2){
-            sortText.setCompoundDrawables(null,null,null,defualt);
+            sortText.setCompoundDrawables(null,null,defualt,null);
             sortText.setTextColor(Color.parseColor("#666666"));
             screen_oldPosition=-1;
         }else{
-            sortText.setCompoundDrawables(null,null,null,drawable);
+            sortText.setCompoundDrawables(null,null,drawable,null);
             sortText.setTextColor(Color.parseColor("#34B1FF"));
             screen_oldPosition=2;
         }
