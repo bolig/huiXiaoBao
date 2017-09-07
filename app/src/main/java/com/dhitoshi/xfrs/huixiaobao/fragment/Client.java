@@ -161,6 +161,6 @@ public class Client extends Fragment implements ClientManage.View{
     //获取筛选条件信息
     @Override
     public void getSelectCustomer(ScreenBean screenBean) {
-        Log.e("TAG","客户类型数量:"+screenBean.getCustomer_type().size());
+       // Log.e("TAG","客户类型数量:"+screenBean.getCustomer_type().size());
     }
 }

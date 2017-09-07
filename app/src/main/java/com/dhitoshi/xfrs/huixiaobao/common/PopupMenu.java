@@ -61,7 +61,7 @@ public class PopupMenu {
         this.menuItemClick = menuItemClick;
     }
     public void show(){
-        popupWindow.showAtLocation(parent, Gravity.TOP|Gravity.RIGHT, DensityUtil.dp2px(10) ,parent.getHeight()+DensityUtil.dp2px(15));
+        popupWindow.showAtLocation(parent, Gravity.TOP|Gravity.RIGHT, DensityUtil.dp2px(10) ,parent.getHeight()+DensityUtil.dp2px(13));
     }
     public  void dismisss(){
         if(null!=popupWindow){

@@ -22,7 +22,7 @@
     <com.dhitoshi.bottombar.BottomBar
         android:id="@+id/theme_bottomBar"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="56dp"
         app:bb_tabXmlResource="@xml/bottombar_tabs"
         >
     </com.dhitoshi.bottombar.BottomBar>
