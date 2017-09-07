@@ -1,9 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.dhitoshi.xfrs.huixiaobao.view.ClientInfo">
+    android:orientation="vertical"
+    android:fitsSystemWindows="true"
+    >
+    <include
+        layout="@layout/toolbar"
+        ></include>
+    <com.dhitoshi.xfrs.huixiaobao.common.NoSlidingViewPager
+        android:id="@+id/client_viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        >
+    </com.dhitoshi.xfrs.huixiaobao.common.NoSlidingViewPager>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#eeeeee"
+        ></View>
+    <com.dhitoshi.bottombar.BottomBar
+        android:id="@+id/client_bottomBar"
+        android:layout_width="match_parent"
+        android:layout_height="66dp"
+        app:bb_tabXmlResource="@xml/client_tabs"
+        >
+    </com.dhitoshi.bottombar.BottomBar>
 
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>

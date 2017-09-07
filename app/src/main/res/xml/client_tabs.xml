@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tabs>
+    <tab
+        id="@+id/tab_info"
+        icon="@mipmap/info"
+        title="客戶"
+        inActiveColor="#999999"
+        activeColor="#34B1FF"
+        ></tab>
+    <tab
+        id="@+id/tab_spend"
+        icon="@mipmap/spending"
+        title="消费"
+        inActiveColor="#999999"
+        activeColor="#34B1FF"
+        ></tab>
+    <tab
+        id="@+id/tab_visit"
+        icon="@mipmap/visit"
+        title="回访"
+        inActiveColor="#999999"
+        activeColor="#34B1FF"
+        ></tab>
+    <tab
+        id="@+id/tab_relation"
+        icon="@mipmap/relation"
+        title="关系"
+        inActiveColor="#999999"
+        activeColor="#34B1FF"
+        ></tab>
+    <tab
+        id="@+id/tab_gift"
+        icon="@mipmap/gift"
+        title="赠品"
+        inActiveColor="#999999"
+        activeColor="#34B1FF"
+        ></tab>
+    <tab
+        id="@+id/tab_meet"
+        icon="@mipmap/meeting"
+        title="参会"
+        inActiveColor="#999999"
+        activeColor="#34B1FF"
+        ></tab>
+</tabs>

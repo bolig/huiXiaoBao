@@ -19,6 +19,7 @@ import com.dhitoshi.xfrs.huixiaobao.R;
 import com.dhitoshi.xfrs.huixiaobao.common.PopupMenu;
 import com.dhitoshi.xfrs.huixiaobao.presenter.ClientPresenter;
 import com.dhitoshi.xfrs.huixiaobao.view.AddClient;
+import com.dhitoshi.xfrs.huixiaobao.view.ClientInfo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -105,6 +106,8 @@ public class Client extends Fragment implements ClientManage.View{
                         startActivity(it);
                         break;
                     case 2:
+                        it=new Intent(getContext(), ClientInfo.class);
+                        startActivity(it);
                         break;
                     case 3:
                         break;
