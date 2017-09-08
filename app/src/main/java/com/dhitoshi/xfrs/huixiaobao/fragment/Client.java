@@ -5,11 +5,13 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewCompat;
+import android.support.v7.widget.AppCompatImageView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 import com.dhitoshi.xfrs.huixiaobao.Bean.ClientBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.Menu;
@@ -28,10 +30,10 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 //客户页面
-public class Client extends Fragment implements ClientManage.View {
+public class Client extends Fragment implements ClientManage.View , View.OnTouchListener{
     Unbinder unbinder;
     @BindView(R.id.client_menu)
-    ImageView clientMenu;
+    AppCompatImageView clientMenu;
     @BindView(R.id.role_text)
     TextView roleText;
     @BindView(R.id.type_text)
@@ -65,6 +67,7 @@ public class Client extends Fragment implements ClientManage.View {
     private void initViews() {
         ClientPresenter clientPresenter = new ClientPresenter(this);
         clientPresenter.getSelectCustomer();
+        clientMenu.setOnTouchListener(this);
         defualt = getContext().getResources().getDrawable(R.mipmap.down);
         defualt.setBounds(0, 0, defualt.getMinimumWidth(), defualt.getMinimumHeight());
         drawable = getContext().getResources().getDrawable(R.mipmap.up);
@@ -211,5 +214,18 @@ public class Client extends Fragment implements ClientManage.View {
     @Override
     public void getSelectCustomer(ScreenBean screenBean) {
          Log.e("TAG","客户类型数量:"+screenBean.getCustomer_type().size());
+    }
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        switch (event.getAction()){
+            case MotionEvent.ACTION_DOWN:
+                ViewCompat.setAlpha(v, 0.5f);
+                break;
+            case MotionEvent.ACTION_UP:
+                ViewCompat.setAlpha(v, 1.0f);
+                break;
+        }
+        return false;
     }
 }

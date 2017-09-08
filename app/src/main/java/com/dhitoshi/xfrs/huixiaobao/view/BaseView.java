@@ -1,10 +1,12 @@
 package com.dhitoshi.xfrs.huixiaobao.view;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
 import com.dhitoshi.ImmersionBar.ImmersionBar;
@@ -12,7 +14,7 @@ import com.dhitoshi.xfrs.huixiaobao.R;
 /**
  * Created by dxs on 2017/9/6.
  */
-public class BaseView extends AppCompatActivity {
+public class BaseView extends AppCompatActivity implements View.OnTouchListener{
     private Toolbar toolbar;
     private TextView title;
     private TextView rightText;
@@ -26,6 +28,7 @@ public class BaseView extends AppCompatActivity {
         title = (TextView)findViewById(R.id.title);
         rightIcon = (AppCompatImageView) findViewById(R.id.right_icon);
         rightText = (TextView)findViewById(R.id.right_text);
+        rightIcon.setOnTouchListener(this);
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -62,5 +65,17 @@ public class BaseView extends AppCompatActivity {
     public  void setRightIcon(int resourceId){
         rightIcon.setVisibility(View.VISIBLE);
         rightIcon.setImageResource(resourceId);
+    }
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        switch (event.getAction()){
+            case MotionEvent.ACTION_DOWN:
+                ViewCompat.setAlpha(v, 0.5f);
+                break;
+            case MotionEvent.ACTION_UP:
+                ViewCompat.setAlpha(v, 1.0f);
+                break;
+        }
+        return false;
     }
 }

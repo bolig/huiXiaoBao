@@ -33,7 +33,7 @@
             android:paddingBottom="6dp"
             android:textCursorDrawable="@null"
             />
-        <ImageView
+        <android.support.v7.widget.AppCompatImageView
             android:id="@+id/client_menu"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
