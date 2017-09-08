@@ -1,6 +1,7 @@
 package com.dhitoshi.xfrs.huixiaobao.http;
 import com.dhitoshi.xfrs.huixiaobao.Bean.AreaBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.ClientBean;
+import com.dhitoshi.xfrs.huixiaobao.Bean.GiftBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.MeetBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.PageBean;
@@ -11,7 +12,6 @@ import com.dhitoshi.xfrs.huixiaobao.Bean.ScreenBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.SpendBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.UserRole;
 import com.dhitoshi.xfrs.huixiaobao.Bean.VisitBean;
-
 import java.util.List;
 import io.reactivex.Observable;
 import okhttp3.RequestBody;
@@ -47,11 +47,23 @@ public interface HttpService {
     //获取消费所需列表
     @GET("customer/spending/listForSpending")
     Observable<HttpBean<Object>> getListForSpending();
+    //获取回访所需列表
+    @GET("customer/feedback/listForFeedBack")
+    Observable<HttpBean<Object>> getListForVisit();
+    //获取社会关系所需列表
+    @GET("customer/relation/listForRelation")
+    Observable<HttpBean<Object>> getListForRelation();
+    //获取赠品所需列表
+    @GET("customer/gift/listForGift")
+    Observable<HttpBean<Object>> getListForGift();
+    //获取会议所需列表
+    @GET("customer/meeting/listForMeeting")
+    Observable<HttpBean<Object>> getListForMeeting();
     //获取参会记录列表
     @GET("customer/meeting/list")
     Observable<HttpBean<PageBean<MeetBean>>> getMeetingLists(@Query("userid") String userid, @Query("page") String page);
     //获取社会关系列表
-    @GET("customer/relation_select/list")
+    @GET("customer/relation/list")
     Observable<HttpBean<PageBean<RelationBean>>> getRelationLists(@Query("userid") String userid, @Query("page") String page);
     //获取回访记录列表
     @GET("customer/feedback/list")
@@ -59,6 +71,9 @@ public interface HttpService {
     //获取消费记录列表
     @GET("customer/spending/list")
     Observable<HttpBean<PageBean<SpendBean>>> getSpendingLists(@Query("userid") String userid, @Query("page") String page);
+    //获取赠品记录列表
+    @GET("customer/gift/list")
+    Observable<HttpBean<PageBean<GiftBean>>> getGiftLists(@Query("userid") String userid, @Query("page") String page);
 
     //更改密码
     @POST("resetPassword")
@@ -72,4 +87,19 @@ public interface HttpService {
     //添加客户
     @POST("customer/add")
     Observable<ClientBean> addClient(@Body RequestBody body);
+    //添加消费记录
+    @POST("customer/spending/add")
+    Observable<HttpBean<SpendBean>> addSpend(@Body RequestBody body);
+    //添加回访
+    @POST("customer/feedback/add")
+    Observable<HttpBean<VisitBean>> addVisit(@Body RequestBody body);
+    //添加社会关系
+    @POST("customer/relation/add")
+    Observable<HttpBean<RelationBean>> addRelation(@Body RequestBody body);
+    //添加赠品
+    @POST("customer/gift/add")
+    Observable<HttpBean<GiftBean>> addGift(@Body RequestBody body);
+    //添加会议记录
+    @POST("customer/meeting/add")
+    Observable<HttpBean<MeetBean>> addMeet(@Body RequestBody body);
 }

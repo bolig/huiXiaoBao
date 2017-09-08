@@ -1,24 +1,18 @@
 package com.dhitoshi.xfrs.huixiaobao.Interface;
-import com.dhitoshi.xfrs.huixiaobao.Bean.ClientBean;
+import com.dhitoshi.xfrs.huixiaobao.Bean.GiftBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
-import com.dhitoshi.xfrs.huixiaobao.Bean.ScreenBean;
-
-import java.util.List;
-
+import com.dhitoshi.xfrs.huixiaobao.Bean.PageBean;
 /**
  * Created by dxs on 2017/9/6.
  */
 public interface GiftManage {
     interface View{
-        void getClientList(List<ClientBean> clientBeens);
-        void getSelectCustomer(ScreenBean screenBean);
+        void getGiftLists(PageBean<GiftBean> pageBean );
     }
     interface Model{
-        void getClientList(String type, String area, String order, String page, Callback<HttpBean<List<ClientBean>>> callback);
-        void getSelectCustomer(Callback<HttpBean<ScreenBean>> callback);
+        void getGiftLists(String userid, String page, Callback<HttpBean<PageBean<GiftBean>>> callback);
     }
     interface Prsenter{
-        void getClientList(String type, String area, String order, String page);
-        void getSelectCustomer();
+        void getGiftLists(String userid, String page);
     }
 }

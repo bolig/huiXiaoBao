@@ -55,7 +55,6 @@ public class Client extends Fragment implements ClientManage.View {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_client, container, false);
@@ -207,7 +206,6 @@ public class Client extends Fragment implements ClientManage.View {
     //获取客户列表
     @Override
     public void getClientList(List<ClientBean> clientBeens) {
-
     }
     //获取筛选条件信息
     @Override
