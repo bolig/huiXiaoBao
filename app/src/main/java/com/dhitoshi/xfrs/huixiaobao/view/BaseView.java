@@ -11,6 +11,9 @@ import android.view.View;
 import android.widget.TextView;
 import com.dhitoshi.ImmersionBar.ImmersionBar;
 import com.dhitoshi.xfrs.huixiaobao.R;
+
+import io.reactivex.disposables.Disposable;
+
 /**
  * Created by dxs on 2017/9/6.
  */
@@ -19,6 +22,7 @@ public class BaseView extends AppCompatActivity implements View.OnTouchListener{
     private TextView title;
     private TextView rightText;
     private AppCompatImageView rightIcon;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +33,7 @@ public class BaseView extends AppCompatActivity implements View.OnTouchListener{
         rightIcon = (AppCompatImageView) findViewById(R.id.right_icon);
         rightText = (TextView)findViewById(R.id.right_text);
         rightIcon.setOnTouchListener(this);
+        rightText.setOnTouchListener(this);
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -70,10 +75,10 @@ public class BaseView extends AppCompatActivity implements View.OnTouchListener{
     public boolean onTouch(View v, MotionEvent event) {
         switch (event.getAction()){
             case MotionEvent.ACTION_DOWN:
-                ViewCompat.setAlpha(v, 0.5f);
+                v.setAlpha(0.5f);
                 break;
             case MotionEvent.ACTION_UP:
-                ViewCompat.setAlpha(v, 1.0f);
+                v.setAlpha(1.0f);
                 break;
         }
         return false;

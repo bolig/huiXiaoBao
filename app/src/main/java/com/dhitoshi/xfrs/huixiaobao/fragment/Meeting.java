@@ -9,6 +9,9 @@ import com.dhitoshi.xfrs.huixiaobao.Bean.MeetBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.PageBean;
 import com.dhitoshi.xfrs.huixiaobao.Interface.MeetingManage;
 import com.dhitoshi.xfrs.huixiaobao.R;
+
+import io.reactivex.disposables.Disposable;
+
 //会议
 public class Meeting extends Fragment implements MeetingManage.View{
 
@@ -29,6 +32,7 @@ public class Meeting extends Fragment implements MeetingManage.View{
 
         return inflater.inflate(R.layout.fragment_meeting, container, false);
     }
+
 
     @Override
     public void getMeetingLists(PageBean<MeetBean> pageBean) {

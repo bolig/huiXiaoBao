@@ -190,4 +190,5 @@ public class ClientBean {
     public void setIll(List<IllBean> ill) {
         this.ill = ill;
     }
+
 }

@@ -23,12 +23,17 @@ import com.dhitoshi.xfrs.huixiaobao.common.PopupMenu;
 import com.dhitoshi.xfrs.huixiaobao.presenter.ClientPresenter;
 import com.dhitoshi.xfrs.huixiaobao.view.AddClient;
 import com.dhitoshi.xfrs.huixiaobao.view.ClientInfo;
+import com.dhitoshi.xfrs.huixiaobao.view.Remind;
+import com.dhitoshi.xfrs.huixiaobao.view.Resource;
+
 import java.util.ArrayList;
 import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import io.reactivex.disposables.Disposable;
+
 //客户页面
 public class Client extends Fragment implements ClientManage.View , View.OnTouchListener{
     Unbinder unbinder;
@@ -163,8 +168,12 @@ public class Client extends Fragment implements ClientManage.View , View.OnTouch
                         startActivity(it);
                         break;
                     case 3:
+                        it = new Intent(getContext(), Remind.class);
+                        startActivity(it);
                         break;
                     case 4:
+                        it = new Intent(getContext(), Resource.class);
+                        startActivity(it);
                         break;
                     case 5:
                         break;
@@ -209,13 +218,13 @@ public class Client extends Fragment implements ClientManage.View , View.OnTouch
     //获取客户列表
     @Override
     public void getClientList(List<ClientBean> clientBeens) {
+
     }
     //获取筛选条件信息
     @Override
     public void getSelectCustomer(ScreenBean screenBean) {
-         Log.e("TAG","客户类型数量:"+screenBean.getCustomer_type().size());
+        Log.e("TAG","客户类型数量:"+screenBean.getCustomer_type().size());
     }
-
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         switch (event.getAction()){

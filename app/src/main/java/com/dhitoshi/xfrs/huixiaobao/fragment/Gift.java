@@ -9,6 +9,9 @@ import com.dhitoshi.xfrs.huixiaobao.Bean.GiftBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.PageBean;
 import com.dhitoshi.xfrs.huixiaobao.Interface.GiftManage;
 import com.dhitoshi.xfrs.huixiaobao.R;
+
+import io.reactivex.disposables.Disposable;
+
 //赠品
 public class Gift extends Fragment implements GiftManage.View{
 
@@ -28,6 +31,8 @@ public class Gift extends Fragment implements GiftManage.View{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_gift, container, false);
     }
+
+
 
     @Override
     public void getGiftLists(PageBean<GiftBean> pageBean) {

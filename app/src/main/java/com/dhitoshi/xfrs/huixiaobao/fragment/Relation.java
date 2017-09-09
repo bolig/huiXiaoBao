@@ -9,6 +9,9 @@ import com.dhitoshi.xfrs.huixiaobao.Bean.PageBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.RelationBean;
 import com.dhitoshi.xfrs.huixiaobao.Interface.RelationManage;
 import com.dhitoshi.xfrs.huixiaobao.R;
+
+import io.reactivex.disposables.Disposable;
+
 public class Relation extends Fragment implements RelationManage.View{
     public Relation() {
     }
@@ -25,6 +28,8 @@ public class Relation extends Fragment implements RelationManage.View{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_relation, container, false);
     }
+
+
 
     @Override
     public void getRelationLists(PageBean<RelationBean> pageBean) {

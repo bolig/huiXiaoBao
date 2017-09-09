@@ -9,6 +9,8 @@ import com.dhitoshi.xfrs.huixiaobao.Bean.VisitBean;
 import com.dhitoshi.xfrs.huixiaobao.Interface.VisitManage;
 import com.dhitoshi.xfrs.huixiaobao.R;
 
+import io.reactivex.disposables.Disposable;
+
 //回访
 public class Visit extends Fragment implements VisitManage.View{
     public Visit() {

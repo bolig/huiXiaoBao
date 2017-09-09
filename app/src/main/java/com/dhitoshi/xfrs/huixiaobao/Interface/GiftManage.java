@@ -7,7 +7,7 @@ import com.dhitoshi.xfrs.huixiaobao.Bean.PageBean;
  */
 public interface GiftManage {
     interface View{
-        void getGiftLists(PageBean<GiftBean> pageBean );
+        void getGiftLists(PageBean<GiftBean> pageBean);
     }
     interface Model{
         void getGiftLists(String userid, String page, Callback<HttpBean<PageBean<GiftBean>>> callback);

@@ -9,447 +9,463 @@
     <include
         layout="@layout/toolbar"
         ></include>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/white"
-        >
+        android:background="@android:color/white">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            >
+            android:orientation="vertical">
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="5dp"
-                android:background="#eee"
-                ></View>
+                android:background="#eee"></View>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:paddingTop="5dp"
                 android:paddingBottom="5dp"
-                >
+                android:paddingTop="5dp">
+
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
                     android:orientation="vertical"
-                    android:paddingLeft="20dp"
-                    >
+                    android:paddingLeft="20dp">
+
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="45dp"
-                        >
+                        android:layout_height="45dp">
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
+                            android:gravity="center_vertical"
                             android:text="客户姓名："
-                            android:gravity="center_vertical"
                             android:textColor="#666666"
-                            android:textSize="14dp"
-                            />
+                            android:textSize="14dp" />
+
                         <EditText
+                            android:id="@+id/client_name"
                             android:layout_width="0dp"
+                            android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:layout_height="wrap_content"
-                            android:hint="请输入"
-                            android:textSize="14dp"
-                            android:textColorHint="#BFBFBF"
-                            android:textColor="@color/colorPrimary"
                             android:background="@null"
-                            />
+                            android:hint="请输入"
+                            android:textColor="@color/colorPrimary"
+                            android:textColorHint="#BFBFBF"
+                            android:textSize="14dp" />
                     </LinearLayout>
+
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="0.5dp"
-                        android:background="#D9D9D9"
-                        ></View>
+                        android:background="#D9D9D9"></View>
+
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="45dp"
-                        >
+                        android:layout_height="45dp">
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
+                            android:gravity="center_vertical"
                             android:text="性        别："
-                            android:gravity="center_vertical"
                             android:textColor="#666666"
-                            android:textSize="14dp"
-                            />
+                            android:textSize="14dp" />
+
                         <TextView
+                            android:id="@+id/client_sex"
                             android:layout_width="0dp"
-                            android:layout_weight="1"
                             android:layout_height="match_parent"
+                            android:layout_weight="1"
                             android:drawableRight="@mipmap/right"
-                            android:text="请选择"
                             android:gravity="center_vertical"
-                            android:textColor="#BFBFBF"
-                            />
+                            android:text="请选择"
+                            android:textColor="#BFBFBF" />
                     </LinearLayout>
+
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="0.5dp"
-                        android:background="#D9D9D9"
-                        ></View>
+                        android:background="#D9D9D9"></View>
+
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="45dp"
-                        >
+                        android:layout_height="45dp">
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
+                            android:gravity="center_vertical"
                             android:text="出生日期："
-                            android:gravity="center_vertical"
                             android:textColor="#666666"
-                            android:textSize="14dp"
-                            />
+                            android:textSize="14dp" />
+
                         <TextView
+                            android:id="@+id/client_birthday"
                             android:layout_width="0dp"
-                            android:layout_weight="1"
                             android:layout_height="match_parent"
+                            android:layout_weight="1"
                             android:drawableRight="@mipmap/right"
-                            android:text="请选择"
                             android:gravity="center_vertical"
-                            android:textColor="#BFBFBF"
-                            />
+                            android:text="请选择"
+                            android:textColor="#BFBFBF" />
                     </LinearLayout>
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:orientation="vertical"
                     android:gravity="center"
-                    >
+                    android:orientation="vertical">
+
                     <ImageView
+                        android:id="@+id/client_head"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@mipmap/head"
-                        />
+                        android:src="@mipmap/head" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="头像设置"
-                        android:textSize="12dp"
-                        android:textColor="#666666"
                         android:layout_marginTop="10dp"
-                        />
+                        android:text="头像设置"
+                        android:textColor="#666666"
+                        android:textSize="12dp" />
                 </LinearLayout>
             </LinearLayout>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="5dp"
-                android:background="#eee"
-                ></View>
+                android:background="#eee"></View>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
-                android:paddingLeft="20dp"
-                >
+                android:paddingLeft="20dp">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:gravity="center_vertical"
                     android:text="手机号码："
-                    android:gravity="center_vertical"
                     android:textColor="#666666"
-                    android:textSize="14dp"
-                    />
+                    android:textSize="14dp" />
+
                 <EditText
+                    android:id="@+id/client_phone"
                     android:layout_width="0dp"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:hint="请输入"
-                    android:textSize="14dp"
-                    android:textColorHint="#BFBFBF"
-                    android:textColor="@color/colorPrimary"
                     android:background="@null"
-                    />
+                    android:hint="请输入"
+                    android:inputType="phone"
+                    android:textColor="@color/colorPrimary"
+                    android:textColorHint="#BFBFBF"
+                    android:textSize="14dp" />
+
                 <TextView
+                    android:id="@+id/checkRepeat"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="查重"
-                    android:background="@drawable/border_blue"
-                    android:paddingLeft="12dp"
-                    android:paddingRight="12dp"
-                    android:paddingBottom="5dp"
-                    android:paddingTop="5dp"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="12dp"
                     android:layout_marginRight="10dp"
-                    />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="拨号"
-                    android:background="@drawable/border_blue"
+                    android:background="@drawable/addclient_click"
+                    android:paddingBottom="5dp"
                     android:paddingLeft="12dp"
                     android:paddingRight="12dp"
-                    android:paddingBottom="5dp"
                     android:paddingTop="5dp"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="12dp"
+                    android:text="查重"
+                    android:textColor="@color/addclient_click"
+                    android:textSize="12dp" />
+
+                <TextView
+                    android:id="@+id/call"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginRight="20dp"
-                    />
+                    android:background="@drawable/addclient_click"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="12dp"
+                    android:paddingRight="12dp"
+                    android:paddingTop="5dp"
+                    android:text="拨号"
+                    android:textColor="@color/addclient_click"
+                    android:textSize="12dp" />
             </LinearLayout>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
-                android:background="#D9D9D9"
                 android:layout_marginLeft="20dp"
-                ></View>
+                android:background="#D9D9D9"></View>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                >
+                android:paddingRight="20dp">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:gravity="center_vertical"
                     android:text="爱        好："
-                    android:gravity="center_vertical"
                     android:textColor="#666666"
-                    android:textSize="14dp"
-                    />
+                    android:textSize="14dp" />
+
                 <TextView
+                    android:id="@+id/client_hobby"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="match_parent"
+                    android:layout_weight="1"
                     android:drawableRight="@mipmap/right"
-                    android:text="请选择"
                     android:gravity="center_vertical"
-                    android:textColor="#BFBFBF"
-                    />
+                    android:text="请选择"
+                    android:textColor="#BFBFBF" />
             </LinearLayout>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
-                android:background="#D9D9D9"
                 android:layout_marginLeft="20dp"
-                ></View>
+                android:background="#D9D9D9"></View>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                >
+                android:paddingRight="20dp">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:gravity="center_vertical"
                     android:text="会员卡号："
-                    android:gravity="center_vertical"
                     android:textColor="#666666"
-                    android:textSize="14dp"
-                    />
+                    android:textSize="14dp" />
+
                 <EditText
+                    android:id="@+id/client_vip"
                     android:layout_width="0dp"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:hint="请输入"
-                    android:textSize="14dp"
-                    android:textColorHint="#BFBFBF"
-                    android:textColor="@color/colorPrimary"
                     android:background="@null"
-                    />
+                    android:hint="请输入"
+                    android:textColor="@color/colorPrimary"
+                    android:textColorHint="#BFBFBF"
+                    android:textSize="14dp" />
             </LinearLayout>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
-                android:background="#D9D9D9"
                 android:layout_marginLeft="20dp"
-                ></View>
+                android:background="#D9D9D9"></View>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                >
+                android:paddingRight="20dp">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:gravity="center_vertical"
                     android:text="所属地区："
-                    android:gravity="center_vertical"
                     android:textColor="#666666"
-                    android:textSize="14dp"
-                    />
+                    android:textSize="14dp" />
+
                 <TextView
+                    android:id="@+id/client_area"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="match_parent"
+                    android:layout_weight="1"
                     android:drawableRight="@mipmap/right"
-                    android:text="请选择"
                     android:gravity="center_vertical"
-                    android:textColor="#BFBFBF"
-                    />
+                    android:text="请选择"
+                    android:textColor="#BFBFBF" />
             </LinearLayout>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
-                android:background="#D9D9D9"
                 android:layout_marginLeft="20dp"
-                ></View>
+                android:background="#D9D9D9"></View>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                >
+                android:paddingRight="20dp">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:gravity="center_vertical"
                     android:text="住宅电话："
-                    android:gravity="center_vertical"
                     android:textColor="#666666"
-                    android:textSize="14dp"
-                    />
+                    android:textSize="14dp" />
+
                 <EditText
+                    android:id="@+id/client_telphone"
                     android:layout_width="0dp"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:hint="请输入"
-                    android:textSize="14dp"
-                    android:textColorHint="#BFBFBF"
-                    android:textColor="@color/colorPrimary"
                     android:background="@null"
-                    />
+                    android:hint="请输入"
+                    android:textColor="@color/colorPrimary"
+                    android:textColorHint="#BFBFBF"
+                    android:textSize="14dp" />
             </LinearLayout>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
-                android:background="#D9D9D9"
                 android:layout_marginLeft="20dp"
-                ></View>
+                android:background="#D9D9D9"></View>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                >
+                android:paddingRight="20dp">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:gravity="center_vertical"
                     android:text="电子邮箱："
-                    android:gravity="center_vertical"
                     android:textColor="#666666"
-                    android:textSize="14dp"
-                    />
+                    android:textSize="14dp" />
+
                 <EditText
+                    android:id="@+id/client_email"
                     android:layout_width="0dp"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:hint="请输入"
-                    android:textSize="14dp"
-                    android:textColorHint="#BFBFBF"
-                    android:textColor="@color/colorPrimary"
                     android:background="@null"
-                    />
+                    android:hint="请输入"
+                    android:textColor="@color/colorPrimary"
+                    android:textColorHint="#BFBFBF"
+                    android:textSize="14dp" />
             </LinearLayout>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
-                android:background="#D9D9D9"
                 android:layout_marginLeft="20dp"
-                ></View>
+                android:background="#D9D9D9"></View>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                >
+                android:paddingRight="20dp">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:gravity="center_vertical"
                     android:text="职        位："
-                    android:gravity="center_vertical"
                     android:textColor="#666666"
-                    android:textSize="14dp"
-                    />
+                    android:textSize="14dp" />
+
                 <TextView
+                    android:id="@+id/client_position"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="match_parent"
+                    android:layout_weight="1"
                     android:drawableRight="@mipmap/right"
+                    android:gravity="center_vertical"
                     android:text="请选择"
-                    android:gravity="center_vertical"
-                    android:textColor="#BFBFBF"
-                    />
+                    android:textColor="#BFBFBF" />
             </LinearLayout>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
-                android:background="#D9D9D9"
                 android:layout_marginLeft="20dp"
-                ></View>
+                android:background="#D9D9D9"></View>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                >
+                android:paddingRight="20dp">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:gravity="center_vertical"
                     android:text="通讯地址："
-                    android:gravity="center_vertical"
                     android:textColor="#666666"
-                    android:textSize="14dp"
-                    />
+                    android:textSize="14dp" />
+
                 <EditText
+                    android:id="@+id/client_address"
                     android:layout_width="0dp"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:hint="请输入"
-                    android:textSize="14dp"
-                    android:textColorHint="#BFBFBF"
-                    android:textColor="@color/colorPrimary"
                     android:background="@null"
-                    />
+                    android:hint="请输入"
+                    android:textColor="@color/colorPrimary"
+                    android:textColorHint="#BFBFBF"
+                    android:textSize="14dp" />
             </LinearLayout>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
-                android:background="#D9D9D9"
                 android:layout_marginLeft="20dp"
-                ></View>
+                android:background="#D9D9D9"></View>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                >
+                android:paddingRight="20dp">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="工作单位："
                     android:gravity="center_vertical"
+                    android:text="工作单位："
                     android:textColor="#666666"
-                    android:textSize="14dp"
-                    />
+                    android:textSize="14dp" />
+
                 <EditText
+                    android:id="@+id/client_company"
                     android:layout_width="0dp"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:hint="请输入"
-                    android:textSize="14dp"
-                    android:textColorHint="#BFBFBF"
-                    android:textColor="@color/colorPrimary"
                     android:background="@null"
-                    />
+                    android:hint="请输入"
+                    android:textColor="@color/colorPrimary"
+                    android:textColorHint="#BFBFBF"
+                    android:textSize="14dp" />
             </LinearLayout>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
-                android:background="#D9D9D9"
                 android:layout_marginLeft="20dp"
-                ></View>
+                android:background="#D9D9D9"></View>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                >
+                android:paddingRight="20dp">
 
                 <TextView
                     android:id="@+id/textView"
@@ -461,135 +477,166 @@
                     android:textSize="14dp" />
 
                 <TextView
+                    android:id="@+id/client_type"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="match_parent"
+                    android:layout_weight="1"
                     android:drawableRight="@mipmap/right"
-                    android:text="请选择"
                     android:gravity="center_vertical"
-                    android:textColor="#BFBFBF"
-                    />
+                    android:text="请选择"
+                    android:textColor="#BFBFBF" />
             </LinearLayout>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
-                android:background="#D9D9D9"
                 android:layout_marginLeft="20dp"
-                ></View>
+                android:background="#D9D9D9"></View>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                >
+                android:paddingRight="20dp">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:gravity="center_vertical"
                     android:text="联系电话："
-                    android:gravity="center_vertical"
                     android:textColor="#666666"
-                    android:textSize="14dp"
-                    />
+                    android:textSize="14dp" />
+
                 <EditText
+                    android:id="@+id/client_companyPone"
                     android:layout_width="0dp"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:hint="请输入"
-                    android:textSize="14dp"
-                    android:textColorHint="#BFBFBF"
-                    android:textColor="@color/colorPrimary"
                     android:background="@null"
-                    />
+                    android:hint="请输入"
+                    android:textColor="@color/colorPrimary"
+                    android:textColorHint="#BFBFBF"
+                    android:textSize="14dp" />
             </LinearLayout>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
-                android:background="#D9D9D9"
                 android:layout_marginLeft="20dp"
-                ></View>
+                android:background="#D9D9D9"></View>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                >
+                android:paddingRight="20dp">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:gravity="center_vertical"
                     android:text="单位地址："
-                    android:gravity="center_vertical"
                     android:textColor="#666666"
-                    android:textSize="14dp"
-                    />
+                    android:textSize="14dp" />
+
                 <EditText
+                    android:id="@+id/client_companyAddress"
                     android:layout_width="0dp"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:hint="请输入"
-                    android:textSize="14dp"
-                    android:textColorHint="#BFBFBF"
-                    android:textColor="@color/colorPrimary"
                     android:background="@null"
-                    />
+                    android:hint="请输入"
+                    android:textColor="@color/colorPrimary"
+                    android:textColorHint="#BFBFBF"
+                    android:textSize="14dp" />
             </LinearLayout>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
-                android:background="#D9D9D9"
                 android:layout_marginLeft="20dp"
-                ></View>
+                android:background="#D9D9D9"></View>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                >
+                android:paddingRight="20dp">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="既往病史："
                     android:gravity="center_vertical"
+                    android:text="录  入  人："
                     android:textColor="#666666"
-                    android:textSize="14dp"
-                    />
+                    android:textSize="14dp" />
+
                 <TextView
+                    android:id="@+id/client_entryMan"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="match_parent"
-                    android:drawableRight="@mipmap/right"
-                    android:text="请选择"
+                    android:layout_weight="1"
                     android:gravity="center_vertical"
-                    android:textColor="#BFBFBF"
-                    />
+                    android:textColor="#BFBFBF" />
             </LinearLayout>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
-                android:background="#D9D9D9"
                 android:layout_marginLeft="20dp"
-                ></View>
+                android:background="#D9D9D9"></View>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="既往病史："
+                    android:textColor="#666666"
+                    android:textSize="14dp" />
+
+                <TextView
+                    android:id="@+id/client_ill"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:drawableRight="@mipmap/right"
+                    android:gravity="center_vertical"
+                    android:text="请选择"
+                    android:textColor="#BFBFBF" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginLeft="20dp"
+                android:background="#D9D9D9"></View>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
-                android:text="备注"
-                android:gravity="center_vertical"
                 android:layout_marginLeft="20dp"
-            />
+                android:gravity="center_vertical"
+                android:text="备注" />
+
             <EditText
+                android:id="@+id/client_notes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="100dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginLeft="20dp"
-                android:background="#F0F0F0"
-                android:hint="请输入备注内容... ..."
-                android:gravity="top"
-                android:padding="5dp"
-                android:textColorHint="#BFBFBF"
-                android:textColor="#BFBFBF"
-                android:textSize="14dp"
                 android:layout_marginBottom="20dp"
-                />
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:background="#F0F0F0"
+                android:gravity="top"
+                android:hint="请输入备注内容... ..."
+                android:minHeight="100dp"
+                android:padding="5dp"
+                android:textColor="#BFBFBF"
+                android:textColorHint="#BFBFBF"
+                android:textSize="14dp" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

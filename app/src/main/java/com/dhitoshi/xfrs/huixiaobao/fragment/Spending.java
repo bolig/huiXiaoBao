@@ -9,6 +9,9 @@ import com.dhitoshi.xfrs.huixiaobao.Bean.PageBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.SpendBean;
 import com.dhitoshi.xfrs.huixiaobao.Interface.SpendManage;
 import com.dhitoshi.xfrs.huixiaobao.R;
+
+import io.reactivex.disposables.Disposable;
+
 //spending_select
 public class Spending extends Fragment implements SpendManage.View{
     public Spending() {
@@ -26,6 +29,7 @@ public class Spending extends Fragment implements SpendManage.View{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_spend, container, false);
     }
+
 
     @Override
     public void getSpendingLists(PageBean<SpendBean> pageBean) {

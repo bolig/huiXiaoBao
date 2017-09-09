@@ -3,6 +3,7 @@ import com.dhitoshi.xfrs.huixiaobao.Bean.AreaBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.ClientBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.GiftBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
+import com.dhitoshi.xfrs.huixiaobao.Bean.InfoAddClientBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.MeetBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.PageBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.Product;
@@ -35,6 +36,9 @@ public interface HttpService {
     //获取筛选框信息
     @GET("customer/selectCustomer")
     Observable<HttpBean<ScreenBean>> getSelectCustomer();
+    //获取增加客户所需列表
+    @GET("customer/infoForAdd")
+    Observable<HttpBean<InfoAddClientBean>> getInfoForAdd();
     //电话号码查重
     @GET("customer/checkRepeat")
     Observable<HttpBean<Object>> checkRepeat(@Query("area") String area,@Query("phone") String phone);
@@ -74,6 +78,12 @@ public interface HttpService {
     //获取赠品记录列表
     @GET("customer/gift/list")
     Observable<HttpBean<PageBean<GiftBean>>> getGiftLists(@Query("userid") String userid, @Query("page") String page);
+    //删除产品
+    @GET("public/item/delete")
+    Observable<HttpBean<Object>> deleteItem(@Query("token") String token,@Query("id") String id);
+    //删除产品类型
+    @GET("public/itemType/delete")
+    Observable<HttpBean<Object>> deleteItemType(@Query("token") String token,@Query("id") String id);
 
     //更改密码
     @POST("resetPassword")
@@ -86,7 +96,7 @@ public interface HttpService {
     Observable<Integer> signUp(@Body RequestBody body);
     //添加客户
     @POST("customer/add")
-    Observable<ClientBean> addClient(@Body RequestBody body);
+    Observable<HttpBean<ClientBean>> addClient(@Body ClientBean clientBean);
     //添加消费记录
     @POST("customer/spending/add")
     Observable<HttpBean<SpendBean>> addSpend(@Body RequestBody body);
@@ -102,4 +112,17 @@ public interface HttpService {
     //添加会议记录
     @POST("customer/meeting/add")
     Observable<HttpBean<MeetBean>> addMeet(@Body RequestBody body);
+    //添加产品
+    @POST("item/add")
+    Observable<HttpBean<Object>> addItem(@Body RequestBody body);
+    //编辑产品
+    @POST("item/edit")
+    Observable<HttpBean<Object>> updateItem(@Body RequestBody body);
+    //添加产品类型
+    @POST("itemType/add")
+    Observable<HttpBean<Object>> addItemType(@Body RequestBody body);
+    //编辑产品类型
+    @POST("itemType/edit")
+    Observable<HttpBean<Object>> updateItemType(@Body RequestBody body);
+
 }
