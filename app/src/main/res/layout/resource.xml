@@ -25,10 +25,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:gravity="center_vertical"
-                android:paddingLeft="20dp"
+                android:layout_marginLeft="20dp"
                 android:paddingRight="15dp"
-                android:background="@android:color/white"
-                android:layout_marginTop="5dp"
+                android:clickable="true"
+                android:background="@drawable/item_click"
                 >
                 <TextView
                     android:layout_width="wrap_content"
@@ -57,9 +57,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:gravity="center_vertical"
-                android:paddingLeft="20dp"
+                android:layout_marginLeft="20dp"
                 android:paddingRight="15dp"
-                android:background="@android:color/white"
+                android:clickable="true"
+                android:background="@drawable/item_click"
                 >
                 <TextView
                     android:layout_width="wrap_content"
@@ -88,9 +89,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:gravity="center_vertical"
-                android:paddingLeft="20dp"
+                android:layout_marginLeft="20dp"
                 android:paddingRight="15dp"
-                android:background="@android:color/white"
+                android:clickable="true"
+                android:background="@drawable/item_click"
                 >
                 <TextView
                     android:layout_width="wrap_content"
@@ -119,9 +121,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:gravity="center_vertical"
-                android:paddingLeft="20dp"
+                android:layout_marginLeft="20dp"
                 android:paddingRight="15dp"
-                android:background="@android:color/white"
+                android:clickable="true"
+                android:background="@drawable/item_click"
                 >
                 <TextView
                     android:layout_width="wrap_content"
@@ -151,29 +154,33 @@
                 android:textSize="14dp"
                 android:textColor="#333333"
                 android:text="今天销售额"
-                android:paddingLeft="20dp"
+                android:layout_marginLeft="20dp"
                 android:paddingRight="15dp"
                 android:gravity="center_vertical"
                 android:drawableRight="@mipmap/right"
-                android:background="@android:color/white"
+                android:clickable="true"
+                android:background="@drawable/item_click"
                 />
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
                 android:layout_marginLeft="20dp"
                 android:background="#D9D9D9"></View>
+
             <TextView
+                android:id="@+id/textView4"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
-                android:textSize="14dp"
-                android:textColor="#333333"
-                android:text="本周销售额"
-                android:paddingLeft="20dp"
-                android:paddingRight="15dp"
-                android:gravity="center_vertical"
+                android:background="@drawable/item_click"
+                android:clickable="true"
                 android:drawableRight="@mipmap/right"
-                android:background="@android:color/white"
-                />
+                android:gravity="center_vertical"
+                android:layout_marginLeft="20dp"
+                android:paddingRight="15dp"
+                android:text="本周销售额"
+                android:textColor="#333333"
+                android:textSize="14dp" />
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
@@ -185,41 +192,43 @@
                 android:textSize="14dp"
                 android:textColor="#333333"
                 android:text="本月销售额"
-                android:paddingLeft="20dp"
+                android:layout_marginLeft="20dp"
                 android:paddingRight="15dp"
                 android:gravity="center_vertical"
                 android:drawableRight="@mipmap/right"
-                android:background="@android:color/white"
+                android:clickable="true"
+                android:background="@drawable/item_click"
                 />
             <View
                 android:layout_width="match_parent"
                 android:layout_height="5dp"
                 android:background="#efefef"></View>
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
+                android:layout_marginLeft="20dp"
+                android:background="@drawable/item_click"
+                android:clickable="true"
                 android:gravity="center_vertical"
-                android:paddingLeft="20dp"
-                android:paddingRight="15dp"
-                android:background="@android:color/white"
-                >
+                android:paddingRight="15dp">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="14dp"
-                    android:textColor="#333333"
                     android:text="今天回访客户"
-                    />
+                    android:textColor="#333333"
+                    android:textSize="14dp" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="14dp"
-                    android:textColor="#333333"
-                    android:drawablePadding="8dp"
-                    android:text="7"
                     android:layout_alignParentRight="true"
+                    android:drawablePadding="8dp"
                     android:drawableRight="@mipmap/right"
-                    />
+                    android:text="7"
+                    android:textColor="#333333"
+                    android:textSize="14dp" />
             </RelativeLayout>
         </LinearLayout>
     </ScrollView>

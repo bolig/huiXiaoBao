@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#DFDFDF"
+    android:background="#EFEFEF"
     >
     <LinearLayout
         android:layout_width="match_parent"
@@ -96,6 +96,7 @@
                 android:layout_height="match_parent"
                 android:drawableRight="@mipmap/down"
                 android:text="排序"
+                android:maxLength="4"
                 android:textColor="#666666"
                 android:gravity="center"
                 android:drawablePadding="8dp"
@@ -103,9 +104,11 @@
         </LinearLayout>
     </LinearLayout>
     <View
+        android:id="@+id/screen_view"
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
-        android:background="#eeeeee"
+        android:background="#dddddd"
         >
     </View>
+    <include layout="@layout/base_recyclerview"></include>
 </LinearLayout>

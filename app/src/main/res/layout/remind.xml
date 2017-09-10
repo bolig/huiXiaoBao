@@ -23,9 +23,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:gravity="center_vertical"
-                android:paddingLeft="20dp"
+                android:layout_marginLeft="20dp"
                 android:paddingRight="15dp"
-                android:background="@android:color/white"
+                android:clickable="true"
+                android:background="@drawable/item_click"
 
                 >
                 <TextView
@@ -55,9 +56,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:gravity="center_vertical"
-                android:paddingLeft="20dp"
+                android:layout_marginLeft="20dp"
                 android:paddingRight="15dp"
-                android:background="@android:color/white"
+                android:clickable="true"
+                android:background="@drawable/item_click"
                 >
                 <TextView
                     android:layout_width="wrap_content"
@@ -89,9 +91,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:gravity="center_vertical"
-                android:paddingLeft="20dp"
+                android:layout_marginLeft="20dp"
                 android:paddingRight="15dp"
-                android:background="@android:color/white"
+                android:clickable="true"
+                android:background="@drawable/item_click"
                 >
                 <TextView
                     android:layout_width="wrap_content"
@@ -120,9 +123,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:gravity="center_vertical"
-                android:paddingLeft="20dp"
+                android:layout_marginLeft="20dp"
                 android:paddingRight="15dp"
-                android:background="@android:color/white"
+                android:clickable="true"
+                android:background="@drawable/item_click"
                 >
                 <TextView
                     android:layout_width="wrap_content"
@@ -151,9 +155,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:gravity="center_vertical"
-                android:paddingLeft="20dp"
+                android:layout_marginLeft="20dp"
                 android:paddingRight="15dp"
-                android:background="@android:color/white"
+                android:clickable="true"
+                android:background="@drawable/item_click"
                 >
                 <TextView
                     android:layout_width="wrap_content"
@@ -182,9 +187,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:gravity="center_vertical"
-                android:paddingLeft="20dp"
+                android:layout_marginLeft="20dp"
                 android:paddingRight="15dp"
-                android:background="@android:color/white"
+                android:clickable="true"
+                android:background="@drawable/item_click"
                 >
                 <TextView
                     android:layout_width="wrap_content"
@@ -213,9 +219,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:gravity="center_vertical"
-                android:paddingLeft="20dp"
+                android:layout_marginLeft="20dp"
                 android:paddingRight="15dp"
-                android:background="@android:color/white"
+                android:clickable="true"
+                android:background="@drawable/item_click"
                 >
                 <TextView
                     android:layout_width="wrap_content"
@@ -244,9 +251,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:gravity="center_vertical"
-                android:paddingLeft="20dp"
+                android:layout_marginLeft="20dp"
                 android:paddingRight="15dp"
-                android:background="@android:color/white"
+                android:clickable="true"
+                android:background="@drawable/item_click"
                 >
                 <TextView
                     android:layout_width="wrap_content"
@@ -275,10 +283,12 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
-                android:background="@android:color/white"
+                android:clickable="true"
+                android:background="@drawable/item_click"
                 android:gravity="center_vertical"
-                android:paddingLeft="20dp"
-                android:paddingRight="15dp">
+                android:layout_marginLeft="20dp"
+                android:paddingRight="15dp"
+                >
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -307,9 +317,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:gravity="center_vertical"
-                android:paddingLeft="20dp"
+                android:layout_marginLeft="20dp"
                 android:paddingRight="15dp"
-                android:background="@android:color/white"
+                android:clickable="true"
+                android:background="@drawable/item_click"
                 >
                 <TextView
                     android:layout_width="wrap_content"
