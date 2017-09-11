@@ -1,10 +1,13 @@
 package com.dhitoshi.xfrs.huixiaobao.presenter;
+import com.dhitoshi.xfrs.huixiaobao.Bean.AreaBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.ClientBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.InfoAddClientBean;
 import com.dhitoshi.xfrs.huixiaobao.Interface.AddClientManage;
 import com.dhitoshi.xfrs.huixiaobao.Interface.Callback;
 import com.dhitoshi.xfrs.huixiaobao.model.AddClientModel;
+
+import java.util.List;
 
 
 /**
@@ -26,7 +29,6 @@ public class AddClientPresenter implements AddClientManage.Presenter{
             }
         });
     }
-
     @Override
     public void getInfoForAdd() {
         addClientModel.getInfoForAdd(new Callback<HttpBean<InfoAddClientBean>>() {
@@ -36,13 +38,22 @@ public class AddClientPresenter implements AddClientManage.Presenter{
             }
         });
     }
-
     @Override
     public void checkRepeat(String area, String phone) {
         addClientModel.checkRepeat(area, phone, new Callback<HttpBean<Object>>() {
             @Override
             public void get(HttpBean<Object> httpBean) {
                 view.checkRepeat(httpBean.getStatus().getMsg());
+            }
+        });
+    }
+
+    @Override
+    public void getAreaLists() {
+        addClientModel.getAreaLists(new Callback<HttpBean<List<AreaBean>>>() {
+            @Override
+            public void get(HttpBean<List<AreaBean>> httpBean) {
+                view.getAreaLists(httpBean);
             }
         });
     }

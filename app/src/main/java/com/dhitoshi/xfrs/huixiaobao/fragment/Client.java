@@ -13,7 +13,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import com.dhitoshi.xfrs.huixiaobao.Bean.AreaBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.ClientBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.CustomerTypeBean;
@@ -32,6 +31,8 @@ import com.dhitoshi.xfrs.huixiaobao.common.PopupScreen;
 import com.dhitoshi.xfrs.huixiaobao.presenter.ClientPresenter;
 import com.dhitoshi.xfrs.huixiaobao.view.AddClient;
 import com.dhitoshi.xfrs.huixiaobao.view.ClientInfo;
+import com.dhitoshi.xfrs.huixiaobao.view.Contact;
+import com.dhitoshi.xfrs.huixiaobao.view.Query;
 import com.dhitoshi.xfrs.huixiaobao.view.Remind;
 import com.dhitoshi.xfrs.huixiaobao.view.Resource;
 
@@ -223,7 +224,7 @@ public class Client extends Fragment implements ClientManage.View, View.OnTouchL
                         startActivity(it);
                         break;
                     case 2:
-                        it = new Intent(getContext(), ClientInfo.class);
+                        it = new Intent(getContext(), Query.class);
                         startActivity(it);
                         break;
                     case 3:
@@ -235,8 +236,12 @@ public class Client extends Fragment implements ClientManage.View, View.OnTouchL
                         startActivity(it);
                         break;
                     case 5:
+                        it = new Intent(getContext(), ClientInfo.class);
+                        startActivity(it);
                         break;
                     case 6:
+                        it=new Intent(getContext(), Contact.class);
+                        startActivity(it);
                         break;
                 }
             }

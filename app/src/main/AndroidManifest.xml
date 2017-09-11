@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.dhitoshi.xfrs.huixiaobao">
-
+    <!--网络访问-->
     <uses-permission android:name="android.permission.INTERNET" />
-
+    <!-- 拨号权限 -->
+    <uses-permission android:name="android.permission.CALL_PHONE"></uses-permission>
     <application
         android:name=".app.MyApplication"
         android:allowBackup="true"
@@ -28,7 +29,9 @@
         <activity android:name=".view.AddGift" />
         <activity android:name=".view.AddMeeting" />
         <activity android:name=".view.Resource" />
-        <activity android:name=".view.Remind"></activity>
+        <activity android:name=".view.Remind" />
+        <activity android:name=".view.Contact" />
+        <activity android:name=".view.Query"></activity>
     </application>
 
 </manifest>

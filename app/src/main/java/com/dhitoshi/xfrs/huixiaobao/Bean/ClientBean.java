@@ -50,6 +50,8 @@ public class ClientBean {
     private String totalnum;
     private String buytime;
     private String backtime;
+    private String hobbys;
+    private String ills;
     private List<HobbyBean> hobby;
     private List<IllBean> ill;
     public int getId() {
@@ -190,5 +192,16 @@ public class ClientBean {
     public void setIll(List<IllBean> ill) {
         this.ill = ill;
     }
-
+    public String getHobbys() {
+        return hobbys;
+    }
+    public void setHobbys(String hobbys) {
+        this.hobbys = hobbys;
+    }
+    public String getIlls() {
+        return ills;
+    }
+    public void setIlls(String ills) {
+        this.ills = ills;
+    }
 }

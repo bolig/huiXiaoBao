@@ -1,5 +1,7 @@
 package com.dhitoshi.xfrs.huixiaobao.view;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -7,12 +9,15 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.dhitoshi.xfrs.huixiaobao.Bean.AreaBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.ClientBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.InfoAddClientBean;
 import com.dhitoshi.xfrs.huixiaobao.Interface.AddClientManage;
 import com.dhitoshi.xfrs.huixiaobao.R;
 import com.dhitoshi.xfrs.huixiaobao.presenter.AddClientPresenter;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -103,6 +108,11 @@ public class AddClient extends BaseView implements AddClientManage.View {
     @Override
     public void checkRepeat(String result) {
     }
+    //获取地区列表
+    @Override
+    public void getAreaLists(HttpBean<List<AreaBean>> httpBean) {
+
+    }
     //提交
     private void commit() {
         juge();
@@ -112,7 +122,7 @@ public class AddClient extends BaseView implements AddClientManage.View {
         clientBean.setSex(sex);
         clientBean.setBirthday(birthday);
         clientBean.setPhone(phone);
-        //clientBean.setHobby();
+        clientBean.setHobbys(hobby);
         clientBean.setVip_id(vip);
         clientBean.setArea(area);
         clientBean.setTelephone(telPhone);
@@ -123,7 +133,7 @@ public class AddClient extends BaseView implements AddClientManage.View {
         clientBean.setType(type);
         clientBean.setCompany_phone(companyPhone);
         clientBean.setCompany_address(companyAddress);
-        // clientBean.setIll();
+        clientBean.setIlls(ill);
         clientBean.setNotes(notes);
         clientBean.setEntryman(clientEntryMan.getText().toString());
         addClientPresenter.addClient(clientBean);
@@ -221,7 +231,6 @@ public class AddClient extends BaseView implements AddClientManage.View {
             return;
         }
     }
-
     //拨打电话
     private void call() {
         phone = clientPhone.getText().toString();
@@ -229,6 +238,8 @@ public class AddClient extends BaseView implements AddClientManage.View {
             Toast.makeText(this, "请填写手机号码", Toast.LENGTH_SHORT).show();
             return;
         }
+        Intent phoneIntent = new Intent("android.intent.action.CALL", Uri.parse("tel:" + phone));
+        startActivity(phoneIntent);
     }
     @OnClick({R.id.right_text, R.id.client_sex, R.id.client_birthday, R.id.client_head, R.id.checkRepeat,
             R.id.call, R.id.client_hobby, R.id.client_area, R.id.client_position, R.id.client_type, R.id.client_ill})

@@ -1,9 +1,10 @@
 package com.dhitoshi.xfrs.huixiaobao.view;
+import android.Manifest;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
-
 import com.dhitoshi.ImmersionBar.ImmersionBar;
 import com.dhitoshi.bottombar.BottomBar;
 import com.dhitoshi.bottombar.OnTabSelectListener;
@@ -13,12 +14,16 @@ import com.dhitoshi.xfrs.huixiaobao.common.NoSlidingViewPager;
 import com.dhitoshi.xfrs.huixiaobao.fragment.Client;
 import com.dhitoshi.xfrs.huixiaobao.fragment.News;
 import com.dhitoshi.xfrs.huixiaobao.fragment.Personal;
-import com.dhitoshi.xfrs.huixiaobao.fragment.StateMent;
-import com.dhitoshi.xfrs.huixiaobao.fragment.Work;
 import java.util.ArrayList;
 import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import permissions.dispatcher.NeedsPermission;
+import permissions.dispatcher.OnShowRationale;
+import permissions.dispatcher.PermissionRequest;
+import permissions.dispatcher.RuntimePermissions;
+
+@RuntimePermissions
 public class Theme extends AppCompatActivity {
     @BindView(R.id.theme_viewpager)
     NoSlidingViewPager themeViewpager;
@@ -34,6 +39,7 @@ public class Theme extends AppCompatActivity {
         initViews();
         initDatas();
         initEvents();
+        ThemePermissionsDispatcher.callWithCheck(this);
     }
     //初始化页面控件
     private void initViews() {
@@ -64,5 +70,17 @@ public class Theme extends AppCompatActivity {
         themeFragments.add(Personal.newInstance());
         return themeFragments;
     }
+    @NeedsPermission(Manifest.permission.CALL_PHONE)
+    void call(){
 
+    }
+    @OnShowRationale(Manifest.permission.CALL_PHONE)
+    void ShowRationaleFoCall(PermissionRequest request){
+        request.proceed();
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        ThemePermissionsDispatcher.onRequestPermissionsResult(this,requestCode,grantResults);
+    }
 }

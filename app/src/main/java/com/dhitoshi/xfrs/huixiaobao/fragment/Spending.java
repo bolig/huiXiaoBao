@@ -12,7 +12,7 @@ import com.dhitoshi.xfrs.huixiaobao.R;
 
 import io.reactivex.disposables.Disposable;
 
-//spending_select
+//消费
 public class Spending extends Fragment implements SpendManage.View{
     public Spending() {
 
