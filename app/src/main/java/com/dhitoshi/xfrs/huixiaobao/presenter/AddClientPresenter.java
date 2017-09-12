@@ -1,4 +1,5 @@
 package com.dhitoshi.xfrs.huixiaobao.presenter;
+import com.dhitoshi.xfrs.huixiaobao.Bean.AddClientBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.AreaBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.ClientBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
@@ -8,6 +9,7 @@ import com.dhitoshi.xfrs.huixiaobao.Interface.Callback;
 import com.dhitoshi.xfrs.huixiaobao.model.AddClientModel;
 
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -21,8 +23,8 @@ public class AddClientPresenter implements AddClientManage.Presenter{
         addClientModel=new AddClientModel();
     }
     @Override
-    public void addClient(ClientBean clientBean) {
-        addClientModel.addClient(clientBean, new Callback<HttpBean<ClientBean>>() {
+    public void addClient(AddClientBean addClientBean) {
+        addClientModel.addClient(addClientBean, new Callback<HttpBean<ClientBean>>() {
             @Override
             public void get(HttpBean<ClientBean> httpBean) {
                 view.addClient(httpBean.getStatus().getMsg());

@@ -1,10 +1,12 @@
 package com.dhitoshi.xfrs.huixiaobao.Interface;
+import com.dhitoshi.xfrs.huixiaobao.Bean.AddClientBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.AreaBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.ClientBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.InfoAddClientBean;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by dxs on 2017/9/8.
@@ -18,13 +20,13 @@ public interface AddClientManage {
         void getAreaLists(HttpBean<List<AreaBean>> httpBean);
     }
     interface Model{
-        void addClient(ClientBean clientBean,Callback<HttpBean<ClientBean>> callback);
+        void addClient(AddClientBean addClientBean, Callback<HttpBean<ClientBean>> callback);
         void getInfoForAdd(Callback<HttpBean<InfoAddClientBean>> callback);
         void checkRepeat( String area,String phone,Callback<HttpBean<Object>> callback);
         void getAreaLists(Callback<HttpBean<List<AreaBean>>> callback);
     }
     interface Presenter{
-        void addClient(ClientBean clientBean);
+        void addClient(AddClientBean addClientBean);
         void getInfoForAdd();
         void checkRepeat( String area,String phone);
         void getAreaLists();

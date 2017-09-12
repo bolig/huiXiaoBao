@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -18,6 +19,7 @@ import com.dhitoshi.xfrs.huixiaobao.Bean.ClientBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.CustomerTypeBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.Menu;
 import com.dhitoshi.xfrs.huixiaobao.Bean.OrderBean;
+import com.dhitoshi.xfrs.huixiaobao.Bean.PageBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.ScreenBean;
 import com.dhitoshi.xfrs.huixiaobao.Interface.ClientManage;
 import com.dhitoshi.xfrs.huixiaobao.Interface.ItemClick;
@@ -28,7 +30,9 @@ import com.dhitoshi.xfrs.huixiaobao.adapter.OrderByAdapter;
 import com.dhitoshi.xfrs.huixiaobao.adapter.TypeAdapter;
 import com.dhitoshi.xfrs.huixiaobao.common.PopupMenu;
 import com.dhitoshi.xfrs.huixiaobao.common.PopupScreen;
+import com.dhitoshi.xfrs.huixiaobao.model.ClientModel;
 import com.dhitoshi.xfrs.huixiaobao.presenter.ClientPresenter;
+import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
 import com.dhitoshi.xfrs.huixiaobao.view.AddClient;
 import com.dhitoshi.xfrs.huixiaobao.view.ClientInfo;
 import com.dhitoshi.xfrs.huixiaobao.view.Contact;
@@ -37,7 +41,9 @@ import com.dhitoshi.xfrs.huixiaobao.view.Remind;
 import com.dhitoshi.xfrs.huixiaobao.view.Resource;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -45,7 +51,7 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 
 //客户页面
-public class Client extends Fragment implements ClientManage.View, View.OnTouchListener {
+public class Client extends BaseFragment implements ClientManage.View, View.OnTouchListener {
     Unbinder unbinder;
     @BindView(R.id.client_menu)
     AppCompatImageView clientMenu;
@@ -73,20 +79,24 @@ public class Client extends Fragment implements ClientManage.View, View.OnTouchL
     private PopupScreen popupScreen;
     private Intent it;
     private int screen_oldPosition = -1;
-
     public Client() {
     }
 
+    @Override
+    public void loadData() {
+        ClientPresenter clientPresenter=new ClientPresenter(this);
+        Map<String,String> map=new HashMap<>();
+        map.put("page","1");
+        clientPresenter.getClientList(map);
+    }
     public static Client newInstance() {
         Client fragment = new Client();
         return fragment;
     }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_client, container, false);
@@ -94,7 +104,6 @@ public class Client extends Fragment implements ClientManage.View, View.OnTouchL
         initViews();
         return view;
     }
-
     private void initViews() {
         ClientPresenter clientPresenter = new ClientPresenter(this);
         clientPresenter.getSelectCustomer();
@@ -104,13 +113,11 @@ public class Client extends Fragment implements ClientManage.View, View.OnTouchL
         up = getContext().getResources().getDrawable(R.mipmap.up);
         up.setBounds(0, 0, up.getMinimumWidth(), up.getMinimumHeight());
     }
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
     }
-
     @OnClick({R.id.client_menu, R.id.client_role, R.id.client_type, R.id.client_sort})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -128,7 +135,6 @@ public class Client extends Fragment implements ClientManage.View, View.OnTouchL
                 break;
         }
     }
-
     //筛选角色
     private void screenRole() {
         if (screen_oldPosition == 0) {
@@ -141,7 +147,6 @@ public class Client extends Fragment implements ClientManage.View, View.OnTouchL
             screen_oldPosition = 0;
         }
     }
-
     //筛选类型
     private void screenRoleType() {
         if (screen_oldPosition == 1) {
@@ -155,7 +160,6 @@ public class Client extends Fragment implements ClientManage.View, View.OnTouchL
         }
         popupScreen(1);
     }
-
     //筛选排序
     private void screenType() {
         if (screen_oldPosition == 2) {
@@ -169,7 +173,6 @@ public class Client extends Fragment implements ClientManage.View, View.OnTouchL
         }
         popupScreen(2);
     }
-
     //弹出筛选框(类型 排序)
     private void popupScreen(final int type) {
         if (null == popupScreen) {
@@ -210,7 +213,6 @@ public class Client extends Fragment implements ClientManage.View, View.OnTouchL
             }
         }
     }
-
     //菜单点击事件
     private void initMenuClick(PopupMenu popupMenu) {
         popupMenu.addMenuItemClickListener(new MenuItemClick<Menu>() {
@@ -247,7 +249,6 @@ public class Client extends Fragment implements ClientManage.View, View.OnTouchL
             }
         });
     }
-
     //初始化菜单数据
     private void initMenuData() {
         menus = new ArrayList<>();
@@ -282,8 +283,8 @@ public class Client extends Fragment implements ClientManage.View, View.OnTouchL
     }
     //获取客户列表
     @Override
-    public void getClientList(List<ClientBean> clientBeens) {
-
+    public void getClientList(PageBean<List<ClientBean>> pageBean) {
+       // Log.e("TAG","客户数量"+pageBean.getData().size());
     }
     //获取筛选条件信息
     @Override

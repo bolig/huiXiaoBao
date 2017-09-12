@@ -1,4 +1,5 @@
 package com.dhitoshi.xfrs.huixiaobao.http;
+import com.dhitoshi.xfrs.huixiaobao.Bean.AddClientBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.AreaBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.ClientBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.GiftBean;
@@ -11,15 +12,20 @@ import com.dhitoshi.xfrs.huixiaobao.Bean.ProductType;
 import com.dhitoshi.xfrs.huixiaobao.Bean.RelationBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.ScreenBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.SpendBean;
+import com.dhitoshi.xfrs.huixiaobao.Bean.UserBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.UserRole;
 import com.dhitoshi.xfrs.huixiaobao.Bean.VisitBean;
 import java.util.List;
+import java.util.Map;
+
 import io.reactivex.Observable;
 import okhttp3.RequestBody;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
+import retrofit2.http.QueryMap;
+
 /**
  * Created by dxs on 2017/5/27.
  */
@@ -32,7 +38,9 @@ public interface HttpService {
     Observable<HttpBean<List<UserRole>>> getGroupLists(@Query("token") String token);
     //获取客户列表
     @GET("customer/list")
-    Observable<HttpBean<List<ClientBean>>> getClientList(@Query("type") String type, @Query("area") String area, @Query("order") String order, @Query("page") String page);
+    Observable<HttpBean<PageBean<ClientBean>>> getClientList(@QueryMap Map<String,String> map);
+    @GET("customer/list")
+    Observable<HttpBean<PageBean<ClientBean>>> getClientList();
     //获取筛选框信息
     @GET("customer/selectCustomer")
     Observable<HttpBean<ScreenBean>> getSelectCustomer();
@@ -90,13 +98,13 @@ public interface HttpService {
     Observable<Integer> resetPassword(@Body RequestBody body);
     //登录
     @POST("login")
-    Observable<Integer> login(@Body RequestBody body);
+    Observable<HttpBean<UserBean>> login(@QueryMap Map<String,String> map);
     //注册
     @POST("signUp")
     Observable<Integer> signUp(@Body RequestBody body);
     //添加客户
     @POST("customer/add")
-    Observable<HttpBean<ClientBean>> addClient(@Body ClientBean clientBean);
+    Observable<HttpBean<ClientBean>> addClient(@Body AddClientBean addClientBean);
     //添加消费记录
     @POST("customer/spending/add")
     Observable<HttpBean<SpendBean>> addSpend(@Body RequestBody body);

@@ -1,6 +1,8 @@
 package com.dhitoshi.xfrs.huixiaobao.common;
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -20,7 +22,7 @@ public class PopupScreen {
     private  PopupWindow popupWindow;
     private  RecyclerView recyclerView;
     private MyDismiss dismiss;
-    public PopupScreen( Context context, View view) {
+    public PopupScreen(Context context, View view) {
         this.parent = view;
         this.context=context;
     }
@@ -30,9 +32,8 @@ public class PopupScreen {
     public PopupScreen init(){
         LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = layoutInflater.inflate(R.layout.screen, null);
-        View bottom= view.findViewById(R.id.screen_bottom);
-        View center= view.findViewById(R.id.screen_center);
         recyclerView=(RecyclerView) view.findViewById(R.id.screen_recyclerView);
+        View shade=view.findViewById(R.id.shade);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context);
         recyclerView.addItemDecoration(new MyDecoration(context, LinearLayoutManager.HORIZONTAL, R.drawable.divider_line));
         recyclerView.setLayoutManager(layoutManager);
@@ -41,14 +42,8 @@ public class PopupScreen {
         popupWindow.setFocusable(true);
         popupWindow.setOutsideTouchable(true);
         // 这个是为了点击“返回Back”也能使其消失，并且并不会影响你的背景
-        popupWindow.setBackgroundDrawable(new BitmapDrawable());
-        bottom.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                popupWindow.dismiss();
-            }
-        });
-        center.setOnClickListener(new View.OnClickListener() {
+        popupWindow.setBackgroundDrawable(new ColorDrawable(0x40000000));
+        shade.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 popupWindow.dismiss();

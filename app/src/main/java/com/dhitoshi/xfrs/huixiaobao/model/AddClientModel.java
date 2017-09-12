@@ -1,4 +1,5 @@
 package com.dhitoshi.xfrs.huixiaobao.model;
+import com.dhitoshi.xfrs.huixiaobao.Bean.AddClientBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.AreaBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.ClientBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
@@ -10,6 +11,7 @@ import com.dhitoshi.xfrs.huixiaobao.http.HttpResult;
 import com.dhitoshi.xfrs.huixiaobao.http.MyHttp;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by dxs on 2017/9/9.
@@ -17,9 +19,9 @@ import java.util.List;
 
 public class AddClientModel implements AddClientManage.Model {
     @Override
-    public void addClient(ClientBean clientBean, final Callback<HttpBean<ClientBean>> callback) {
+    public void addClient(AddClientBean addClientBean, final Callback<HttpBean<ClientBean>> callback) {
         MyHttp http=MyHttp.getInstance();
-        http.send(http.getHttpService().addClient(clientBean),new CommonObserver(new HttpResult<HttpBean<ClientBean>>() {
+        http.send(http.getHttpService().addClient(addClientBean),new CommonObserver(new HttpResult<HttpBean<ClientBean>>() {
 
             @Override
             public void OnSuccess(HttpBean<ClientBean> httpBean) {

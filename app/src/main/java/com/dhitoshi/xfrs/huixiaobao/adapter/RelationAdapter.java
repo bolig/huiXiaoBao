@@ -15,8 +15,8 @@ public class RelationAdapter extends BaseAdapter<RelationBean> {
     @Override
     public void covert(BaseRecyclerHolder holder, List<RelationBean> mList, int position) {
         RelationBean item=mList.get(position);
-//        holder.setText(R.id.client_info_day,item.getCreatetime());
-//        holder.setText(R.id.client_info_time,item.getCreatetime());
+        holder.setText(R.id.client_info_day,item.getCreatetime());
+        holder.setText(R.id.client_info_time,item.getCreatetime());
         holder.setText(R.id.relation_name,item.getName());
         holder.setText(R.id.relation_relation,item.getRelation());
         holder.setText(R.id.relation_phone,item.getPhone());

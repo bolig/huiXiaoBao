@@ -6,5 +6,10 @@ public class Setting extends BaseView {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.setting);
+        initViews();
+    }
+    private void initViews() {
+        initBaseViews();
+        setTitle("设置");
     }
 }

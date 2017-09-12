@@ -5,13 +5,13 @@ import java.util.List;
  */
 
 public class PageBean<T> {
-    private List<T> data;
+    private List<T> list;
     private int nextPage;
-    public  List<T> getData() {
-        return data;
+    public List<T> getList() {
+        return list;
     }
-    public void setData(List<T> data) {
-        this.data = data;
+    public void setList(List<T> list) {
+        this.list = list;
     }
     public int getNextPage() {
         return nextPage;

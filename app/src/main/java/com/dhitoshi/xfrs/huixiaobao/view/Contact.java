@@ -10,7 +10,7 @@ public class Contact extends BaseView {
     }
     private void initViews() {
         initBaseViews();
-        setTitle("通讯录联系人");
+        setTitle("contact_head");
         setRightText("全部");
     }
 }

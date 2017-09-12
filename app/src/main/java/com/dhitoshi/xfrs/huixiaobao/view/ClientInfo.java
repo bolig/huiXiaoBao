@@ -62,7 +62,7 @@ public class ClientInfo extends BaseView {
         getThemeFragments();
         adapter = new ViewPagerAdapter(getSupportFragmentManager(), themeFragments);
         clientViewpager.setAdapter(adapter);
-        setRightIcon(R.mipmap.more);
+        setRightText("修改");
     }
 
     //初始化页面事件
@@ -75,7 +75,6 @@ public class ClientInfo extends BaseView {
                 current = position;
             }
         });
-
     }
 
     //弹出菜单

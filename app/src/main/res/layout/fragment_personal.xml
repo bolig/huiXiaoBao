@@ -35,63 +35,7 @@
         android:background="@android:color/white"
         >
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:textSize="14dp"
-            android:textColor="#333333"
-            android:text="设置"
-            android:layout_marginLeft="20dp"
-            android:paddingRight="15dp"
-            android:gravity="center_vertical"
-            android:drawableRight="@mipmap/right"
-            android:clickable="true"
-            android:background="@drawable/item_click"
-            />
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:layout_marginLeft="20dp"
-            android:background="#D9D9D9"></View>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:textSize="14dp"
-            android:textColor="#333333"
-            android:text="分享推荐"
-            android:layout_marginLeft="20dp"
-            android:paddingRight="15dp"
-            android:gravity="center_vertical"
-            android:drawableRight="@mipmap/right"
-            android:clickable="true"
-            android:background="@drawable/item_click"
-            />
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:layout_marginLeft="20dp"
-            android:background="#D9D9D9"></View>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:textSize="14dp"
-            android:textColor="#333333"
-            android:text="成长积分"
-            android:layout_marginLeft="20dp"
-            android:paddingRight="15dp"
-            android:gravity="center_vertical"
-            android:drawableRight="@mipmap/right"
-            android:clickable="true"
-            android:background="@drawable/item_click"
-            />
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:orientation="vertical"
-        android:background="@android:color/white"
-        >
-        <TextView
+            android:id="@+id/personal_meeting"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:textSize="14dp"
@@ -110,6 +54,48 @@
             android:layout_marginLeft="20dp"
             android:background="#D9D9D9"></View>
         <TextView
+            android:id="@+id/personal_setting"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:textSize="14dp"
+            android:textColor="#333333"
+            android:text="设置"
+            android:layout_marginLeft="20dp"
+            android:paddingRight="15dp"
+            android:gravity="center_vertical"
+            android:drawableRight="@mipmap/right"
+            android:clickable="true"
+            android:background="@drawable/item_click"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:orientation="vertical"
+        android:background="@android:color/white"
+        >
+        <TextView
+            android:id="@+id/personal_share"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:textSize="14dp"
+            android:textColor="#333333"
+            android:text="分享推荐"
+            android:layout_marginLeft="20dp"
+            android:paddingRight="15dp"
+            android:gravity="center_vertical"
+            android:drawableRight="@mipmap/right"
+            android:clickable="true"
+            android:background="@drawable/item_click"
+            />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginLeft="20dp"
+            android:background="#D9D9D9"></View>
+        <TextView
+            android:id="@+id/personal_help"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:textSize="14dp"

@@ -6,19 +6,21 @@ package com.dhitoshi.xfrs.huixiaobao.Bean;
 
 public class RelationBean {
 
+
     /**
-     * id : 1
-     * userid : 14
-     * name : 姓名
+     * id : 2
+     * userid : 13
+     * name : 李庆
      * sex : 男
-     * relation_select : 夫妻
-     * birthday : 2017-09-06 00:00:00
-     * phone : 123456
-     * telephone : 212315
-     * email : 1235@152.com
-     * company : 单位
-     * position : 中层经理
-     * notes : 备注
+     * relation : 父子
+     * birthday : 2014-09-12 00:00:00
+     * phone : 18380419494
+     * telephone : 223466780
+     * email : 6742685468@qq.com
+     * company : 工作
+     * position : null
+     * createtime : 1970-01-01 08:00:00
+     * notes : 此地喝了饿了
      */
 
     private int id;
@@ -31,7 +33,8 @@ public class RelationBean {
     private String telephone;
     private String email;
     private String company;
-    private String position;
+    private Object position;
+    private String createtime;
     private String notes;
 
     public int getId() {
@@ -114,12 +117,20 @@ public class RelationBean {
         this.company = company;
     }
 
-    public String getPosition() {
+    public Object getPosition() {
         return position;
     }
 
-    public void setPosition(String position) {
+    public void setPosition(Object position) {
         this.position = position;
+    }
+
+    public String getCreatetime() {
+        return createtime;
+    }
+
+    public void setCreatetime(String createtime) {
+        this.createtime = createtime;
     }
 
     public String getNotes() {

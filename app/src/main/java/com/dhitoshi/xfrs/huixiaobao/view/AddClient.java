@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.dhitoshi.xfrs.huixiaobao.Bean.AddClientBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.AreaBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.ClientBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
@@ -97,12 +98,12 @@ public class AddClient extends BaseView implements AddClientManage.View {
     //添加客户
     @Override
     public void addClient(String result) {
-        Log.e("TAG", "添加客户结果:---->>>>" + result);
+
     }
     //获取添加客户所需列表
     @Override
     public void getInfoForAdd(HttpBean<InfoAddClientBean> httpBean) {
-        Log.e("TAG", "既往病史----->>>" + httpBean.getData().getIll());
+
     }
     //查重
     @Override
@@ -115,28 +116,28 @@ public class AddClient extends BaseView implements AddClientManage.View {
     }
     //提交
     private void commit() {
-        juge();
+        //juge();
         notes = clientNotes.getText().toString();
-        ClientBean clientBean = new ClientBean();
-        clientBean.setName(name);
-        clientBean.setSex(sex);
-        clientBean.setBirthday(birthday);
-        clientBean.setPhone(phone);
-        clientBean.setHobbys(hobby);
-        clientBean.setVip_id(vip);
-        clientBean.setArea(area);
-        clientBean.setTelephone(telPhone);
-        clientBean.setEmail(email);
-        clientBean.setPosition(position);
-        clientBean.setAddress(address);
-        clientBean.setCompany(company);
-        clientBean.setType(type);
-        clientBean.setCompany_phone(companyPhone);
-        clientBean.setCompany_address(companyAddress);
-        clientBean.setIlls(ill);
-        clientBean.setNotes(notes);
-        clientBean.setEntryman(clientEntryMan.getText().toString());
-        addClientPresenter.addClient(clientBean);
+        AddClientBean addClientBean = new AddClientBean();
+        addClientBean.setName("dxs");
+        addClientBean.setSex("0");
+        addClientBean.setBirthday("1995-06-07");
+        addClientBean.setPhone("15708440446");
+        addClientBean.setHobby("1,2,3");
+        addClientBean.setVip_id("3546546");
+        addClientBean.setArea("2");
+        addClientBean.setTelephone("ddg");
+        addClientBean.setEmail("dd");
+        addClientBean.setPosition("dsd");
+        addClientBean.setAddress("jgfjj");
+        addClientBean.setCompany("fjgfj");
+        addClientBean.setType("shdh");
+        addClientBean.setCompany_phone("fjhgkhk");
+        addClientBean.setCompany_address("shwbfg");
+        addClientBean.setIll("gjfkfjhj");
+        addClientBean.setNotes("aafasfdf");
+        addClientBean.setEntryman(clientEntryMan.getText().toString());
+        addClientPresenter.addClient(addClientBean);
     }
     //提交检查
     private void juge() {

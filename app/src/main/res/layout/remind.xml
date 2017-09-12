@@ -35,6 +35,9 @@
                     android:textSize="14dp"
                     android:textColor="#333333"
                     android:text="今天过生日的客户"
+                    android:drawableLeft="@mipmap/remind_one"
+                    android:gravity="center"
+                    android:drawablePadding="10dp"
                     />
                 <TextView
                     android:layout_width="wrap_content"
@@ -67,10 +70,10 @@
                     android:textSize="14dp"
                     android:textColor="#333333"
                     android:text="30天内过生日的客户"
-                    android:layout_alignBaseline="@+id/textView3"
-                    android:layout_alignBottom="@+id/textView3"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true" />
+                    android:drawableLeft="@mipmap/remind_two"
+                    android:gravity="center"
+                    android:drawablePadding="10dp"
+                    />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -102,6 +105,9 @@
                     android:textSize="14dp"
                     android:textColor="#333333"
                     android:text="30天内没有回访的客户"
+                    android:drawableLeft="@mipmap/remind_three"
+                    android:gravity="center"
+                    android:drawablePadding="10dp"
                     />
                 <TextView
                     android:layout_width="wrap_content"
@@ -134,6 +140,9 @@
                     android:textSize="14dp"
                     android:textColor="#333333"
                     android:text="关注的客户"
+                    android:drawableLeft="@mipmap/remind_four"
+                    android:gravity="center"
+                    android:drawablePadding="10dp"
                     />
                 <TextView
                     android:layout_width="wrap_content"
@@ -166,6 +175,9 @@
                     android:textSize="14dp"
                     android:textColor="#333333"
                     android:text="今日预定回访客户"
+                    android:drawableLeft="@mipmap/remind_five"
+                    android:gravity="center"
+                    android:drawablePadding="10dp"
                     />
                 <TextView
                     android:layout_width="wrap_content"
@@ -198,6 +210,9 @@
                     android:textSize="14dp"
                     android:textColor="#333333"
                     android:text="首次购买3日后需回访客户"
+                    android:drawableLeft="@mipmap/remind_six"
+                    android:gravity="center"
+                    android:drawablePadding="10dp"
                     />
                 <TextView
                     android:layout_width="wrap_content"
@@ -230,6 +245,9 @@
                     android:textSize="14dp"
                     android:textColor="#333333"
                     android:text="60天内没有购买的客户"
+                    android:drawableLeft="@mipmap/remind_seven"
+                    android:gravity="center"
+                    android:drawablePadding="10dp"
                     />
                 <TextView
                     android:layout_width="wrap_content"
@@ -262,6 +280,9 @@
                     android:textSize="14dp"
                     android:textColor="#333333"
                     android:text="今日新增客户"
+                    android:drawableLeft="@mipmap/resource_two"
+                    android:gravity="center"
+                    android:drawablePadding="10dp"
                     />
                 <TextView
                     android:layout_width="wrap_content"
@@ -295,7 +316,11 @@
                     android:layout_height="wrap_content"
                     android:text="从未回访的客户"
                     android:textColor="#333333"
-                    android:textSize="14dp" />
+                    android:textSize="14dp"
+                    android:drawableLeft="@mipmap/remind_nine"
+                    android:gravity="center"
+                    android:drawablePadding="10dp"
+                    />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -328,6 +353,9 @@
                     android:textSize="14dp"
                     android:textColor="#333333"
                     android:text="从未购买过的客户"
+                    android:drawableLeft="@mipmap/remind_ten"
+                    android:gravity="center"
+                    android:drawablePadding="10dp"
                     />
                 <TextView
                     android:layout_width="wrap_content"
