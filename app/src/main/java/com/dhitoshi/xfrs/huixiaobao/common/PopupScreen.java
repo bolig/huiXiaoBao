@@ -1,6 +1,7 @@
 package com.dhitoshi.xfrs.huixiaobao.common;
 import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.Build;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
@@ -64,7 +65,12 @@ public class PopupScreen {
     public void show(){
         int []location=new int[2];
         parent.getLocationOnScreen(location);
-        popupWindow.showAtLocation(parent, Gravity.NO_GRAVITY, 0,parent.getHeight()+location[1]);
+        if (Build.VERSION.SDK_INT < 24) {
+            popupWindow.showAsDropDown(parent, 0, 0);
+
+        } else {
+            popupWindow.showAtLocation(parent, Gravity.NO_GRAVITY, 0,parent.getHeight()+location[1]);
+        }
         popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {
