@@ -4,12 +4,12 @@ package com.dhitoshi.xfrs.huixiaobao.Interface;
  * Created by dxs on 2017/9/8.
  */
 
-public interface AddSpendManage {
+public interface AddMeetingManage {
     interface View{
 
     }
     interface Model{
-        void addSpend();
+
     }
     interface Presenter{
 
