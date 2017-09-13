@@ -1,26 +1,41 @@
 package com.dhitoshi.xfrs.huixiaobao.fragment;
+
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-//relation_select
+
+import com.dhitoshi.refreshlayout.SmartRefreshLayout;
 import com.dhitoshi.xfrs.huixiaobao.Bean.PageBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.RelationBean;
 import com.dhitoshi.xfrs.huixiaobao.Interface.RelationManage;
 import com.dhitoshi.xfrs.huixiaobao.R;
+import com.dhitoshi.xfrs.huixiaobao.adapter.RelationAdapter;
+import com.dhitoshi.xfrs.huixiaobao.presenter.RelationPresenter;
 
-import io.reactivex.disposables.Disposable;
+//relation_select
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
-public class Relation extends BaseFragment implements RelationManage.View{
+public class Relation extends BaseFragment implements RelationManage.View {
     private static final String ARG_ID = "id";
+    @BindView(R.id.recyclerView)
+    RecyclerView recyclerView;
+    @BindView(R.id.smartRefreshLayout)
+    SmartRefreshLayout smartRefreshLayout;
+    Unbinder unbinder;
     private int id;
+
     public Relation() {
     }
 
     @Override
     public void loadData() {
-
+        RelationPresenter relationPresenter = new RelationPresenter(this);
+        relationPresenter.getRelationLists(String.valueOf(id), "1");
     }
 
     public static Relation newInstance(int id) {
@@ -30,6 +45,7 @@ public class Relation extends BaseFragment implements RelationManage.View{
         fragment.setArguments(args);
         return fragment;
     }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,13 +56,20 @@ public class Relation extends BaseFragment implements RelationManage.View{
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_relation, container, false);
+        View view = inflater.inflate(R.layout.fragment_relation, container, false);
+        unbinder = ButterKnife.bind(this, view);
+        return view;
     }
-
-
-
     @Override
     public void getRelationLists(PageBean<RelationBean> pageBean) {
+        RelationAdapter adapter=new RelationAdapter(pageBean.getList(),getContext());
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(adapter);
+    }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
     }
 }

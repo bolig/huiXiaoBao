@@ -64,6 +64,7 @@ public class ClientInfo extends BaseView {
         getThemeFragments();
         adapter = new ViewPagerAdapter(getSupportFragmentManager(), themeFragments);
         clientViewpager.setAdapter(adapter);
+        clientViewpager.setOffscreenPageLimit(6);
         name=getIntent().getStringExtra("name");
         setTitle(name);
         setRightIcon(R.mipmap.more);
