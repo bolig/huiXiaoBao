@@ -47,7 +47,8 @@ public class ClientInfo extends BaseView {
     private PopupMenu popupMenu;
     private Intent it;
     private int current;
-
+    private String name;
+    private int id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,10 +60,13 @@ public class ClientInfo extends BaseView {
 
     private void InitViews() {
         initBaseViews();
+        id=getIntent().getIntExtra("id",0);
         getThemeFragments();
         adapter = new ViewPagerAdapter(getSupportFragmentManager(), themeFragments);
         clientViewpager.setAdapter(adapter);
-        setRightText("修改");
+        name=getIntent().getStringExtra("name");
+        setTitle(name);
+        setRightIcon(R.mipmap.more);
     }
 
     //初始化页面事件
@@ -125,11 +129,11 @@ public class ClientInfo extends BaseView {
     private List<Fragment> getThemeFragments() {
         themeFragments = new ArrayList<>();
         themeFragments.add(Info.newInstance());
-        themeFragments.add(Spending.newInstance());
-        themeFragments.add(Visit.newInstance());
-        themeFragments.add(Relation.newInstance());
-        themeFragments.add(Gift.newInstance());
-        themeFragments.add(Meeting.newInstance());
+        themeFragments.add(Spending.newInstance(id));
+        themeFragments.add(Visit.newInstance(id));
+        themeFragments.add(Relation.newInstance(id));
+        themeFragments.add(Gift.newInstance(id));
+        themeFragments.add(Meeting.newInstance(id));
         return themeFragments;
     }
 

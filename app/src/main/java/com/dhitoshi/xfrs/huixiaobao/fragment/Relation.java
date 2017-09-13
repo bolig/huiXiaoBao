@@ -12,16 +12,30 @@ import com.dhitoshi.xfrs.huixiaobao.R;
 
 import io.reactivex.disposables.Disposable;
 
-public class Relation extends Fragment implements RelationManage.View{
+public class Relation extends BaseFragment implements RelationManage.View{
+    private static final String ARG_ID = "id";
+    private int id;
     public Relation() {
     }
-    public static Relation newInstance() {
+
+    @Override
+    public void loadData() {
+
+    }
+
+    public static Relation newInstance(int id) {
         Relation fragment = new Relation();
+        Bundle args = new Bundle();
+        args.putInt(ARG_ID, id);
+        fragment.setArguments(args);
         return fragment;
     }
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            id = getArguments().getInt(ARG_ID);
+        }
     }
 
     @Override

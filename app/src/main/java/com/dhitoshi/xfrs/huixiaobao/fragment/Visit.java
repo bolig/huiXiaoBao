@@ -12,16 +12,30 @@ import com.dhitoshi.xfrs.huixiaobao.R;
 import io.reactivex.disposables.Disposable;
 
 //回访
-public class Visit extends Fragment implements VisitManage.View{
+public class Visit extends BaseFragment implements VisitManage.View{
+    private static final String ARG_ID = "id";
+    private int id;
     public Visit() {
     }
-    public static Visit newInstance() {
+
+    @Override
+    public void loadData() {
+
+    }
+
+    public static Visit newInstance(int id) {
         Visit fragment = new Visit();
+        Bundle args = new Bundle();
+        args.putInt(ARG_ID, id);
+        fragment.setArguments(args);
         return fragment;
     }
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            id = getArguments().getInt(ARG_ID);
+        }
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

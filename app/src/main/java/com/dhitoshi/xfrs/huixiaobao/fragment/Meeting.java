@@ -13,18 +13,30 @@ import com.dhitoshi.xfrs.huixiaobao.R;
 import io.reactivex.disposables.Disposable;
 
 //会议
-public class Meeting extends Fragment implements MeetingManage.View{
-
+public class Meeting extends BaseFragment implements MeetingManage.View{
+    private static final String ARG_ID = "id";
+    private int id;
     public Meeting() {
+    }
+
+    @Override
+    public void loadData() {
 
     }
-    public static Meeting newInstance() {
+
+    public static Meeting newInstance(int id) {
         Meeting fragment = new Meeting();
+        Bundle args = new Bundle();
+        args.putInt(ARG_ID, id);
+        fragment.setArguments(args);
         return fragment;
     }
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            id = getArguments().getInt(ARG_ID);
+        }
     }
 
     @Override

@@ -15,7 +15,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.Login">
+        <activity android:name=".view.Theme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -35,7 +35,7 @@
         <activity android:name=".view.Contact" />
         <activity android:name=".view.Query" />
         <activity android:name=".view.Setting" />
-        <activity android:name=".view.Theme"></activity>
+        <activity android:name=".view.Login"></activity>
     </application>
 
 </manifest>
