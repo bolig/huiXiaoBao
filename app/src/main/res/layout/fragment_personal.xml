@@ -45,6 +45,8 @@
             android:paddingRight="15dp"
             android:gravity="center_vertical"
             android:drawableRight="@mipmap/right"
+            android:drawableLeft="@mipmap/personal_meet"
+            android:drawablePadding="8dp"
             android:clickable="true"
             android:background="@drawable/item_click"
             />
@@ -64,6 +66,8 @@
             android:paddingRight="15dp"
             android:gravity="center_vertical"
             android:drawableRight="@mipmap/right"
+            android:drawablePadding="8dp"
+            android:drawableLeft="@mipmap/setting"
             android:clickable="true"
             android:background="@drawable/item_click"
             />
@@ -86,6 +90,8 @@
             android:paddingRight="15dp"
             android:gravity="center_vertical"
             android:drawableRight="@mipmap/right"
+            android:drawableLeft="@mipmap/share"
+            android:drawablePadding="8dp"
             android:clickable="true"
             android:background="@drawable/item_click"
             />
@@ -101,6 +107,8 @@
             android:textSize="14dp"
             android:textColor="#333333"
             android:text="帮助与反馈"
+            android:drawableLeft="@mipmap/help"
+            android:drawablePadding="8dp"
             android:layout_marginLeft="20dp"
             android:paddingRight="15dp"
             android:gravity="center_vertical"
