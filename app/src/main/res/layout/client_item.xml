@@ -6,11 +6,12 @@
     android:paddingRight="15dp"
     android:paddingTop="10dp"
     android:paddingBottom="10dp"
+    android:background="@drawable/item_click"
     >
     <ImageView
         android:id="@+id/client_head"
-        android:layout_width="51dp"
-        android:layout_height="51dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:src="@mipmap/head"
         android:layout_centerVertical="true"
         />

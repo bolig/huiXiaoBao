@@ -20,11 +20,11 @@ import java.util.Map;
  */
 public class ClientModel implements ClientManage.Model{
     @Override
-    public void getClientList(Map<String,String> map, final Callback<HttpBean<PageBean<List<ClientBean>>>> callback) {
+    public void getClientList(Map<String,String> map, final Callback<HttpBean<PageBean<ClientBean>>> callback) {
         MyHttp http=MyHttp.getInstance();
-        http.send(http.getHttpService().getClientList(map),new CommonObserver(new HttpResult<HttpBean<PageBean<List<ClientBean>>>>() {
+        http.send(http.getHttpService().getClientList(map),new CommonObserver(new HttpResult<HttpBean<PageBean<ClientBean>>>() {
             @Override
-            public void OnSuccess(HttpBean<PageBean<List<ClientBean>>> httpBean) {
+            public void OnSuccess(HttpBean<PageBean<ClientBean>> httpBean) {
                  callback.get(httpBean);
             }
             @Override
@@ -35,11 +35,11 @@ public class ClientModel implements ClientManage.Model{
     }
 
     @Override
-    public void getClientList(final Callback<HttpBean<PageBean<List<ClientBean>>>> callback) {
+    public void getClientList(final Callback<HttpBean<PageBean<ClientBean>>> callback) {
         MyHttp http=MyHttp.getInstance();
-        http.send(http.getHttpService().getClientList(),new CommonObserver(new HttpResult<HttpBean<PageBean<List<ClientBean>>>>() {
+        http.send(http.getHttpService().getClientList(),new CommonObserver(new HttpResult<HttpBean<PageBean<ClientBean>>>() {
             @Override
-            public void OnSuccess(HttpBean<PageBean<List<ClientBean>>> httpBean) {
+            public void OnSuccess(HttpBean<PageBean<ClientBean>> httpBean) {
                 callback.get(httpBean);
             }
             @Override

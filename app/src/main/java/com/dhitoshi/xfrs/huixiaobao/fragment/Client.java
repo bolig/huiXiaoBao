@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.AppCompatImageView;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -26,8 +27,10 @@ import com.dhitoshi.xfrs.huixiaobao.Interface.ItemClick;
 import com.dhitoshi.xfrs.huixiaobao.Interface.MenuItemClick;
 import com.dhitoshi.xfrs.huixiaobao.Interface.MyDismiss;
 import com.dhitoshi.xfrs.huixiaobao.R;
+import com.dhitoshi.xfrs.huixiaobao.adapter.ClientAdapter;
 import com.dhitoshi.xfrs.huixiaobao.adapter.OrderByAdapter;
 import com.dhitoshi.xfrs.huixiaobao.adapter.TypeAdapter;
+import com.dhitoshi.xfrs.huixiaobao.common.MyDecoration;
 import com.dhitoshi.xfrs.huixiaobao.common.PopupMenu;
 import com.dhitoshi.xfrs.huixiaobao.common.PopupScreen;
 import com.dhitoshi.xfrs.huixiaobao.model.ClientModel;
@@ -283,8 +286,18 @@ public class Client extends BaseFragment implements ClientManage.View, View.OnTo
     }
     //获取客户列表
     @Override
-    public void getClientList(PageBean<List<ClientBean>> pageBean) {
-       // Log.e("TAG","客户数量"+pageBean.getData().size());
+    public void getClientList(PageBean<ClientBean> pageBean) {
+        Log.e("TAG","客户数量"+pageBean.getList().size());
+        ClientAdapter adapter=new ClientAdapter(pageBean.getList(),getContext());
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.addItemDecoration(new MyDecoration(getContext(), LinearLayoutManager.HORIZONTAL, R.drawable.divider_line));
+        recyclerView.setAdapter(adapter);
+        adapter.addItemClickListener(new ItemClick<ClientBean>() {
+            @Override
+            public void onItemClick(View view, ClientBean clientBean, int position) {
+
+            }
+        });
     }
     //获取筛选条件信息
     @Override

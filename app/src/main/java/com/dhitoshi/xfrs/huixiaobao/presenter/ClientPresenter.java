@@ -21,9 +21,9 @@ public class ClientPresenter implements ClientManage.Prsenter{
     }
     @Override
     public void getClientList(Map<String,String> map) {
-        clientModel.getClientList(map, new Callback<HttpBean<PageBean<List<ClientBean>>>>() {
+        clientModel.getClientList(map, new Callback<HttpBean<PageBean<ClientBean>>>() {
             @Override
-            public void get(HttpBean<PageBean<List<ClientBean>>> httpBean) {
+            public void get(HttpBean<PageBean<ClientBean>> httpBean) {
                 view.getClientList(httpBean.getData());
             }
         });
@@ -31,9 +31,9 @@ public class ClientPresenter implements ClientManage.Prsenter{
 
     @Override
     public void getClientList() {
-        clientModel.getClientList(new Callback<HttpBean<PageBean<List<ClientBean>>>>() {
+        clientModel.getClientList(new Callback<HttpBean<PageBean<ClientBean>>>() {
             @Override
-            public void get(HttpBean<PageBean<List<ClientBean>>> httpBean) {
+            public void get(HttpBean<PageBean<ClientBean>> httpBean) {
                 view.getClientList(httpBean.getData());
             }
         });

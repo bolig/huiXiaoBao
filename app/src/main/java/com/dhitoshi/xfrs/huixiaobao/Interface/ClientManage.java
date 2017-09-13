@@ -12,12 +12,12 @@ import java.util.Map;
  */
 public interface ClientManage {
     interface View{
-        void getClientList(PageBean<List<ClientBean>> pageBean);
+        void getClientList(PageBean<ClientBean> pageBean);
         void getSelectCustomer(ScreenBean screenBean);
     }
     interface Model{
-        void getClientList(Map<String,String> map, Callback<HttpBean<PageBean<List<ClientBean>>>> callback);
-        void getClientList( Callback<HttpBean<PageBean<List<ClientBean>>>> callback);
+        void getClientList(Map<String,String> map, Callback<HttpBean<PageBean<ClientBean>>> callback);
+        void getClientList( Callback<HttpBean<PageBean<ClientBean>>> callback);
         void getSelectCustomer(Callback<HttpBean<ScreenBean>> callback);
     }
     interface Prsenter{
