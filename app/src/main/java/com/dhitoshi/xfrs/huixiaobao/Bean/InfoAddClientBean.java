@@ -11,7 +11,7 @@ public class InfoAddClientBean {
     private List<HobbyBean> hobby;
     private List<IllBean> ill;
     private List<PositionBean> position;
-    private List<CustomerTypeBean> customerType;
+    private List<CustomerTypeBean> customer_type;
 
     public List<HobbyBean> getHobby() {
         return hobby;
@@ -38,9 +38,9 @@ public class InfoAddClientBean {
     }
 
     public List<CustomerTypeBean> getCustomerType() {
-        return customerType;
+        return customer_type;
     }
     public void setCustomerType(List<CustomerTypeBean> customerType) {
-        this.customerType = customerType;
+        this.customer_type = customerType;
     }
 }

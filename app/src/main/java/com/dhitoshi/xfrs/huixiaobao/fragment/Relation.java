@@ -31,13 +31,11 @@ public class Relation extends BaseFragment implements RelationManage.View {
 
     public Relation() {
     }
-
     @Override
     public void loadData() {
         RelationPresenter relationPresenter = new RelationPresenter(this);
         relationPresenter.getRelationLists(String.valueOf(id), "1");
     }
-
     public static Relation newInstance(int id) {
         Relation fragment = new Relation();
         Bundle args = new Bundle();
@@ -45,15 +43,14 @@ public class Relation extends BaseFragment implements RelationManage.View {
         fragment.setArguments(args);
         return fragment;
     }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             id = getArguments().getInt(ARG_ID);
         }
+        //smartRefreshLayout.setOnRefreshListener()
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_relation, container, false);
@@ -66,7 +63,6 @@ public class Relation extends BaseFragment implements RelationManage.View {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
     }
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();

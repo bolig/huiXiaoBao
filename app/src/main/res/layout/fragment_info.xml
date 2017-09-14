@@ -28,7 +28,6 @@
                 android:id="@+id/info_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="客户王小明"
                 android:layout_toRightOf="@+id/info_head"
                 android:textSize="14dp"
                 android:textColor="#333333"
@@ -36,15 +35,15 @@
                 android:layout_marginTop="6dp"
                 />
             <TextView
+                android:id="@+id/info_sex"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@+id/info_head"
                 android:layout_below="@+id/info_name"
-                android:text="男"
                 android:textSize="12dp"
                 android:textColor="#999999"
                 android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="6dp"
                 />
             <ImageView
                 android:id="@+id/info_send"
@@ -87,11 +86,11 @@
                     />
 
                 <TextView
+                    android:id="@+id/info_birthday"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
-                    android:text="1982-09-21"
                     android:textColor="#333333"
                     android:textSize="15dp"
                     android:layout_marginLeft="20dp"
@@ -119,11 +118,11 @@
                     android:textSize="15dp"
                     />
                 <TextView
+                    android:id="@+id/info_phone"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
-                    android:text="18280818793"
                     android:textColor="#333333"
                     android:textSize="15dp"
                     android:layout_marginLeft="20dp"
@@ -141,7 +140,6 @@
                 android:paddingRight="20dp"
                 android:background="@android:color/white"
                 >
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -151,12 +149,12 @@
                     android:textSize="15dp"
                     />
                 <TextView
+                    android:id="@+id/info_hobby"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
-                    android:text="暂无"
-                    android:textColor="#B3B3B3"
+                    android:textColor="#666666"
                     android:textSize="15dp"
                     android:layout_marginLeft="20dp"
                     />
@@ -173,8 +171,8 @@
                 android:paddingRight="20dp"
                 android:background="@android:color/white"
                 >
-
                 <TextView
+
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
@@ -182,16 +180,16 @@
                     android:textColor="#666666"
                     android:textSize="15dp"
                     />
+
                 <TextView
+                    android:id="@+id/info_vip"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
+                    android:layout_marginLeft="20dp"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
-                    android:text="1982-09-21"
                     android:textColor="#333333"
-                    android:textSize="15dp"
-                    android:layout_marginLeft="20dp"
-                    />
+                    android:textSize="15dp" />
             </LinearLayout>
             <View
                 android:layout_width="match_parent"
@@ -205,7 +203,6 @@
                 android:paddingRight="20dp"
                 android:background="@android:color/white"
                 >
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -215,11 +212,11 @@
                     android:textSize="15dp"
                     />
                 <TextView
+                    android:id="@+id/info_area"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
-                    android:text="1982-09-21"
                     android:textColor="#333333"
                     android:textSize="15dp"
                     android:layout_marginLeft="20dp"
@@ -247,11 +244,11 @@
                     android:textSize="15dp"
                     />
                 <TextView
+                    android:id="@+id/info_telPhone"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
-                    android:text="1982-09-21"
                     android:textColor="#333333"
                     android:textSize="15dp"
                     android:layout_marginLeft="20dp"
@@ -269,7 +266,6 @@
                 android:paddingRight="20dp"
                 android:background="@android:color/white"
                 >
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -279,11 +275,11 @@
                     android:textSize="15dp"
                     />
                 <TextView
+                    android:id="@+id/info_email"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
-                    android:text="1982-09-21"
                     android:textColor="#333333"
                     android:textSize="15dp"
                     android:layout_marginLeft="20dp"
@@ -311,11 +307,11 @@
                     android:textSize="15dp"
                     />
                 <TextView
+                    android:id="@+id/info_position"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
-                    android:text="1982-09-21"
                     android:textColor="#333333"
                     android:textSize="15dp"
                     android:layout_marginLeft="20dp"
@@ -333,7 +329,6 @@
                 android:paddingRight="20dp"
                 android:background="@android:color/white"
                 >
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -343,11 +338,11 @@
                     android:textSize="15dp"
                     />
                 <TextView
+                    android:id="@+id/info_address"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
-                    android:text="1982-09-21"
                     android:textColor="#333333"
                     android:textSize="15dp"
                     android:layout_marginLeft="20dp"
@@ -365,7 +360,6 @@
                 android:paddingRight="20dp"
                 android:background="@android:color/white"
                 >
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -374,16 +368,16 @@
                     android:textColor="#666666"
                     android:textSize="15dp"
                     />
+
                 <TextView
+                    android:id="@+id/info_company"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
+                    android:layout_marginLeft="20dp"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
-                    android:text="1982-09-21"
                     android:textColor="#333333"
-                    android:textSize="15dp"
-                    android:layout_marginLeft="20dp"
-                    />
+                    android:textSize="15dp" />
             </LinearLayout>
             <View
                 android:layout_width="match_parent"
@@ -397,7 +391,6 @@
                 android:paddingRight="20dp"
                 android:background="@android:color/white"
                 >
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -407,11 +400,11 @@
                     android:textSize="15dp"
                     />
                 <TextView
+                    android:id="@+id/info_companyPhone"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
-                    android:text="1982-09-21"
                     android:textColor="#333333"
                     android:textSize="15dp"
                     android:layout_marginLeft="20dp"
@@ -429,7 +422,6 @@
                 android:paddingRight="20dp"
                 android:background="@android:color/white"
                 >
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -438,16 +430,16 @@
                     android:textColor="#666666"
                     android:textSize="15dp"
                     />
+
                 <TextView
+                    android:id="@+id/info_companyAddress"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
+                    android:layout_marginLeft="20dp"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
-                    android:text="1982-09-21"
                     android:textColor="#333333"
-                    android:textSize="15dp"
-                    android:layout_marginLeft="20dp"
-                    />
+                    android:textSize="15dp" />
             </LinearLayout>
             <View
                 android:layout_width="match_parent"
@@ -461,7 +453,6 @@
                 android:paddingRight="20dp"
                 android:background="@android:color/white"
                 >
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -471,11 +462,11 @@
                     android:textSize="15dp"
                     />
                 <TextView
+                    android:id="@+id/info_entryMan"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
-                    android:text="1982-09-21"
                     android:textColor="#333333"
                     android:textSize="15dp"
                     android:layout_marginLeft="20dp"
@@ -493,7 +484,6 @@
                 android:paddingRight="20dp"
                 android:background="@android:color/white"
                 >
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -503,11 +493,11 @@
                     android:textSize="15dp"
                     />
                 <TextView
+                    android:id="@+id/info_ill"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
-                    android:text="1982-09-21"
                     android:textColor="#333333"
                     android:textSize="15dp"
                     android:layout_marginLeft="20dp"
@@ -525,7 +515,6 @@
                 android:paddingRight="20dp"
                 android:background="@android:color/white"
                 >
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -535,11 +524,11 @@
                     android:textSize="15dp"
                     />
                 <TextView
+                    android:id="@+id/info_notes"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
-                    android:text="1982-09-21"
                     android:textColor="#333333"
                     android:textSize="15dp"
                     android:layout_marginLeft="20dp"

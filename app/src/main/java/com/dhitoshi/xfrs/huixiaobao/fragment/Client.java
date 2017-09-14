@@ -295,9 +295,7 @@ public class Client extends BaseFragment implements ClientManage.View, View.OnTo
         adapter.addItemClickListener(new ItemClick<ClientBean>() {
             @Override
             public void onItemClick(View view, ClientBean clientBean, int position) {
-                startActivity(new Intent(getContext(),ClientInfo.class)
-                        .putExtra("id",clientBean.getId())
-                        .putExtra("nzme",clientBean.getName()));
+                startActivity(new Intent(getContext(),ClientInfo.class).putExtra("info",clientBean));
             }
         });
     }

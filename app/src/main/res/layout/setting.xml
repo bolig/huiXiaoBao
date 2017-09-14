@@ -16,6 +16,7 @@
         android:background="@android:color/white"
         >
         <TextView
+            android:id="@+id/safe"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:textSize="14dp"
@@ -36,6 +37,7 @@
             android:layout_marginLeft="20dp"
             android:background="#D9D9D9"></View>
         <TextView
+            android:id="@+id/remind"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:textSize="14dp"
@@ -56,6 +58,7 @@
             android:layout_marginLeft="20dp"
             android:background="#D9D9D9"></View>
         <TextView
+            android:id="@+id/base"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:textSize="14dp"
@@ -79,6 +82,7 @@
         android:background="@android:color/white"
         >
         <TextView
+            android:id="@+id/copyright"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:textSize="14dp"
@@ -99,6 +103,7 @@
             android:layout_marginLeft="20dp"
             android:background="#D9D9D9"></View>
         <TextView
+            android:id="@+id/exit"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:textSize="14dp"

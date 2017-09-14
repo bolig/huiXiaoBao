@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.dhitoshi.bottombar.BottomBar;
 import com.dhitoshi.bottombar.OnTabSelectListener;
+import com.dhitoshi.xfrs.huixiaobao.Bean.ClientBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.Menu;
 import com.dhitoshi.xfrs.huixiaobao.Interface.MenuItemClick;
 import com.dhitoshi.xfrs.huixiaobao.R;
@@ -47,7 +48,7 @@ public class ClientInfo extends BaseView {
     private PopupMenu popupMenu;
     private Intent it;
     private int current;
-    private String name;
+    private ClientBean clientBean;
     private int id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,14 +61,14 @@ public class ClientInfo extends BaseView {
 
     private void InitViews() {
         initBaseViews();
-        id=getIntent().getIntExtra("id",0);
+        clientBean=getIntent().getParcelableExtra("info");
+        id=clientBean.getId();
         getThemeFragments();
         adapter = new ViewPagerAdapter(getSupportFragmentManager(), themeFragments);
         clientViewpager.setAdapter(adapter);
         clientViewpager.setOffscreenPageLimit(6);
-        name=getIntent().getStringExtra("name");
-        setTitle(name);
-        setRightIcon(R.mipmap.more);
+        setTitle(clientBean.getName());
+        setRightIcon(R.mipmap.update);
     }
 
     //初始化页面事件
@@ -76,8 +77,10 @@ public class ClientInfo extends BaseView {
             @Override
             public void onTabSelected(@IdRes int tabId, int position) {
                 clientViewpager.setCurrentItem(position, false);
-                setRightIcon(position == 0 ? R.mipmap.more : R.mipmap.add);
+                setRightIcon(position == 0 ? R.mipmap.update : R.mipmap.add);
                 current = position;
+                setTitle(position==0?clientBean.getName():clientBean.getName()+"的"+
+                        clientBottomBar.getTabAtPosition(position).getTitle());
             }
         });
     }
@@ -107,7 +110,6 @@ public class ClientInfo extends BaseView {
                     case 0:
                         break;
                     case 1:
-
                         break;
                 }
             }
@@ -129,7 +131,7 @@ public class ClientInfo extends BaseView {
 
     private List<Fragment> getThemeFragments() {
         themeFragments = new ArrayList<>();
-        themeFragments.add(Info.newInstance());
+        themeFragments.add(Info.newInstance(clientBean));
         themeFragments.add(Spending.newInstance(id));
         themeFragments.add(Visit.newInstance(id));
         themeFragments.add(Relation.newInstance(id));
@@ -142,7 +144,10 @@ public class ClientInfo extends BaseView {
     public void onViewClicked() {
         switch (current){
             case 0:
-                popupMenu();
+                //popupMenu();
+                it=new Intent(this,AddClient.class);
+                it.putExtra("info",clientBean);
+                startActivity(it);
                 break;
             case 1:
                 it=new Intent(this,AddSpend.class);

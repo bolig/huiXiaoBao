@@ -47,7 +47,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseRecyclerHo
     }
     @Override
     public int getItemCount() {
-        return mList.size();
+        return mList==null?0:mList.size();
     }
     public void addItemClickListener(ItemClick<T> itemClick) {
         this.itemClick = itemClick;

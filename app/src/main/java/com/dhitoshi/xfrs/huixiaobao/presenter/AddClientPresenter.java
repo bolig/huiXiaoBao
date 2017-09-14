@@ -31,6 +31,17 @@ public class AddClientPresenter implements AddClientManage.Presenter{
             }
         });
     }
+
+    @Override
+    public void editClient(AddClientBean addClientBean) {
+        addClientModel.editClient(addClientBean, new Callback<HttpBean<ClientBean>>() {
+            @Override
+            public void get(HttpBean<ClientBean> httpBean) {
+                view.editClient(httpBean.getStatus().getMsg());
+            }
+        });
+    }
+
     @Override
     public void getInfoForAdd() {
         addClientModel.getInfoForAdd(new Callback<HttpBean<InfoAddClientBean>>() {
@@ -41,8 +52,8 @@ public class AddClientPresenter implements AddClientManage.Presenter{
         });
     }
     @Override
-    public void checkRepeat(String area, String phone) {
-        addClientModel.checkRepeat(area, phone, new Callback<HttpBean<Object>>() {
+    public void checkRepeat(String area, String phone,String id) {
+        addClientModel.checkRepeat(area, phone,id, new Callback<HttpBean<Object>>() {
             @Override
             public void get(HttpBean<Object> httpBean) {
                 view.checkRepeat(httpBean.getStatus().getMsg());

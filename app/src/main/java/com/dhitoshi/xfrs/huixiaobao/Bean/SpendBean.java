@@ -1,8 +1,12 @@
 package com.dhitoshi.xfrs.huixiaobao.Bean;
+
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by dxs on 2017/9/7.
  */
-public class SpendBean {
+public class SpendBean implements Parcelable {
 
     /**
      * id : 1
@@ -157,4 +161,61 @@ public class SpendBean {
     public void setSaleman_name(String saleman_name) {
         this.saleman_name = saleman_name;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.id);
+        dest.writeString(this.createtime);
+        dest.writeString(this.buyaddress);
+        dest.writeString(this.cost);
+        dest.writeString(this.number);
+        dest.writeString(this.discount);
+        dest.writeString(this.ac_receive);
+        dest.writeString(this.debt);
+        dest.writeString(this.ac_num);
+        dest.writeString(this.wait_num);
+        dest.writeString(this.notes);
+        dest.writeString(this.customer_name);
+        dest.writeString(this.customer_company);
+        dest.writeString(this.item_name);
+        dest.writeString(this.saleman_name);
+    }
+
+    public SpendBean() {
+    }
+
+    protected SpendBean(Parcel in) {
+        this.id = in.readInt();
+        this.createtime = in.readString();
+        this.buyaddress = in.readString();
+        this.cost = in.readString();
+        this.number = in.readString();
+        this.discount = in.readString();
+        this.ac_receive = in.readString();
+        this.debt = in.readString();
+        this.ac_num = in.readString();
+        this.wait_num = in.readString();
+        this.notes = in.readString();
+        this.customer_name = in.readString();
+        this.customer_company = in.readString();
+        this.item_name = in.readString();
+        this.saleman_name = in.readString();
+    }
+
+    public static final Parcelable.Creator<SpendBean> CREATOR = new Parcelable.Creator<SpendBean>() {
+        @Override
+        public SpendBean createFromParcel(Parcel source) {
+            return new SpendBean(source);
+        }
+
+        @Override
+        public SpendBean[] newArray(int size) {
+            return new SpendBean[size];
+        }
+    };
 }

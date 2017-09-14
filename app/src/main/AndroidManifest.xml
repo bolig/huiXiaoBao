@@ -22,20 +22,56 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.Chat" />
-        <activity android:name=".view.AddClient" />
-        <activity android:name=".view.ClientInfo" />
-        <activity android:name=".view.AddSpend" />
-        <activity android:name=".view.AddVisit" />
-        <activity android:name=".view.AddRelation" />
-        <activity android:name=".view.AddGift" />
-        <activity android:name=".view.AddMeeting" />
-        <activity android:name=".view.Resource" />
-        <activity android:name=".view.Remind" />
-        <activity android:name=".view.Contact" />
-        <activity android:name=".view.Query" />
-        <activity android:name=".view.Setting" />
-        <activity android:name=".view.Login"></activity>
+        <activity
+            android:name=".view.Chat"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.AddClient"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.ClientInfo"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.AddSpend"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.AddVisit"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.AddRelation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.AddGift"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.AddMeeting"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.Resource"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.Remind"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.Contact"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.Query"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.Setting"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.Login"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.Select"
+            android:screenOrientation="portrait" />
+        <activity android:name=".view.BaseSetting" />
+        <activity android:name=".view.Permission" />
+        <activity android:name=".view.Product" />
+        <activity android:name=".view.ProductType" />
+        <activity android:name=".view.PersonalClient"></activity>
     </application>
 
 </manifest>

@@ -28,16 +28,13 @@ public class Meeting extends BaseFragment implements MeetingManage.View {
     SmartRefreshLayout smartRefreshLayout;
     Unbinder unbinder;
     private int id;
-
     public Meeting() {
     }
-
     @Override
     public void loadData() {
         MeetPresenter meetPresenter = new MeetPresenter(this);
         meetPresenter.getMeetingLists(String.valueOf(id), "1");
     }
-
     public static Meeting newInstance(int id) {
         Meeting fragment = new Meeting();
         Bundle args = new Bundle();
@@ -45,7 +42,6 @@ public class Meeting extends BaseFragment implements MeetingManage.View {
         fragment.setArguments(args);
         return fragment;
     }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,21 +49,18 @@ public class Meeting extends BaseFragment implements MeetingManage.View {
             id = getArguments().getInt(ARG_ID);
         }
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_meeting, container, false);
         unbinder = ButterKnife.bind(this, view);
         return view;
     }
-
     @Override
     public void getMeetingLists(PageBean<MeetBean> pageBean) {
         MeetingAdapter adapter=new MeetingAdapter(pageBean.getList(),getContext());
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
     }
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();

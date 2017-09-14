@@ -70,6 +70,7 @@ public class BaseView extends AppCompatActivity implements View.OnTouchListener{
     public  void setRightIcon(int resourceId){
         rightIcon.setVisibility(View.VISIBLE);
         rightIcon.setImageResource(resourceId);
+        rightIcon.setColorFilter(getResources().getColor(android.R.color.white));
     }
     @Override
     public boolean onTouch(View v, MotionEvent event) {

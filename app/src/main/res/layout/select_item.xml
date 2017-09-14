@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView
+    android:id="@+id/select_item_text"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="45dp"
+    android:background="@drawable/item_click"
+    android:gravity="center"
+    android:textSize="14dp"
+    android:textColor="#666666"
+    >
+</TextView>

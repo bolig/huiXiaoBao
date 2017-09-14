@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true"
+    android:background="#efefef"
+   >
+    <include layout="@layout/toolbar"></include>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/item_click"
+        android:drawableRight="@mipmap/right"
+        android:paddingLeft="20dp"
+        android:drawablePadding="8dp"
+        android:gravity="center_vertical"
+        android:paddingRight="15dp"
+        android:textSize="14dp"
+        android:textColor="#333333"
+        android:text="地区"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/item_click"
+        android:drawableRight="@mipmap/right"
+        android:paddingLeft="20dp"
+        android:drawablePadding="8dp"
+        android:gravity="center_vertical"
+        android:paddingRight="15dp"
+        android:textSize="14dp"
+        android:textColor="#333333"
+        android:text="权限组"
+        />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/item_click"
+        android:drawablePadding="8dp"
+        android:drawableRight="@mipmap/right"
+        android:gravity="center_vertical"
+        android:paddingLeft="20dp"
+        android:paddingRight="15dp"
+        android:text="用户"
+        android:textColor="#333333"
+        android:textSize="14dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/item_click"
+        android:drawableRight="@mipmap/right"
+        android:paddingLeft="20dp"
+        android:drawablePadding="8dp"
+        android:gravity="center_vertical"
+        android:paddingRight="15dp"
+        android:textSize="14dp"
+        android:textColor="#333333"
+        android:text="产品类别"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/item_click"
+        android:drawableRight="@mipmap/right"
+        android:paddingLeft="20dp"
+        android:drawablePadding="8dp"
+        android:gravity="center_vertical"
+        android:paddingRight="15dp"
+        android:textSize="14dp"
+        android:textColor="#333333"
+        android:text="产品"
+        />
+</LinearLayout>

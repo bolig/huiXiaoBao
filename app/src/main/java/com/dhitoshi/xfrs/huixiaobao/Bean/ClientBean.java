@@ -1,9 +1,13 @@
 package com.dhitoshi.xfrs.huixiaobao.Bean;
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.util.ArrayList;
 import java.util.List;
 /**
  * Created by dxs on 2017/9/6.
  */
-public class ClientBean {
+public class ClientBean implements Parcelable {
     /**
      * id : 13
      * name : kehu
@@ -50,8 +54,8 @@ public class ClientBean {
     private String totalnum;
     private String buytime;
     private String backtime;
-    private List<HobbyBean> hobby;
-    private List<IllBean> ill;
+    private List<HobbyNameBean> hobby;
+    private List<IllNameBean> ill;
     public int getId() {
         return id;
     }
@@ -178,16 +182,91 @@ public class ClientBean {
     public void setBacktime(String backtime) {
         this.backtime = backtime;
     }
-    public List<HobbyBean> getHobby() {
+    public List<HobbyNameBean> getHobby() {
         return hobby;
     }
-    public void setHobby(List<HobbyBean> hobby) {
+    public void setHobby(List<HobbyNameBean> hobby) {
         this.hobby = hobby;
     }
-    public List<IllBean> getIll() {
+    public List<IllNameBean> getIll() {
         return ill;
     }
-    public void setIll(List<IllBean> ill) {
+    public void setIll(List<IllNameBean> ill) {
         this.ill = ill;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.id);
+        dest.writeString(this.name);
+        dest.writeString(this.sex);
+        dest.writeString(this.birthday);
+        dest.writeString(this.phone);
+        dest.writeString(this.vip_id);
+        dest.writeString(this.area);
+        dest.writeString(this.telephone);
+        dest.writeString(this.email);
+        dest.writeString(this.position);
+        dest.writeString(this.address);
+        dest.writeString(this.company);
+        dest.writeString(this.company_phone);
+        dest.writeString(this.company_address);
+        dest.writeString(this.entryman);
+        dest.writeString(this.notes);
+        dest.writeString(this.type);
+        dest.writeString(this.createtime);
+        dest.writeString(this.totalnum);
+        dest.writeString(this.buytime);
+        dest.writeString(this.backtime);
+        dest.writeList(this.hobby);
+        dest.writeList(this.ill);
+    }
+
+    public ClientBean() {
+    }
+
+    protected ClientBean(Parcel in) {
+        this.id = in.readInt();
+        this.name = in.readString();
+        this.sex = in.readString();
+        this.birthday = in.readString();
+        this.phone = in.readString();
+        this.vip_id = in.readString();
+        this.area = in.readString();
+        this.telephone = in.readString();
+        this.email = in.readString();
+        this.position = in.readString();
+        this.address = in.readString();
+        this.company = in.readString();
+        this.company_phone = in.readString();
+        this.company_address = in.readString();
+        this.entryman = in.readString();
+        this.notes = in.readString();
+        this.type = in.readString();
+        this.createtime = in.readString();
+        this.totalnum = in.readString();
+        this.buytime = in.readString();
+        this.backtime = in.readString();
+        this.hobby = new ArrayList<>();
+        in.readList(this.hobby, HobbyBean.class.getClassLoader());
+        this.ill = new ArrayList<>();
+        in.readList(this.ill, IllBean.class.getClassLoader());
+    }
+
+    public static final Parcelable.Creator<ClientBean> CREATOR = new Parcelable.Creator<ClientBean>() {
+        @Override
+        public ClientBean createFromParcel(Parcel source) {
+            return new ClientBean(source);
+        }
+
+        @Override
+        public ClientBean[] newArray(int size) {
+            return new ClientBean[size];
+        }
+    };
 }

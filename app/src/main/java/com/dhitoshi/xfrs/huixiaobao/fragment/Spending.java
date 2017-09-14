@@ -1,5 +1,6 @@
 package com.dhitoshi.xfrs.huixiaobao.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,10 +11,12 @@ import android.view.ViewGroup;
 import com.dhitoshi.refreshlayout.SmartRefreshLayout;
 import com.dhitoshi.xfrs.huixiaobao.Bean.PageBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.SpendBean;
+import com.dhitoshi.xfrs.huixiaobao.Interface.ItemClick;
 import com.dhitoshi.xfrs.huixiaobao.Interface.SpendManage;
 import com.dhitoshi.xfrs.huixiaobao.R;
 import com.dhitoshi.xfrs.huixiaobao.adapter.SpendAdapter;
 import com.dhitoshi.xfrs.huixiaobao.presenter.SpendPresenter;
+import com.dhitoshi.xfrs.huixiaobao.view.AddSpend;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -66,6 +69,12 @@ public class Spending extends BaseFragment implements SpendManage.View {
         SpendAdapter adapter = new SpendAdapter(pageBean.getList(), getContext());
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
+        adapter.addItemClickListener(new ItemClick<SpendBean>() {
+            @Override
+            public void onItemClick(View view, SpendBean spendBean, int position) {
+                startActivity(new Intent(getContext(), AddSpend.class).putExtra("spend",spendBean));
+            }
+        });
     }
 
     @Override
