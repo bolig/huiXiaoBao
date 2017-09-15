@@ -1,10 +1,13 @@
 package com.dhitoshi.xfrs.huixiaobao.Bean;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by dxs on 2017/9/6.
  */
 
-public class ProductBean {
+public class ProductBean implements Parcelable {
 
     /**
      * id : 1
@@ -69,4 +72,43 @@ public class ProductBean {
     public void setType_name(String type_name) {
         this.type_name = type_name;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.id);
+        dest.writeString(this.name);
+        dest.writeString(this.area);
+        dest.writeString(this.cost);
+        dest.writeString(this.notes);
+        dest.writeString(this.type_name);
+    }
+
+    public ProductBean() {
+    }
+
+    protected ProductBean(Parcel in) {
+        this.id = in.readInt();
+        this.name = in.readString();
+        this.area = in.readString();
+        this.cost = in.readString();
+        this.notes = in.readString();
+        this.type_name = in.readString();
+    }
+
+    public static final Parcelable.Creator<ProductBean> CREATOR = new Parcelable.Creator<ProductBean>() {
+        @Override
+        public ProductBean createFromParcel(Parcel source) {
+            return new ProductBean(source);
+        }
+
+        @Override
+        public ProductBean[] newArray(int size) {
+            return new ProductBean[size];
+        }
+    };
 }

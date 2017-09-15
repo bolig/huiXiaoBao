@@ -1,9 +1,12 @@
 package com.dhitoshi.xfrs.huixiaobao.view;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.dhitoshi.xfrs.huixiaobao.Bean.BaseBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.InfoAddSpendBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.PositionBean;
@@ -21,6 +24,7 @@ import com.dhitoshi.xfrs.huixiaobao.common.SelectDateDialog;
 import com.dhitoshi.xfrs.huixiaobao.common.SelectDialog;
 import com.dhitoshi.xfrs.huixiaobao.presenter.AddSpendPresenter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -65,9 +69,9 @@ public class AddSpend extends BaseView implements AddSpendManage.View{
     private String waitNumber;
     private String notes;
     private AddSpendPresenter addSpendPresenter;
-    private List<ProductBean> item;
-    private List<SaleaddressBean> saleaddress;
-    private List<SalesmanBean> salesman;
+    private ArrayList<ProductBean> item;
+    private List<BaseBean> saleaddress;
+    private ArrayList<BaseBean> salesman;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -110,18 +114,19 @@ public class AddSpend extends BaseView implements AddSpendManage.View{
     }
     //选择产品
     private void selectProduct() {
-
+        startActivityForResult(new Intent(this,Select.class).putParcelableArrayListExtra("list",item)
+                .putExtra("type",3).putExtra("select",spendProduct.getText().toString()),3);
     }
     //选择购买地点
     private void selectLocation() {
         LocationAdapter adapter=new LocationAdapter(saleaddress,this,spendLocation.getText().toString());
         final SelectDialog dialog=new SelectDialog(this);
         dialog.setTitle("选择购买地点").setAdapter(adapter).show();
-        adapter.addItemClickListener(new ItemClick<SaleaddressBean>() {
+        adapter.addItemClickListener(new ItemClick<BaseBean>() {
             @Override
-            public void onItemClick(View view, SaleaddressBean saleaddressBean, int position) {
-                spendLocation.setText(saleaddressBean.getName());
-                addressId=String.valueOf(saleaddressBean.getId());
+            public void onItemClick(View view, BaseBean baseBean, int position) {
+                spendLocation.setText(baseBean.getName());
+                addressId=String.valueOf(baseBean.getId());
                 spendLocation.setTextColor(getResources().getColor(R.color.colorPrimary));
                 dialog.dismiss();
             }
@@ -129,7 +134,8 @@ public class AddSpend extends BaseView implements AddSpendManage.View{
     }
     //选择销售人员
     private void selectSaleMan() {
-
+        startActivityForResult(new Intent(this,Select.class).putParcelableArrayListExtra("list",salesman)
+                .putExtra("type",4).putExtra("select",spendSaleMan.getText().toString()),4);
     }
     //选择购买日期
     private void selectDate() {
@@ -147,16 +153,29 @@ public class AddSpend extends BaseView implements AddSpendManage.View{
     public void addSpend(String result) {
 
     }
-
     @Override
     public void editSpend(String result) {
 
     }
-
     @Override
     public void getListForSpending(HttpBean<InfoAddSpendBean> httpBean) {
-        item=httpBean.getData().getItem();
+        item= (ArrayList<ProductBean>) httpBean.getData().getItem();
         saleaddress=httpBean.getData().getSaleaddress();
-        salesman=httpBean.getData().getSalesman();
+        salesman= (ArrayList<BaseBean>) httpBean.getData().getSalesman();
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(resultCode==200){
+            switch (requestCode){
+                case 3:
+                    productId=data.getStringExtra("id");
+                    spendProduct.setText(data.getStringExtra("name"));
+                    break;
+                case 4:
+                    saleManId=data.getStringExtra("id");
+                    spendSaleMan.setText(data.getStringExtra("name"));
+                    break;
+            }
+        }
     }
 }

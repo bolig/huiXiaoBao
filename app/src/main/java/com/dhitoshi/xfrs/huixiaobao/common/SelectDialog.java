@@ -21,11 +21,11 @@ public class SelectDialog extends Dialog {
     private String s;
     private BaseAdapter adapter;
     public SelectDialog(@NonNull Context context) {
-        super(context);
+        super(context,android.R.style.Theme_Holo_Light_Dialog_NoActionBar);
         this.context=context;
     }
     public SelectDialog(@NonNull Context context, @StyleRes int themeResId) {
-        super(context, themeResId);
+        super(context, android.R.style.Theme_Holo_Light_Dialog_NoActionBar);
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {

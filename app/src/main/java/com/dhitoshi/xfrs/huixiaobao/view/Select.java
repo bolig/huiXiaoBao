@@ -7,6 +7,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.Toast;
+
+import com.dhitoshi.xfrs.huixiaobao.Bean.BaseBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HobbyBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.IllBean;
 import com.dhitoshi.xfrs.huixiaobao.Interface.CheckBoxClick;
@@ -14,6 +16,7 @@ import com.dhitoshi.xfrs.huixiaobao.Interface.ItemClick;
 import com.dhitoshi.xfrs.huixiaobao.R;
 import com.dhitoshi.xfrs.huixiaobao.adapter.HobbyAdapter;
 import com.dhitoshi.xfrs.huixiaobao.adapter.IllAdapter;
+import com.dhitoshi.xfrs.huixiaobao.adapter.SelectAdapter;
 import com.dhitoshi.xfrs.huixiaobao.common.MyDecoration;
 import java.util.ArrayList;
 import butterknife.BindView;
@@ -55,6 +58,10 @@ public class Select extends BaseView {
                 setRightText("确定");
                 break;
             case 3:
+                setTitle("选择购买产品");
+                break;
+            case 4:
+                setTitle("选择销售员");
                 break;
         }
     }
@@ -66,8 +73,39 @@ public class Select extends BaseView {
             case 2:
                 initIll();
                 break;
+            case 3:
+                break;
+            case 4:
+                radioSelect();
+                break;
         }
     }
+    //选择购买产品 销售员(单选)
+    private void radioSelect() {
+        SelectAdapter adapter=new SelectAdapter(content,this,select);
+        selectRecyclerView.setAdapter(adapter);
+        adapter.addItemClickListener(new ItemClick<BaseBean>() {
+            @Override
+            public void onItemClick(View view, BaseBean baseBean, int position) {
+                Intent it=new Intent();
+                it.putExtra("id",baseBean.getId());
+                it.putExtra("name",baseBean.getName());
+                setResult(200,it);
+                finish();
+            }
+        });
+        adapter.addCheckBoxClick(new CheckBoxClick() {
+            @Override
+            public void check(boolean isChecked, String name, int id) {
+            Intent it=new Intent();
+            it.putExtra("id",id);
+            it.putExtra("name",name);
+            setResult(200,it);
+            finish();
+            }
+        });
+    }
+
     //既往病史数据处理
     private void initIll() {
         IllAdapter adapter=new IllAdapter(content,this,select);
@@ -120,7 +158,7 @@ public class Select extends BaseView {
     @OnClick(R.id.right_text)
     public void onViewClicked() {
         if(ids.isEmpty()){
-            Toast.makeText(this,"至少选择一个专长",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,"您还未选择呢！请选择",Toast.LENGTH_SHORT).show();
             return;
         }
         Intent it=new Intent();
