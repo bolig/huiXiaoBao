@@ -1,10 +1,13 @@
 package com.dhitoshi.xfrs.huixiaobao.Bean;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by dxs on 2017/9/8.
  */
 
-public class GiftBean {
+public class GiftBean implements Parcelable {
 
     /**
      * id : 1
@@ -72,4 +75,47 @@ public class GiftBean {
     public void setNotes(String notes) {
         this.notes = notes;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.id);
+        dest.writeString(this.userid);
+        dest.writeString(this.createtime);
+        dest.writeString(this.gift);
+        dest.writeString(this.num);
+        dest.writeString(this.saleaddress);
+        dest.writeString(this.salesman);
+        dest.writeString(this.notes);
+    }
+
+    public GiftBean() {
+    }
+
+    protected GiftBean(Parcel in) {
+        this.id = in.readInt();
+        this.userid = in.readString();
+        this.createtime = in.readString();
+        this.gift = in.readString();
+        this.num = in.readString();
+        this.saleaddress = in.readString();
+        this.salesman = in.readString();
+        this.notes = in.readString();
+    }
+
+    public static final Parcelable.Creator<GiftBean> CREATOR = new Parcelable.Creator<GiftBean>() {
+        @Override
+        public GiftBean createFromParcel(Parcel source) {
+            return new GiftBean(source);
+        }
+
+        @Override
+        public GiftBean[] newArray(int size) {
+            return new GiftBean[size];
+        }
+    };
 }

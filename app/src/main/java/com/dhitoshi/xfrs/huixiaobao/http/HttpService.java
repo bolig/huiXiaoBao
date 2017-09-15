@@ -1,11 +1,19 @@
 package com.dhitoshi.xfrs.huixiaobao.http;
 import com.dhitoshi.xfrs.huixiaobao.Bean.AddClientBean;
+import com.dhitoshi.xfrs.huixiaobao.Bean.AddGiftBean;
+import com.dhitoshi.xfrs.huixiaobao.Bean.AddMeetBean;
+import com.dhitoshi.xfrs.huixiaobao.Bean.AddRelationBean;
+import com.dhitoshi.xfrs.huixiaobao.Bean.AddSpendBean;
+import com.dhitoshi.xfrs.huixiaobao.Bean.AddVisitBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.AreaBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.ClientBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.GiftBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.InfoAddClientBean;
+import com.dhitoshi.xfrs.huixiaobao.Bean.InfoAddMeetBean;
+import com.dhitoshi.xfrs.huixiaobao.Bean.InfoAddRelationBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.InfoAddSpendBean;
+import com.dhitoshi.xfrs.huixiaobao.Bean.InfoAddVisitBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.MeetBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.PageBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.ProductBean;
@@ -64,16 +72,16 @@ public interface HttpService {
     Observable<HttpBean<InfoAddSpendBean>> getListForSpending();
     //获取回访所需列表
     @GET("customer/feedback/listForFeedBack")
-    Observable<HttpBean<Object>> getListForVisit();
+    Observable<HttpBean<InfoAddVisitBean>> getListForVisit();
     //获取社会关系所需列表
     @GET("customer/relation/listForRelation")
-    Observable<HttpBean<Object>> getListForRelation();
+    Observable<HttpBean<InfoAddRelationBean>> getListForRelation();
     //获取赠品所需列表
     @GET("customer/gift/listForGift")
-    Observable<HttpBean<Object>> getListForGift();
+    Observable<HttpBean<InfoAddSpendBean>> getListForGift();
     //获取会议所需列表
     @GET("customer/meeting/listForMeeting")
-    Observable<HttpBean<Object>> getListForMeeting();
+    Observable<HttpBean<InfoAddMeetBean>> getListForMeeting();
     //获取参会记录列表
     @GET("customer/meeting/list")
     Observable<HttpBean<PageBean<MeetBean>>> getMeetingLists(@Query("userid") String userid, @Query("page") String page);
@@ -113,34 +121,34 @@ public interface HttpService {
     Observable<HttpBean<ClientBean>> editClient(@Body AddClientBean addClientBean);
     //添加消费记录
     @POST("customer/spending/add")
-    Observable<HttpBean<SpendBean>> addSpend(@Body SpendBean spendBean,@Query("userid") String userid);
+    Observable<HttpBean<SpendBean>> addSpend(@Body AddSpendBean addSpendBean);
     //编辑消费记录
     @POST("customer/spending/edit")
-    Observable<HttpBean<SpendBean>> editSpend(@Body SpendBean spendBean,@Query("userid") String userid);
+    Observable<HttpBean<SpendBean>> editSpend(@Body AddSpendBean addSpendBean);
     //添加回访
     @POST("customer/feedback/add")
-    Observable<HttpBean<VisitBean>> addVisit(@Body VisitBean visitBean,@Query("userid") String userid);
+    Observable<HttpBean<VisitBean>> addVisit(@Body AddVisitBean addVisitBean);
     //编辑回访
     @POST("feedback/edit")
-    Observable<HttpBean<VisitBean>> editVisit(@Body VisitBean visitBean,@Query("userid") String userid);
+    Observable<HttpBean<VisitBean>> editVisit(@Body AddVisitBean addVisitBean);
     //添加社会关系
     @POST("customer/relation/add")
-    Observable<HttpBean<RelationBean>> addRelation(@Body RelationBean relationBean,@Query("userid") String userid);
+    Observable<HttpBean<RelationBean>> addRelation(@Body AddRelationBean addRelationBean);
     //编辑社会关系
     @POST("customer/relation/edit")
-    Observable<HttpBean<RelationBean>> editRelation(@Body RelationBean relationBean,@Query("userid") String userid);
+    Observable<HttpBean<RelationBean>> editRelation(@Body AddRelationBean addRelationBean);
     //添加赠品
     @POST("customer/gift/add")
-    Observable<HttpBean<GiftBean>> addGift(@Body GiftBean giftBean,@Query("userid") String userid);
+    Observable<HttpBean<GiftBean>> addGift(@Body AddGiftBean addGiftBean);
     //编辑赠品
     @POST("customer/gift/edit")
-    Observable<HttpBean<GiftBean>> editGift(@Body GiftBean giftBean,@Query("userid") String userid);
+    Observable<HttpBean<GiftBean>> editGift(@Body AddGiftBean addGiftBean);
     //添加会议记录
     @POST("customer/meeting/add")
-    Observable<HttpBean<MeetBean>> addMeet(@Body MeetBean meetBean,@Query("userid") String useridy);
+    Observable<HttpBean<MeetBean>> addMeet(@Body AddMeetBean addMeetBean);
     //编辑会议记录
     @POST("customer/meeting/edit")
-    Observable<HttpBean<MeetBean>> editMeet(@Body MeetBean meetBean,@Query("userid") String userid);
+    Observable<HttpBean<MeetBean>> editMeet(@Body AddMeetBean addMeetBean);
     //添加产品
     @POST("item/add")
     Observable<HttpBean<Object>> addItem(@Body RequestBody body);

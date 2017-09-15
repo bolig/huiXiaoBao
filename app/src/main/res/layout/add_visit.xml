@@ -41,8 +41,9 @@
                     android:textSize="14dp" />
 
                 <EditText
+                    android:id="@+id/visit_client"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@null"
                     android:hint="请输入"
@@ -70,6 +71,7 @@
                     android:textSize="14dp" />
 
                 <TextView
+                    android:id="@+id/visit_salesman"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -98,6 +100,7 @@
                     android:textSize="14dp" />
 
                 <TextView
+                    android:id="@+id/visit_date"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -126,6 +129,7 @@
                     android:textSize="14dp" />
 
                 <TextView
+                    android:id="@+id/visit_nextDate"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -154,6 +158,7 @@
                     android:textSize="14dp" />
 
                 <TextView
+                    android:id="@+id/visit_type"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -176,6 +181,7 @@
                 android:gravity="center_vertical"
                 android:text="回访内容" />
             <EditText
+                android:id="@+id/visit_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
@@ -200,6 +206,7 @@
                 android:gravity="center_vertical"
                 android:text="备注" />
             <EditText
+                android:id="@+id/visit_notes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
@@ -224,7 +231,7 @@
                 android:gravity="center_vertical"
                 android:text="客户建议" />
             <EditText
-                android:id="@+id/editText"
+                android:id="@+id/visit_suggest"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
@@ -238,6 +245,16 @@
                 android:textColor="#BFBFBF"
                 android:textColorHint="#BFBFBF"
                 android:textSize="14dp" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:background="#eee"></View>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginLeft="20dp"
+                android:gravity="center_vertical"
+                android:text="上传图片" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

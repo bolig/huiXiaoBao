@@ -10,7 +10,7 @@ public class PersonalClient extends BaseView {
     }
     private void initViews() {
         initBaseViews();
-        setTitle("用户");
+        setTitle("user");
         setRightIcon(R.mipmap.add);
     }
 }

@@ -1,10 +1,12 @@
 package com.dhitoshi.xfrs.huixiaobao.Bean;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 /**
  * Created by dxs on 2017/9/7.
  */
 
-public class RelationBean {
+public class RelationBean implements Parcelable {
 
 
     /**
@@ -33,7 +35,7 @@ public class RelationBean {
     private String telephone;
     private String email;
     private String company;
-    private Object position;
+    private String position;
     private String createtime;
     private String notes;
 
@@ -117,11 +119,11 @@ public class RelationBean {
         this.company = company;
     }
 
-    public Object getPosition() {
+    public String getPosition() {
         return position;
     }
 
-    public void setPosition(Object position) {
+    public void setPosition(String position) {
         this.position = position;
     }
 
@@ -140,4 +142,57 @@ public class RelationBean {
     public void setNotes(String notes) {
         this.notes = notes;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.id);
+        dest.writeString(this.userid);
+        dest.writeString(this.name);
+        dest.writeString(this.sex);
+        dest.writeString(this.relation);
+        dest.writeString(this.birthday);
+        dest.writeString(this.phone);
+        dest.writeString(this.telephone);
+        dest.writeString(this.email);
+        dest.writeString(this.company);
+        dest.writeString(this.position);
+        dest.writeString(this.createtime);
+        dest.writeString(this.notes);
+    }
+
+    public RelationBean() {
+    }
+
+    protected RelationBean(Parcel in) {
+        this.id = in.readInt();
+        this.userid = in.readString();
+        this.name = in.readString();
+        this.sex = in.readString();
+        this.relation = in.readString();
+        this.birthday = in.readString();
+        this.phone = in.readString();
+        this.telephone = in.readString();
+        this.email = in.readString();
+        this.company = in.readString();
+        this.position = in.readParcelable(Object.class.getClassLoader());
+        this.createtime = in.readString();
+        this.notes = in.readString();
+    }
+
+    public static final Parcelable.Creator<RelationBean> CREATOR = new Parcelable.Creator<RelationBean>() {
+        @Override
+        public RelationBean createFromParcel(Parcel source) {
+            return new RelationBean(source);
+        }
+
+        @Override
+        public RelationBean[] newArray(int size) {
+            return new RelationBean[size];
+        }
+    };
 }

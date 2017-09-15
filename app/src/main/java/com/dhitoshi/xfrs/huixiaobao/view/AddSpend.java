@@ -7,6 +7,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.dhitoshi.xfrs.huixiaobao.Bean.AddSpendBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.BaseBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.InfoAddSpendBean;
@@ -57,22 +58,22 @@ public class AddSpend extends BaseView implements AddSpendManage.View{
     @BindView(R.id.spend_notes)
     EditText spendNotes;
     private SpendBean spendBean;
-    private String createtime;
-    private String productId;
-    private String addressId;
-    private String saleManId;
-    private String price;
-    private String number;
-    private String discount;
-    private String receive;
-    private String debt;
-    private String acNumber;
-    private String waitNumber;
-    private String notes;
+    private String createtime="";
+    private String productId="";
+    private String addressId="";
+    private String saleManId="";
+    private String price="";
+    private String number="";
+    private String discount="";
+    private String receive="";
+    private String debt="";
+    private String acNumber="";
+    private String waitNumber="";
     private AddSpendPresenter addSpendPresenter;
     private ArrayList<ProductBean> item;
     private List<BaseBean> saleaddress;
     private ArrayList<BaseBean> salesman;
+    private int userId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,9 +81,9 @@ public class AddSpend extends BaseView implements AddSpendManage.View{
         ButterKnife.bind(this);
         initViews();
     }
-
     private void initViews() {
         initBaseViews();
+        userId=getIntent().getIntExtra("id",0);
         spendBean = getIntent().getParcelableExtra("spend");
         setTitle(null == spendBean ? "新增消费记录" : "编辑消费记录");
         if (null != spendBean) {
@@ -111,7 +112,7 @@ public class AddSpend extends BaseView implements AddSpendManage.View{
         spendNotes.setText(spendBean.getNotes());
         spendNotes.setTextColor(getResources().getColor(R.color.colorPrimary));
     }
-    @OnClick({R.id.spend_date, R.id.spend_product, R.id.spend_location, R.id.spend_saleMan})
+    @OnClick({R.id.spend_date, R.id.spend_product, R.id.spend_location, R.id.spend_saleMan,R.id.right_text})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.spend_date:
@@ -126,7 +127,85 @@ public class AddSpend extends BaseView implements AddSpendManage.View{
             case R.id.spend_saleMan:
                 selectSaleMan();
                 break;
+            case R.id.right_text:
+                commit();
         }
+    }
+    private void commit() {
+       if(juge()){
+           AddSpendBean bean=new AddSpendBean();
+           bean.setCreatetime(createtime);
+           bean.setItemid(productId);
+           bean.setBuyaddress(addressId);
+           bean.setSalemanid(saleManId);
+           bean.setCost(price);
+           bean.setNumber(number);
+           bean.setDiscount(discount);
+           bean.setAc_receive(receive);
+           bean.setDebt(debt);
+           bean.setAc_num(acNumber);
+           bean.setWait_num(waitNumber);
+           bean.setNotes(spendNotes.getText().toString());
+           bean.setUserid(String.valueOf(userId));
+           if(null==spendBean){
+               addSpendPresenter.addSpend(bean);
+           }else{
+               addSpendPresenter.editSpend(bean);
+           }
+       }
+    }
+    private boolean juge(){
+        if(createtime.isEmpty()){
+            Toast.makeText(this," 请选择购买日期",Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if(productId.isEmpty()){
+            Toast.makeText(this,"请选择购买产品",Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if(addressId.isEmpty()){
+            Toast.makeText(this,"请选择购买地点",Toast.LENGTH_SHORT).show();
+            return false;
+        }if(saleManId.isEmpty()){
+            Toast.makeText(this,"请选择销售员",Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        price=spendPrice.getText().toString();
+        if(price.isEmpty()){
+            Toast.makeText(this,"请填写单价",Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        number=spendNumber.getText().toString();
+        if(number.isEmpty()){
+            Toast.makeText(this,"请填写数量",Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        discount=spendDiscount.getText().toString();
+        if(discount.isEmpty()){
+            Toast.makeText(this,"请填写折扣比例",Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        receive=spendMoney.getText().toString();
+        if(receive.isEmpty()){
+            Toast.makeText(this,"请填写实收金额",Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        debt=spendDebt.getText().toString();
+        if(debt.isEmpty()){
+            Toast.makeText(this,"请填写应收欠款",Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        acNumber=spendAcNum.getText().toString();
+        if(acNumber.isEmpty()){
+            Toast.makeText(this,"请填写实发数量",Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        waitNumber=spendWaitNum.getText().toString();
+        if(waitNumber.isEmpty()){
+            Toast.makeText(this,"请填写寄存数量",Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
     }
     //选择产品
     private void selectProduct() {

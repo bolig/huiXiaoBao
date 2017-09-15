@@ -10,6 +10,6 @@ public class Permission extends BaseView {
     }
     private void initViews() {
         initBaseViews();
-        setTitle("权限组");
+        setTitle("permission");
     }
 }

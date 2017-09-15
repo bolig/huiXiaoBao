@@ -72,7 +72,8 @@ public class Spending extends BaseFragment implements SpendManage.View {
         adapter.addItemClickListener(new ItemClick<SpendBean>() {
             @Override
             public void onItemClick(View view, SpendBean spendBean, int position) {
-                startActivity(new Intent(getContext(), AddSpend.class).putExtra("spend",spendBean));
+                startActivity(new Intent(getContext(), AddSpend.class)
+                        .putExtra("spend",spendBean).putExtra("id",id));
             }
         });
     }

@@ -1,4 +1,5 @@
 package com.dhitoshi.xfrs.huixiaobao.model;
+import com.dhitoshi.xfrs.huixiaobao.Bean.AddSpendBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.InfoAddSpendBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.SpendBean;
@@ -13,9 +14,9 @@ import com.dhitoshi.xfrs.huixiaobao.http.MyHttp;
  */
 public class AddSpendModel implements AddSpendManage.Model{
     @Override
-    public void addSpend(SpendBean spendBean, String userId, final Callback<HttpBean<SpendBean>> callback) {
+    public void addSpend(AddSpendBean addSpendBean, final Callback<HttpBean<SpendBean>> callback) {
         MyHttp http=MyHttp.getInstance();
-        http.send(http.getHttpService().addSpend(spendBean,userId),new CommonObserver(new HttpResult<HttpBean<SpendBean>>() {
+        http.send(http.getHttpService().addSpend(addSpendBean),new CommonObserver(new HttpResult<HttpBean<SpendBean>>() {
             @Override
             public void OnSuccess(HttpBean<SpendBean> httpBean) {
                 callback.get(httpBean);
@@ -43,9 +44,9 @@ public class AddSpendModel implements AddSpendManage.Model{
     }
 
     @Override
-    public void editSpend(SpendBean spendBean, String userId, final Callback<HttpBean<SpendBean>> callback) {
+    public void editSpend(AddSpendBean addSpendBean, final Callback<HttpBean<SpendBean>> callback) {
         MyHttp http=MyHttp.getInstance();
-        http.send(http.getHttpService().editSpend(spendBean,userId),new CommonObserver(new HttpResult<HttpBean<SpendBean>>() {
+        http.send(http.getHttpService().editSpend(addSpendBean),new CommonObserver(new HttpResult<HttpBean<SpendBean>>() {
             @Override
             public void OnSuccess(HttpBean<SpendBean> httpBean) {
                 callback.get(httpBean);

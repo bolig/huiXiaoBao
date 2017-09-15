@@ -1,6 +1,8 @@
 package com.dhitoshi.xfrs.huixiaobao.Interface;
 
+import com.dhitoshi.xfrs.huixiaobao.Bean.AddMeetBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
+import com.dhitoshi.xfrs.huixiaobao.Bean.InfoAddMeetBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.InfoAddSpendBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.MeetBean;
 
@@ -13,16 +15,16 @@ public interface AddMeetingManage {
     interface View{
         void  addMeeting(String result);
         void  editMeeting(String result);
-        void  getListForMeeting(HttpBean<InfoAddSpendBean> httpBean);
+        void  getListForMeeting(HttpBean<InfoAddMeetBean> httpBean);
     }
     interface Model{
-        void addMeeting(MeetBean meetBean, String userId, Callback<HttpBean<MeetBean>> callback);
-        void getListForMeeting(Callback<HttpBean<InfoAddSpendBean>> callback);
-        void editMeeting(MeetBean meetBean,String userId,Callback<HttpBean<MeetBean>> callback);
+        void addMeeting(AddMeetBean addMeetBean, Callback<HttpBean<MeetBean>> callback);
+        void getListForMeeting(Callback<HttpBean<InfoAddMeetBean>> callback);
+        void editMeeting(AddMeetBean addMeetBean,Callback<HttpBean<MeetBean>> callback);
     }
     interface Presenter{
-        void addMeeting(MeetBean meetBean, String userId);
-        void editMeeting(MeetBean meetBean,String userId);
+        void addMeeting(AddMeetBean addMeetBean);
+        void editMeeting(AddMeetBean addMeetBean);
         void getListForMeeting();
     }
 

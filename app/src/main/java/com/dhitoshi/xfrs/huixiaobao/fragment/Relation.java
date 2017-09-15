@@ -1,5 +1,6 @@
 package com.dhitoshi.xfrs.huixiaobao.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,10 +11,13 @@ import android.view.ViewGroup;
 import com.dhitoshi.refreshlayout.SmartRefreshLayout;
 import com.dhitoshi.xfrs.huixiaobao.Bean.PageBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.RelationBean;
+import com.dhitoshi.xfrs.huixiaobao.Interface.ItemClick;
 import com.dhitoshi.xfrs.huixiaobao.Interface.RelationManage;
 import com.dhitoshi.xfrs.huixiaobao.R;
 import com.dhitoshi.xfrs.huixiaobao.adapter.RelationAdapter;
 import com.dhitoshi.xfrs.huixiaobao.presenter.RelationPresenter;
+import com.dhitoshi.xfrs.huixiaobao.view.AddRelation;
+import com.dhitoshi.xfrs.huixiaobao.view.AddSpend;
 
 //relation_select
 import butterknife.BindView;
@@ -62,6 +66,13 @@ public class Relation extends BaseFragment implements RelationManage.View {
         RelationAdapter adapter=new RelationAdapter(pageBean.getList(),getContext());
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
+        adapter.addItemClickListener(new ItemClick<RelationBean>() {
+            @Override
+            public void onItemClick(View view, RelationBean relationBean, int position) {
+                startActivity(new Intent(getContext(), AddRelation.class)
+                        .putExtra("relation",relationBean).putExtra("id",id));
+            }
+        });
     }
     @Override
     public void onDestroyView() {

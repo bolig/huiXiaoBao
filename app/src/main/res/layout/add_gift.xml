@@ -40,6 +40,7 @@
                     android:textSize="14dp" />
 
                 <TextView
+                    android:id="@+id/gift_date"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -70,6 +71,7 @@
                     android:textSize="14dp" />
 
                 <TextView
+                    android:id="@+id/gift_name"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -93,7 +95,6 @@
                 android:paddingRight="20dp">
 
                 <TextView
-                    android:id="@+id/textView2"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
@@ -102,8 +103,9 @@
                     android:textSize="14dp" />
 
                 <EditText
+                    android:id="@+id/gift_number"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@null"
                     android:hint="请输入"
@@ -133,6 +135,7 @@
                     android:textSize="14dp" />
 
                 <TextView
+                    android:id="@+id/gift_address"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -162,6 +165,7 @@
                     android:textSize="14dp" />
 
                 <TextView
+                    android:id="@+id/gift_salesman"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -185,6 +189,7 @@
                 android:text="备注" />
 
             <EditText
+                android:id="@+id/gift_notes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"

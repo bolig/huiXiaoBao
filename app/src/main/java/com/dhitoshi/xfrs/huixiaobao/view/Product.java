@@ -10,7 +10,7 @@ public class Product extends BaseView {
     }
     private void initViews() {
         initBaseViews();
-        setTitle("产品");
+        setTitle("product");
         setRightIcon(R.mipmap.add);
     }
 }

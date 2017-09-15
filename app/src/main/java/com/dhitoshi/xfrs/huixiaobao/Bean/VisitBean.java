@@ -1,8 +1,12 @@
 package com.dhitoshi.xfrs.huixiaobao.Bean;
+
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by dxs on 2017/9/7.
  */
-public class VisitBean {
+public class VisitBean implements Parcelable {
     /**
      * id : 2
      * createtime : 2017-09-10 08:00:00
@@ -95,4 +99,51 @@ public class VisitBean {
     public void setFeedman_name(String feedman_name) {
         this.feedman_name = feedman_name;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.id);
+        dest.writeString(this.createtime);
+        dest.writeString(this.nexttime);
+        dest.writeString(this.feedtype);
+        dest.writeString(this.feedbody);
+        dest.writeString(this.notes);
+        dest.writeString(this.advice);
+        dest.writeString(this.img);
+        dest.writeString(this.customer_name);
+        dest.writeString(this.feedman_name);
+    }
+
+    public VisitBean() {
+    }
+
+    protected VisitBean(Parcel in) {
+        this.id = in.readInt();
+        this.createtime = in.readString();
+        this.nexttime = in.readString();
+        this.feedtype = in.readString();
+        this.feedbody = in.readString();
+        this.notes = in.readString();
+        this.advice = in.readString();
+        this.img = in.readString();
+        this.customer_name = in.readString();
+        this.feedman_name = in.readString();
+    }
+
+    public static final Parcelable.Creator<VisitBean> CREATOR = new Parcelable.Creator<VisitBean>() {
+        @Override
+        public VisitBean createFromParcel(Parcel source) {
+            return new VisitBean(source);
+        }
+
+        @Override
+        public VisitBean[] newArray(int size) {
+            return new VisitBean[size];
+        }
+    };
 }

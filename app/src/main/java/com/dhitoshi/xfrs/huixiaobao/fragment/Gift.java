@@ -1,5 +1,6 @@
 package com.dhitoshi.xfrs.huixiaobao.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,10 +11,14 @@ import android.view.ViewGroup;
 import com.dhitoshi.refreshlayout.SmartRefreshLayout;
 import com.dhitoshi.xfrs.huixiaobao.Bean.GiftBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.PageBean;
+import com.dhitoshi.xfrs.huixiaobao.Bean.SpendBean;
 import com.dhitoshi.xfrs.huixiaobao.Interface.GiftManage;
+import com.dhitoshi.xfrs.huixiaobao.Interface.ItemClick;
 import com.dhitoshi.xfrs.huixiaobao.R;
 import com.dhitoshi.xfrs.huixiaobao.adapter.GiftAdapter;
 import com.dhitoshi.xfrs.huixiaobao.presenter.GiftPresenter;
+import com.dhitoshi.xfrs.huixiaobao.view.AddGift;
+import com.dhitoshi.xfrs.huixiaobao.view.AddSpend;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -68,6 +73,13 @@ public class Gift extends BaseFragment implements GiftManage.View {
         GiftAdapter adapter=new GiftAdapter(pageBean.getList(),getContext());
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
+        adapter.addItemClickListener(new ItemClick<GiftBean>() {
+            @Override
+            public void onItemClick(View view, GiftBean giftBean, int position) {
+                startActivity(new Intent(getContext(), AddGift.class)
+                        .putExtra("gift",giftBean).putExtra("id",id));
+            }
+        });
     }
 
     @Override

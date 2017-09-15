@@ -1,10 +1,13 @@
 package com.dhitoshi.xfrs.huixiaobao.Bean;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by dxs on 2017/9/7.
  */
 
-public class MeetBean {
+public class MeetBean implements Parcelable {
 
     /**
      * id : 1
@@ -99,4 +102,49 @@ public class MeetBean {
     public void setNotes(String notes) {
         this.notes = notes;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.id);
+        dest.writeString(this.userid);
+        dest.writeString(this.createtime);
+        dest.writeString(this.type);
+        dest.writeString(this.salesman);
+        dest.writeString(this.usertype);
+        dest.writeString(this.attend);
+        dest.writeString(this.body);
+        dest.writeString(this.notes);
+    }
+
+    public MeetBean() {
+    }
+
+    protected MeetBean(Parcel in) {
+        this.id = in.readInt();
+        this.userid = in.readString();
+        this.createtime = in.readString();
+        this.type = in.readString();
+        this.salesman = in.readString();
+        this.usertype = in.readString();
+        this.attend = in.readString();
+        this.body = in.readString();
+        this.notes = in.readString();
+    }
+
+    public static final Parcelable.Creator<MeetBean> CREATOR = new Parcelable.Creator<MeetBean>() {
+        @Override
+        public MeetBean createFromParcel(Parcel source) {
+            return new MeetBean(source);
+        }
+
+        @Override
+        public MeetBean[] newArray(int size) {
+            return new MeetBean[size];
+        }
+    };
 }

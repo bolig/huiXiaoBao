@@ -1,4 +1,5 @@
 package com.dhitoshi.xfrs.huixiaobao.fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -8,10 +9,14 @@ import android.view.ViewGroup;
 import com.dhitoshi.refreshlayout.SmartRefreshLayout;
 import com.dhitoshi.xfrs.huixiaobao.Bean.PageBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.VisitBean;
+import com.dhitoshi.xfrs.huixiaobao.Interface.ItemClick;
 import com.dhitoshi.xfrs.huixiaobao.Interface.VisitManage;
 import com.dhitoshi.xfrs.huixiaobao.R;
 import com.dhitoshi.xfrs.huixiaobao.adapter.VisitAdapter;
 import com.dhitoshi.xfrs.huixiaobao.presenter.VisitPresenter;
+import com.dhitoshi.xfrs.huixiaobao.view.AddSpend;
+import com.dhitoshi.xfrs.huixiaobao.view.AddVisit;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -63,6 +68,13 @@ public class Visit extends BaseFragment implements VisitManage.View {
         VisitAdapter adapter = new VisitAdapter(pageBean.getList(), getContext());
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
+        adapter.addItemClickListener(new ItemClick<VisitBean>() {
+            @Override
+            public void onItemClick(View view, VisitBean visitBean, int position) {
+                startActivity(new Intent(getContext(), AddVisit.class)
+                        .putExtra("visit",visitBean).putExtra("id",id));
+            }
+        });
     }
 
     @Override

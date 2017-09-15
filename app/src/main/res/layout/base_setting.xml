@@ -18,6 +18,7 @@
         android:drawablePadding="8dp"
         android:gravity="center_vertical"
         android:paddingRight="15dp"
+        android:drawableLeft="@mipmap/area"
         android:textSize="14dp"
         android:textColor="#333333"
         android:text="地区"
@@ -35,6 +36,7 @@
         android:textSize="14dp"
         android:textColor="#333333"
         android:text="权限组"
+        android:drawableLeft="@mipmap/permission"
         />
 
     <TextView
@@ -48,6 +50,7 @@
         android:gravity="center_vertical"
         android:paddingLeft="20dp"
         android:paddingRight="15dp"
+        android:drawableLeft="@mipmap/user"
         android:text="用户"
         android:textColor="#333333"
         android:textSize="14dp" />
@@ -64,6 +67,7 @@
         android:paddingRight="15dp"
         android:textSize="14dp"
         android:textColor="#333333"
+        android:drawableLeft="@mipmap/type"
         android:text="产品类别"
         />
     <TextView
@@ -78,6 +82,7 @@
         android:paddingRight="15dp"
         android:textSize="14dp"
         android:textColor="#333333"
+        android:drawableLeft="@mipmap/product"
         android:text="产品"
         />
 </LinearLayout>

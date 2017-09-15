@@ -151,22 +151,27 @@ public class ClientInfo extends BaseView {
                 break;
             case 1:
                 it=new Intent(this,AddSpend.class);
+                it.putExtra("id",id);
                 startActivity(it);
                 break;
             case 2:
                 it=new Intent(this,AddVisit.class);
+                it.putExtra("id",id);
                 startActivity(it);
                 break;
             case 3:
                 it=new Intent(this,AddRelation.class);
+                it.putExtra("id",id);
                 startActivity(it);
                 break;
             case 4:
                 it=new Intent(this,AddGift.class);
+                it.putExtra("id",id);
                 startActivity(it);
                 break;
             case 5:
                 it=new Intent(this,AddMeeting.class);
+                it.putExtra("id",id);
                 startActivity(it);
                 break;
         }
