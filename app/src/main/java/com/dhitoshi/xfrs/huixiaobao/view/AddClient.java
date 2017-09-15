@@ -437,10 +437,12 @@ public class AddClient extends BaseView implements AddClientManage.View {
                case 1:
                    hobby=data.getStringExtra("ids");
                    clientHobby.setText(data.getStringExtra("names"));
+                   clientHobby.setTextColor(getResources().getColor(R.color.colorPrimary));
                    break;
                case 2:
                    ill=data.getStringExtra("ids");
                    clientIll.setText(data.getStringExtra("names"));
+                   clientIll.setTextColor(getResources().getColor(R.color.colorPrimary));
                    break;
            }
        }

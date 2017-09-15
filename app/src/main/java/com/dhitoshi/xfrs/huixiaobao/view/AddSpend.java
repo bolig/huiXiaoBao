@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dhitoshi.xfrs.huixiaobao.Bean.BaseBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
@@ -91,9 +92,24 @@ public class AddSpend extends BaseView implements AddSpendManage.View{
         addSpendPresenter=new AddSpendPresenter(this);
         addSpendPresenter.getListForSpending();
     }
-
     private void initSpendInfo() {
-
+        spendDate.setText(spendBean.getCreatetime());
+        spendDate.setTextColor(getResources().getColor(R.color.colorPrimary));
+        spendProduct.setText(spendBean.getItem_name());
+        spendProduct.setTextColor(getResources().getColor(R.color.colorPrimary));
+        spendLocation.setText(spendBean.getBuyaddress());
+        spendLocation.setTextColor(getResources().getColor(R.color.colorPrimary));
+        spendSaleMan.setText(spendBean.getSaleman_name());
+        spendSaleMan.setTextColor(getResources().getColor(R.color.colorPrimary));
+        spendPrice.setText(spendBean.getCost());
+        spendNumber.setText(spendBean.getNumber());
+        spendDiscount.setText(spendBean.getDiscount());
+        spendMoney.setText(spendBean.getAc_receive());
+        spendDebt.setText(spendBean.getDebt());
+        spendAcNum.setText(spendBean.getAc_num());
+        spendWaitNum.setText(spendBean.getWait_num());
+        spendNotes.setText(spendBean.getNotes());
+        spendNotes.setTextColor(getResources().getColor(R.color.colorPrimary));
     }
     @OnClick({R.id.spend_date, R.id.spend_product, R.id.spend_location, R.id.spend_saleMan})
     public void onViewClicked(View view) {
@@ -149,14 +165,17 @@ public class AddSpend extends BaseView implements AddSpendManage.View{
             }
         }).show();
     }
+    //添加消费
     @Override
     public void addSpend(String result) {
-
+        Toast.makeText(this, result, Toast.LENGTH_SHORT).show();
     }
+    //编辑消费
     @Override
     public void editSpend(String result) {
-
+        Toast.makeText(this,result, Toast.LENGTH_SHORT).show();
     }
+    //获得添加消费所需列表
     @Override
     public void getListForSpending(HttpBean<InfoAddSpendBean> httpBean) {
         item= (ArrayList<ProductBean>) httpBean.getData().getItem();
@@ -170,10 +189,12 @@ public class AddSpend extends BaseView implements AddSpendManage.View{
                 case 3:
                     productId=data.getStringExtra("id");
                     spendProduct.setText(data.getStringExtra("name"));
+                    spendProduct.setTextColor(getResources().getColor(R.color.colorPrimary));
                     break;
                 case 4:
                     saleManId=data.getStringExtra("id");
                     spendSaleMan.setText(data.getStringExtra("name"));
+                    spendSaleMan.setTextColor(getResources().getColor(R.color.colorPrimary));
                     break;
             }
         }

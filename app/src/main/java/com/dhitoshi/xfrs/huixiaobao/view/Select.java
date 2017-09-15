@@ -11,11 +11,13 @@ import android.widget.Toast;
 import com.dhitoshi.xfrs.huixiaobao.Bean.BaseBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HobbyBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.IllBean;
+import com.dhitoshi.xfrs.huixiaobao.Bean.ProductBean;
 import com.dhitoshi.xfrs.huixiaobao.Interface.CheckBoxClick;
 import com.dhitoshi.xfrs.huixiaobao.Interface.ItemClick;
 import com.dhitoshi.xfrs.huixiaobao.R;
 import com.dhitoshi.xfrs.huixiaobao.adapter.HobbyAdapter;
 import com.dhitoshi.xfrs.huixiaobao.adapter.IllAdapter;
+import com.dhitoshi.xfrs.huixiaobao.adapter.ProductAdapter;
 import com.dhitoshi.xfrs.huixiaobao.adapter.SelectAdapter;
 import com.dhitoshi.xfrs.huixiaobao.common.MyDecoration;
 import java.util.ArrayList;
@@ -74,13 +76,39 @@ public class Select extends BaseView {
                 initIll();
                 break;
             case 3:
+                initProduct();
                 break;
             case 4:
                 radioSelect();
                 break;
         }
     }
-    //选择购买产品 销售员(单选)
+    //选择购买产品
+    private void initProduct() {
+        ProductAdapter adapter=new ProductAdapter(content,this,select);
+        selectRecyclerView.setAdapter(adapter);
+        adapter.addItemClickListener(new ItemClick<ProductBean>() {
+            @Override
+            public void onItemClick(View view, ProductBean productBean, int position) {
+                Intent it=new Intent();
+                it.putExtra("id",productBean.getId());
+                it.putExtra("name",productBean.getName());
+                setResult(200,it);
+                finish();
+            }
+        });
+        adapter.addCheckBoxClick(new CheckBoxClick() {
+            @Override
+            public void check(boolean isChecked, String name, int id) {
+                Intent it=new Intent();
+                it.putExtra("id",id);
+                it.putExtra("name",name);
+                setResult(200,it);
+                finish();
+            }
+        });
+    }
+    // 销售员(单选)
     private void radioSelect() {
         SelectAdapter adapter=new SelectAdapter(content,this,select);
         selectRecyclerView.setAdapter(adapter);
@@ -105,7 +133,6 @@ public class Select extends BaseView {
             }
         });
     }
-
     //既往病史数据处理
     private void initIll() {
         IllAdapter adapter=new IllAdapter(content,this,select);
