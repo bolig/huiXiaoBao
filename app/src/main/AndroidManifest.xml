@@ -71,7 +71,8 @@
         <activity android:name=".view.Permission" />
         <activity android:name=".view.Product" />
         <activity android:name=".view.ProductType" />
-        <activity android:name=".view.PersonalClient"></activity>
+        <activity android:name=".view.PersonalClient" />
+        <activity android:name=".view.AddProduct"></activity>
     </application>
 
 </manifest>

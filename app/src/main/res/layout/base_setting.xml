@@ -9,6 +9,7 @@
    >
     <include layout="@layout/toolbar"></include>
     <TextView
+        android:id="@+id/base_area"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:layout_marginTop="5dp"
@@ -24,6 +25,7 @@
         android:text="地区"
         />
     <TextView
+        android:id="@+id/base_permission"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:layout_marginTop="5dp"
@@ -40,7 +42,7 @@
         />
 
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/base_user"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:layout_marginTop="5dp"
@@ -56,6 +58,7 @@
         android:textSize="14dp" />
 
     <TextView
+        android:id="@+id/base_productType"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:layout_marginTop="5dp"
@@ -71,6 +74,7 @@
         android:text="产品类别"
         />
     <TextView
+        android:id="@+id/base_product"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:layout_marginTop="5dp"

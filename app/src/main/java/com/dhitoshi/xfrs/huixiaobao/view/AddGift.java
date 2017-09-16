@@ -23,14 +23,11 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
 public class AddGift extends BaseView implements AddGiftManage.View{
     @BindView(R.id.gift_date)
     TextView giftDate;
     @BindView(R.id.gift_name)
     TextView giftName;
-    @BindView(R.id.textView2)
-    TextView textView2;
     @BindView(R.id.gift_number)
     EditText giftNumber;
     @BindView(R.id.gift_address)
