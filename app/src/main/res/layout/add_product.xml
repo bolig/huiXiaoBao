@@ -194,5 +194,4 @@
             android:textColorHint="#BFBFBF"
             android:textSize="14dp" />
     </LinearLayout>
-
 </LinearLayout>
