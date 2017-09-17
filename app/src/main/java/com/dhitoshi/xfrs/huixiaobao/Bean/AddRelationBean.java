@@ -5,6 +5,7 @@ package com.dhitoshi.xfrs.huixiaobao.Bean;
  */
 
 public class AddRelationBean {
+    private String id;
     private String userid;
     private String name;
     private String sex;
@@ -16,6 +17,14 @@ public class AddRelationBean {
     private String company;
     private String position;
     private String notes;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getUserid() {
         return userid;

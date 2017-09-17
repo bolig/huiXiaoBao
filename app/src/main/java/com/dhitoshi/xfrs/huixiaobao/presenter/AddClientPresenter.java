@@ -1,9 +1,12 @@
 package com.dhitoshi.xfrs.huixiaobao.presenter;
+import android.content.Context;
+
 import com.dhitoshi.xfrs.huixiaobao.Bean.AddClientBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.AreaBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.ClientBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.InfoAddClientBean;
+import com.dhitoshi.xfrs.huixiaobao.Dialog.LoadingDialog;
 import com.dhitoshi.xfrs.huixiaobao.Interface.AddClientManage;
 import com.dhitoshi.xfrs.huixiaobao.Interface.Callback;
 import com.dhitoshi.xfrs.huixiaobao.model.AddClientModel;
@@ -18,13 +21,13 @@ import java.util.Map;
 public class AddClientPresenter implements AddClientManage.Presenter{
     private AddClientManage.View view;
     private AddClientModel addClientModel;
-    public AddClientPresenter(AddClientManage.View view) {
+    public AddClientPresenter(AddClientManage.View view, Context context) {
         this.view = view;
-        addClientModel=new AddClientModel();
+        addClientModel=new AddClientModel(context);
     }
     @Override
-    public void addClient(AddClientBean addClientBean) {
-        addClientModel.addClient(addClientBean, new Callback<HttpBean<ClientBean>>() {
+    public void addClient(AddClientBean addClientBean, LoadingDialog dialog) {
+        addClientModel.addClient(addClientBean,dialog, new Callback<HttpBean<ClientBean>>() {
             @Override
             public void get(HttpBean<ClientBean> httpBean) {
                 view.addClient(httpBean.getStatus().getMsg());
@@ -33,8 +36,8 @@ public class AddClientPresenter implements AddClientManage.Presenter{
     }
 
     @Override
-    public void editClient(AddClientBean addClientBean) {
-        addClientModel.editClient(addClientBean, new Callback<HttpBean<ClientBean>>() {
+    public void editClient(AddClientBean addClientBean,LoadingDialog dialog) {
+        addClientModel.editClient(addClientBean,dialog, new Callback<HttpBean<ClientBean>>() {
             @Override
             public void get(HttpBean<ClientBean> httpBean) {
                 view.editClient(httpBean.getStatus().getMsg());
@@ -52,21 +55,11 @@ public class AddClientPresenter implements AddClientManage.Presenter{
         });
     }
     @Override
-    public void checkRepeat(String area, String phone,String id) {
-        addClientModel.checkRepeat(area, phone,id, new Callback<HttpBean<Object>>() {
+    public void checkRepeat(LoadingDialog dialog,String area, String phone,String id) {
+        addClientModel.checkRepeat(dialog,area, phone,id, new Callback<HttpBean<Object>>() {
             @Override
             public void get(HttpBean<Object> httpBean) {
                 view.checkRepeat(httpBean.getStatus().getMsg());
-            }
-        });
-    }
-
-    @Override
-    public void getAreaLists() {
-        addClientModel.getAreaLists(new Callback<HttpBean<List<AreaBean>>>() {
-            @Override
-            public void get(HttpBean<List<AreaBean>> httpBean) {
-                view.getAreaLists(httpBean);
             }
         });
     }

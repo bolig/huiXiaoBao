@@ -5,6 +5,7 @@ package com.dhitoshi.xfrs.huixiaobao.Bean;
  */
 
 public class AddVisitBean {
+    private String id;
     private String userid;
     private String createtime;
     private String nexttime;
@@ -14,6 +15,12 @@ public class AddVisitBean {
     private String notes;
     private String advice;
     private String img;
+    public String getId() {
+        return id;
+    }
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getUserid() {
         return userid;

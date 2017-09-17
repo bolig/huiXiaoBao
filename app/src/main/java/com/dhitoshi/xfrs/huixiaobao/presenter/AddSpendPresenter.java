@@ -1,8 +1,11 @@
 package com.dhitoshi.xfrs.huixiaobao.presenter;
+import android.content.Context;
+
 import com.dhitoshi.xfrs.huixiaobao.Bean.AddSpendBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.InfoAddSpendBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.SpendBean;
+import com.dhitoshi.xfrs.huixiaobao.Dialog.LoadingDialog;
 import com.dhitoshi.xfrs.huixiaobao.Interface.AddSpendManage;
 import com.dhitoshi.xfrs.huixiaobao.Interface.Callback;
 import com.dhitoshi.xfrs.huixiaobao.model.AddSpendModel;
@@ -14,13 +17,13 @@ import com.dhitoshi.xfrs.huixiaobao.model.AddSpendModel;
 public class AddSpendPresenter implements AddSpendManage.Presenter {
     private AddSpendManage.View view;
     private AddSpendModel model;
-    public AddSpendPresenter(AddSpendManage.View view) {
+    public AddSpendPresenter(AddSpendManage.View view, Context context) {
         this.view = view;
-        model=new AddSpendModel();
+        model=new AddSpendModel(context);
     }
     @Override
-    public void addSpend(AddSpendBean addSpendBean) {
-        model.addSpend(addSpendBean, new Callback<HttpBean<SpendBean>>() {
+    public void addSpend(AddSpendBean addSpendBean, LoadingDialog dialog) {
+        model.addSpend(addSpendBean,dialog, new Callback<HttpBean<SpendBean>>() {
             @Override
             public void get(HttpBean<SpendBean> httpBean) {
                 view.addSpend(httpBean.getStatus().getMsg());
@@ -28,8 +31,8 @@ public class AddSpendPresenter implements AddSpendManage.Presenter {
         });
     }
     @Override
-    public void editSpend(AddSpendBean addSpendBean) {
-        model.editSpend(addSpendBean, new Callback<HttpBean<SpendBean>>() {
+    public void editSpend(AddSpendBean addSpendBean,LoadingDialog dialog) {
+        model.editSpend(addSpendBean,dialog, new Callback<HttpBean<SpendBean>>() {
             @Override
             public void get(HttpBean<SpendBean> httpBean) {
                 view.editSpend(httpBean.getStatus().getMsg());

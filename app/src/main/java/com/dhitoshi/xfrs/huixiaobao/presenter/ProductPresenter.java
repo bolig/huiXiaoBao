@@ -1,5 +1,9 @@
 package com.dhitoshi.xfrs.huixiaobao.presenter;
+import android.content.Context;
+
+import com.dhitoshi.refreshlayout.SmartRefreshLayout;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
+import com.dhitoshi.xfrs.huixiaobao.Bean.PageBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.ProductBean;
 import com.dhitoshi.xfrs.huixiaobao.Interface.Callback;
 import com.dhitoshi.xfrs.huixiaobao.Interface.ProductManage;
@@ -13,15 +17,15 @@ import java.util.List;
 public class ProductPresenter implements ProductManage.Presenter{
     private ProductManage.View view;
     private ProductModel model;
-    public ProductPresenter(ProductManage.View view) {
+    public ProductPresenter(ProductManage.View view, Context context) {
         this.view = view;
-        model=new ProductModel();
+        model=new ProductModel(context);
     }
     @Override
-    public void getItem() {
-        model.getItem(new Callback<HttpBean<List<ProductBean>>>() {
+    public void getItem(SmartRefreshLayout smartRefreshLayout) {
+        model.getItem(smartRefreshLayout,new Callback<HttpBean<PageBean<ProductBean>>>() {
             @Override
-            public void get(HttpBean<List<ProductBean>> httpBean) {
+            public void get(HttpBean<PageBean<ProductBean>> httpBean) {
                 view.getItem(httpBean);
             }
         });

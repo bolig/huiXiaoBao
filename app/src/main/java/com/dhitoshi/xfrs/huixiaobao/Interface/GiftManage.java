@@ -1,4 +1,5 @@
 package com.dhitoshi.xfrs.huixiaobao.Interface;
+import com.dhitoshi.refreshlayout.SmartRefreshLayout;
 import com.dhitoshi.xfrs.huixiaobao.Bean.GiftBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.PageBean;
@@ -10,9 +11,9 @@ public interface GiftManage {
         void getGiftLists(PageBean<GiftBean> pageBean);
     }
     interface Model{
-        void getGiftLists(String userid, String page, Callback<HttpBean<PageBean<GiftBean>>> callback);
+        void getGiftLists(String userid, String page, SmartRefreshLayout smartRefreshLayout, Callback<HttpBean<PageBean<GiftBean>>> callback);
     }
     interface Prsenter{
-        void getGiftLists(String userid, String page);
+        void getGiftLists(String userid, String page,SmartRefreshLayout smartRefreshLayout);
     }
 }

@@ -1,50 +1,87 @@
 package com.dhitoshi.xfrs.huixiaobao.view;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 import com.dhitoshi.xfrs.huixiaobao.Bean.UserBean;
+import com.dhitoshi.xfrs.huixiaobao.Dialog.LoadingDialog;
 import com.dhitoshi.xfrs.huixiaobao.Interface.LoginManage;
 import com.dhitoshi.xfrs.huixiaobao.R;
 import com.dhitoshi.xfrs.huixiaobao.common.ClearEditText;
-import com.dhitoshi.xfrs.huixiaobao.model.LoginModel;
 import com.dhitoshi.xfrs.huixiaobao.presenter.LoginPresenter;
 import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
-
 import java.util.HashMap;
 import java.util.Map;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
-public class Login extends AppCompatActivity implements LoginManage.View {
-
-    @BindView(R.id.et_phone)
-    ClearEditText etPhone;
-    @BindView(R.id.et_password)
-    ClearEditText etPassword;
-
+public class Login extends AppCompatActivity implements LoginManage.View, View.OnTouchListener {
+    @BindView(R.id.login_name)
+    ClearEditText loginName;
+    @BindView(R.id.login_pswd)
+    ClearEditText loginPswd;
+    @BindView(R.id.login)
+    TextView login;
+    private String name;
+    private String password;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
         ButterKnife.bind(this);
+        initView();
     }
-
+    private void initView() {
+        login.setOnTouchListener(this);
+        if(!SharedPreferencesUtil.Obtain(this,"token","").toString().isEmpty()){
+            startActivity(new Intent(this, Theme.class));
+            finish();
+        }
+    }
     @Override
     public void login(UserBean userBean) {
-        SharedPreferencesUtil.Save(this,"token",userBean.getToken());
-        startActivity(new Intent(this,Theme.class));
+        SharedPreferencesUtil.Save(this, "truename", userBean.getTruename());
+        SharedPreferencesUtil.Save(this, "id", userBean.getId());
+        SharedPreferencesUtil.Save(this, "token", userBean.getToken());
+        startActivity(new Intent(this, Theme.class));
+        finish();
     }
-
     @OnClick(R.id.login)
     public void onViewClicked() {
-        LoginPresenter loginPresenter=new LoginPresenter(this) ;
-        Map<String,String> map=new HashMap<>();
-        map.put("name",etPhone.getText().toString());
-        map.put("password",etPassword.getText().toString());
-        loginPresenter.login(map);
+        name = loginName.getText().toString();
+        if (name.isEmpty()) {
+            Toast.makeText(this, "请填写用户名", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        password = loginPswd.getText().toString();
+        if (password.isEmpty()) {
+            Toast.makeText(this, "请填写密码", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        login();
+    }
+    private void login() {
+        LoadingDialog dialog = LoadingDialog.build(this).setLoadingTitle("登录中");
+        dialog.show();
+        LoginPresenter loginPresenter = new LoginPresenter(this,this);
+        Map<String, String> map = new HashMap<>();
+        map.put("name", name);
+        map.put("password", password);
+        loginPresenter.login(map, dialog);
+    }
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                v.setAlpha(0.8f);
+                break;
+            case MotionEvent.ACTION_UP:
+                v.setAlpha(1.0f);
+                break;
+        }
+        return false;
     }
 }

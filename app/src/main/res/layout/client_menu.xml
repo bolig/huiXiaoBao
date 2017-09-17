@@ -10,7 +10,7 @@
     app:arrowPosition="110dp"
     app:arrowLocation="top"
     android:orientation="vertical"
-    app:bubbleColor="@android:color/white"
+    app:bubbleColor="#e6e6e6"
     >
    <android.support.v7.widget.RecyclerView
        android:id="@+id/menu_recyclerView"

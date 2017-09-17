@@ -10,6 +10,9 @@ import com.dhitoshi.xfrs.huixiaobao.Bean.BaseBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.GiftBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.InfoAddGiftBean;
+import com.dhitoshi.xfrs.huixiaobao.Dialog.LoadingDialog;
+import com.dhitoshi.xfrs.huixiaobao.Event.GiftEvent;
+import com.dhitoshi.xfrs.huixiaobao.Event.MeetingEvent;
 import com.dhitoshi.xfrs.huixiaobao.Interface.AddGiftManage;
 import com.dhitoshi.xfrs.huixiaobao.Interface.DateCallBack;
 import com.dhitoshi.xfrs.huixiaobao.Interface.ItemClick;
@@ -18,6 +21,9 @@ import com.dhitoshi.xfrs.huixiaobao.adapter.DialogAdapter;
 import com.dhitoshi.xfrs.huixiaobao.common.SelectDateDialog;
 import com.dhitoshi.xfrs.huixiaobao.common.SelectDialog;
 import com.dhitoshi.xfrs.huixiaobao.presenter.AddGiftPresenter;
+
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.ArrayList;
 import java.util.List;
 import butterknife.BindView;
@@ -63,14 +69,16 @@ public class AddGift extends BaseView implements AddGiftManage.View{
             initGiftInfo();
         }
         setRightText("提交");
-        addGiftPresenter=new AddGiftPresenter(this);
+        addGiftPresenter=new AddGiftPresenter(this,this);
         addGiftPresenter.getListForGift();
     }
     private void initGiftInfo() {
+        createtime=giftBean.getCreatetime();
         giftDate.setText(giftBean.getCreatetime());
         giftDate.setTextColor(getResources().getColor(R.color.colorPrimary));
-        giftName.setText(giftBean.getId());
+        giftName.setText(giftBean.getGift());
         giftName.setTextColor(getResources().getColor(R.color.colorPrimary));
+        num=giftBean.getNum();
         giftNumber.setText(giftBean.getNum());
         giftNumber.setTextColor(getResources().getColor(R.color.colorPrimary));
         giftAddress.setText(giftBean.getSaleaddress());
@@ -107,13 +115,16 @@ public class AddGift extends BaseView implements AddGiftManage.View{
             bean.setSaleaddress(saleaddress);
             bean.setGift(gift);
             bean.setNum(num);
-            bean.setUserid(String.valueOf(userId));
             bean.setSalesman(salesman);
             bean.setNotes(giftNotes.getText().toString());
+            LoadingDialog dialog = LoadingDialog.build(this).setLoadingTitle("提交中");
+            dialog.show();
             if(null==giftBean){
-                addGiftPresenter.addGift(bean);
+                bean.setUserid(String.valueOf(userId));
+                addGiftPresenter.addGift(bean,dialog);
             }else{
-                addGiftPresenter.editGift(bean);
+                bean.setId(String.valueOf(giftBean.getId()));
+                addGiftPresenter.editGift(bean,dialog);
             }
         }
     }
@@ -181,16 +192,37 @@ public class AddGift extends BaseView implements AddGiftManage.View{
     @Override
     public void addGift(String result) {
         Toast.makeText(this,result,Toast.LENGTH_SHORT).show();
+        EventBus.getDefault().post(new GiftEvent(1));
+        finish();
     }
     @Override
     public void editGift(String result) {
         Toast.makeText(this,result,Toast.LENGTH_SHORT).show();
+        EventBus.getDefault().post(new GiftEvent(1));
+        finish();
     }
     @Override
     public void getListForGift(HttpBean<InfoAddGiftBean> httpBean) {
         item= (ArrayList<GiftBean>) httpBean.getData().getGift();
         addresses=httpBean.getData().getSaleaddress();
         salesmen= (ArrayList<BaseBean>) httpBean.getData().getSalesman();
+        if(giftBean!=null){
+//            for (int i = 0; i < item.size(); i++) {
+//                if(giftBean.getGift().equals(item.get(i).getName())){
+//                    usertype=String.valueOf(item.get(i).getId());
+//                }
+//            }
+            for (int j = 0; j < addresses.size(); j++) {
+                if(giftBean.getSaleaddress().equals(addresses.get(j).getName())){
+                    saleaddress=String.valueOf(addresses.get(j).getId());
+                }
+            }
+            for (int k = 0; k < salesmen.size(); k++) {
+                if(giftBean.getSalesman().equals(salesmen.get(k).getName())){
+                    salesman=String.valueOf(salesmen.get(k).getId());
+                }
+            }
+        }
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

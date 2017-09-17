@@ -1,7 +1,5 @@
 package com.dhitoshi.xfrs.huixiaobao.common;
-import android.app.Activity;
 import android.content.Context;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.support.v7.widget.LinearLayoutManager;
@@ -62,7 +60,6 @@ public class PopupScreen {
         parent.getLocationOnScreen(location);
         if (Build.VERSION.SDK_INT < 24) {
             popupWindow.showAsDropDown(parent, 0, 0);
-
         } else {
             popupWindow.showAtLocation(parent, Gravity.NO_GRAVITY, 0,parent.getHeight()+location[1]);
         }

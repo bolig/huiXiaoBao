@@ -16,6 +16,7 @@
         android:paddingRight="10dp"
         >
         <TextView
+            android:id="@+id/permission_position"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="市场总监"
@@ -23,6 +24,7 @@
             android:textColor="#333333"
             />
         <TextView
+            android:id="@+id/permission_area"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="总公司"
@@ -31,12 +33,15 @@
             />
     </RelativeLayout>
     <TextView
+        android:id="@+id/permission_notes"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:minHeight="40dp"
         android:text="市场总监作为高级管理者，一般不需要查看什么市 场总监作为高级管理者。"
         android:textColor="#666666"
+        android:gravity="center_vertical"
         android:textSize="14dp"
         android:lineSpacingMultiplier="1.5"
         android:layout_marginTop="10dp"
@@ -52,6 +57,7 @@
         android:layout_height="45dp"
         >
         <LinearLayout
+            android:id="@+id/permission_update"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -74,6 +80,7 @@
             android:layout_gravity="center"
             ></View>
         <LinearLayout
+            android:id="@+id/permission_delete"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"

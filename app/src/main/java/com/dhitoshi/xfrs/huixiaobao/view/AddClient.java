@@ -19,6 +19,7 @@ import com.dhitoshi.xfrs.huixiaobao.Bean.IllBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.InfoAddClientBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.PositionBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.SexBean;
+import com.dhitoshi.xfrs.huixiaobao.Dialog.LoadingDialog;
 import com.dhitoshi.xfrs.huixiaobao.Interface.AddClientManage;
 import com.dhitoshi.xfrs.huixiaobao.Interface.DateCallBack;
 import com.dhitoshi.xfrs.huixiaobao.Interface.ItemClick;
@@ -29,6 +30,7 @@ import com.dhitoshi.xfrs.huixiaobao.adapter.SexAdapter;
 import com.dhitoshi.xfrs.huixiaobao.common.SelectDateDialog;
 import com.dhitoshi.xfrs.huixiaobao.common.SelectDialog;
 import com.dhitoshi.xfrs.huixiaobao.presenter.AddClientPresenter;
+import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -113,18 +115,23 @@ public class AddClient extends BaseView implements AddClientManage.View {
         setTitle(null==clientBean?"新增客户":"编辑客户");
         if(null!=clientBean){
             initClientInfo();
+        }else{
+            clientEntryMan.setText(SharedPreferencesUtil.Obtain(this,"truename","").toString());
         }
         setRightText("提交");
-        addClientPresenter = new AddClientPresenter(this);
+        addClientPresenter = new AddClientPresenter(this,this);
         addClientPresenter.getInfoForAdd();
-        addClientPresenter.getAreaLists();
     }
     private void initClientInfo() {
+        name=clientBean.getName();
         clientName.setText(clientBean.getName());
+        sex=clientBean.getSex().equals("男")?"1":"0";
         clientSex.setText(clientBean.getSex());
         clientSex.setTextColor(getResources().getColor(R.color.colorPrimary));
-        clientBirthday.setText(clientBean.getBirthday());
+        birthday=clientBean.getBirthday();
+        clientBirthday.setText(birthday);
         clientBirthday.setTextColor(getResources().getColor(R.color.colorPrimary));
+        phone=clientBean.getPhone();
         clientPhone.setText(clientBean.getPhone());
         int hobbySize=clientBean.getHobby().size();
         for (int i = 0; i < hobbySize; i++) {
@@ -132,19 +139,29 @@ public class AddClient extends BaseView implements AddClientManage.View {
         }
         clientHobby.setText(hobby);
         clientHobby.setTextColor(getResources().getColor(R.color.colorPrimary));
+        vip=clientBean.getVip_id();
         clientVip.setText(clientBean.getVip_id());
-        clientArea.setText(clientBean.getArea());
+        area=clientBean.getArea_id();
+        clientArea.setText(clientBean.getNotes());
         clientArea.setTextColor(getResources().getColor(R.color.colorPrimary));
+        telPhone=clientBean.getTelephone();
         clientTelphone.setText(clientBean.getTelephone());
+        email=clientBean.getEmail();
         clientEmail.setText(clientBean.getEmail());
+
         clientPosition.setText(clientBean.getPosition());
         clientPosition.setTextColor(getResources().getColor(R.color.colorPrimary));
+        address=clientBean.getAddress();
         clientAddress.setText(clientBean.getAddress());
+        company=clientBean.getCompany();
         clientCompany.setText(clientBean.getCompany());
         clientType.setText(clientBean.getType());
         clientType.setTextColor(getResources().getColor(R.color.colorPrimary));
+        companyPhone=clientBean.getCompany_phone();
         clientCompanyPone.setText(clientBean.getCompany_phone());
+        companyAddress=clientBean.getCompany_address();
         clientCompanyAddress.setText(clientBean.getCompany_address());
+
         clientEntryMan.setText(clientBean.getEntryman());
         clientEntryMan.setTextColor(getResources().getColor(R.color.colorPrimary));
         int illSize=clientBean.getIll().size();
@@ -178,11 +195,6 @@ public class AddClient extends BaseView implements AddClientManage.View {
     public void checkRepeat(String result) {
         Toast.makeText(this,result,Toast.LENGTH_SHORT).show();
     }
-    //获取地区列表
-    @Override
-    public void getAreaLists(HttpBean<List<AreaBean>> httpBean) {
-
-    }
     //提交
     private void commit() {
         if (juge()){
@@ -206,10 +218,12 @@ public class AddClient extends BaseView implements AddClientManage.View {
             addClientBean.setIll(ill);
             addClientBean.setNotes(notes);
             addClientBean.setEntryman(clientEntryMan.getText().toString());
+            LoadingDialog dialog = LoadingDialog.build(this).setLoadingTitle("提交中");
+            dialog.show();
             if(null==clientBean){
-                addClientPresenter.addClient(addClientBean);
+                addClientPresenter.addClient(addClientBean,dialog);
             }else{
-                addClientPresenter.editClient(addClientBean);
+                addClientPresenter.editClient(addClientBean,dialog);
             }
         }
     }
@@ -300,10 +314,12 @@ public class AddClient extends BaseView implements AddClientManage.View {
             Toast.makeText(this, "请填写手机号码", Toast.LENGTH_SHORT).show();
             return;
         }
+        LoadingDialog dialog = LoadingDialog.build(this).setLoadingTitle("查重中");
+        dialog.show();
         if(null==clientBean){
-            addClientPresenter.checkRepeat(String.valueOf(areaId),phone,"");
+            addClientPresenter.checkRepeat(dialog,String.valueOf(areaId),phone,"");
         }else{
-            addClientPresenter.checkRepeat("",phone,String.valueOf(clientBean.getId()));
+            addClientPresenter.checkRepeat(dialog,"",phone,String.valueOf(clientBean.getId()));
         }
 
     }
@@ -375,7 +391,7 @@ public class AddClient extends BaseView implements AddClientManage.View {
     }
     //选择地区
     private void selectArea() {
-
+        startActivityForResult(new Intent(this,Area.class).putExtra("type",0),0);
     }
     //选择疾病
     private void selectIll() {

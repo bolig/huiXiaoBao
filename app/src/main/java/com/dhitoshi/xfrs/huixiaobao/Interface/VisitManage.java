@@ -1,4 +1,5 @@
 package com.dhitoshi.xfrs.huixiaobao.Interface;
+import com.dhitoshi.refreshlayout.SmartRefreshLayout;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.PageBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.VisitBean;
@@ -10,9 +11,9 @@ public interface VisitManage {
         void getFeedbackLists(PageBean<VisitBean> pageBean);
     }
     interface Model{
-        void getFeedbackLists(String userid, String page, Callback<HttpBean<PageBean<VisitBean>>> callback);
+        void getFeedbackLists(String userid, String page, SmartRefreshLayout smartRefreshLayout, Callback<HttpBean<PageBean<VisitBean>>> callback);
     }
     interface Prsenter{
-        void getFeedbackLists(String userid,String page);
+        void getFeedbackLists(String userid,String page,SmartRefreshLayout smartRefreshLayout);
     }
 }

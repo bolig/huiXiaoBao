@@ -1,4 +1,8 @@
 package com.dhitoshi.xfrs.huixiaobao.model;
+import android.content.Context;
+import android.widget.Toast;
+
+import com.dhitoshi.refreshlayout.SmartRefreshLayout;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.MeetBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.PageBean;
@@ -11,17 +15,31 @@ import com.dhitoshi.xfrs.huixiaobao.http.MyHttp;
  * Created by dxs on 2017/9/7.
  */
 public class MeetModel implements MeetingManage.Model{
+    private Context context;
+
+    public MeetModel(Context context) {
+        this.context = context;
+    }
 
     @Override
-    public void getMeetingLists(String userid, String page, final Callback<HttpBean<PageBean<MeetBean>>> callback) {
+    public void getMeetingLists(String userid, String page, final SmartRefreshLayout smartRefreshLayout, final Callback<HttpBean<PageBean<MeetBean>>> callback) {
         MyHttp http=MyHttp.getInstance();
         http.send(http.getHttpService().getMeetingLists(userid, page),new CommonObserver(new HttpResult<HttpBean<PageBean<MeetBean>>>() {
             @Override
             public void OnSuccess(HttpBean<PageBean<MeetBean>> httpBean) {
-                callback.get(httpBean);
+                smartRefreshLayout.finishRefresh();
+                smartRefreshLayout.finishLoadmore();
+                if(httpBean.getStatus().getCode()==200){
+                    callback.get(httpBean);
+                }else{
+                    Toast.makeText(context,httpBean.getStatus().getMsg(),Toast.LENGTH_SHORT).show();
+                }
             }
             @Override
             public void OnFail(String msg) {
+                smartRefreshLayout.finishRefresh();
+                smartRefreshLayout.finishLoadmore();
+                Toast.makeText(context,msg,Toast.LENGTH_SHORT).show();
 
             }
         }));

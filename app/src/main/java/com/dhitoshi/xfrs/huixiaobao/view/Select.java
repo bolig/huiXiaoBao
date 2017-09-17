@@ -65,6 +65,18 @@ public class Select extends BaseView {
             case 4:
                 setTitle("选择销售员");
                 break;
+            case 5:
+                setTitle("选择回访人");
+                break;
+            case 6:
+                setTitle("选择邀请人");
+                break;
+            case 7:
+                setTitle("选择赠送名称");
+                break;
+            case 8:
+                setTitle("选择经手人");
+                break;
         }
     }
     private void initData() {
@@ -79,6 +91,10 @@ public class Select extends BaseView {
                 initProduct();
                 break;
             case 4:
+            case 5:
+            case 6:
+            case 7:
+            case 8:
                 radioSelect();
                 break;
         }
@@ -91,7 +107,7 @@ public class Select extends BaseView {
             @Override
             public void onItemClick(View view, ProductBean productBean, int position) {
                 Intent it=new Intent();
-                it.putExtra("id",productBean.getId());
+                it.putExtra("id",String.valueOf(productBean.getId()));
                 it.putExtra("name",productBean.getName());
                 setResult(200,it);
                 finish();
@@ -101,7 +117,7 @@ public class Select extends BaseView {
             @Override
             public void check(boolean isChecked, String name, int id) {
                 Intent it=new Intent();
-                it.putExtra("id",id);
+                it.putExtra("id",String.valueOf(id));
                 it.putExtra("name",name);
                 setResult(200,it);
                 finish();
@@ -115,8 +131,9 @@ public class Select extends BaseView {
         adapter.addItemClickListener(new ItemClick<BaseBean>() {
             @Override
             public void onItemClick(View view, BaseBean baseBean, int position) {
+                Log.e("TAG","id--->>>>"+baseBean.getId());
                 Intent it=new Intent();
-                it.putExtra("id",baseBean.getId());
+                it.putExtra("id",String.valueOf(baseBean.getId()));
                 it.putExtra("name",baseBean.getName());
                 setResult(200,it);
                 finish();
@@ -125,8 +142,9 @@ public class Select extends BaseView {
         adapter.addCheckBoxClick(new CheckBoxClick() {
             @Override
             public void check(boolean isChecked, String name, int id) {
+                Log.e("TAG","id-------"+id);
             Intent it=new Intent();
-            it.putExtra("id",id);
+            it.putExtra("id",String.valueOf(id));
             it.putExtra("name",name);
             setResult(200,it);
             finish();

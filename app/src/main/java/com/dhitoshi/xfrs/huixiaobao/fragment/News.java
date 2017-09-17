@@ -13,9 +13,7 @@ import com.alibaba.mobileim.YWLoginParam;
 import com.alibaba.mobileim.channel.event.IWxCallback;
 import com.dhitoshi.xfrs.huixiaobao.R;
 import com.dhitoshi.xfrs.huixiaobao.view.Chat;
-
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import butterknife.Unbinder;
 
 //消息页面
@@ -47,17 +45,6 @@ public class News extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
-    }
-    @OnClick({R.id.login, R.id.jump})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.login:
-                login();
-                break;
-            case R.id.jump:
-                jump();
-                break;
-        }
     }
 
     private void jump() {

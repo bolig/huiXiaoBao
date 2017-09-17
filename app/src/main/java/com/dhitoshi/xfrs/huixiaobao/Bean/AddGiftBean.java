@@ -5,6 +5,7 @@ package com.dhitoshi.xfrs.huixiaobao.Bean;
  */
 
 public class AddGiftBean {
+    private String id;
     private String userid;
     private String createtime;
     private String gift;
@@ -12,6 +13,14 @@ public class AddGiftBean {
     private String saleaddress;
     private String salesman;
     private String notes;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getUserid() {
         return userid;

@@ -1,29 +1,34 @@
 package com.dhitoshi.xfrs.huixiaobao.view;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.dhitoshi.xfrs.huixiaobao.Bean.AddVisitBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.BaseBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.InfoAddVisitBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.VisitBean;
+import com.dhitoshi.xfrs.huixiaobao.Dialog.LoadingDialog;
+import com.dhitoshi.xfrs.huixiaobao.Event.VisitEvent;
 import com.dhitoshi.xfrs.huixiaobao.Interface.AddVisitManage;
+import com.dhitoshi.xfrs.huixiaobao.Interface.DateCallBack;
+import com.dhitoshi.xfrs.huixiaobao.Interface.ItemClick;
 import com.dhitoshi.xfrs.huixiaobao.R;
+import com.dhitoshi.xfrs.huixiaobao.adapter.CommonAdapter;
+import com.dhitoshi.xfrs.huixiaobao.common.SelectDateDialog;
+import com.dhitoshi.xfrs.huixiaobao.common.SelectDialog;
 import com.dhitoshi.xfrs.huixiaobao.presenter.AddVisitPresenter;
-
+import org.greenrobot.eventbus.EventBus;
+import java.util.ArrayList;
 import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class AddVisit extends BaseView implements AddVisitManage.View{
 
-    @BindView(R.id.visit_client)
-    EditText visitClient;
     @BindView(R.id.visit_salesman)
     TextView visitSalesman;
     @BindView(R.id.visit_date)
@@ -48,7 +53,7 @@ public class AddVisit extends BaseView implements AddVisitManage.View{
     private String img="";
     private int userId;
     private VisitBean visitBean;
-    private List<BaseBean> feedmen;
+    private ArrayList<BaseBean> feedmen;
     private List<BaseBean> feedtypes;
     private AddVisitPresenter addVisitPresenter;
     @Override
@@ -67,24 +72,27 @@ public class AddVisit extends BaseView implements AddVisitManage.View{
             initVisitInfo();
         }
         setRightText("提交");
-        addVisitPresenter=new AddVisitPresenter(this);
+        addVisitPresenter=new AddVisitPresenter(this,this);
         addVisitPresenter.getListForVisit();
     }
     private void initVisitInfo() {
-        visitClient.setText(visitBean.getCustomer_name());
-        visitClient.setTextColor(getResources().getColor(R.color.colorPrimary));
         visitSalesman.setText(visitBean.getFeedman_name());
         visitSalesman.setTextColor(getResources().getColor(R.color.colorPrimary));
+        createtime=visitBean.getCreatetime();
         visitDate.setText(visitBean.getCreatetime());
         visitDate.setTextColor(getResources().getColor(R.color.colorPrimary));
+        nexttime=visitBean.getNexttime();
         visitNextDate.setText(visitBean.getNexttime());
         visitNextDate.setTextColor(getResources().getColor(R.color.colorPrimary));
         visitType.setText(visitBean.getFeedtype());
         visitType.setTextColor(getResources().getColor(R.color.colorPrimary));
+        feedbody=visitBean.getFeedbody();
         visitContent.setText(visitBean.getFeedbody());
         visitContent.setTextColor(getResources().getColor(R.color.colorPrimary));
+        notes=visitBean.getNotes();
         visitNotes.setText(visitBean.getNotes());
         visitNotes.setTextColor(getResources().getColor(R.color.colorPrimary));
+        advice=visitBean.getAdvice();
         visitSuggest.setText(visitBean.getAdvice());
         visitSuggest.setTextColor(getResources().getColor(R.color.colorPrimary));
     }
@@ -109,15 +117,44 @@ public class AddVisit extends BaseView implements AddVisitManage.View{
         }
     }
     private void selectSalesMan() {
+        startActivityForResult(new Intent(this,Select.class).putParcelableArrayListExtra("list",feedmen)
+                .putExtra("type",5).putExtra("select",visitSalesman.getText().toString()),5);
     }
     private void selectDate() {
-
+        SelectDateDialog dialog=new SelectDateDialog(this);
+        dialog.setTitle("选择回访日期").setTime(visitDate.getText().toString()).getDate(new DateCallBack() {
+            @Override
+            public void getDate(String date) {
+                createtime=date;
+                visitDate.setText(date);
+                visitDate.setTextColor(getResources().getColor(R.color.colorPrimary));
+            }
+        }).show();
     }
     private void selectNextDate() {
-
+        SelectDateDialog dialog=new SelectDateDialog(this);
+        dialog.setTitle("选择再次回访日期").setTime(visitNextDate.getText().toString()).getDate(new DateCallBack() {
+            @Override
+            public void getDate(String date) {
+                nexttime=date;
+                visitNextDate.setText(date);
+                visitNextDate.setTextColor(getResources().getColor(R.color.colorPrimary));
+            }
+        }).show();
     }
     private void selectType() {
-
+        CommonAdapter adapter=new CommonAdapter(feedtypes,this,visitType.getText().toString());
+        final SelectDialog dialog=new SelectDialog(this);
+        dialog.setTitle("选择回访方式").setAdapter(adapter).show();
+        adapter.addItemClickListener(new ItemClick<BaseBean>() {
+            @Override
+            public void onItemClick(View view, BaseBean baseBean, int position) {
+                visitType.setText(baseBean.getName());
+                feedtype=String.valueOf(baseBean.getId());
+                visitType.setTextColor(getResources().getColor(R.color.colorPrimary));
+                dialog.dismiss();
+            }
+        });
     }
     private void commit() {
         if(juge()){
@@ -130,16 +167,18 @@ public class AddVisit extends BaseView implements AddVisitManage.View{
             bean.setFeedtype(feedtype);
             bean.setImg(img);
             bean.setNexttime(nexttime);
-            bean.setUserid(String.valueOf(userId));
+            LoadingDialog dialog = LoadingDialog.build(this).setLoadingTitle("提交中");
+            dialog.show();
             if(visitBean==null){
-                addVisitPresenter.addVisit(bean);
+                bean.setUserid(String.valueOf(userId));
+                addVisitPresenter.addVisit(bean,dialog);
             }else{
-                addVisitPresenter.editVisit(bean);
+                bean.setId(String.valueOf(visitBean.getId()));
+                addVisitPresenter.editVisit(bean,dialog);
             }
         }
     }
     private boolean juge() {
-        feedman=visitSalesman.getText().toString();
         if(feedman.isEmpty()){
             Toast.makeText(this,"请选择回访人",Toast.LENGTH_SHORT).show();
             return false;
@@ -176,14 +215,43 @@ public class AddVisit extends BaseView implements AddVisitManage.View{
     @Override
     public void addVisit(String result) {
         Toast.makeText(this,result,Toast.LENGTH_SHORT).show();
+        EventBus.getDefault().post(new VisitEvent(1));
+        finish();
     }
     @Override
     public void editVisit(String result) {
         Toast.makeText(this,result,Toast.LENGTH_SHORT).show();
+        EventBus.getDefault().post(new VisitEvent(1));
+        finish();
     }
     @Override
     public void getListForVisit(HttpBean<InfoAddVisitBean> httpBean) {
-        feedmen=httpBean.getData().getFeedman();
+        feedmen= (ArrayList<BaseBean>) httpBean.getData().getFeedman();
         feedtypes=httpBean.getData().getFeedtype();
+        if(visitBean!=null){
+            for (int i = 0; i < feedmen.size(); i++) {
+                if(visitBean.getFeedman_name().equals(feedmen.get(i).getName())){
+                    feedman=String.valueOf(feedmen.get(i).getId());
+                }
+            }
+            for (int j = 0; j < feedtypes.size(); j++) {
+                if(visitBean.getFeedtype().equals(feedtypes.get(j).getName())){
+                    feedtype=String.valueOf(feedtypes.get(j).getId());
+                }
+            }
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(resultCode==200){
+            switch (requestCode){
+                case 5:
+                    feedman=data.getStringExtra("id");
+                    visitSalesman.setText(data.getStringExtra("name"));
+                    visitSalesman.setTextColor(getResources().getColor(R.color.colorPrimary));
+                    break;
+            }
+        }
     }
 }

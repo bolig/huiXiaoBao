@@ -1,4 +1,5 @@
 package com.dhitoshi.xfrs.huixiaobao.Interface;
+import com.dhitoshi.refreshlayout.SmartRefreshLayout;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.PageBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.RelationBean;
@@ -10,9 +11,9 @@ public interface RelationManage {
         void getRelationLists(PageBean<RelationBean> pageBean);
     }
     interface Model{
-        void getRelationLists(String userid, String page, Callback<HttpBean<PageBean<RelationBean>>> callback);
+        void getRelationLists(String userid, String page, SmartRefreshLayout smartRefreshLayout, Callback<HttpBean<PageBean<RelationBean>>> callback);
     }
     interface Prsenter{
-        void getRelationLists(String userid, String page);
+        void getRelationLists(String userid, String page,SmartRefreshLayout smartRefreshLayout);
     }
 }

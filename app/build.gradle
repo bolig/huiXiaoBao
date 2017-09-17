@@ -18,6 +18,13 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    android.applicationVariants.all {
+        variant ->
+            variant.outputs.each {
+                    //默认生成的包名
+                output -> output.outputFile = new File(output.outputFile.parent, "慧销宝_v" + defaultConfig.versionName + "_" + defaultConfig.versionCode + ".apk");
+            }
+    }
 }
 
 dependencies {
@@ -42,6 +49,7 @@ dependencies {
     compile 'com.android.support:multidex:1.0.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.github.hotchemi:permissionsdispatcher:2.4.0'
+    compile 'org.greenrobot:eventbus:3.0.0'
     testCompile 'junit:junit:4.12'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     annotationProcessor 'com.github.hotchemi:permissionsdispatcher-processor:2.4.0'

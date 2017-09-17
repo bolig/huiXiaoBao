@@ -1,5 +1,7 @@
 package com.dhitoshi.xfrs.huixiaobao.Interface;
+import com.dhitoshi.refreshlayout.SmartRefreshLayout;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
+import com.dhitoshi.xfrs.huixiaobao.Bean.PageBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.ProductBean;
 import java.util.List;
 /**
@@ -7,12 +9,12 @@ import java.util.List;
  */
 public interface ProductManage {
     interface View{
-        void getItem(HttpBean<List<ProductBean>> httpBean);
+        void getItem(HttpBean<PageBean<ProductBean>> httpBean);
     }
     interface Model{
-        void getItem(Callback<HttpBean<List<ProductBean>>> callback);
+        void getItem(SmartRefreshLayout smartRefreshLayout,Callback<HttpBean<PageBean<ProductBean>>> callback);
     }
     interface Presenter{
-        void getItem();
+        void getItem(SmartRefreshLayout smartRefreshLayout);
     }
 }

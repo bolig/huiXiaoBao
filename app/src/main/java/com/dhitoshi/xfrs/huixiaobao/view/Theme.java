@@ -14,6 +14,9 @@ import com.dhitoshi.xfrs.huixiaobao.common.NoSlidingViewPager;
 import com.dhitoshi.xfrs.huixiaobao.fragment.Client;
 import com.dhitoshi.xfrs.huixiaobao.fragment.News;
 import com.dhitoshi.xfrs.huixiaobao.fragment.Personal;
+import com.dhitoshi.xfrs.huixiaobao.fragment.StateMent;
+import com.dhitoshi.xfrs.huixiaobao.fragment.Work;
+
 import java.util.ArrayList;
 import java.util.List;
 import butterknife.BindView;
@@ -22,7 +25,6 @@ import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.OnShowRationale;
 import permissions.dispatcher.PermissionRequest;
 import permissions.dispatcher.RuntimePermissions;
-
 @RuntimePermissions
 public class Theme extends AppCompatActivity {
     @BindView(R.id.theme_viewpager)
@@ -46,6 +48,7 @@ public class Theme extends AppCompatActivity {
         getThemeFragments();
         adapter = new ViewPagerAdapter(getSupportFragmentManager(), themeFragments);
         themeViewpager.setAdapter(adapter);
+        themeViewpager.setOffscreenPageLimit(5);
         ImmersionBar.with(this).navigationBarEnable(false)
                 .barColor(R.color.colorPrimary).init();
     }
@@ -67,7 +70,10 @@ public class Theme extends AppCompatActivity {
         themeFragments = new ArrayList<>();
         themeFragments.add(News.newInstance());
         themeFragments.add(Client.newInstance());
+        themeFragments.add(Work.newInstance());
+        themeFragments.add(StateMent.newInstance());
         themeFragments.add(Personal.newInstance());
+
         return themeFragments;
     }
     @NeedsPermission(Manifest.permission.CALL_PHONE)

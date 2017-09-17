@@ -1,8 +1,11 @@
 package com.dhitoshi.xfrs.huixiaobao.presenter;
+import android.content.Context;
+
 import com.dhitoshi.xfrs.huixiaobao.Bean.AddMeetBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.InfoAddMeetBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.MeetBean;
+import com.dhitoshi.xfrs.huixiaobao.Dialog.LoadingDialog;
 import com.dhitoshi.xfrs.huixiaobao.Interface.AddMeetingManage;
 import com.dhitoshi.xfrs.huixiaobao.Interface.Callback;
 import com.dhitoshi.xfrs.huixiaobao.model.AddMeetingModel;
@@ -12,13 +15,13 @@ import com.dhitoshi.xfrs.huixiaobao.model.AddMeetingModel;
 public class AddMeetingPresenter implements AddMeetingManage.Presenter{
     private AddMeetingManage.View view;
     private AddMeetingModel model;
-    public AddMeetingPresenter(AddMeetingManage.View view) {
+    public AddMeetingPresenter(AddMeetingManage.View view, Context context) {
         this.view = view;
-        model=new AddMeetingModel();
+        model=new AddMeetingModel(context);
     }
     @Override
-    public void addMeeting(AddMeetBean addMeetBean) {
-        model.addMeeting(addMeetBean, new Callback<HttpBean<MeetBean>>() {
+    public void addMeeting(AddMeetBean addMeetBean, LoadingDialog dialog) {
+        model.addMeeting(addMeetBean,dialog, new Callback<HttpBean<MeetBean>>() {
             @Override
             public void get(HttpBean<MeetBean> httpBean) {
                 view.addMeeting(httpBean.getStatus().getMsg());
@@ -26,8 +29,8 @@ public class AddMeetingPresenter implements AddMeetingManage.Presenter{
         });
     }
     @Override
-    public void editMeeting(AddMeetBean addMeetBean) {
-        model.editMeeting(addMeetBean, new Callback<HttpBean<MeetBean>>() {
+    public void editMeeting(AddMeetBean addMeetBean, LoadingDialog dialog) {
+        model.editMeeting(addMeetBean,dialog, new Callback<HttpBean<MeetBean>>() {
             @Override
             public void get(HttpBean<MeetBean> httpBean) {
                 view.editMeeting(httpBean.getStatus().getMsg());

@@ -1,4 +1,7 @@
 package com.dhitoshi.xfrs.huixiaobao.presenter;
+import android.content.Context;
+
+import com.dhitoshi.refreshlayout.SmartRefreshLayout;
 import com.dhitoshi.xfrs.huixiaobao.Bean.GiftBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.PageBean;
@@ -11,13 +14,13 @@ import com.dhitoshi.xfrs.huixiaobao.model.GiftModel;
 public class GiftPresenter implements GiftManage.Prsenter{
     private GiftManage.View view;
     private GiftModel giftModel;
-    public GiftPresenter(GiftManage.View view) {
+    public GiftPresenter(GiftManage.View view, Context context) {
         this.view = view;
-        giftModel=new GiftModel();
+        giftModel=new GiftModel(context);
     }
     @Override
-    public void getGiftLists(String userid, String page) {
-        giftModel.getGiftLists(userid, page, new Callback<HttpBean<PageBean<GiftBean>>>() {
+    public void getGiftLists(String userid, String page, SmartRefreshLayout smartRefreshLayout) {
+        giftModel.getGiftLists(userid, page, smartRefreshLayout,new Callback<HttpBean<PageBean<GiftBean>>>() {
             @Override
             public void get(HttpBean<PageBean<GiftBean>> httpBean) {
                 view.getGiftLists(httpBean.getData());

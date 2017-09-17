@@ -9,11 +9,26 @@ import com.dhitoshi.xfrs.huixiaobao.Bean.AddRelationBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.BaseBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.InfoAddRelationBean;
+import com.dhitoshi.xfrs.huixiaobao.Bean.PositionBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.RelationBean;
+import com.dhitoshi.xfrs.huixiaobao.Bean.SexBean;
+import com.dhitoshi.xfrs.huixiaobao.Dialog.LoadingDialog;
+import com.dhitoshi.xfrs.huixiaobao.Event.RelationEvent;
+import com.dhitoshi.xfrs.huixiaobao.Event.SpendEvent;
 import com.dhitoshi.xfrs.huixiaobao.Interface.AddRelationManage;
+import com.dhitoshi.xfrs.huixiaobao.Interface.DateCallBack;
+import com.dhitoshi.xfrs.huixiaobao.Interface.ItemClick;
 import com.dhitoshi.xfrs.huixiaobao.R;
+import com.dhitoshi.xfrs.huixiaobao.adapter.CommonAdapter;
+import com.dhitoshi.xfrs.huixiaobao.adapter.PositionAdapter;
+import com.dhitoshi.xfrs.huixiaobao.adapter.SexAdapter;
+import com.dhitoshi.xfrs.huixiaobao.common.SelectDateDialog;
+import com.dhitoshi.xfrs.huixiaobao.common.SelectDialog;
 import com.dhitoshi.xfrs.huixiaobao.presenter.AddRelationPresenter;
 
+import org.greenrobot.eventbus.EventBus;
+
+import java.util.ArrayList;
 import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -48,7 +63,7 @@ public class AddRelation extends BaseView implements AddRelationManage.View{
     private String telephone="";
     private String email="";
     private String company="";
-    private String position="";
+    private String workPosition="";
     private int userId;
     private List<BaseBean> relations;
     private List<BaseBean> positions;
@@ -70,24 +85,31 @@ public class AddRelation extends BaseView implements AddRelationManage.View{
             initRelationInfo();
         }
         setRightText("提交");
-        addRelationPresenter=new AddRelationPresenter(this);
+        addRelationPresenter=new AddRelationPresenter(this,this);
         addRelationPresenter.getListForRelation();
     }
     private void initRelationInfo() {
+        name=relationBean.getName();
         relationName.setText(relationBean.getName());
         relationName.setTextColor(getResources().getColor(R.color.colorPrimary));
+        sex=relationBean.getSex().equals("男")?"1":"0";
         relationSex.setText(relationBean.getSex());
         relationSex.setTextColor(getResources().getColor(R.color.colorPrimary));
         relationRelation.setText(relationBean.getRelation());
         relationRelation.setTextColor(getResources().getColor(R.color.colorPrimary));
+        birthday=relationBean.getBirthday();
         relationBirthday.setText(relationBean.getBirthday());
         relationBirthday.setTextColor(getResources().getColor(R.color.colorPrimary));
+        phone=relationBean.getPhone();
         relationPhone.setText(relationBean.getPhone());
         relationPhone.setTextColor(getResources().getColor(R.color.colorPrimary));
+        telephone=relationBean.getTelephone();
         relationTelephone.setText(relationBean.getTelephone());
         relationTelephone.setTextColor(getResources().getColor(R.color.colorPrimary));
+        email=relationBean.getEmail();
         relationEmail.setText(relationBean.getEmail());
         relationEmail.setTextColor(getResources().getColor(R.color.colorPrimary));
+        company=relationBean.getCompany();
         relationCompany.setText(relationBean.getCompany());
         relationCompany.setTextColor(getResources().getColor(R.color.colorPrimary));
         relationPosition.setText(relationBean.getPosition());
@@ -118,19 +140,63 @@ public class AddRelation extends BaseView implements AddRelationManage.View{
     }
     //选择性别
     private void SelectSex() {
-
+        List<SexBean> sexBeens=new ArrayList<>();
+        sexBeens.add(new SexBean("0","男"));
+        sexBeens.add(new SexBean("1","女"));
+        SexAdapter adapter=new SexAdapter(sexBeens,this,relationSex.getText().toString());
+        final SelectDialog dialog=new SelectDialog(this);
+        dialog.setTitle("选择性别").setAdapter(adapter).show();
+        adapter.addItemClickListener(new ItemClick<SexBean>() {
+            @Override
+            public void onItemClick(View view, SexBean sexBean, int position) {
+                relationSex.setText(sexBean.getName());
+                sex=sexBean.getId();
+                relationSex.setTextColor(getResources().getColor(R.color.colorPrimary));
+                dialog.dismiss();
+            }
+        });
     }
     //选择关系
     private void SelectRelation() {
-
+        CommonAdapter adapter=new CommonAdapter(relations,this,relationRelation.getText().toString());
+        final SelectDialog dialog=new SelectDialog(this);
+        dialog.setTitle("选择职位").setAdapter(adapter).show();
+        adapter.addItemClickListener(new ItemClick<BaseBean>() {
+            @Override
+            public void onItemClick(View view, BaseBean baseBean, int position) {
+                relationRelation.setText(baseBean.getName());
+                relation=String.valueOf(baseBean.getId());
+                relationRelation.setTextColor(getResources().getColor(R.color.colorPrimary));
+                dialog.dismiss();
+            }
+        });
     }
     //选择出生日期
     private void SelectBirthday() {
-
+        SelectDateDialog dialog=new SelectDateDialog(this);
+        dialog.setTitle("选择出生日期").setTime(relationBirthday.getText().toString()).getDate(new DateCallBack() {
+            @Override
+            public void getDate(String date) {
+                birthday=date;
+                relationBirthday.setText(date);
+                relationBirthday.setTextColor(getResources().getColor(R.color.colorPrimary));
+            }
+        }).show();
     }
     //选择职位
     private void SelectPosition() {
-
+        PositionAdapter adapter=new PositionAdapter(positions,this,relationPosition.getText().toString());
+        final SelectDialog dialog=new SelectDialog(this);
+        dialog.setTitle("选择职位").setAdapter(adapter).show();
+        adapter.addItemClickListener(new ItemClick<PositionBean>() {
+            @Override
+            public void onItemClick(View view, PositionBean positionBean, int position) {
+                relationPosition.setText(positionBean.getName());
+                workPosition=String.valueOf(positionBean.getId());
+                relationPosition.setTextColor(getResources().getColor(R.color.colorPrimary));
+                dialog.dismiss();
+            }
+        });
     }
     //提交
     private void commit() {
@@ -144,12 +210,16 @@ public class AddRelation extends BaseView implements AddRelationManage.View{
             bean.setTelephone(telephone);
             bean.setEmail(email);
             bean.setCompany(company);
-            bean.setPosition(position);
+            bean.setPosition(workPosition);
             bean.setNotes(relationNotes.getText().toString());
+            LoadingDialog dialog = LoadingDialog.build(this).setLoadingTitle("提交中");
+            dialog.show();
             if(relationBean==null){
-                addRelationPresenter.addRelation(bean);
+                bean.setUserid(String.valueOf(userId));
+                addRelationPresenter.addRelation(bean,dialog);
             }else{
-                addRelationPresenter.editRelation(bean);
+                bean.setId(String.valueOf(relationBean.getId()));
+                addRelationPresenter.editRelation(bean,dialog);
             }
         }
     }
@@ -192,7 +262,7 @@ public class AddRelation extends BaseView implements AddRelationManage.View{
             Toast.makeText(this,"请填写工作单位",Toast.LENGTH_SHORT).show();
             return false;
         }
-        if(position.isEmpty()){
+        if(workPosition.isEmpty()){
             Toast.makeText(this,"请选择职位",Toast.LENGTH_SHORT).show();
             return false;
         }
@@ -202,14 +272,30 @@ public class AddRelation extends BaseView implements AddRelationManage.View{
     @Override
     public void addRelation(String result) {
         Toast.makeText(this,result,Toast.LENGTH_SHORT).show();
+        EventBus.getDefault().post(new RelationEvent(1));
+        finish();
     }
     @Override
     public void editRelation(String result) {
         Toast.makeText(this,result,Toast.LENGTH_SHORT).show();
+        EventBus.getDefault().post(new RelationEvent(1));
+        finish();
     }
     @Override
     public void getListForRelation(HttpBean<InfoAddRelationBean> httpBean) {
         relations=httpBean.getData().getRelation();
         positions=httpBean.getData().getPosition();
+        if(relationBean!=null){
+            for (int i = 0; i < relations.size(); i++) {
+                if(relationBean.getRelation().equals(relations.get(i).getName())){
+                    relation=String.valueOf(relations.get(i).getId());
+                }
+            }
+            for (int j = 0; j < positions.size(); j++) {
+                if(relationBean.getPosition().equals(positions.get(j).getName())){
+                    workPosition=String.valueOf(positions.get(j).getId());
+                }
+            }
+        }
     }
 }

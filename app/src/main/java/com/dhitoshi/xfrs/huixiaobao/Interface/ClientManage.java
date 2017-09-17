@@ -1,4 +1,5 @@
 package com.dhitoshi.xfrs.huixiaobao.Interface;
+import com.dhitoshi.refreshlayout.SmartRefreshLayout;
 import com.dhitoshi.xfrs.huixiaobao.Bean.ClientBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.PageBean;
@@ -16,13 +17,11 @@ public interface ClientManage {
         void getSelectCustomer(ScreenBean screenBean);
     }
     interface Model{
-        void getClientList(Map<String,String> map, Callback<HttpBean<PageBean<ClientBean>>> callback);
-        void getClientList( Callback<HttpBean<PageBean<ClientBean>>> callback);
+        void getClientList(Map<String,String> map,SmartRefreshLayout smartRefreshLayout, Callback<HttpBean<PageBean<ClientBean>>> callback);
         void getSelectCustomer(Callback<HttpBean<ScreenBean>> callback);
     }
     interface Prsenter{
-        void getClientList(Map<String,String> map);
-        void getClientList();
+        void getClientList(Map<String,String> map, SmartRefreshLayout smartRefreshLayout);
         void getSelectCustomer();
     }
 }

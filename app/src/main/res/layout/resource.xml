@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:fitsSystemWindows="true"
-    android:background="#efefef"
+    android:background="#e6e6e6"
     >
     <include
         layout="@layout/toolbar"
@@ -161,7 +161,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="5dp"
-                android:background="#efefef"></View>
+                android:background="#e6e6e6"></View>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
@@ -223,7 +223,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="5dp"
-                android:background="#efefef"></View>
+                android:background="#e6e6e6"></View>
 
             <RelativeLayout
                 android:layout_width="match_parent"

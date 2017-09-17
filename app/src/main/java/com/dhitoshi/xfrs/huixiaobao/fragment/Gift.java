@@ -9,9 +9,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.dhitoshi.refreshlayout.SmartRefreshLayout;
+import com.dhitoshi.refreshlayout.api.RefreshLayout;
+import com.dhitoshi.refreshlayout.listener.OnRefreshListener;
 import com.dhitoshi.xfrs.huixiaobao.Bean.GiftBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.PageBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.SpendBean;
+import com.dhitoshi.xfrs.huixiaobao.Event.GiftEvent;
+import com.dhitoshi.xfrs.huixiaobao.Event.MeetingEvent;
 import com.dhitoshi.xfrs.huixiaobao.Interface.GiftManage;
 import com.dhitoshi.xfrs.huixiaobao.Interface.ItemClick;
 import com.dhitoshi.xfrs.huixiaobao.R;
@@ -19,6 +23,10 @@ import com.dhitoshi.xfrs.huixiaobao.adapter.GiftAdapter;
 import com.dhitoshi.xfrs.huixiaobao.presenter.GiftPresenter;
 import com.dhitoshi.xfrs.huixiaobao.view.AddGift;
 import com.dhitoshi.xfrs.huixiaobao.view.AddSpend;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -33,17 +41,15 @@ public class Gift extends BaseFragment implements GiftManage.View {
     SmartRefreshLayout smartRefreshLayout;
     Unbinder unbinder;
     private int id;
-
+    private int page=1;
+    private GiftPresenter giftPresenter;
     public Gift() {
 
     }
-
     @Override
     public void loadData() {
-        GiftPresenter giftPresenter = new GiftPresenter(this);
-        giftPresenter.getGiftLists(String.valueOf(id), "1");
+        smartRefreshLayout.autoRefresh();
     }
-
     public static Gift newInstance(int id) {
         Gift fragment = new Gift();
         Bundle args = new Bundle();
@@ -51,7 +57,6 @@ public class Gift extends BaseFragment implements GiftManage.View {
         fragment.setArguments(args);
         return fragment;
     }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,10 +69,21 @@ public class Gift extends BaseFragment implements GiftManage.View {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_gift, container, false);
         unbinder = ButterKnife.bind(this, view);
+        EventBus.getDefault().register(this);
+        initViews();
         return view;
     }
 
-
+    private void initViews() {
+        giftPresenter = new GiftPresenter(this,getContext());
+        smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+                page=1;
+                giftPresenter.getGiftLists(String.valueOf(id), String.valueOf(page),smartRefreshLayout);
+            }
+        });
+    }
     @Override
     public void getGiftLists(PageBean<GiftBean> pageBean) {
         GiftAdapter adapter=new GiftAdapter(pageBean.getList(),getContext());
@@ -81,10 +97,18 @@ public class Gift extends BaseFragment implements GiftManage.View {
             }
         });
     }
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+        EventBus.getDefault().unregister(this);
+    }
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventMainThread(GiftEvent event) {
+        switch (event.getState()){
+            case 1:
+                smartRefreshLayout.autoRefresh();
+                break;
+        }
     }
 }

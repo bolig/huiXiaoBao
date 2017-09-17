@@ -1,28 +1,27 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:gravity="center_vertical"
     >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:gravity="center"
+        android:background="@color/colorPrimary"
+        >
+        <com.dhitoshi.xfrs.huixiaobao.common.TbSegmentView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:buttonTexts="消息,好友,群组"
+            app:buttonValues="0,1,2"
+            android:layout_gravity="center"
+            app:style="1"
 
-    <Button
-        android:id="@+id/login"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="登录"
-        />
-    <Button
-        android:id="@+id/jump"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="跳转"
-        />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="消息"
-        android:layout_gravity="center"
-        />
+            />
+    </LinearLayout>
+<!--app:backgroundColor="#f00"
+            app:selectedColor="#ff0"-->
 
 </LinearLayout>

@@ -26,6 +26,7 @@ public class BaseView extends AppCompatActivity implements View.OnTouchListener{
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
     public void initBaseViews() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);

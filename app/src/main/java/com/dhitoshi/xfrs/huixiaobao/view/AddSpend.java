@@ -16,6 +16,8 @@ import com.dhitoshi.xfrs.huixiaobao.Bean.ProductBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.SaleaddressBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.SalesmanBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.SpendBean;
+import com.dhitoshi.xfrs.huixiaobao.Dialog.LoadingDialog;
+import com.dhitoshi.xfrs.huixiaobao.Event.SpendEvent;
 import com.dhitoshi.xfrs.huixiaobao.Interface.AddSpendManage;
 import com.dhitoshi.xfrs.huixiaobao.Interface.DateCallBack;
 import com.dhitoshi.xfrs.huixiaobao.Interface.ItemClick;
@@ -25,6 +27,8 @@ import com.dhitoshi.xfrs.huixiaobao.adapter.PositionAdapter;
 import com.dhitoshi.xfrs.huixiaobao.common.SelectDateDialog;
 import com.dhitoshi.xfrs.huixiaobao.common.SelectDialog;
 import com.dhitoshi.xfrs.huixiaobao.presenter.AddSpendPresenter;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -90,10 +94,11 @@ public class AddSpend extends BaseView implements AddSpendManage.View{
             initSpendInfo();
         }
         setRightText("提交");
-        addSpendPresenter=new AddSpendPresenter(this);
+        addSpendPresenter=new AddSpendPresenter(this,this);
         addSpendPresenter.getListForSpending();
     }
     private void initSpendInfo() {
+        createtime=spendBean.getCreatetime();
         spendDate.setText(spendBean.getCreatetime());
         spendDate.setTextColor(getResources().getColor(R.color.colorPrimary));
         spendProduct.setText(spendBean.getItem_name());
@@ -102,15 +107,21 @@ public class AddSpend extends BaseView implements AddSpendManage.View{
         spendLocation.setTextColor(getResources().getColor(R.color.colorPrimary));
         spendSaleMan.setText(spendBean.getSaleman_name());
         spendSaleMan.setTextColor(getResources().getColor(R.color.colorPrimary));
+        price=spendBean.getCost();
         spendPrice.setText(spendBean.getCost());
+        number=spendBean.getNumber();
         spendNumber.setText(spendBean.getNumber());
+        discount=spendBean.getDiscount();
         spendDiscount.setText(spendBean.getDiscount());
+        receive=spendBean.getAc_receive();
         spendMoney.setText(spendBean.getAc_receive());
+        debt=spendBean.getDebt();
         spendDebt.setText(spendBean.getDebt());
+        acNumber=spendBean.getAc_num();
         spendAcNum.setText(spendBean.getAc_num());
+        waitNumber=spendBean.getWait_num();
         spendWaitNum.setText(spendBean.getWait_num());
         spendNotes.setText(spendBean.getNotes());
-        spendNotes.setTextColor(getResources().getColor(R.color.colorPrimary));
     }
     @OnClick({R.id.spend_date, R.id.spend_product, R.id.spend_location, R.id.spend_saleMan,R.id.right_text})
     public void onViewClicked(View view) {
@@ -146,11 +157,14 @@ public class AddSpend extends BaseView implements AddSpendManage.View{
            bean.setAc_num(acNumber);
            bean.setWait_num(waitNumber);
            bean.setNotes(spendNotes.getText().toString());
-           bean.setUserid(String.valueOf(userId));
+           LoadingDialog dialog = LoadingDialog.build(this).setLoadingTitle("提交中");
+           dialog.show();
            if(null==spendBean){
-               addSpendPresenter.addSpend(bean);
+               bean.setUserid(String.valueOf(userId));
+               addSpendPresenter.addSpend(bean,dialog);
            }else{
-               addSpendPresenter.editSpend(bean);
+               bean.setId(String.valueOf(spendBean.getId()));
+               addSpendPresenter.editSpend(bean,dialog);
            }
        }
     }
@@ -166,7 +180,8 @@ public class AddSpend extends BaseView implements AddSpendManage.View{
         if(addressId.isEmpty()){
             Toast.makeText(this,"请选择购买地点",Toast.LENGTH_SHORT).show();
             return false;
-        }if(saleManId.isEmpty()){
+        }
+        if(saleManId.isEmpty()){
             Toast.makeText(this,"请选择销售员",Toast.LENGTH_SHORT).show();
             return false;
         }
@@ -248,11 +263,15 @@ public class AddSpend extends BaseView implements AddSpendManage.View{
     @Override
     public void addSpend(String result) {
         Toast.makeText(this, result, Toast.LENGTH_SHORT).show();
+        EventBus.getDefault().post(new SpendEvent(1));
+        finish();
     }
     //编辑消费
     @Override
     public void editSpend(String result) {
         Toast.makeText(this,result, Toast.LENGTH_SHORT).show();
+        EventBus.getDefault().post(new SpendEvent(1));
+        finish();
     }
     //获得添加消费所需列表
     @Override
@@ -260,6 +279,23 @@ public class AddSpend extends BaseView implements AddSpendManage.View{
         item= (ArrayList<ProductBean>) httpBean.getData().getItem();
         saleaddress=httpBean.getData().getSaleaddress();
         salesman= (ArrayList<BaseBean>) httpBean.getData().getSalesman();
+        if(spendBean!=null){
+            for (int i = 0; i < item.size(); i++) {
+                if(spendBean.getItem_name().equals(item.get(i).getName())){
+                    productId=String.valueOf(item.get(i).getId());
+                }
+            }
+            for (int j = 0; j < saleaddress.size(); j++) {
+                if(spendBean.getBuyaddress().equals(saleaddress.get(j).getName())){
+                    addressId=String.valueOf(saleaddress.get(j).getId());
+                }
+            }
+            for (int k = 0; k < salesman.size(); k++) {
+                if(spendBean.getSaleman_name().equals(salesman.get(k).getName())){
+                    saleManId=String.valueOf(salesman.get(k).getId());
+                }
+            }
+        }
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -271,6 +307,7 @@ public class AddSpend extends BaseView implements AddSpendManage.View{
                     spendProduct.setTextColor(getResources().getColor(R.color.colorPrimary));
                     break;
                 case 4:
+
                     saleManId=data.getStringExtra("id");
                     spendSaleMan.setText(data.getStringExtra("name"));
                     spendSaleMan.setTextColor(getResources().getColor(R.color.colorPrimary));

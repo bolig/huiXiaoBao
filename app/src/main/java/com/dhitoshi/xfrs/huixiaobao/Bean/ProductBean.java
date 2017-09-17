@@ -24,6 +24,15 @@ public class ProductBean implements Parcelable {
     private String cost;
     private String notes;
     private String type_name;
+    private String area_id;
+
+    public String getArea_id() {
+        return area_id;
+    }
+
+    public void setArea_id(String area_id) {
+        this.area_id = area_id;
+    }
 
     public int getId() {
         return id;

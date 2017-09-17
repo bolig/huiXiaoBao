@@ -1,10 +1,8 @@
 package com.dhitoshi.xfrs.huixiaobao.fragment;
-
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,6 +13,9 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import com.dhitoshi.refreshlayout.SmartRefreshLayout;
+import com.dhitoshi.refreshlayout.api.RefreshLayout;
+import com.dhitoshi.refreshlayout.listener.OnRefreshListener;
 import com.dhitoshi.xfrs.huixiaobao.Bean.AreaBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.ClientBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.CustomerTypeBean;
@@ -31,28 +32,26 @@ import com.dhitoshi.xfrs.huixiaobao.adapter.ClientAdapter;
 import com.dhitoshi.xfrs.huixiaobao.adapter.OrderByAdapter;
 import com.dhitoshi.xfrs.huixiaobao.adapter.TypeAdapter;
 import com.dhitoshi.xfrs.huixiaobao.common.MyDecoration;
+import com.dhitoshi.xfrs.huixiaobao.common.PopupArea;
 import com.dhitoshi.xfrs.huixiaobao.common.PopupMenu;
 import com.dhitoshi.xfrs.huixiaobao.common.PopupScreen;
-import com.dhitoshi.xfrs.huixiaobao.model.ClientModel;
 import com.dhitoshi.xfrs.huixiaobao.presenter.ClientPresenter;
-import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
 import com.dhitoshi.xfrs.huixiaobao.view.AddClient;
 import com.dhitoshi.xfrs.huixiaobao.view.ClientInfo;
 import com.dhitoshi.xfrs.huixiaobao.view.Contact;
 import com.dhitoshi.xfrs.huixiaobao.view.Query;
 import com.dhitoshi.xfrs.huixiaobao.view.Remind;
 import com.dhitoshi.xfrs.huixiaobao.view.Resource;
+import com.dhitoshi.xfrs.huixiaobao.view.SearchClient;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
-
 //客户页面
 public class Client extends BaseFragment implements ClientManage.View, View.OnTouchListener {
     Unbinder unbinder;
@@ -68,6 +67,8 @@ public class Client extends BaseFragment implements ClientManage.View, View.OnTo
     View screenView;
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
+    @BindView(R.id.smartRefreshLayout)
+    SmartRefreshLayout smartRefreshLayout;
     private Drawable drawable;
     private Drawable down;
     private Drawable up;
@@ -80,17 +81,19 @@ public class Client extends BaseFragment implements ClientManage.View, View.OnTo
     private TypeAdapter typeAdapter;
     private OrderByAdapter orderByAdapter;
     private PopupScreen popupScreen;
+    private PopupArea popupArea;
     private Intent it;
     private int screen_oldPosition = -1;
+    private ClientPresenter clientPresenter;
+    private int page=1;
+    private String type="2";
+    private String area="2";
+    private String order="6";
     public Client() {
     }
-
     @Override
     public void loadData() {
-        ClientPresenter clientPresenter=new ClientPresenter(this);
-        Map<String,String> map=new HashMap<>();
-        map.put("page","1");
-        clientPresenter.getClientList(map);
+        smartRefreshLayout.autoRefresh();
     }
     public static Client newInstance() {
         Client fragment = new Client();
@@ -108,7 +111,18 @@ public class Client extends BaseFragment implements ClientManage.View, View.OnTo
         return view;
     }
     private void initViews() {
-        ClientPresenter clientPresenter = new ClientPresenter(this);
+        clientPresenter = new ClientPresenter(this,getContext());
+        smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+                Map<String, String> map = new HashMap<>();
+                map.put("type", type);
+                map.put("area", area);
+                map.put("order", order);
+                map.put("page", String.valueOf(page));
+                clientPresenter.getClientList(map,smartRefreshLayout);
+            }
+        });
         clientPresenter.getSelectCustomer();
         clientMenu.setOnTouchListener(this);
         down = getContext().getResources().getDrawable(R.mipmap.down);
@@ -121,7 +135,7 @@ public class Client extends BaseFragment implements ClientManage.View, View.OnTo
         super.onDestroyView();
         unbinder.unbind();
     }
-    @OnClick({R.id.client_menu, R.id.client_role, R.id.client_type, R.id.client_sort})
+    @OnClick({R.id.client_menu, R.id.client_role, R.id.client_type, R.id.client_sort,R.id.client_search})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.client_menu:
@@ -136,6 +150,9 @@ public class Client extends BaseFragment implements ClientManage.View, View.OnTo
             case R.id.client_sort:
                 screenType();
                 break;
+            case R.id.client_search:
+                startActivity(new Intent(getContext(), SearchClient.class));
+                break;
         }
     }
     //筛选角色
@@ -148,6 +165,28 @@ public class Client extends BaseFragment implements ClientManage.View, View.OnTo
             roleText.setCompoundDrawables(null, null, up, null);
             roleText.setTextColor(Color.parseColor("#34B1FF"));
             screen_oldPosition = 0;
+        }
+        popupRole();
+    }
+    //弹出筛选框(地区)
+    private void popupRole() {
+        if (null == popupArea) {
+            popupArea = PopupArea.Build(getContext(), screenView).init(areas);
+            popupArea.show();
+            popupArea.addDismiss(new MyDismiss() {
+                @Override
+                public void dismiss() {
+                    roleText.setCompoundDrawables(null, null, down, null);
+                    roleText.setTextColor(Color.parseColor("#666666"));
+                    screen_oldPosition = -1;
+                }
+            });
+        } else {
+            if (!popupArea.isShowing()) {
+                popupArea.show();
+            } else {
+                popupArea.dismisss();
+            }
         }
     }
     //筛选类型
@@ -180,6 +219,8 @@ public class Client extends BaseFragment implements ClientManage.View, View.OnTo
     private void popupScreen(final int type) {
         if (null == popupScreen) {
             popupScreen = PopupScreen.Build(getContext(), screenView).init();
+            typeAdapter.setSelected(typeText.getText().toString());
+            orderByAdapter.setSelected(sortText.getText().toString());
             popupScreen.setResource(type == 1 ? typeAdapter : orderByAdapter);
             popupScreen.show();
             popupScreen.addDismiss(new MyDismiss() {
@@ -194,6 +235,8 @@ public class Client extends BaseFragment implements ClientManage.View, View.OnTo
             });
         } else {
             if (!popupScreen.isShowing()) {
+                typeAdapter.setSelected(typeText.getText().toString());
+                orderByAdapter.setSelected(sortText.getText().toString());
                 popupScreen.setResource(type == 1 ? typeAdapter : orderByAdapter);
                 popupScreen.show();
             } else {
@@ -241,11 +284,10 @@ public class Client extends BaseFragment implements ClientManage.View, View.OnTo
                         startActivity(it);
                         break;
                     case 5:
-                        it = new Intent(getContext(), ClientInfo.class);
-                        startActivity(it);
+
                         break;
                     case 6:
-                        it=new Intent(getContext(), Contact.class);
+                        it = new Intent(getContext(), Contact.class);
                         startActivity(it);
                         break;
                 }
@@ -287,15 +329,15 @@ public class Client extends BaseFragment implements ClientManage.View, View.OnTo
     //获取客户列表
     @Override
     public void getClientList(PageBean<ClientBean> pageBean) {
-        Log.e("TAG","客户数量"+pageBean.getList().size());
-        ClientAdapter adapter=new ClientAdapter(pageBean.getList(),getContext());
+        Log.e("TAG", "客户数量" + pageBean.getList().size());
+        ClientAdapter adapter = new ClientAdapter(pageBean.getList(), getContext());
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.addItemDecoration(new MyDecoration(getContext(), LinearLayoutManager.HORIZONTAL, R.drawable.divider_line));
         recyclerView.setAdapter(adapter);
         adapter.addItemClickListener(new ItemClick<ClientBean>() {
             @Override
             public void onItemClick(View view, ClientBean clientBean, int position) {
-                startActivity(new Intent(getContext(),ClientInfo.class).putExtra("info",clientBean));
+                startActivity(new Intent(getContext(), ClientInfo.class).putExtra("info", clientBean));
             }
         });
     }
@@ -304,21 +346,25 @@ public class Client extends BaseFragment implements ClientManage.View, View.OnTo
     public void getSelectCustomer(ScreenBean screenBean) {
         areas = screenBean.getArea();
         customerTypes = screenBean.getCustomer_type();
-        typeAdapter = new TypeAdapter(customerTypes, getContext(), R.layout.screen_item);
+        typeAdapter = new TypeAdapter(customerTypes, getContext());
         typeAdapter.addItemClickListener(new ItemClick<CustomerTypeBean>() {
             @Override
             public void onItemClick(View view, CustomerTypeBean customerTypeBean, int position) {
                 popupScreen.dismisss();
                 typeText.setText(customerTypeBean.getName());
+                type=String.valueOf(customerTypeBean.getId());
+                smartRefreshLayout.autoRefresh();
             }
         });
         orders = screenBean.getOrder();
-        orderByAdapter = new OrderByAdapter(orders, getContext(), R.layout.screen_item);
+        orderByAdapter = new OrderByAdapter(orders, getContext());
         orderByAdapter.addItemClickListener(new ItemClick<OrderBean>() {
             @Override
             public void onItemClick(View view, OrderBean orderBean, int position) {
                 popupScreen.dismisss();
                 sortText.setText(orderBean.getName());
+                order=String.valueOf(orderBean.getId());
+                smartRefreshLayout.autoRefresh();
             }
         });
     }

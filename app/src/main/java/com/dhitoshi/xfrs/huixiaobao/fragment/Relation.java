@@ -1,5 +1,4 @@
 package com.dhitoshi.xfrs.huixiaobao.fragment;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -7,19 +6,21 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.dhitoshi.refreshlayout.SmartRefreshLayout;
+import com.dhitoshi.refreshlayout.api.RefreshLayout;
+import com.dhitoshi.refreshlayout.listener.OnRefreshListener;
 import com.dhitoshi.xfrs.huixiaobao.Bean.PageBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.RelationBean;
+import com.dhitoshi.xfrs.huixiaobao.Event.RelationEvent;
 import com.dhitoshi.xfrs.huixiaobao.Interface.ItemClick;
 import com.dhitoshi.xfrs.huixiaobao.Interface.RelationManage;
 import com.dhitoshi.xfrs.huixiaobao.R;
 import com.dhitoshi.xfrs.huixiaobao.adapter.RelationAdapter;
 import com.dhitoshi.xfrs.huixiaobao.presenter.RelationPresenter;
 import com.dhitoshi.xfrs.huixiaobao.view.AddRelation;
-import com.dhitoshi.xfrs.huixiaobao.view.AddSpend;
-
-//relation_select
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -32,13 +33,13 @@ public class Relation extends BaseFragment implements RelationManage.View {
     SmartRefreshLayout smartRefreshLayout;
     Unbinder unbinder;
     private int id;
-
+    private int page=1;
+    private  RelationPresenter relationPresenter;
     public Relation() {
     }
     @Override
     public void loadData() {
-        RelationPresenter relationPresenter = new RelationPresenter(this);
-        relationPresenter.getRelationLists(String.valueOf(id), "1");
+        smartRefreshLayout.autoRefresh();
     }
     public static Relation newInstance(int id) {
         Relation fragment = new Relation();
@@ -53,13 +54,25 @@ public class Relation extends BaseFragment implements RelationManage.View {
         if (getArguments() != null) {
             id = getArguments().getInt(ARG_ID);
         }
-        //smartRefreshLayout.setOnRefreshListener()
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_relation, container, false);
         unbinder = ButterKnife.bind(this, view);
+        EventBus.getDefault().register(this);
+        initView();
         return view;
+    }
+
+    private void initView() {
+        relationPresenter = new RelationPresenter(this,getContext());
+        smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+                page=1;
+                relationPresenter.getRelationLists(String.valueOf(id), String.valueOf(page),smartRefreshLayout);
+            }
+        });
     }
     @Override
     public void getRelationLists(PageBean<RelationBean> pageBean) {
@@ -78,5 +91,14 @@ public class Relation extends BaseFragment implements RelationManage.View {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+        EventBus.getDefault().unregister(this);
+    }
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventMainThread(RelationEvent event) {
+        switch (event.getState()){
+            case 1:
+                smartRefreshLayout.autoRefresh();
+                break;
+        }
     }
 }

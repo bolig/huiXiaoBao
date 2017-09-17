@@ -4,6 +4,8 @@ import com.dhitoshi.xfrs.huixiaobao.Bean.AddSpendBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.InfoAddSpendBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.SpendBean;
+import com.dhitoshi.xfrs.huixiaobao.Dialog.LoadingDialog;
+
 /**
  * Created by dxs on 2017/9/8.
  */
@@ -15,13 +17,13 @@ public interface AddSpendManage {
         void getListForSpending(HttpBean<InfoAddSpendBean> httpBean);
     }
     interface Model{
-        void addSpend(AddSpendBean addSpendBean, Callback<HttpBean<SpendBean>> callback);
+        void addSpend(AddSpendBean addSpendBean, LoadingDialog dialog,Callback<HttpBean<SpendBean>> callback);
         void getListForSpending(Callback<HttpBean<InfoAddSpendBean>> callback);
-        void editSpend(AddSpendBean addSpendBean,Callback<HttpBean<SpendBean>> callback);
+        void editSpend(AddSpendBean addSpendBean,LoadingDialog dialog,Callback<HttpBean<SpendBean>> callback);
     }
     interface Presenter{
-        void addSpend(AddSpendBean addSpendBean);
-        void editSpend(AddSpendBean addSpendBean);
+        void addSpend(AddSpendBean addSpendBean,LoadingDialog dialog);
+        void editSpend(AddSpendBean addSpendBean,LoadingDialog dialog);
         void getListForSpending();
     }
 

@@ -15,6 +15,20 @@
         activeColor="#34B1FF"
         ></tab>
     <tab
+        id="@+id/tab_work"
+        icon="@mipmap/client"
+        title="工作"
+        inActiveColor="#999999"
+        activeColor="#34B1FF"
+        ></tab>
+    <tab
+        id="@+id/tab_stateMent"
+        icon="@mipmap/client"
+        title="报表"
+        inActiveColor="#999999"
+        activeColor="#34B1FF"
+        ></tab>
+    <tab
         id="@+id/tab_personal"
         icon="@mipmap/personal"
         title="我"

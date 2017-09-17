@@ -179,7 +179,7 @@ public class RelationBean implements Parcelable {
         this.telephone = in.readString();
         this.email = in.readString();
         this.company = in.readString();
-        this.position = in.readParcelable(Object.class.getClassLoader());
+        this.position = in.readString();
         this.createtime = in.readString();
         this.notes = in.readString();
     }

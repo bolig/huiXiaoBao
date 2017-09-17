@@ -5,6 +5,7 @@ package com.dhitoshi.xfrs.huixiaobao.Bean;
  */
 
 public class AddSpendBean {
+    private String id;
     private String userid;
     private String createtime;
     private String itemid;
@@ -18,6 +19,14 @@ public class AddSpendBean {
     private String ac_num;
     private String wait_num;
     private String notes;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getUserid() {
         return userid;

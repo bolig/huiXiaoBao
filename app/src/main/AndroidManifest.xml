@@ -15,7 +15,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.Theme">
+        <activity android:name=".view.Login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -62,7 +62,7 @@
             android:name=".view.Setting"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".view.Login"
+            android:name=".view.Theme"
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.Select"
@@ -72,7 +72,10 @@
         <activity android:name=".view.Product" />
         <activity android:name=".view.ProductType" />
         <activity android:name=".view.PersonalClient" />
-        <activity android:name=".view.AddProduct"></activity>
+        <activity android:name=".view.AddProduct" />
+        <activity android:name=".view.UserList" />
+        <activity android:name=".view.SearchClient" />
+        <activity android:name=".view.Area"></activity>
     </application>
 
 </manifest>

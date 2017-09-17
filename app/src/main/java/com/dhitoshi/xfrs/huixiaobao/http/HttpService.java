@@ -2,10 +2,12 @@ package com.dhitoshi.xfrs.huixiaobao.http;
 import com.dhitoshi.xfrs.huixiaobao.Bean.AddClientBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.AddGiftBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.AddMeetBean;
+import com.dhitoshi.xfrs.huixiaobao.Bean.AddProductBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.AddRelationBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.AddSpendBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.AddVisitBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.AreaBean;
+import com.dhitoshi.xfrs.huixiaobao.Bean.BaseBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.ClientBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.GiftBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
@@ -50,8 +52,9 @@ public interface HttpService {
     //获取客户列表
     @GET("customer/list")
     Observable<HttpBean<PageBean<ClientBean>>> getClientList(@QueryMap Map<String,String> map);
-    @GET("customer/list")
-    Observable<HttpBean<PageBean<ClientBean>>> getClientList();
+    //搜索客户
+    @GET("customer/search")
+    Observable<HttpBean<PageBean<ClientBean>>> searchClientList(@Query("search") String search,@Query("page") String page);
     //获取筛选框信息
     @GET("customer/selectCustomer")
     Observable<HttpBean<ScreenBean>> getSelectCustomer();
@@ -63,10 +66,10 @@ public interface HttpService {
     Observable<HttpBean<Object>> checkRepeat(@Query("area") String area,@Query("phone") String phone,@Query("id") String id);
     //获取产品类别
     @GET("item/itemType")
-    Observable<HttpBean<List<ProductTypeBean>>> getItemType();
+    Observable<HttpBean<PageBean<BaseBean>>> getItemType();
     //获取产品列表
     @GET("item/item")
-    Observable<HttpBean<List<ProductBean>>> getItem();
+    Observable<HttpBean<PageBean<ProductBean>>> getItem();
     //获取消费所需列表
     @GET("customer/spending/listForSpending")
     Observable<HttpBean<InfoAddSpendBean>> getListForSpending();
@@ -98,11 +101,15 @@ public interface HttpService {
     @GET("customer/gift/list")
     Observable<HttpBean<PageBean<GiftBean>>> getGiftLists(@Query("userid") String userid, @Query("page") String page);
     //删除产品
-    @GET("public/item/delete")
+    @GET("item/delete")
     Observable<HttpBean<Object>> deleteItem(@Query("token") String token,@Query("id") String id);
     //删除产品类型
-    @GET("public/itemType/delete")
+    @GET("itemType/delete")
     Observable<HttpBean<Object>> deleteItemType(@Query("token") String token,@Query("id") String id);
+    //获得用户列表
+    @GET("user/detailList")
+    Observable<HttpBean<PageBean<UserBean>>> getUserList(@Query("page") String page);
+
 
     //更改密码
     @POST("resetPassword")
@@ -129,7 +136,7 @@ public interface HttpService {
     @POST("customer/feedback/add")
     Observable<HttpBean<VisitBean>> addVisit(@Body AddVisitBean addVisitBean);
     //编辑回访
-    @POST("feedback/edit")
+    @POST("customer/feedback/edit")
     Observable<HttpBean<VisitBean>> editVisit(@Body AddVisitBean addVisitBean);
     //添加社会关系
     @POST("customer/relation/add")
@@ -151,10 +158,10 @@ public interface HttpService {
     Observable<HttpBean<MeetBean>> editMeet(@Body AddMeetBean addMeetBean);
     //添加产品
     @POST("item/add")
-    Observable<HttpBean<Object>> addItem(@Body RequestBody body);
+    Observable<HttpBean<Object>> addItem(@Body AddProductBean addProductBean);
     //编辑产品
     @POST("item/edit")
-    Observable<HttpBean<Object>> updateItem(@Body RequestBody body);
+    Observable<HttpBean<Object>> updateItem(@Body AddProductBean addProductBean);
     //添加产品类型
     @POST("itemType/add")
     Observable<HttpBean<Object>> addItemType(@Body RequestBody body);
