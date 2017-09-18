@@ -75,7 +75,8 @@
         <activity android:name=".view.AddProduct" />
         <activity android:name=".view.UserList" />
         <activity android:name=".view.SearchClient" />
-        <activity android:name=".view.Area"></activity>
+        <activity android:name=".view.Area" />
+        <activity android:name=".view.AddProductType"></activity>
     </application>
 
 </manifest>

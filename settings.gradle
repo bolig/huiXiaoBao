@@ -1,1 +1,1 @@
-include ':app', ':BottomBar', ':RefreshLayout', ':ImmersionBar', ':Bubbleview'
+include ':app', ':RefreshLayout', ':Bubbleview', ':BottomBar'

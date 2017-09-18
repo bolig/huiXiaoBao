@@ -1,11 +1,12 @@
 package com.dhitoshi.xfrs.huixiaobao.view;
 import android.Manifest;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
-import com.dhitoshi.ImmersionBar.ImmersionBar;
+import android.view.WindowManager;
 import com.dhitoshi.bottombar.BottomBar;
 import com.dhitoshi.bottombar.OnTabSelectListener;
 import com.dhitoshi.xfrs.huixiaobao.R;
@@ -16,6 +17,7 @@ import com.dhitoshi.xfrs.huixiaobao.fragment.News;
 import com.dhitoshi.xfrs.huixiaobao.fragment.Personal;
 import com.dhitoshi.xfrs.huixiaobao.fragment.StateMent;
 import com.dhitoshi.xfrs.huixiaobao.fragment.Work;
+import com.dhitoshi.xfrs.huixiaobao.utils.SystemBarTintManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,12 +47,25 @@ public class Theme extends AppCompatActivity {
     }
     //初始化页面控件
     private void initViews() {
+        // 透明状态栏
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        }
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.N){
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        }
+        // 创建状态栏的管理实例
+        SystemBarTintManager tintManager = new SystemBarTintManager(this);
+        // 激活状态栏设置
+        tintManager.setStatusBarTintEnabled(true);
+        // 激活导航栏设置
+        tintManager.setNavigationBarTintEnabled(true);
+        tintManager.setTintResource(R.color.colorPrimary);
         getThemeFragments();
         adapter = new ViewPagerAdapter(getSupportFragmentManager(), themeFragments);
         themeViewpager.setAdapter(adapter);
         themeViewpager.setOffscreenPageLimit(5);
-        ImmersionBar.with(this).navigationBarEnable(false)
-                .barColor(R.color.colorPrimary).init();
     }
     //初始化数据
     private void initDatas() {

@@ -19,7 +19,7 @@ public class RelationBean implements Parcelable {
      * phone : 18380419494
      * telephone : 223466780
      * email : 6742685468@qq.com
-     * company : 工作
+     * company : work
      * position : null
      * createtime : 1970-01-01 08:00:00
      * notes : 此地喝了饿了

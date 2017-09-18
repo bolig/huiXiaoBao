@@ -32,10 +32,9 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile project(':BottomBar')
     compile project(':RefreshLayout')
-    compile project(':ImmersionBar')
     compile project(':Bubbleview')
+    compile project(':BottomBar')
     compile 'com.jakewharton:butterknife:8.8.1'
     compile 'com.android.support:support-v4:25.3.1'
     compile 'com.alibaba.mobileim:IMCore:2.0.2.1@aar'

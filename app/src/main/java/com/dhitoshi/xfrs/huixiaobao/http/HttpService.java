@@ -12,6 +12,7 @@ import com.dhitoshi.xfrs.huixiaobao.Bean.ClientBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.GiftBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.InfoAddClientBean;
+import com.dhitoshi.xfrs.huixiaobao.Bean.InfoAddGiftBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.InfoAddMeetBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.InfoAddRelationBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.InfoAddSpendBean;
@@ -81,7 +82,7 @@ public interface HttpService {
     Observable<HttpBean<InfoAddRelationBean>> getListForRelation();
     //获取赠品所需列表
     @GET("customer/gift/listForGift")
-    Observable<HttpBean<InfoAddSpendBean>> getListForGift();
+    Observable<HttpBean<InfoAddGiftBean>> getListForGift();
     //获取会议所需列表
     @GET("customer/meeting/listForMeeting")
     Observable<HttpBean<InfoAddMeetBean>> getListForMeeting();
@@ -161,12 +162,12 @@ public interface HttpService {
     Observable<HttpBean<Object>> addItem(@Body AddProductBean addProductBean);
     //编辑产品
     @POST("item/edit")
-    Observable<HttpBean<Object>> updateItem(@Body AddProductBean addProductBean);
+    Observable<HttpBean<Object>> editItem(@Body AddProductBean addProductBean);
     //添加产品类型
     @POST("itemType/add")
-    Observable<HttpBean<Object>> addItemType(@Body RequestBody body);
+    Observable<HttpBean<Object>> addItemType(@Query("token") String token,@Query("name") String name);
     //编辑产品类型
     @POST("itemType/edit")
-    Observable<HttpBean<Object>> updateItemType(@Body RequestBody body);
+    Observable<HttpBean<Object>> editItemType(@Query("id") String id,@Query("token") String token,@Query("name") String name);
 
 }

@@ -16,14 +16,14 @@
         ></tab>
     <tab
         id="@+id/tab_work"
-        icon="@mipmap/client"
+        icon="@mipmap/work"
         title="工作"
         inActiveColor="#999999"
         activeColor="#34B1FF"
         ></tab>
     <tab
         id="@+id/tab_stateMent"
-        icon="@mipmap/client"
+        icon="@mipmap/state_ment"
         title="报表"
         inActiveColor="#999999"
         activeColor="#34B1FF"

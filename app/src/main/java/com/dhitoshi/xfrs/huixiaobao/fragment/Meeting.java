@@ -31,7 +31,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-//会议
+//meet
 public class Meeting extends BaseFragment implements MeetingManage.View {
     private static final String ARG_ID = "id";
     @BindView(R.id.recyclerView)

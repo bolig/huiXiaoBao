@@ -25,6 +25,15 @@ public class ProductBean implements Parcelable {
     private String notes;
     private String type_name;
     private String area_id;
+    private String type_id;
+
+    public String getType_id() {
+        return type_id;
+    }
+
+    public void setType_id(String type_id) {
+        this.type_id = type_id;
+    }
 
     public String getArea_id() {
         return area_id;
@@ -95,6 +104,8 @@ public class ProductBean implements Parcelable {
         dest.writeString(this.cost);
         dest.writeString(this.notes);
         dest.writeString(this.type_name);
+        dest.writeString(this.area_id);
+        dest.writeString(this.type_id);
     }
 
     public ProductBean() {
@@ -107,6 +118,8 @@ public class ProductBean implements Parcelable {
         this.cost = in.readString();
         this.notes = in.readString();
         this.type_name = in.readString();
+        this.area_id = in.readString();
+        this.type_id = in.readString();
     }
 
     public static final Parcelable.Creator<ProductBean> CREATOR = new Parcelable.Creator<ProductBean>() {

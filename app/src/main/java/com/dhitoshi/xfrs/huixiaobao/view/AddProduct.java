@@ -1,15 +1,33 @@
 package com.dhitoshi.xfrs.huixiaobao.view;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.dhitoshi.xfrs.huixiaobao.Bean.AddProductBean;
+import com.dhitoshi.xfrs.huixiaobao.Bean.AreaBean;
+import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
+import com.dhitoshi.xfrs.huixiaobao.Bean.PageBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.ProductBean;
+import com.dhitoshi.xfrs.huixiaobao.Dialog.LoadingDialog;
+import com.dhitoshi.xfrs.huixiaobao.Event.ProductEvent;
+import com.dhitoshi.xfrs.huixiaobao.Interface.AddProductManage;
 import com.dhitoshi.xfrs.huixiaobao.R;
+import com.dhitoshi.xfrs.huixiaobao.presenter.AddProductPresenter;
+import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
+
+import org.greenrobot.eventbus.EventBus;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-public class AddProduct extends BaseView {
+public class AddProduct extends BaseView implements AddProductManage.View{
     @BindView(R.id.product_area)
     TextView productArea;
     @BindView(R.id.product_type)
@@ -26,6 +44,7 @@ public class AddProduct extends BaseView {
     private String area="";
     private String cost="";
     private String notes="";
+    private AddProductPresenter addProductPresenter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,21 +59,22 @@ public class AddProduct extends BaseView {
         if(productBean!=null){
             initProductInfo();
         }
+        addProductPresenter=new AddProductPresenter(this,this);
         setRightText("提交");
     }
     private void initProductInfo() {
         area=productBean.getArea_id();
         productArea.setText(productBean.getArea());
+        productArea.setTextColor(getResources().getColor(R.color.colorPrimary));
+        type_id=productBean.getType_id();
         productType.setText(productBean.getType_name());
+        productType.setTextColor(getResources().getColor(R.color.colorPrimary));
         name=productBean.getName();
         productName.setText(productBean.getName());
-        productName.setTextColor(getResources().getColor(R.color.colorPrimary));
         cost=productBean.getCost();
         productPrice.setText(productBean.getCost());
-        productPrice.setTextColor(getResources().getColor(R.color.colorPrimary));
         notes=productBean.getNotes();
         productDescribe.setText(productBean.getNotes());
-        productDescribe.setTextColor(getResources().getColor(R.color.colorPrimary));
     }
     @OnClick({R.id.right_text, R.id.product_area, R.id.product_type})
     public void onViewClicked(View view) {
@@ -72,10 +92,23 @@ public class AddProduct extends BaseView {
     }
     private void commit() {
         if(juge()){
-
+            AddProductBean bean=new AddProductBean();
+            bean.setArea(area);
+            bean.setCost(cost);
+            bean.setName(name);
+            bean.setNotes(notes);
+            bean.setType_id(type_id);
+            bean.setToken(SharedPreferencesUtil.Obtain(this,"token","").toString());
+            LoadingDialog dialog = LoadingDialog.build(this).setLoadingTitle("提交中");
+            dialog.show();
+            if(productBean==null) {
+                addProductPresenter.addItem(bean,dialog);
+            }else{
+                bean.setId(String.valueOf(productBean.getId()));
+                addProductPresenter.editItem(bean,dialog);
+            }
         }
     }
-
     private boolean juge() {
         if(area.isEmpty()){
             Toast.makeText(this,"请选择所属区域",Toast.LENGTH_SHORT).show();
@@ -103,8 +136,32 @@ public class AddProduct extends BaseView {
         return true;
     }
     private void selectArea() {
+        startActivityForResult(new Intent(this,Area.class).putExtra("type",0),0);
     }
     private void selectType() {
-
+    }
+    @Override
+    public void addItem(String result) {
+        Toast.makeText(this,result,Toast.LENGTH_SHORT).show();
+        EventBus.getDefault().post(new ProductEvent(1));
+        finish();
+    }
+    @Override
+    public void editItem(String result) {
+        Toast.makeText(this,result,Toast.LENGTH_SHORT).show();
+        EventBus.getDefault().post(new ProductEvent(1));
+        finish();
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(resultCode==200){
+            switch (requestCode){
+                case 6:
+                    type_id=data.getStringExtra("id");
+                    productType.setText(data.getStringExtra("name"));
+                    productType.setTextColor(getResources().getColor(R.color.colorPrimary));
+                    break;
+            }
+        }
     }
 }

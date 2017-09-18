@@ -9,6 +9,7 @@ import android.widget.CheckBox;
 import android.widget.Toast;
 
 import com.dhitoshi.xfrs.huixiaobao.Bean.BaseBean;
+import com.dhitoshi.xfrs.huixiaobao.Bean.GiftBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HobbyBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.IllBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.ProductBean;
@@ -19,6 +20,7 @@ import com.dhitoshi.xfrs.huixiaobao.adapter.HobbyAdapter;
 import com.dhitoshi.xfrs.huixiaobao.adapter.IllAdapter;
 import com.dhitoshi.xfrs.huixiaobao.adapter.ProductAdapter;
 import com.dhitoshi.xfrs.huixiaobao.adapter.SelectAdapter;
+import com.dhitoshi.xfrs.huixiaobao.adapter.SelectGiftAdapter;
 import com.dhitoshi.xfrs.huixiaobao.common.MyDecoration;
 import java.util.ArrayList;
 import butterknife.BindView;
@@ -93,11 +95,39 @@ public class Select extends BaseView {
             case 4:
             case 5:
             case 6:
-            case 7:
             case 8:
+            case 9:
                 radioSelect();
                 break;
+            case 7:
+                initGift();
+                break;
         }
+    }
+    //选择赠送名称
+    private void initGift() {
+        SelectGiftAdapter adapter=new SelectGiftAdapter(content,this,select);
+        selectRecyclerView.setAdapter(adapter);
+        adapter.addItemClickListener(new ItemClick<GiftBean>() {
+            @Override
+            public void onItemClick(View view, GiftBean giftBean, int position) {
+                Intent it=new Intent();
+                it.putExtra("id",String.valueOf(giftBean.getId()));
+                it.putExtra("name",giftBean.getGift());
+                setResult(200,it);
+                finish();
+            }
+        });
+        adapter.addCheckBoxClick(new CheckBoxClick() {
+            @Override
+            public void check(boolean isChecked, String name, int id) {
+                Intent it=new Intent();
+                it.putExtra("id",String.valueOf(id));
+                it.putExtra("name",name);
+                setResult(200,it);
+                finish();
+            }
+        });
     }
     //选择购买产品
     private void initProduct() {

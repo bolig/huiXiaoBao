@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:fitsSystemWindows="true"
+    android:clipToPadding="true"
    >
     <com.dhitoshi.xfrs.huixiaobao.common.NoSlidingViewPager
         android:id="@+id/theme_viewpager"
