@@ -12,6 +12,7 @@ import com.dhitoshi.xfrs.huixiaobao.Bean.ClientBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.GiftBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.InfoAddClientBean;
+import com.dhitoshi.xfrs.huixiaobao.Bean.InfoAddGiftBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.InfoAddMeetBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.InfoAddRelationBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.InfoAddSpendBean;
@@ -81,7 +82,7 @@ public interface HttpService {
     Observable<HttpBean<InfoAddRelationBean>> getListForRelation();
     //获取赠品所需列表
     @GET("customer/gift/listForGift")
-    Observable<HttpBean<InfoAddSpendBean>> getListForGift();
+    Observable<HttpBean<InfoAddGiftBean>> getListForGift();
     //获取会议所需列表
     @GET("customer/meeting/listForMeeting")
     Observable<HttpBean<InfoAddMeetBean>> getListForMeeting();
