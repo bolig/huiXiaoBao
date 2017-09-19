@@ -76,7 +76,10 @@
         <activity android:name=".view.UserList" />
         <activity android:name=".view.SearchClient" />
         <activity android:name=".view.Area" />
-        <activity android:name=".view.AddProductType"></activity>
+        <activity android:name=".view.AddProductType" />
+        <activity android:name=".view.AddUser" />
+        <activity android:name=".view.AddPermission" />
+        <activity android:name=".view.AddArea"></activity>
     </application>
 
 </manifest>
