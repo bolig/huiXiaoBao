@@ -79,7 +79,8 @@
         <activity android:name=".view.AddProductType" />
         <activity android:name=".view.AddUser" />
         <activity android:name=".view.AddPermission" />
-        <activity android:name=".view.AddArea"></activity>
+        <activity android:name=".view.AddArea" />
+        <activity android:name=".view.Lunch"></activity>
     </application>
 
 </manifest>
