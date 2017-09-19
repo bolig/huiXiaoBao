@@ -17,6 +17,7 @@ import com.dhitoshi.xfrs.huixiaobao.Bean.InfoAddMeetBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.InfoAddRelationBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.InfoAddSpendBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.InfoAddVisitBean;
+import com.dhitoshi.xfrs.huixiaobao.Bean.KidBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.MeetBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.PageBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.ProductBean;
@@ -110,7 +111,12 @@ public interface HttpService {
     //获得用户列表
     @GET("user/detailList")
     Observable<HttpBean<PageBean<UserBean>>> getUserList(@Query("page") String page);
-
+    //删除权限组
+    @GET("group/delete")//id name area is_super notes token
+    Observable<HttpBean<Object>> deleteGroup(@Query("id") String id,@Query("token") String token);
+    //删除地区
+    @GET("area/delete")//id name area is_super notes token
+    Observable<HttpBean<Object>> deleteArea(@Query("id") String id,@Query("token") String token);
 
     //更改密码
     @POST("resetPassword")
@@ -169,5 +175,22 @@ public interface HttpService {
     //编辑产品类型
     @POST("itemType/edit")
     Observable<HttpBean<Object>> editItemType(@Query("id") String id,@Query("token") String token,@Query("name") String name);
-
+    //导入通讯录
+    @POST("customer/addFast")
+    Observable<HttpBean<Object>> addFast(@Query("name") String name,@Query("phone") String phone,@Query("area") String area);
+    //快速新增
+    @POST("fastSign")//name password group area CRM APP
+    Observable<HttpBean<Object>> fastSign(@QueryMap Map<String,String> map);
+    //添加权限组
+    @POST("group/add")//name area is_super notes token
+    Observable<HttpBean<Object>> addGroup(@QueryMap Map<String,String> map);
+    //编辑权限组
+    @POST("group/edit")//id name area is_super notes token
+    Observable<HttpBean<Object>> editGroup(@QueryMap Map<String,String> map);
+    //添加地区
+    @POST("area/add")
+    Observable<HttpBean<KidBean>> addArea(@Body KidBean kidBean,@Query("token") String token);
+    //编辑地区
+    @POST("area/edit")
+    Observable<HttpBean<Object>> editArea(@Body KidBean kidBean,@Query("token") String token);
 }

@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import com.dhitoshi.refreshlayout.SmartRefreshLayout;
 import com.dhitoshi.refreshlayout.api.RefreshLayout;
+import com.dhitoshi.refreshlayout.listener.OnLoadmoreListener;
 import com.dhitoshi.refreshlayout.listener.OnRefreshListener;
 import com.dhitoshi.xfrs.huixiaobao.Bean.AreaBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.ClientBean;
@@ -115,6 +116,17 @@ public class Client extends BaseFragment implements ClientManage.View, View.OnTo
         smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
+                Map<String, String> map = new HashMap<>();
+                map.put("type", type);
+                map.put("area", area);
+                map.put("order", order);
+                map.put("page", String.valueOf(page));
+                clientPresenter.getClientList(map,smartRefreshLayout);
+            }
+        });
+        smartRefreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
+            @Override
+            public void onLoadmore(RefreshLayout refreshlayout) {
                 Map<String, String> map = new HashMap<>();
                 map.put("type", type);
                 map.put("area", area);
@@ -330,6 +342,7 @@ public class Client extends BaseFragment implements ClientManage.View, View.OnTo
     @Override
     public void getClientList(PageBean<ClientBean> pageBean) {
         Log.e("TAG", "客户数量" + pageBean.getList().size());
+        Log.e("TAG", "next" + pageBean.getNextPage());
         ClientAdapter adapter = new ClientAdapter(pageBean.getList(), getContext());
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.addItemDecoration(new MyDecoration(getContext(), LinearLayoutManager.HORIZONTAL, R.drawable.divider_line));

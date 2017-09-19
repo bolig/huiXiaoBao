@@ -100,7 +100,6 @@ public class ClientInfo extends BaseView {
             }
         }
     }
-
     //菜单点击事件
     private void initMenuClick(PopupMenu popupMenu) {
         popupMenu.addMenuItemClickListener(new MenuItemClick<Menu>() {
@@ -115,7 +114,6 @@ public class ClientInfo extends BaseView {
             }
         });
     }
-
     //初始化菜单数据
     private void initMenuData() {
         menus = new ArrayList<>();

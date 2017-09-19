@@ -1,6 +1,6 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tl="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -11,17 +11,22 @@
         android:gravity="center"
         android:background="@color/colorPrimary"
         >
-        <com.dhitoshi.xfrs.huixiaobao.common.TbSegmentView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:buttonTexts="消息,好友,群组"
-            app:buttonValues="0,1,2"
-            android:layout_gravity="center"
-            app:style="1"
-
+        <com.dhitoshi.xfrs.huixiaobao.common.SegmentTabLayout
+            android:id="@+id/segement"
+            android:layout_width="220dp"
+            android:layout_height="32dp"
+            tl:tl_indicator_anim_enable="true"
+            tl:tl_indicator_bounce_enable="false"
+            tl:tl_indicator_color="@android:color/white"
+            tl:tl_textSelectColor="@color/colorPrimary"
+            tl:tl_textUnselectColor="@android:color/white"
+            tl:tl_tab_padding="15dp"
             />
     </LinearLayout>
-<!--app:backgroundColor="#f00"
-            app:selectedColor="#ff0"-->
-
+    <com.dhitoshi.xfrs.huixiaobao.common.NoSlidingViewPager
+        android:id="@+id/news_viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+    </com.dhitoshi.xfrs.huixiaobao.common.NoSlidingViewPager>
 </LinearLayout>

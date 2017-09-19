@@ -37,27 +37,6 @@
             android:layout_marginLeft="20dp"
             android:background="#D9D9D9"></View>
         <TextView
-            android:id="@+id/remind"
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:textSize="14dp"
-            android:textColor="#333333"
-            android:text="个人提醒"
-            android:layout_marginLeft="20dp"
-            android:paddingRight="15dp"
-            android:gravity="center_vertical"
-            android:drawableRight="@mipmap/right"
-            android:drawablePadding="8dp"
-            android:drawableLeft="@mipmap/personal_remind"
-            android:clickable="true"
-            android:background="@drawable/item_click"
-            />
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:layout_marginLeft="20dp"
-            android:background="#D9D9D9"></View>
-        <TextView
             android:id="@+id/base"
             android:layout_width="match_parent"
             android:layout_height="45dp"

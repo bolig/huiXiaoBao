@@ -18,12 +18,10 @@ public class Setting extends BaseView {
         initBaseViews();
         setTitle("设置");
     }
-    @OnClick({R.id.safe, R.id.remind, R.id.base, R.id.copyright, R.id.exit})
+    @OnClick({R.id.safe, R.id.base, R.id.copyright, R.id.exit})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.safe:
-                break;
-            case R.id.remind:
                 break;
             case R.id.base:
                 it=new Intent(this,BaseSetting.class);
@@ -32,6 +30,8 @@ public class Setting extends BaseView {
             case R.id.copyright:
                 break;
             case R.id.exit:
+                startActivity(new Intent(this,Login.class));
+                finish();
                 break;
         }
     }

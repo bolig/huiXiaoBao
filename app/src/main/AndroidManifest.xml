@@ -10,12 +10,12 @@
     <application
         android:name=".app.MyApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/logo"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.Login">
+        <activity android:name=".view.Launch">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -80,7 +80,8 @@
         <activity android:name=".view.AddUser" />
         <activity android:name=".view.AddPermission" />
         <activity android:name=".view.AddArea" />
-        <activity android:name=".view.Lunch"></activity>
+        <activity android:name=".view.Login" />
+        <activity android:name=".view.Welcome"></activity>
     </application>
 
 </manifest>
