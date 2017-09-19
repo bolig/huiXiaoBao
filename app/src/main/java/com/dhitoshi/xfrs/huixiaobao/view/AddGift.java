@@ -10,6 +10,7 @@ import com.dhitoshi.xfrs.huixiaobao.Bean.BaseBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.GiftBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.InfoAddGiftBean;
+import com.dhitoshi.xfrs.huixiaobao.Bean.ProductBean;
 import com.dhitoshi.xfrs.huixiaobao.Dialog.LoadingDialog;
 import com.dhitoshi.xfrs.huixiaobao.Event.GiftEvent;
 import com.dhitoshi.xfrs.huixiaobao.Event.MeetingEvent;
@@ -49,7 +50,7 @@ public class AddGift extends BaseView implements AddGiftManage.View{
     private String salesman="";
     private int userId;
     private GiftBean giftBean;
-    private ArrayList<GiftBean> item;
+    private ArrayList<ProductBean> item;
     private List<BaseBean> addresses;
     private ArrayList<BaseBean> salesmen;
     private AddGiftPresenter addGiftPresenter;
@@ -203,7 +204,7 @@ public class AddGift extends BaseView implements AddGiftManage.View{
     }
     @Override
     public void getListForGift(HttpBean<InfoAddGiftBean> httpBean) {
-        item= (ArrayList<GiftBean>) httpBean.getData().getGift();
+        item= (ArrayList<ProductBean>) httpBean.getData().getGift();
         addresses=httpBean.getData().getSaleaddress();
         salesmen= (ArrayList<BaseBean>) httpBean.getData().getSalesman();
         if(giftBean!=null){

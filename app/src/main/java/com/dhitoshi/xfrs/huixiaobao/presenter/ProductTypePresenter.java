@@ -4,15 +4,13 @@ import com.dhitoshi.refreshlayout.SmartRefreshLayout;
 import com.dhitoshi.xfrs.huixiaobao.Bean.BaseBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.PageBean;
+import com.dhitoshi.xfrs.huixiaobao.Dialog.LoadingDialog;
 import com.dhitoshi.xfrs.huixiaobao.Interface.Callback;
 import com.dhitoshi.xfrs.huixiaobao.Interface.ProductTypeManage;
 import com.dhitoshi.xfrs.huixiaobao.model.ProductTypeModel;
-import java.util.List;
-
 /**
  * Created by dxs on 2017/9/16.
  */
-
 public class ProductTypePresenter implements ProductTypeManage.Presenter{
     private ProductTypeManage.View view;
     private ProductTypeModel model;
@@ -21,12 +19,23 @@ public class ProductTypePresenter implements ProductTypeManage.Presenter{
         model=new ProductTypeModel(context);
     }
     @Override
-    public void getItemType(SmartRefreshLayout smartRefreshLayout) {
-       model.getItemType(smartRefreshLayout, new Callback<HttpBean<PageBean<BaseBean>>>() {
+    public void getItemType(String page,SmartRefreshLayout smartRefreshLayout) {
+       model.getItemType(page,smartRefreshLayout, new Callback<HttpBean<PageBean<BaseBean>>>() {
            @Override
            public void get(HttpBean<PageBean<BaseBean>> httpBean) {
                view.getItemType(httpBean);
            }
        });
     }
+
+    @Override
+    public void deleteItemType(String token, String id, LoadingDialog dialog) {
+        model.deleteItemType(token, id, dialog, new Callback<HttpBean<Object>>() {
+            @Override
+            public void get(HttpBean<Object> httpBean) {
+                view.deleteItemType(httpBean.getStatus().getMsg());
+            }
+        });
+    }
+
 }

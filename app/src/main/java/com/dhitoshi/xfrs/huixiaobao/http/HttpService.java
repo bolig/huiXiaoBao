@@ -162,12 +162,12 @@ public interface HttpService {
     Observable<HttpBean<Object>> addItem(@Body AddProductBean addProductBean);
     //编辑产品
     @POST("item/edit")
-    Observable<HttpBean<Object>> updateItem(@Body AddProductBean addProductBean);
+    Observable<HttpBean<Object>> editItem(@Body AddProductBean addProductBean);
     //添加产品类型
     @POST("itemType/add")
-    Observable<HttpBean<Object>> addItemType(@Body RequestBody body);
+    Observable<HttpBean<Object>> addItemType(@Query("token") String token,@Query("name") String name);
     //编辑产品类型
     @POST("itemType/edit")
-    Observable<HttpBean<Object>> updateItemType(@Body RequestBody body);
+    Observable<HttpBean<Object>> editItemType(@Query("id") String id,@Query("token") String token,@Query("name") String name);
 
 }

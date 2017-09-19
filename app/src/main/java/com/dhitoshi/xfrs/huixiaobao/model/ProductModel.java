@@ -6,6 +6,7 @@ import com.dhitoshi.refreshlayout.SmartRefreshLayout;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.PageBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.ProductBean;
+import com.dhitoshi.xfrs.huixiaobao.Dialog.LoadingDialog;
 import com.dhitoshi.xfrs.huixiaobao.Interface.Callback;
 import com.dhitoshi.xfrs.huixiaobao.Interface.ProductManage;
 import com.dhitoshi.xfrs.huixiaobao.common.CommonObserver;
@@ -22,7 +23,7 @@ public class ProductModel implements ProductManage.Model{
         this.context = context;
     }
     @Override
-    public void getItem(final SmartRefreshLayout smartRefreshLayout, final Callback<HttpBean<PageBean<ProductBean>>> callback) {
+    public void getItem(String page,final SmartRefreshLayout smartRefreshLayout, final Callback<HttpBean<PageBean<ProductBean>>> callback) {
         MyHttp http=MyHttp.getInstance();
         http.send(http.getHttpService().getItem(),new CommonObserver(new HttpResult<HttpBean<PageBean<ProductBean>>>() {
             @Override
@@ -37,6 +38,26 @@ public class ProductModel implements ProductManage.Model{
             @Override
             public void OnFail(String msg) {
                 smartRefreshLayout.finishRefresh();
+                Toast.makeText(context,msg,Toast.LENGTH_SHORT).show();
+            }
+        }));
+    }
+    @Override
+    public void deleteItem(String token, String id, final LoadingDialog dialog, final Callback<HttpBean<Object>> callback) {
+        MyHttp http=MyHttp.getInstance();
+        http.send(http.getHttpService().deleteItem(token,id),new CommonObserver(new HttpResult<HttpBean<Object>>() {
+            @Override
+            public void OnSuccess(HttpBean<Object> httpBean) {
+                dialog.dismiss();
+                if(httpBean.getStatus().getCode()==200){
+                    callback.get(httpBean);
+                }else{
+                    Toast.makeText(context,httpBean.getStatus().getMsg(),Toast.LENGTH_SHORT).show();
+                }
+            }
+            @Override
+            public void OnFail(String msg) {
+                dialog.dismiss();
                 Toast.makeText(context,msg,Toast.LENGTH_SHORT).show();
             }
         }));
