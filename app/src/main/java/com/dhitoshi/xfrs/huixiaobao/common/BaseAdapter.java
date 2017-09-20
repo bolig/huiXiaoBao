@@ -30,24 +30,31 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseRecyclerHo
     }
     @Override
     public BaseRecyclerHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view= LayoutInflater.from(context).inflate(layoutId,parent,false);
+        View view;
+        if(mList.size()==0){
+            view= LayoutInflater.from(context).inflate( R.layout.empty,parent,false);
+        }else{
+            view= LayoutInflater.from(context).inflate(layoutId,parent,false);
+        }
         return BaseRecyclerHolder.getBaseRecyclerHolder(view,contentLength,context);
     }
     @Override
     public void onBindViewHolder(BaseRecyclerHolder holder, final int position) {
-        covert(holder,mList,position);
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(itemClick!=null){
-                    itemClick.onItemClick(view,mList.get(position),position);
+        if(mList.size()>0){
+            covert(holder,mList,position);
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(itemClick!=null){
+                        itemClick.onItemClick(view,mList.get(position),position);
+                    }
                 }
-            }
-        });
+            });
+        }
     }
     @Override
     public int getItemCount() {
-        return mList==null?0:mList.size();
+        return mList==null?1:mList.size();
     }
     public void addItemClickListener(ItemClick<T> itemClick) {
         this.itemClick = itemClick;
