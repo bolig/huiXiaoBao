@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.dhitoshi.xfrs.huixiaobao.common.SwipeItemLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@android:color/white"
+        >
+        <TextView
+            android:id="@+id/area_name"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:textColor="#666666"
+            android:textSize="14dp"
+            android:paddingLeft="20dp"
+            />
+        <CheckBox
+            android:id="@+id/multiple_select"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@null"
+            android:background="@drawable/check"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dp"
+            />
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_width="140dp"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="5dp"
+        >
+        <TextView
+            android:id="@+id/type_update"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/colorPrimary"
+            android:gravity="center"
+            android:text="修改"
+            android:textColor="@android:color/white"
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/type_delete"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:text="删除"
+            android:gravity="center"
+            android:textSize="15dp"
+            android:textColor="@android:color/white"
+            android:background="@android:color/holo_red_light"
+            />
+    </LinearLayout>
+</com.dhitoshi.xfrs.huixiaobao.common.SwipeItemLayout>
