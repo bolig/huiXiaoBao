@@ -6,4 +6,6 @@
     android:background="#e6e6e6"
     >
     <include layout="@layout/base_recyclerview"></include>
+    <include layout="@layout/empty"></include>
+    <include layout="@layout/error"></include>
 </LinearLayout>

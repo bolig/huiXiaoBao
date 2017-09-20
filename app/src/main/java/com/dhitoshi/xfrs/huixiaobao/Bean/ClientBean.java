@@ -230,6 +230,7 @@ public class ClientBean implements Parcelable {
         dest.writeString(this.totalnum);
         dest.writeString(this.buytime);
         dest.writeString(this.backtime);
+        dest.writeString(this.area_id);
         dest.writeList(this.hobby);
         dest.writeList(this.ill);
     }
@@ -259,6 +260,7 @@ public class ClientBean implements Parcelable {
         this.totalnum = in.readString();
         this.buytime = in.readString();
         this.backtime = in.readString();
+        this.area_id=in.readString();
         this.hobby = new ArrayList<>();
         in.readList(this.hobby, HobbyBean.class.getClassLoader());
         this.ill = new ArrayList<>();

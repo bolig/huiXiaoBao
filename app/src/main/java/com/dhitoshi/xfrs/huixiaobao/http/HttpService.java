@@ -185,8 +185,8 @@ public interface HttpService {
     Observable<HttpBean<Object>> editGroup(@QueryMap Map<String,String> map);
     //添加地区
     @POST("area/add")
-    Observable<HttpBean<KidBean>> addArea(@Body KidBean kidBean,@Query("token") String token);
+    Observable<HttpBean<KidBean>> addArea(@QueryMap Map<String,String> map);
     //编辑地区
     @POST("area/edit")
-    Observable<HttpBean<Object>> editArea(@Body KidBean kidBean,@Query("token") String token);
+    Observable<HttpBean<Object>> editArea(@QueryMap Map<String,String> map);
 }

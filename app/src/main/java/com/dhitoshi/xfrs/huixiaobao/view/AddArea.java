@@ -1,21 +1,167 @@
 package com.dhitoshi.xfrs.huixiaobao.view;
+import android.content.Intent;
 import android.os.Bundle;
-import com.dhitoshi.xfrs.huixiaobao.R;
-import com.dhitoshi.xfrs.huixiaobao.adapter.AddAreaAdapter;
-import com.dhitoshi.xfrs.huixiaobao.common.SwipeItemLayout;
+import android.util.Log;
+import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.Toast;
 
-public class AddArea extends BaseView {
-    private AddAreaAdapter adapter;
-    private SwipeItemLayout.OnSwipeItemTouchListener listener;
+import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
+import com.dhitoshi.xfrs.huixiaobao.Bean.KidBean;
+import com.dhitoshi.xfrs.huixiaobao.Dialog.LoadingDialog;
+import com.dhitoshi.xfrs.huixiaobao.Event.AddAreaOneEvent;
+import com.dhitoshi.xfrs.huixiaobao.Event.AddAreaThreeEvent;
+import com.dhitoshi.xfrs.huixiaobao.Event.AddAreaTwoEvent;
+import com.dhitoshi.xfrs.huixiaobao.Interface.AddAreaManage;
+import com.dhitoshi.xfrs.huixiaobao.R;
+import com.dhitoshi.xfrs.huixiaobao.presenter.AddAreaPresenter;
+import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
+
+import org.greenrobot.eventbus.EventBus;
+
+import java.util.HashMap;
+import java.util.Map;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+public class AddArea extends BaseView implements AddAreaManage.View{
+    @BindView(R.id.area_name)
+    EditText areaName;
+    @BindView(R.id.area_admin)
+    EditText areaAdmin;
+    @BindView(R.id.area_phone)
+    EditText areaPhone;
+    @BindView(R.id.area_address)
+    EditText areaAddress;
+    @BindView(R.id.area_employee)
+    CheckBox areaEmployee;
+    @BindView(R.id.area_repeat)
+    CheckBox areaRepeat;
+    @BindView(R.id.area_notes)
+    EditText areaNotes;
+    private int id;
+    private String name="";
+    private String admin="";
+    private String phone="";
+    private String address="";
+    private String notes="";
+    private String is_employee="";
+    private String if_repeat="";
+    private String parent_id="";
+    private String token;
+    private Intent it;
+    private Map<String,String> map;
+    private  int type=-4;//-1 编辑 0--  1-- 2--
+    private AddAreaPresenter addAreaPresenter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_area);
+        ButterKnife.bind(this);
         initViews();
     }
     private void initViews() {
         initBaseViews();
         setTitle("地区");
-        setRightIcon(R.mipmap.add);
+        setRightText("确定");
+        it=getIntent();
+        map=new HashMap<>();
+        addAreaPresenter=new AddAreaPresenter(this,this);
+        type=it.getIntExtra("type",-4);
+        token=SharedPreferencesUtil.Obtain(this,"token","").toString();
+        Log.e("TAG","type---->>>"+type);
+        if(type<0){
+            initAreainfo();
+        }else{
+            parent_id=it.getStringExtra("parent_id");
+        }
+    }
+    private void initAreainfo() {
+        id=it.getIntExtra("id",0);
+        name=it.getStringExtra("name");
+        areaName.setText(name);
+        admin=it.getStringExtra("admin");
+        areaAdmin.setText(admin);
+        phone=it.getStringExtra("phone");
+        areaPhone.setText(phone);
+        address=it.getStringExtra("address");
+        areaAddress.setText(address);
+        notes=it.getStringExtra("notes");
+        areaNotes.setText(notes);
+        areaEmployee.setChecked(it.getIntExtra("is_employee",0)==1?true:false);
+        is_employee=String.valueOf(it.getIntExtra("is_employee",0));
+        areaRepeat.setChecked(it.getIntExtra("if_repeat",0)==1?true:false);
+        if_repeat=String.valueOf(it.getIntExtra("if_repeat",0));
+        parent_id=it.getStringExtra("parent_id");
+    }
+    @OnClick(R.id.right_text)
+    public void onViewClicked() {
+        commit();
+    }
+    private void commit() {
+        if (juge()) {
+            map.put("name",name);
+            map.put("notes",notes);
+            map.put("admin",admin);
+            map.put("token",token);
+            map.put("phone",phone);
+            map.put("address",address);
+            map.put("is_employee",is_employee);
+            map.put("if_repeat",if_repeat);
+            map.put("parent_id",type==0?"0":parent_id);
+            LoadingDialog dialog = LoadingDialog.build(this).setLoadingTitle("提交中");
+            dialog.show();
+            if(type<0) {
+                map.put("id",String.valueOf(id));
+                Log.e("TAG","map--->>>"+map.toString());
+                addAreaPresenter.editArea(map,dialog);
+            }else{
+                addAreaPresenter.addArea(map,dialog);
+            }
+        }
+    }
+    private boolean juge() {
+        name = areaName.getText().toString();
+        if (name.isEmpty()) {
+            Toast.makeText(this, "请填写地区名称", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        admin = areaAdmin.getText().toString();
+        phone = areaPhone.getText().toString();
+        address = areaAddress.getText().toString();
+        notes = areaNotes.getText().toString();
+        is_employee=areaEmployee.isChecked()?"1":"0";
+        if_repeat=areaRepeat.isChecked()?"1":"0";
+        token= SharedPreferencesUtil.Obtain(this,"token","").toString();
+        return true;
+    }
+    @Override
+    public void addArea(HttpBean<KidBean> httpBean) {
+        Toast.makeText(this,httpBean.getStatus().getMsg(),Toast.LENGTH_SHORT).show();
+        map.put("id",String.valueOf(httpBean.getData().getId()));
+        if(type==0){
+            EventBus.getDefault().post(new AddAreaOneEvent(1,map));
+        }
+        else  if(type==1){
+            EventBus.getDefault().post(new AddAreaTwoEvent(1,map));
+        }
+        else  if(type==2){
+            EventBus.getDefault().post(new AddAreaThreeEvent(1,map));
+        }
+        finish();
+    }
+    @Override
+    public void editArea(String result) {
+        Toast.makeText(this,result,Toast.LENGTH_SHORT).show();
+        if(type==-1){
+            EventBus.getDefault().post(new AddAreaOneEvent(2,map));
+        }
+        else  if(type==-2){
+            EventBus.getDefault().post(new AddAreaTwoEvent(2,map));
+        }
+        else  if(type==-3){
+            EventBus.getDefault().post(new AddAreaThreeEvent(2,map));
+        }
+        finish();
     }
 }

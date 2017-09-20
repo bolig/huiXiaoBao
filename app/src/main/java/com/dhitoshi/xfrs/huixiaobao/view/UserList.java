@@ -49,7 +49,7 @@ public class UserList extends BaseView implements UserManage.View{
     private void initViews() {
         initBaseViews();
         setTitle("用户");
-        setRightIcon(R.mipmap.add);
+      //  setRightIcon(R.mipmap.add);
         smartRefreshLayout.autoRefresh();
         smartRefreshLayout.setEnableLoadmore(false);
         userPresenter=new UserPresenter(this,this);
@@ -62,7 +62,7 @@ public class UserList extends BaseView implements UserManage.View{
     }
     @OnClick(R.id.right_icon)
     public void onViewClicked() {
-        popupMenu();
+      //  popupMenu();
     }
     //弹出菜单
     private void popupMenu() {

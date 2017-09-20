@@ -14,14 +14,14 @@ import java.util.List;
 public interface PermissionManage {
     interface View{
         void getGroupLists(HttpBean<List<UserRole>> httpBean);
-        void deleteArea(String result);
+        void deleteGroup(String result);
     }
     interface Model{
         void getGroupLists(String token,SmartRefreshLayout smartRefreshLayout, Callback<HttpBean<List<UserRole>>> callback);
-        void deleteArea(String id, String token, LoadingDialog dialog,Callback<HttpBean<Object>> callback);
+        void deleteGroup(String id, String token, LoadingDialog dialog,Callback<HttpBean<Object>> callback);
     }
     interface Presenter{
         void getGroupLists(String token,SmartRefreshLayout smartRefreshLayout);
-        void deleteArea(String id, String token, LoadingDialog dialog);
+        void deleteGroup(String id, String token, LoadingDialog dialog);
     }
 }

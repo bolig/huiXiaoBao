@@ -1,10 +1,13 @@
 package com.dhitoshi.xfrs.huixiaobao.Bean;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by dxs on 2017/9/6.
  */
 
-public class UserRole {
+public class UserRole implements Parcelable {
 
 
     /**
@@ -70,4 +73,43 @@ public class UserRole {
     public void setArea_id(String area_id) {
         this.area_id = area_id;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.id);
+        dest.writeString(this.name);
+        dest.writeString(this.area);
+        dest.writeString(this.notes);
+        dest.writeInt(this.is_super);
+        dest.writeString(this.area_id);
+    }
+
+    public UserRole() {
+    }
+
+    protected UserRole(Parcel in) {
+        this.id = in.readInt();
+        this.name = in.readString();
+        this.area = in.readString();
+        this.notes = in.readString();
+        this.is_super = in.readInt();
+        this.area_id = in.readString();
+    }
+
+    public static final Parcelable.Creator<UserRole> CREATOR = new Parcelable.Creator<UserRole>() {
+        @Override
+        public UserRole createFromParcel(Parcel source) {
+            return new UserRole(source);
+        }
+
+        @Override
+        public UserRole[] newArray(int size) {
+            return new UserRole[size];
+        }
+    };
 }

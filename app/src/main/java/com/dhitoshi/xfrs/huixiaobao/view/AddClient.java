@@ -10,7 +10,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dhitoshi.xfrs.huixiaobao.Bean.AddClientBean;
-import com.dhitoshi.xfrs.huixiaobao.Bean.AreaBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.ClientBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.CustomerTypeBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HobbyBean;
@@ -20,6 +19,8 @@ import com.dhitoshi.xfrs.huixiaobao.Bean.InfoAddClientBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.PositionBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.SexBean;
 import com.dhitoshi.xfrs.huixiaobao.Dialog.LoadingDialog;
+import com.dhitoshi.xfrs.huixiaobao.Event.ClientEvent;
+import com.dhitoshi.xfrs.huixiaobao.Event.InfoEvent;
 import com.dhitoshi.xfrs.huixiaobao.Interface.AddClientManage;
 import com.dhitoshi.xfrs.huixiaobao.Interface.DateCallBack;
 import com.dhitoshi.xfrs.huixiaobao.Interface.ItemClick;
@@ -31,6 +32,8 @@ import com.dhitoshi.xfrs.huixiaobao.common.SelectDateDialog;
 import com.dhitoshi.xfrs.huixiaobao.common.SelectDialog;
 import com.dhitoshi.xfrs.huixiaobao.presenter.AddClientPresenter;
 import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -97,6 +100,8 @@ public class AddClient extends BaseView implements AddClientManage.View {
     private ClientBean clientBean;
     private String hobby="";
     private String ill="";
+    private String hobbyName="";
+    private String illName="";
     private int areaId=0;
     private ArrayList<HobbyBean> hobbys;
     private ArrayList<IllBean> ills;
@@ -135,9 +140,9 @@ public class AddClient extends BaseView implements AddClientManage.View {
         clientPhone.setText(clientBean.getPhone());
         int hobbySize=clientBean.getHobby().size();
         for (int i = 0; i < hobbySize; i++) {
-            hobby+=clientBean.getHobby().get(i).getHobbyname()+" ";
+            hobbyName+=clientBean.getHobby().get(i).getHobbyname()+" ";
         }
-        clientHobby.setText(hobby);
+        clientHobby.setText(hobbyName);
         clientHobby.setTextColor(getResources().getColor(R.color.colorPrimary));
         vip=clientBean.getVip_id();
         clientVip.setText(clientBean.getVip_id());
@@ -166,9 +171,9 @@ public class AddClient extends BaseView implements AddClientManage.View {
         clientEntryMan.setTextColor(getResources().getColor(R.color.colorPrimary));
         int illSize=clientBean.getIll().size();
         for (int i = 0; i < illSize; i++) {
-            ill+=clientBean.getIll().get(i).getIllname()+" ";
+            illName+=clientBean.getIll().get(i).getIllname()+" ";
         }
-        clientIll.setText(ill);
+        clientIll.setText(illName);
         clientIll.setTextColor(getResources().getColor(R.color.colorPrimary));
         clientNotes.setText(clientBean.getNotes());
     }
@@ -176,11 +181,15 @@ public class AddClient extends BaseView implements AddClientManage.View {
     @Override
     public void addClient(String result) {
         Toast.makeText(this,result,Toast.LENGTH_SHORT).show();
+        EventBus.getDefault().post(new ClientEvent(1));
+        finish();
     }
     //编辑客户
     @Override
-    public void editClient(String result) {
-        Toast.makeText(this,result,Toast.LENGTH_SHORT).show();
+    public void editClient(HttpBean<ClientBean> httpBean) {
+        Toast.makeText(this,httpBean.getStatus().getMsg(),Toast.LENGTH_SHORT).show();
+        EventBus.getDefault().post(new InfoEvent(1,httpBean.getData()));
+        finish();
     }
     //获取添加客户所需列表
     @Override
@@ -189,6 +198,38 @@ public class AddClient extends BaseView implements AddClientManage.View {
         ills= (ArrayList<IllBean>) httpBean.getData().getIll();
         positions=httpBean.getData().getPosition();
         customerTypes=httpBean.getData().getCustomerType();
+        if(clientBean!=null){
+            for (int i = 0; i < clientBean.getHobby().size(); i++) {
+                for (int j = 0; j < hobbys.size(); j++) {
+                    if(clientBean.getHobby().get(i).getHobbyname().equals(hobbys.get(j).getName())){
+                        if(hobby.isEmpty()){
+                            hobby+=String.valueOf(hobbys.get(j).getId());
+                        }
+                        hobby+=","+String.valueOf(hobbys.get(j).getId());
+                    }
+                }
+            }
+            for (int i = 0; i < clientBean.getIll().size(); i++) {
+                for (int j = 0; j < ills.size(); j++) {
+                    if(clientBean.getIll().get(i).getIllname().equals(ills.get(j).getName())){
+                        if(ill.isEmpty()){
+                            ill+=String.valueOf(ills.get(j).getId());
+                        }
+                        ill+=","+String.valueOf(ills.get(j).getId());
+                    }
+                }
+            }
+            for (int m = 0; m < positions.size(); m++) {
+                if(clientBean.getPosition().equals(positions.get(m).getName())){
+                    workPosition=String.valueOf(positions.get(m).getId());
+                }
+            }
+            for (int k = 0; k < customerTypes.size(); k++) {
+                if(clientBean.getType().equals(customerTypes.get(k).getName())){
+                    type=String.valueOf(customerTypes.get(k).getId());
+                }
+            }
+        }
     }
     //查重
     @Override
@@ -223,6 +264,7 @@ public class AddClient extends BaseView implements AddClientManage.View {
             if(null==clientBean){
                 addClientPresenter.addClient(addClientBean,dialog);
             }else{
+                addClientBean.setId(String.valueOf(clientBean.getId()));
                 addClientPresenter.editClient(addClientBean,dialog);
             }
         }
@@ -391,7 +433,7 @@ public class AddClient extends BaseView implements AddClientManage.View {
     }
     //选择地区
     private void selectArea() {
-        startActivityForResult(new Intent(this,Area.class).putExtra("type",0),0);
+        startActivityForResult(new Intent(this,SelectArea.class).putExtra("type",0),0);
     }
     //选择疾病
     private void selectIll() {
@@ -459,6 +501,14 @@ public class AddClient extends BaseView implements AddClientManage.View {
                    ill=data.getStringExtra("ids");
                    clientIll.setText(data.getStringExtra("names"));
                    clientIll.setTextColor(getResources().getColor(R.color.colorPrimary));
+                   break;
+           }
+       }else if(resultCode==200){
+           switch (requestCode){
+               case 0:
+                   area=data.getStringExtra("area_id");
+                   clientArea.setText(data.getStringExtra("area_name"));
+                   clientArea.setTextColor(getResources().getColor(R.color.colorPrimary));
                    break;
            }
        }

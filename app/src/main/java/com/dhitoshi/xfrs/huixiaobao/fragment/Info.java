@@ -11,7 +11,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dhitoshi.xfrs.huixiaobao.Bean.ClientBean;
+import com.dhitoshi.xfrs.huixiaobao.Event.ClientEvent;
+import com.dhitoshi.xfrs.huixiaobao.Event.InfoEvent;
 import com.dhitoshi.xfrs.huixiaobao.R;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -85,6 +91,7 @@ public class Info extends Fragment {
         View view = inflater.inflate(R.layout.fragment_info, container, false);
         unbinder = ButterKnife.bind(this, view);
         initViews();
+        EventBus.getDefault().register(this);
         return view;
     }
 
@@ -120,6 +127,7 @@ public class Info extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+        EventBus.getDefault().unregister(this);
     }
 
     @OnClick({R.id.info_send, R.id.info_call})
@@ -130,6 +138,15 @@ public class Info extends Fragment {
             case R.id.info_call:
                 Intent phoneIntent = new Intent("android.intent.action.CALL", Uri.parse("tel:" + clientBean.getPhone()));
                 getContext().startActivity(phoneIntent);
+                break;
+        }
+    }
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventMainThread(InfoEvent event) {
+        switch (event.getState()){
+            case 1:
+                clientBean=event.getClientBean();
+                initViews();
                 break;
         }
     }

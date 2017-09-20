@@ -1,16 +1,12 @@
 package com.dhitoshi.xfrs.huixiaobao.view;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dhitoshi.xfrs.huixiaobao.Bean.AddProductBean;
-import com.dhitoshi.xfrs.huixiaobao.Bean.AreaBean;
-import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
-import com.dhitoshi.xfrs.huixiaobao.Bean.PageBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.ProductBean;
 import com.dhitoshi.xfrs.huixiaobao.Dialog.LoadingDialog;
 import com.dhitoshi.xfrs.huixiaobao.Event.ProductEvent;
@@ -20,9 +16,6 @@ import com.dhitoshi.xfrs.huixiaobao.presenter.AddProductPresenter;
 import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
 
 import org.greenrobot.eventbus.EventBus;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -136,7 +129,7 @@ public class AddProduct extends BaseView implements AddProductManage.View{
         return true;
     }
     private void selectArea() {
-        startActivityForResult(new Intent(this,Area.class).putExtra("type",0),0);
+        startActivityForResult(new Intent(this,SelectArea.class),0);
     }
     private void selectType() {
         startActivityForResult(new Intent(this,SelectType.class).putExtra("selected",productType.getText().toString()),6);
@@ -161,6 +154,15 @@ public class AddProduct extends BaseView implements AddProductManage.View{
                     type_id=data.getStringExtra("id");
                     productType.setText(data.getStringExtra("name"));
                     productType.setTextColor(getResources().getColor(R.color.colorPrimary));
+                    break;
+            }
+        }
+        else if(resultCode==200){
+            switch (requestCode){
+                case 0:
+                    area=data.getStringExtra("area_id");
+                    productArea.setText(data.getStringExtra("area_name"));
+                    productArea.setTextColor(getResources().getColor(R.color.colorPrimary));
                     break;
             }
         }

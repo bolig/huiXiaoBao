@@ -74,6 +74,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@null"
+                    android:singleLine="true"
                     android:hint="请输入"
                     android:textColor="@color/colorPrimary"
                     android:textColorHint="#BFBFBF"
@@ -95,12 +96,12 @@
                     android:layout_weight="1"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
-                    android:text="员工节点"
+                    android:text="超级管理员权限"
                     android:textColor="#666666"
                     android:textSize="14dp"
                     />
                 <CheckBox
-                    android:id="@+id/meet_attend"
+                    android:id="@+id/super_attend"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/check"
@@ -118,9 +119,9 @@
                 android:layout_height="40dp"
                 android:layout_marginLeft="20dp"
                 android:gravity="center_vertical"
-                android:text="备注" />
+                android:text="描述" />
             <EditText
-                android:id="@+id/spend_notes"
+                android:id="@+id/permission_notes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"

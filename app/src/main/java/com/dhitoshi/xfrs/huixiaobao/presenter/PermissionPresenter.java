@@ -32,11 +32,11 @@ public class PermissionPresenter implements PermissionManage.Presenter{
     }
 
     @Override
-    public void deleteArea(String id, String token, LoadingDialog dialog) {
-        model.deleteArea(id, token, dialog, new Callback<HttpBean<Object>>() {
+    public void deleteGroup(String id, String token, LoadingDialog dialog) {
+        model.deleteGroup(id, token, dialog, new Callback<HttpBean<Object>>() {
             @Override
             public void get(HttpBean<Object> httpBean) {
-                view.deleteArea(httpBean.getStatus().getMsg());
+                view.deleteGroup(httpBean.getStatus().getMsg());
             }
         });
     }

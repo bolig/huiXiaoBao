@@ -40,7 +40,7 @@ public class AddClientPresenter implements AddClientManage.Presenter{
         addClientModel.editClient(addClientBean,dialog, new Callback<HttpBean<ClientBean>>() {
             @Override
             public void get(HttpBean<ClientBean> httpBean) {
-                view.editClient(httpBean.getStatus().getMsg());
+                view.editClient(httpBean);
             }
         });
     }

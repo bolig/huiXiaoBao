@@ -28,7 +28,6 @@ public class SetProductAdapter extends BaseAdapter<ProductBean>{
         holder.getView(R.id.product_update).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 context.startActivity(new Intent(context, AddProduct.class).putExtra("product",mList.get(position)));
             }
         });

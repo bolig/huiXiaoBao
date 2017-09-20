@@ -162,7 +162,7 @@
                 android:hint="请输入备注内容... ..."
                 android:minHeight="100dp"
                 android:padding="5dp"
-                android:textColor="#BFBFBF"
+                android:textColor="@color/colorPrimary"
                 android:textColorHint="#BFBFBF"
                 android:textSize="14dp" />
             <View
@@ -187,7 +187,7 @@
                 android:hint="请输入回访内容... ..."
                 android:minHeight="100dp"
                 android:padding="5dp"
-                android:textColor="#BFBFBF"
+                android:textColor="@color/colorPrimary"
                 android:textColorHint="#BFBFBF"
                 android:textSize="14dp" />
             <View
@@ -200,6 +200,7 @@
                 android:layout_marginLeft="20dp"
                 android:gravity="center_vertical"
                 android:text="客户建议" />
+
             <EditText
                 android:id="@+id/visit_suggest"
                 android:layout_width="match_parent"
@@ -212,7 +213,7 @@
                 android:hint="请输入客户建议内容... ..."
                 android:minHeight="100dp"
                 android:padding="5dp"
-                android:textColor="#BFBFBF"
+                android:textColor="@color/colorPrimary"
                 android:textColorHint="#BFBFBF"
                 android:textSize="14dp" />
             <!--<View-->

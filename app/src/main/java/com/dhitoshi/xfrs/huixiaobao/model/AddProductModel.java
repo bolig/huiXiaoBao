@@ -6,9 +6,12 @@ import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
 import com.dhitoshi.xfrs.huixiaobao.Dialog.LoadingDialog;
 import com.dhitoshi.xfrs.huixiaobao.Interface.AddProductManage;
 import com.dhitoshi.xfrs.huixiaobao.Interface.Callback;
+import com.dhitoshi.xfrs.huixiaobao.Interface.LoginCall;
 import com.dhitoshi.xfrs.huixiaobao.common.CommonObserver;
 import com.dhitoshi.xfrs.huixiaobao.http.HttpResult;
 import com.dhitoshi.xfrs.huixiaobao.http.MyHttp;
+import com.dhitoshi.xfrs.huixiaobao.utils.LoginUtil;
+
 /**
  * Created by dxs on 2017/9/18.
  */
@@ -19,7 +22,7 @@ public class AddProductModel implements AddProductManage.Model {
         this.context = context;
     }
     @Override
-    public void addItem(AddProductBean addProductBean, final LoadingDialog dialog, final Callback<HttpBean<Object>> callback) {
+    public void addItem(final AddProductBean addProductBean, final LoadingDialog dialog, final Callback<HttpBean<Object>> callback) {
         MyHttp http=MyHttp.getInstance();
         http.send(http.getHttpService().addItem(addProductBean),new CommonObserver(new HttpResult<HttpBean<Object>>() {
             @Override
@@ -27,7 +30,16 @@ public class AddProductModel implements AddProductManage.Model {
                 dialog.dismiss();
                 if(httpBean.getStatus().getCode()==200){
                     callback.get(httpBean);
-                }else{
+                }else if(httpBean.getStatus().getCode()==600){
+                    LoginUtil.autoLogin(context, new LoginCall() {
+                        @Override
+                        public void autoLogin(String token) {
+                           addProductBean.setToken(token);
+                            addItem(addProductBean,dialog,callback);
+                        }
+                    });
+                }
+                else{
                     Toast.makeText(context,httpBean.getStatus().getMsg(),Toast.LENGTH_SHORT).show();
                 }
             }
@@ -39,7 +51,7 @@ public class AddProductModel implements AddProductManage.Model {
         }));
     }
     @Override
-    public void editItem(AddProductBean addProductBean, final LoadingDialog dialog, final Callback<HttpBean<Object>> callback) {
+    public void editItem(final AddProductBean addProductBean, final LoadingDialog dialog, final Callback<HttpBean<Object>> callback) {
         MyHttp http=MyHttp.getInstance();
         http.send(http.getHttpService().editItem(addProductBean),new CommonObserver(new HttpResult<HttpBean<Object>>() {
             @Override
@@ -47,7 +59,16 @@ public class AddProductModel implements AddProductManage.Model {
                 dialog.dismiss();
                 if(httpBean.getStatus().getCode()==200){
                     callback.get(httpBean);
-                }else{
+                }else if(httpBean.getStatus().getCode()==600){
+                    LoginUtil.autoLogin(context, new LoginCall() {
+                        @Override
+                        public void autoLogin(String token) {
+                            addProductBean.setToken(token);
+                            editItem(addProductBean,dialog,callback);
+                        }
+                    });
+                }
+                else{
                     Toast.makeText(context,httpBean.getStatus().getMsg(),Toast.LENGTH_SHORT).show();
                 }
             }

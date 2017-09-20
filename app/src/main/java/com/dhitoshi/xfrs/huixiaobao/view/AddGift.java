@@ -222,7 +222,7 @@ public class AddGift extends BaseView implements AddGiftManage.View{
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(resultCode==400){
+        if(resultCode==200){
             switch (requestCode){
                 case 7:
                     gift=data.getStringExtra("id");

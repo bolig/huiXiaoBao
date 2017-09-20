@@ -12,4 +12,6 @@
         layout="@layout/toolbar"
         ></include>
     <include layout="@layout/base_recyclerview"></include>
+    <include layout="@layout/empty"></include>
+    <include layout="@layout/error"></include>
 </LinearLayout>

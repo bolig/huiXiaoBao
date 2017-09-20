@@ -59,7 +59,7 @@ public class Work extends Fragment {
 
     @OnClick({R.id.work_banner, R.id.work_examine, R.id.work_leave, R.id.work_sign, R.id.work_meet,
             R.id.work_target, R.id.work_performance, R.id.work_plan, R.id.work_visit, R.id.work_attendance,
-            R.id.leave, R.id.work_bbs, R.id.work_knowledge, R.id.work_news})
+            R.id.leave,R.id.examine, R.id.work_bbs, R.id.work_knowledge, R.id.work_news})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.work_banner:
@@ -93,6 +93,9 @@ public class Work extends Fragment {
                 Toast.makeText(getContext(),"开发中，敬请期待",Toast.LENGTH_SHORT).show();
                 break;
             case R.id.leave:
+                Toast.makeText(getContext(),"开发中，敬请期待",Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.examine:
                 Toast.makeText(getContext(),"开发中，敬请期待",Toast.LENGTH_SHORT).show();
                 break;
             case R.id.work_bbs:

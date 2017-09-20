@@ -1,10 +1,12 @@
 package com.dhitoshi.xfrs.huixiaobao.view;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.dhitoshi.refreshlayout.SmartRefreshLayout;
@@ -15,10 +17,8 @@ import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.PageBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.ProductBean;
 import com.dhitoshi.xfrs.huixiaobao.Dialog.LoadingDialog;
-import com.dhitoshi.xfrs.huixiaobao.Event.MeetingEvent;
 import com.dhitoshi.xfrs.huixiaobao.Event.ProductEvent;
 import com.dhitoshi.xfrs.huixiaobao.Interface.DeleteCallback;
-import com.dhitoshi.xfrs.huixiaobao.Interface.ItemClick;
 import com.dhitoshi.xfrs.huixiaobao.Interface.ProductManage;
 import com.dhitoshi.xfrs.huixiaobao.R;
 import com.dhitoshi.xfrs.huixiaobao.adapter.SetProductAdapter;
@@ -36,6 +36,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
 public class Product extends BaseView implements ProductManage.View {
     @BindView(R.id.right_icon)
     AppCompatImageView rightIcon;
@@ -43,12 +44,17 @@ public class Product extends BaseView implements ProductManage.View {
     RecyclerView recyclerView;
     @BindView(R.id.smartRefreshLayout)
     SmartRefreshLayout smartRefreshLayout;
+    @BindView(R.id.empty)
+    RelativeLayout empty;
+    @BindView(R.id.error)
+    RelativeLayout error;
     private ProductPresenter productPresenter;
-    private  SetProductAdapter adapter;
+    private SetProductAdapter adapter;
     private SwipeItemLayout.OnSwipeItemTouchListener listener;
-    private int deletePosition=-1;
+    private int deletePosition = -1;
     private List<ProductBean> products;
-    private int page=1;
+    private int page = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,18 +74,18 @@ public class Product extends BaseView implements ProductManage.View {
         initBaseViews();
         setTitle("产品");
         setRightIcon(R.mipmap.add);
-        products=new ArrayList<>();
+        products = new ArrayList<>();
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         listener = new SwipeItemLayout.OnSwipeItemTouchListener(this);
         recyclerView.addOnItemTouchListener(listener);
         smartRefreshLayout.autoRefresh();
-        productPresenter = new ProductPresenter(this,this);
+        productPresenter = new ProductPresenter(this, this);
         smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
                 products.removeAll(products);
-                page=1;
-                productPresenter.getItem(String.valueOf(page),smartRefreshLayout);
+                page = 1;
+                productPresenter.getItem(String.valueOf(page), smartRefreshLayout);
             }
         });
 
@@ -87,49 +93,54 @@ public class Product extends BaseView implements ProductManage.View {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
                 ++page;
-                productPresenter.getItem(String.valueOf(page),smartRefreshLayout);
+                productPresenter.getItem(String.valueOf(page), smartRefreshLayout);
             }
         });
     }
+
     @Override
     public void getItem(HttpBean<PageBean<ProductBean>> httpBean) {
         products.addAll(httpBean.getData().getList());
-        int size=products.size();
-        if(size>=10&&size%10==0){
+        int size = products.size();
+        if (size >= 10 && size % 10 == 0) {
             smartRefreshLayout.setEnableLoadmore(true);
-        }else{
+        } else {
             smartRefreshLayout.setEnableLoadmore(false);
         }
-        if(adapter==null){
+        empty.setVisibility(size==0? View.VISIBLE:View.GONE);
+        if (adapter == null) {
             adapter = new SetProductAdapter(products, this);
             recyclerView.setAdapter(adapter);
             adapter.addDeleteCallback(new DeleteCallback() {
                 @Override
-                public void delete(int id,int position) {
-                    deletePosition=position;
-                    String token= SharedPreferencesUtil.Obtain(Product.this,"token","").toString();
+                public void delete(int id, int position) {
+                    deletePosition = position;
+                    String token = SharedPreferencesUtil.Obtain(Product.this, "token", "").toString();
                     LoadingDialog dialog = LoadingDialog.build(Product.this).setLoadingTitle("删除中");
                     dialog.show();
-                    productPresenter.deleteItem(token,String.valueOf(id),dialog);
+                    productPresenter.deleteItem(token, String.valueOf(id), dialog);
                 }
             });
-        }else{
+        } else {
             adapter.notifyDataSetChanged();
         }
     }
+
     @Override
     public void deleteItem(String result) {
-        Toast.makeText(this,result,Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, result, Toast.LENGTH_SHORT).show();
         products.remove(deletePosition);
         adapter.notifyDataSetChanged();
     }
+
     @OnClick(R.id.right_icon)
     public void onViewClicked() {
-        startActivity(new Intent(this,AddProduct.class));
+        startActivity(new Intent(this, AddProduct.class));
     }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(ProductEvent event) {
-        switch (event.getState()){
+        switch (event.getState()) {
             case 1:
                 smartRefreshLayout.autoRefresh();
                 break;

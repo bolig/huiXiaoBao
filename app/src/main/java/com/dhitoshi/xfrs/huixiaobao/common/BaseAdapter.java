@@ -4,6 +4,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
 import com.dhitoshi.xfrs.huixiaobao.Interface.ItemClick;
 import com.dhitoshi.xfrs.huixiaobao.R;
 import java.util.List;
@@ -27,30 +29,29 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseRecyclerHo
     @Override
     public BaseRecyclerHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view;
-        if(mList.size()==0){
-            view= LayoutInflater.from(context).inflate(R.layout.empty,parent,false);
-        }else{
+//        if(mList.size()==0){
+//            view= LayoutInflater.from(context).inflate(R.layout.empty,parent,false);
+//        }else{
             view= LayoutInflater.from(context).inflate(layoutId,parent,false);
-        }
+       // }
         return BaseRecyclerHolder.getBaseRecyclerHolder(view,contentLength,context);
     }
     @Override
     public void onBindViewHolder(BaseRecyclerHolder holder, final int position) {
-        if(mList.size()>0){
-            covert(holder,mList,position);
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if(itemClick!=null){
-                        itemClick.onItemClick(view,mList.get(position),position);
-                    }
+        covert(holder,mList,position);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(itemClick!=null){
+                    itemClick.onItemClick(view,mList.get(position),position);
                 }
-            });
-        }
+            }
+        });
+
     }
     @Override
     public int getItemCount() {
-        return mList.size()==0?1:mList.size();
+        return mList.size();
     }
     public void addItemClickListener(ItemClick<T> itemClick) {
         this.itemClick = itemClick;

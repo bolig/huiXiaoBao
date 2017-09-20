@@ -1,4 +1,5 @@
 package com.dhitoshi.xfrs.huixiaobao.fragment;
+
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -12,7 +13,9 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 import com.dhitoshi.refreshlayout.SmartRefreshLayout;
 import com.dhitoshi.refreshlayout.api.RefreshLayout;
 import com.dhitoshi.refreshlayout.listener.OnLoadmoreListener;
@@ -24,6 +27,8 @@ import com.dhitoshi.xfrs.huixiaobao.Bean.Menu;
 import com.dhitoshi.xfrs.huixiaobao.Bean.OrderBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.PageBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.ScreenBean;
+import com.dhitoshi.xfrs.huixiaobao.Event.ClientEvent;
+import com.dhitoshi.xfrs.huixiaobao.Interface.AreaCallback;
 import com.dhitoshi.xfrs.huixiaobao.Interface.ClientManage;
 import com.dhitoshi.xfrs.huixiaobao.Interface.ItemClick;
 import com.dhitoshi.xfrs.huixiaobao.Interface.MenuItemClick;
@@ -45,14 +50,20 @@ import com.dhitoshi.xfrs.huixiaobao.view.Remind;
 import com.dhitoshi.xfrs.huixiaobao.view.Resource;
 import com.dhitoshi.xfrs.huixiaobao.view.SearchClient;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+
 //客户页面
 public class Client extends BaseFragment implements ClientManage.View, View.OnTouchListener {
     Unbinder unbinder;
@@ -70,6 +81,10 @@ public class Client extends BaseFragment implements ClientManage.View, View.OnTo
     RecyclerView recyclerView;
     @BindView(R.id.smartRefreshLayout)
     SmartRefreshLayout smartRefreshLayout;
+    @BindView(R.id.empty)
+    RelativeLayout empty;
+    @BindView(R.id.error)
+    RelativeLayout error;
     private Drawable drawable;
     private Drawable down;
     private Drawable up;
@@ -86,49 +101,56 @@ public class Client extends BaseFragment implements ClientManage.View, View.OnTo
     private Intent it;
     private int screen_oldPosition = -1;
     private ClientPresenter clientPresenter;
-    private int page=1;
-    private String type="2";
-    private String area="2";
-    private String order="6";
+    private int page = 1;
+    private String type = "2";
+    private String area = "2";
+    private String order = "6";
     private List<ClientBean> clients;
-    private  ClientAdapter adapter;
+    private ClientAdapter adapter;
+
     public Client() {
     }
+
     @Override
     public void loadData() {
         smartRefreshLayout.autoRefresh();
     }
+
     public static Client newInstance() {
         Client fragment = new Client();
         return fragment;
     }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_client, container, false);
         unbinder = ButterKnife.bind(this, view);
         initViews();
+        EventBus.getDefault().register(this);
         return view;
     }
+
     private void initViews() {
-        clients=new ArrayList<>();
+        clients = new ArrayList<>();
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.addItemDecoration(new MyDecoration(getContext(), LinearLayoutManager.HORIZONTAL, R.drawable.divider_line));
-        clientPresenter = new ClientPresenter(this,getContext());
+        clientPresenter = new ClientPresenter(this, getContext());
         smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
                 clients.removeAll(clients);
-                page=1;
+                page = 1;
                 Map<String, String> map = new HashMap<>();
                 map.put("type", type);
                 map.put("area", area);
                 map.put("order", order);
                 map.put("page", String.valueOf(page));
-                clientPresenter.getClientList(map,smartRefreshLayout);
+                clientPresenter.getClientList(map, smartRefreshLayout);
             }
         });
 
@@ -141,7 +163,7 @@ public class Client extends BaseFragment implements ClientManage.View, View.OnTo
                 map.put("area", area);
                 map.put("order", order);
                 map.put("page", String.valueOf(page));
-                clientPresenter.getClientList(map,smartRefreshLayout);
+                clientPresenter.getClientList(map, smartRefreshLayout);
             }
         });
         clientPresenter.getSelectCustomer();
@@ -151,12 +173,15 @@ public class Client extends BaseFragment implements ClientManage.View, View.OnTo
         up = getContext().getResources().getDrawable(R.mipmap.up);
         up.setBounds(0, 0, up.getMinimumWidth(), up.getMinimumHeight());
     }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+        EventBus.getDefault().unregister(this);
     }
-    @OnClick({R.id.client_menu, R.id.client_role, R.id.client_type, R.id.client_sort,R.id.client_search})
+
+    @OnClick({R.id.client_menu, R.id.client_role, R.id.client_type, R.id.client_sort, R.id.client_search})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.client_menu:
@@ -176,6 +201,7 @@ public class Client extends BaseFragment implements ClientManage.View, View.OnTo
                 break;
         }
     }
+
     //筛选角色
     private void screenRole() {
         if (screen_oldPosition == 0) {
@@ -189,6 +215,7 @@ public class Client extends BaseFragment implements ClientManage.View, View.OnTo
         }
         popupRole();
     }
+
     //弹出筛选框(地区)
     private void popupRole() {
         if (null == popupArea) {
@@ -200,6 +227,13 @@ public class Client extends BaseFragment implements ClientManage.View, View.OnTo
                     roleText.setCompoundDrawables(null, null, down, null);
                     roleText.setTextColor(Color.parseColor("#666666"));
                     screen_oldPosition = -1;
+                }
+            });
+            popupArea.addAreaClick(new AreaCallback() {
+                @Override
+                public void getArea(String id, String areaName) {
+                    area = id;
+                    roleText.setText(areaName);
                     smartRefreshLayout.autoRefresh();
                 }
             });
@@ -211,6 +245,7 @@ public class Client extends BaseFragment implements ClientManage.View, View.OnTo
             }
         }
     }
+
     //筛选类型
     private void screenRoleType() {
         if (screen_oldPosition == 1) {
@@ -224,6 +259,7 @@ public class Client extends BaseFragment implements ClientManage.View, View.OnTo
         }
         popupScreen(1);
     }
+
     //筛选排序
     private void screenType() {
         if (screen_oldPosition == 2) {
@@ -237,6 +273,7 @@ public class Client extends BaseFragment implements ClientManage.View, View.OnTo
         }
         popupScreen(2);
     }
+
     //弹出筛选框(类型 排序)
     private void popupScreen(final int type) {
         if (null == popupScreen) {
@@ -266,6 +303,7 @@ public class Client extends BaseFragment implements ClientManage.View, View.OnTo
             }
         }
     }
+
     //弹出菜单
     private void popupMenu() {
         if (null == popupMenu) {
@@ -281,6 +319,7 @@ public class Client extends BaseFragment implements ClientManage.View, View.OnTo
             }
         }
     }
+
     //菜单点击事件
     private void initMenuClick(PopupMenu popupMenu) {
         popupMenu.addMenuItemClickListener(new MenuItemClick<Menu>() {
@@ -316,6 +355,7 @@ public class Client extends BaseFragment implements ClientManage.View, View.OnTo
             }
         });
     }
+
     //初始化菜单数据
     private void initMenuData() {
         menus = new ArrayList<>();
@@ -348,18 +388,19 @@ public class Client extends BaseFragment implements ClientManage.View, View.OnTo
         menu = new Menu("导入通讯录", drawable);
         menus.add(menu);
     }
+
     //获取客户列表
     @Override
     public void getClientList(PageBean<ClientBean> pageBean) {
         clients.addAll(pageBean.getList());
-        int size=clients.size();
-        if(size>=10&&size%10==0){
+        int size = clients.size();
+        if (size >= 10 && size % 10 == 0) {
             smartRefreshLayout.setEnableLoadmore(true);
-        }else{
+        } else {
             smartRefreshLayout.setEnableLoadmore(false);
         }
-        Log.e("TAG", "客户数量" + pageBean.getList().size());
-        if(null==adapter){
+        empty.setVisibility(size==0?View.VISIBLE:View.GONE);
+        if (null == adapter) {
             adapter = new ClientAdapter(clients, getContext());
             recyclerView.setAdapter(adapter);
             adapter.addItemClickListener(new ItemClick<ClientBean>() {
@@ -368,11 +409,12 @@ public class Client extends BaseFragment implements ClientManage.View, View.OnTo
                     startActivity(new Intent(getContext(), ClientInfo.class).putExtra("info", clientBean));
                 }
             });
-        }else{
+        } else {
             adapter.notifyDataSetChanged();
         }
 
     }
+
     //获取筛选条件信息
     @Override
     public void getSelectCustomer(ScreenBean screenBean) {
@@ -384,7 +426,7 @@ public class Client extends BaseFragment implements ClientManage.View, View.OnTo
             public void onItemClick(View view, CustomerTypeBean customerTypeBean, int position) {
                 popupScreen.dismisss();
                 typeText.setText(customerTypeBean.getName());
-                type=String.valueOf(customerTypeBean.getId());
+                type = String.valueOf(customerTypeBean.getId());
                 smartRefreshLayout.autoRefresh();
             }
         });
@@ -395,11 +437,12 @@ public class Client extends BaseFragment implements ClientManage.View, View.OnTo
             public void onItemClick(View view, OrderBean orderBean, int position) {
                 popupScreen.dismisss();
                 sortText.setText(orderBean.getName());
-                order=String.valueOf(orderBean.getId());
+                order = String.valueOf(orderBean.getId());
                 smartRefreshLayout.autoRefresh();
             }
         });
     }
+
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         switch (event.getAction()) {
@@ -411,5 +454,14 @@ public class Client extends BaseFragment implements ClientManage.View, View.OnTo
                 break;
         }
         return false;
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventMainThread(ClientEvent event) {
+        switch (event.getState()) {
+            case 1:
+                smartRefreshLayout.autoRefresh();
+                break;
+        }
     }
 }

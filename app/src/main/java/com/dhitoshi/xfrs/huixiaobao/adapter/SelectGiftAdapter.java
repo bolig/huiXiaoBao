@@ -26,7 +26,7 @@ public class SelectGiftAdapter extends BaseAdapter<GiftBean> {
     }
     @Override
     public void covert(BaseRecyclerHolder holder, final List<GiftBean> mList, final int position) {
-        holder.setText(R.id.multiple_text,mList.get(position).getGift());
+        holder.setText(R.id.multiple_text,mList.get(position).getName());
         CheckBox checkBox=holder.getView(R.id.multiple_select);
         checkBox.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -15,7 +15,7 @@ import java.util.Map;
 public interface AddClientManage {
     interface View{
         void addClient(String result);
-        void editClient(String result);
+        void editClient(HttpBean<ClientBean> httpBean);
         void getInfoForAdd(HttpBean<InfoAddClientBean> httpBean);
         void checkRepeat(String result);
 

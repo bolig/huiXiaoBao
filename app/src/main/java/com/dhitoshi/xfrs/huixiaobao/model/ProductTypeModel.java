@@ -7,10 +7,13 @@ import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.PageBean;
 import com.dhitoshi.xfrs.huixiaobao.Dialog.LoadingDialog;
 import com.dhitoshi.xfrs.huixiaobao.Interface.Callback;
+import com.dhitoshi.xfrs.huixiaobao.Interface.LoginCall;
 import com.dhitoshi.xfrs.huixiaobao.Interface.ProductTypeManage;
 import com.dhitoshi.xfrs.huixiaobao.common.CommonObserver;
 import com.dhitoshi.xfrs.huixiaobao.http.HttpResult;
 import com.dhitoshi.xfrs.huixiaobao.http.MyHttp;
+import com.dhitoshi.xfrs.huixiaobao.utils.LoginUtil;
+
 import java.util.List;
 /**
  * Created by dxs on 2017/9/16.
@@ -43,7 +46,7 @@ public class ProductTypeModel implements ProductTypeManage.Model{
     }
 
     @Override
-    public void deleteItemType(String token, String id, final LoadingDialog dialog, final Callback<HttpBean<Object>> callback) {
+    public void deleteItemType(String token, final String id, final LoadingDialog dialog, final Callback<HttpBean<Object>> callback) {
         MyHttp http=MyHttp.getInstance();
         http.send(http.getHttpService().deleteItemType(token,id),new CommonObserver(new HttpResult<HttpBean<Object>>() {
             @Override
@@ -51,7 +54,15 @@ public class ProductTypeModel implements ProductTypeManage.Model{
                dialog.dismiss();
                 if(httpBean.getStatus().getCode()==200){
                     callback.get(httpBean);
-                }else{
+                }else if(httpBean.getStatus().getCode()==600){
+                    LoginUtil.autoLogin(context, new LoginCall() {
+                        @Override
+                        public void autoLogin(String token) {
+                            deleteItemType(token,id,dialog,callback);
+                        }
+                    });
+                }
+                else{
                     Toast.makeText(context,httpBean.getStatus().getMsg(),Toast.LENGTH_SHORT).show();
                 }
             }

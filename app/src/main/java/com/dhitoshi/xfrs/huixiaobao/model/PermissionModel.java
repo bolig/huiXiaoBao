@@ -9,11 +9,13 @@ import com.dhitoshi.xfrs.huixiaobao.Bean.ProductBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.UserRole;
 import com.dhitoshi.xfrs.huixiaobao.Dialog.LoadingDialog;
 import com.dhitoshi.xfrs.huixiaobao.Interface.Callback;
+import com.dhitoshi.xfrs.huixiaobao.Interface.LoginCall;
 import com.dhitoshi.xfrs.huixiaobao.Interface.PermissionManage;
 import com.dhitoshi.xfrs.huixiaobao.Interface.ProductManage;
 import com.dhitoshi.xfrs.huixiaobao.common.CommonObserver;
 import com.dhitoshi.xfrs.huixiaobao.http.HttpResult;
 import com.dhitoshi.xfrs.huixiaobao.http.MyHttp;
+import com.dhitoshi.xfrs.huixiaobao.utils.LoginUtil;
 
 import java.util.List;
 
@@ -37,7 +39,15 @@ public class PermissionModel implements PermissionManage.Model{
                 smartRefreshLayout.finishRefresh();
                 if(httpBean.getStatus().getCode()==200){
                     callback.get(httpBean);
-                }else{
+                }else if(httpBean.getStatus().getCode()==600){
+                    LoginUtil.autoLogin(context, new LoginCall() {
+                        @Override
+                        public void autoLogin(String token) {
+                           getGroupLists(token,smartRefreshLayout,callback);
+                        }
+                    });
+                }
+                else{
                     Toast.makeText(context,httpBean.getStatus().getMsg(),Toast.LENGTH_SHORT).show();
                 }
             }
@@ -50,15 +60,23 @@ public class PermissionModel implements PermissionManage.Model{
     }
 
     @Override
-    public void deleteArea(String id, String token, final LoadingDialog dialog, final Callback<HttpBean<Object>> callback) {
+    public void deleteGroup(final String id, String token, final LoadingDialog dialog, final Callback<HttpBean<Object>> callback) {
         MyHttp http=MyHttp.getInstance();
-        http.send(http.getHttpService().deleteArea(id,token),new CommonObserver(new HttpResult<HttpBean<Object>>() {
+        http.send(http.getHttpService().deleteGroup(id,token),new CommonObserver(new HttpResult<HttpBean<Object>>() {
             @Override
             public void OnSuccess(HttpBean<Object> httpBean) {
                dialog.dismiss();
                 if(httpBean.getStatus().getCode()==200){
                     callback.get(httpBean);
-                }else{
+                }else if(httpBean.getStatus().getCode()==600){
+                    LoginUtil.autoLogin(context, new LoginCall() {
+                        @Override
+                        public void autoLogin(String token) {
+                            deleteGroup(id,token,dialog,callback);
+                        }
+                    });
+                }
+                else{
                     Toast.makeText(context,httpBean.getStatus().getMsg(),Toast.LENGTH_SHORT).show();
                 }
             }

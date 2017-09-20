@@ -27,6 +27,16 @@ public class GiftBean implements Parcelable {
     private String saleaddress;
     private String salesman;
     private String notes;
+    private String name;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public int getId() {
         return id;
     }
@@ -76,6 +86,9 @@ public class GiftBean implements Parcelable {
         this.notes = notes;
     }
 
+    public GiftBean() {
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -91,9 +104,7 @@ public class GiftBean implements Parcelable {
         dest.writeString(this.saleaddress);
         dest.writeString(this.salesman);
         dest.writeString(this.notes);
-    }
-
-    public GiftBean() {
+        dest.writeString(this.name);
     }
 
     protected GiftBean(Parcel in) {
@@ -105,9 +116,10 @@ public class GiftBean implements Parcelable {
         this.saleaddress = in.readString();
         this.salesman = in.readString();
         this.notes = in.readString();
+        this.name = in.readString();
     }
 
-    public static final Parcelable.Creator<GiftBean> CREATOR = new Parcelable.Creator<GiftBean>() {
+    public static final Creator<GiftBean> CREATOR = new Creator<GiftBean>() {
         @Override
         public GiftBean createFromParcel(Parcel source) {
             return new GiftBean(source);

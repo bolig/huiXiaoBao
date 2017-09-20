@@ -113,7 +113,7 @@ public class Select extends BaseView {
             public void onItemClick(View view, GiftBean giftBean, int position) {
                 Intent it=new Intent();
                 it.putExtra("id",String.valueOf(giftBean.getId()));
-                it.putExtra("name",giftBean.getGift());
+                it.putExtra("name",giftBean.getName());
                 setResult(200,it);
                 finish();
             }
@@ -237,7 +237,7 @@ public class Select extends BaseView {
             return;
         }
         Intent it=new Intent();
-        it.putExtra("ids",ids);
+        it.putExtra("ids",ids.substring(0,ids.length()-1));
         it.putExtra("names",names);
         setResult(100,it);
         finish();
