@@ -35,7 +35,7 @@ public class Login extends AppCompatActivity implements LoginManage.View, View.O
     CheckBox check;
     private String name;
     private String password;
-
+    private boolean isRemeber=false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,11 +58,17 @@ public class Login extends AppCompatActivity implements LoginManage.View, View.O
         }
         loginName.setText(SharedPreferencesUtil.Obtain(this, "name","").toString());
         loginName.setSelection(loginName.getText().length());
+        isRemeber= (boolean) SharedPreferencesUtil.Obtain(this,"isRemeber",true);
+        if(isRemeber){
+            loginPswd.setText(SharedPreferencesUtil.Obtain(this, "password","").toString());
+            check.setChecked(isRemeber);
+        }
     }
 
     @Override
     public void login(UserBean userBean) {
         SharedPreferencesUtil.Save(this, "name",name);
+        SharedPreferencesUtil.Save(this, "password",password);
         SharedPreferencesUtil.Save(this, "truename", userBean.getTruename());
         SharedPreferencesUtil.Save(this, "id", userBean.getId());
         SharedPreferencesUtil.Save(this, "token", userBean.getToken());
