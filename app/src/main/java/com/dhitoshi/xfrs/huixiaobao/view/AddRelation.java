@@ -185,14 +185,14 @@ public class AddRelation extends BaseView implements AddRelationManage.View{
     }
     //选择职位
     private void SelectPosition() {
-        PositionAdapter adapter=new PositionAdapter(positions,this,relationPosition.getText().toString());
+        CommonAdapter adapter=new CommonAdapter(positions,this,relationPosition.getText().toString());
         final SelectDialog dialog=new SelectDialog(this);
         dialog.setTitle("选择职位").setAdapter(adapter).show();
-        adapter.addItemClickListener(new ItemClick<PositionBean>() {
+        adapter.addItemClickListener(new ItemClick<BaseBean>() {
             @Override
-            public void onItemClick(View view, PositionBean positionBean, int position) {
-                relationPosition.setText(positionBean.getName());
-                workPosition=String.valueOf(positionBean.getId());
+            public void onItemClick(View view, BaseBean baseBean, int position) {
+                relationPosition.setText(baseBean.getName());
+                workPosition=String.valueOf(baseBean.getId());
                 relationPosition.setTextColor(getResources().getColor(R.color.colorPrimary));
                 dialog.dismiss();
             }

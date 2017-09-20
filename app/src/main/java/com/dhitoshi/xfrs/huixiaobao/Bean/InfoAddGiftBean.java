@@ -5,15 +5,15 @@ import java.util.List;
  * Created by dxs on 2017/9/14.
  */
 public class InfoAddGiftBean {
-    private List<ProductBean> gift;
+    private List<GiftBean> gift;
     private List<BaseBean> saleaddress;
     private List<BaseBean> salesman;
 
-    public List<ProductBean> getGift() {
+    public List<GiftBean> getGift() {
         return gift;
     }
 
-    public void setGift(List<ProductBean> gift) {
+    public void setGift(List<GiftBean> gift) {
         this.gift = gift;
     }
 

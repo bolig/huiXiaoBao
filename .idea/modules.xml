@@ -7,6 +7,7 @@
       <module fileurl="file://$PROJECT_DIR$/HuiXiaoBao.iml" filepath="$PROJECT_DIR$/HuiXiaoBao.iml" />
       <module fileurl="file://$PROJECT_DIR$/RefreshLayout/RefreshLayout.iml" filepath="$PROJECT_DIR$/RefreshLayout/RefreshLayout.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/index/index.iml" filepath="$PROJECT_DIR$/index/index.iml" />
     </modules>
   </component>
 </project>

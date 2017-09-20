@@ -50,7 +50,7 @@ public class AddGift extends BaseView implements AddGiftManage.View{
     private String salesman="";
     private int userId;
     private GiftBean giftBean;
-    private ArrayList<ProductBean> item;
+    private ArrayList<GiftBean> item;
     private List<BaseBean> addresses;
     private ArrayList<BaseBean> salesmen;
     private AddGiftPresenter addGiftPresenter;
@@ -204,15 +204,10 @@ public class AddGift extends BaseView implements AddGiftManage.View{
     }
     @Override
     public void getListForGift(HttpBean<InfoAddGiftBean> httpBean) {
-        item= (ArrayList<ProductBean>) httpBean.getData().getGift();
+        item= (ArrayList<GiftBean>) httpBean.getData().getGift();
         addresses=httpBean.getData().getSaleaddress();
         salesmen= (ArrayList<BaseBean>) httpBean.getData().getSalesman();
         if(giftBean!=null){
-//            for (int i = 0; i < item.size(); i++) {
-//                if(giftBean.getGift().equals(item.get(i).getName())){
-//                    usertype=String.valueOf(item.get(i).getId());
-//                }
-//            }
             for (int j = 0; j < addresses.size(); j++) {
                 if(giftBean.getSaleaddress().equals(addresses.get(j).getName())){
                     saleaddress=String.valueOf(addresses.get(j).getId());

@@ -9,7 +9,7 @@ public class AddAreaOne extends BaseView {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.add_areaOther);
+        setContentView(R.layout.add_areaother);
         initViews();
     }
     private void initViews() {

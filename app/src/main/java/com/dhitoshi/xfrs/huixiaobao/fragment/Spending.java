@@ -100,7 +100,7 @@ public class Spending extends BaseFragment implements SpendManage.View {
     }
     @Override
     public void getSpendingLists(PageBean<SpendBean> pageBean) {
-        spends.addAll(spends);
+        spends.addAll(pageBean.getList());
         if(adapter==null){
             adapter = new SpendAdapter(spends, getContext());
             recyclerView.setAdapter(adapter);

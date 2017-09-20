@@ -1,19 +1,15 @@
 package com.dhitoshi.xfrs.huixiaobao.common;
-
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.dhitoshi.xfrs.huixiaobao.Interface.ItemClick;
-
+import com.dhitoshi.xfrs.huixiaobao.R;
 import java.util.List;
-
 /**
  * Created by dxs on 2017/8/21.
  */
-
 public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseRecyclerHolder> {
 
     private List<T> mList;
@@ -32,7 +28,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseRecyclerHo
     public BaseRecyclerHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view;
         if(mList.size()==0){
-            view= LayoutInflater.from(context).inflate( R.layout.empty,parent,false);
+            view= LayoutInflater.from(context).inflate(R.layout.empty,parent,false);
         }else{
             view= LayoutInflater.from(context).inflate(layoutId,parent,false);
         }
@@ -54,7 +50,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseRecyclerHo
     }
     @Override
     public int getItemCount() {
-        return mList==null?1:mList.size();
+        return mList.size()==0?1:mList.size();
     }
     public void addItemClickListener(ItemClick<T> itemClick) {
         this.itemClick = itemClick;
