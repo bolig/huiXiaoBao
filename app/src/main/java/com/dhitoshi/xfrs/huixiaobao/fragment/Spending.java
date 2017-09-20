@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.dhitoshi.refreshlayout.SmartRefreshLayout;
 import com.dhitoshi.refreshlayout.api.RefreshLayout;
+import com.dhitoshi.refreshlayout.listener.OnLoadmoreListener;
 import com.dhitoshi.refreshlayout.listener.OnRefreshListener;
 import com.dhitoshi.xfrs.huixiaobao.Bean.PageBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.SpendBean;
@@ -23,6 +24,9 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -37,6 +41,8 @@ public class Spending extends BaseFragment implements SpendManage.View {
     private int id;
     private SpendPresenter spendPresenter;
     private int page=1;
+    private List<SpendBean> spends;
+    private SpendAdapter adapter;
     public Spending() {
     }
     @Override
@@ -67,27 +73,48 @@ public class Spending extends BaseFragment implements SpendManage.View {
         return view;
     }
     private void initViews() {
+        spends=new ArrayList<>();
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         spendPresenter = new SpendPresenter(this,getContext());
         smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
+                spends.removeAll(spends);
                 page=1;
+                spendPresenter.getSpendingLists(String.valueOf(id), String.valueOf(page),smartRefreshLayout);
+            }
+        });
+        int size=spends.size();
+        if(size>=10&&size%10==0){
+            smartRefreshLayout.setEnableLoadmore(true);
+        }else{
+            smartRefreshLayout.setEnableLoadmore(false);
+        }
+        smartRefreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
+            @Override
+            public void onLoadmore(RefreshLayout refreshlayout) {
+                ++page;
                 spendPresenter.getSpendingLists(String.valueOf(id), String.valueOf(page),smartRefreshLayout);
             }
         });
     }
     @Override
     public void getSpendingLists(PageBean<SpendBean> pageBean) {
-        SpendAdapter adapter = new SpendAdapter(pageBean.getList(), getContext());
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(adapter);
-        adapter.addItemClickListener(new ItemClick<SpendBean>() {
-            @Override
-            public void onItemClick(View view, SpendBean spendBean, int position) {
-                startActivity(new Intent(getContext(), AddSpend.class)
-                        .putExtra("spend",spendBean).putExtra("id",id));
-            }
-        });
+        spends.addAll(spends);
+        if(adapter==null){
+            adapter = new SpendAdapter(spends, getContext());
+            recyclerView.setAdapter(adapter);
+            adapter.addItemClickListener(new ItemClick<SpendBean>() {
+                @Override
+                public void onItemClick(View view, SpendBean spendBean, int position) {
+                    startActivity(new Intent(getContext(), AddSpend.class)
+                            .putExtra("spend",spendBean).putExtra("id",id));
+                }
+            });
+        }else{
+            adapter.notifyDataSetChanged();
+        }
+
     }
     @Override
     public void onDestroyView() {

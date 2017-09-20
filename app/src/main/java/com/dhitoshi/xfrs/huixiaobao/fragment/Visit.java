@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.dhitoshi.refreshlayout.SmartRefreshLayout;
 import com.dhitoshi.refreshlayout.api.RefreshLayout;
+import com.dhitoshi.refreshlayout.listener.OnLoadmoreListener;
 import com.dhitoshi.refreshlayout.listener.OnRefreshListener;
 import com.dhitoshi.xfrs.huixiaobao.Bean.PageBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.VisitBean;
@@ -25,6 +26,9 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -40,6 +44,8 @@ public class Visit extends BaseFragment implements VisitManage.View {
     private int id;
     private int page=1;
     private VisitPresenter visitPresenter;
+    private List<VisitBean> visits;
+    private VisitAdapter adapter;
     public Visit() {
     }
     @Override
@@ -69,27 +75,48 @@ public class Visit extends BaseFragment implements VisitManage.View {
         return view;
     }
     private void initViews() {
+        visits=new ArrayList<>();
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         visitPresenter = new VisitPresenter(this,getContext());
         smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
+                visits.removeAll(visits);
                 page=1;
+                visitPresenter.getFeedbackLists(String.valueOf(id), String.valueOf(page),smartRefreshLayout);
+            }
+        });
+        int size=visits.size();
+        if(size>=10&&size%10==0){
+            smartRefreshLayout.setEnableLoadmore(true);
+        }else{
+            smartRefreshLayout.setEnableLoadmore(false);
+        }
+        smartRefreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
+            @Override
+            public void onLoadmore(RefreshLayout refreshlayout) {
+                ++page;
                 visitPresenter.getFeedbackLists(String.valueOf(id), String.valueOf(page),smartRefreshLayout);
             }
         });
     }
     @Override
     public void getFeedbackLists(PageBean<VisitBean> pageBean) {
-        VisitAdapter adapter = new VisitAdapter(pageBean.getList(), getContext());
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(adapter);
-        adapter.addItemClickListener(new ItemClick<VisitBean>() {
-            @Override
-            public void onItemClick(View view, VisitBean visitBean, int position) {
-                startActivity(new Intent(getContext(), AddVisit.class)
-                        .putExtra("visit",visitBean).putExtra("id",id));
-            }
-        });
+        visits.addAll(pageBean.getList());
+        if(adapter==null){
+            adapter = new VisitAdapter(visits, getContext());
+            recyclerView.setAdapter(adapter);
+            adapter.addItemClickListener(new ItemClick<VisitBean>() {
+                @Override
+                public void onItemClick(View view, VisitBean visitBean, int position) {
+                    startActivity(new Intent(getContext(), AddVisit.class)
+                            .putExtra("visit",visitBean).putExtra("id",id));
+                }
+            });
+        }else{
+            adapter.notifyDataSetChanged();
+        }
+
     }
     @Override
     public void onDestroyView() {

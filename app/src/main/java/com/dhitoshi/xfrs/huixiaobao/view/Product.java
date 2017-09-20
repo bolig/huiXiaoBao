@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import com.dhitoshi.refreshlayout.SmartRefreshLayout;
 import com.dhitoshi.refreshlayout.api.RefreshLayout;
+import com.dhitoshi.refreshlayout.listener.OnLoadmoreListener;
 import com.dhitoshi.refreshlayout.listener.OnRefreshListener;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.PageBean;
@@ -29,6 +30,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -66,33 +68,53 @@ public class Product extends BaseView implements ProductManage.View {
         initBaseViews();
         setTitle("产品");
         setRightIcon(R.mipmap.add);
+        products=new ArrayList<>();
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        listener = new SwipeItemLayout.OnSwipeItemTouchListener(this);
+        recyclerView.addOnItemTouchListener(listener);
         smartRefreshLayout.autoRefresh();
         productPresenter = new ProductPresenter(this,this);
         smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
+                products.removeAll(products);
+                page=1;
+                productPresenter.getItem(String.valueOf(page),smartRefreshLayout);
+            }
+        });
+        int size=products.size();
+        if(size>=10&&size%10==0){
+            smartRefreshLayout.setEnableLoadmore(true);
+        }else{
+            smartRefreshLayout.setEnableLoadmore(false);
+        }
+        smartRefreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
+            @Override
+            public void onLoadmore(RefreshLayout refreshlayout) {
+                ++page;
                 productPresenter.getItem(String.valueOf(page),smartRefreshLayout);
             }
         });
     }
     @Override
     public void getItem(HttpBean<PageBean<ProductBean>> httpBean) {
-        products=httpBean.getData().getList();
-        adapter = new SetProductAdapter(products, this);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(adapter);
-        listener = new SwipeItemLayout.OnSwipeItemTouchListener(this);
-        recyclerView.addOnItemTouchListener(listener);
-        adapter.addDeleteCallback(new DeleteCallback() {
-            @Override
-            public void delete(int id,int position) {
-                deletePosition=position;
-                String token= SharedPreferencesUtil.Obtain(Product.this,"token","").toString();
-                LoadingDialog dialog = LoadingDialog.build(Product.this).setLoadingTitle("删除中");
-                dialog.show();
-                productPresenter.deleteItem(token,String.valueOf(id),dialog);
-            }
-        });
+        products.addAll(httpBean.getData().getList());
+        if(adapter==null){
+            adapter = new SetProductAdapter(products, this);
+            recyclerView.setAdapter(adapter);
+            adapter.addDeleteCallback(new DeleteCallback() {
+                @Override
+                public void delete(int id,int position) {
+                    deletePosition=position;
+                    String token= SharedPreferencesUtil.Obtain(Product.this,"token","").toString();
+                    LoadingDialog dialog = LoadingDialog.build(Product.this).setLoadingTitle("删除中");
+                    dialog.show();
+                    productPresenter.deleteItem(token,String.valueOf(id),dialog);
+                }
+            });
+        }else{
+            adapter.notifyDataSetChanged();
+        }
     }
     @Override
     public void deleteItem(String result) {

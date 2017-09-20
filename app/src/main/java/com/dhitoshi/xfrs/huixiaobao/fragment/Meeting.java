@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 
 import com.dhitoshi.refreshlayout.SmartRefreshLayout;
 import com.dhitoshi.refreshlayout.api.RefreshLayout;
+import com.dhitoshi.refreshlayout.listener.OnLoadmoreListener;
 import com.dhitoshi.refreshlayout.listener.OnRefreshListener;
 import com.dhitoshi.xfrs.huixiaobao.Bean.MeetBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.PageBean;
@@ -27,6 +28,9 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -42,6 +46,8 @@ public class Meeting extends BaseFragment implements MeetingManage.View {
     private int id;
     private int page=1;
     private MeetPresenter meetPresenter;
+    private List<MeetBean> meets;
+    private MeetingAdapter adapter;
     public Meeting() {
     }
     @Override
@@ -72,27 +78,47 @@ public class Meeting extends BaseFragment implements MeetingManage.View {
     }
 
     private void initView() {
+        meets=new ArrayList<>();
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         meetPresenter = new MeetPresenter(this,getContext());
         smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
+                meets.removeAll(meets);
                 page=1;
+                meetPresenter.getMeetingLists(String.valueOf(id), String.valueOf(page),smartRefreshLayout);
+            }
+        });
+        int size=meets.size();
+        if(size>=10&&size%10==0){
+            smartRefreshLayout.setEnableLoadmore(true);
+        }else{
+            smartRefreshLayout.setEnableLoadmore(false);
+        }
+        smartRefreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
+            @Override
+            public void onLoadmore(RefreshLayout refreshlayout) {
+                ++page;
                 meetPresenter.getMeetingLists(String.valueOf(id), String.valueOf(page),smartRefreshLayout);
             }
         });
     }
     @Override
     public void getMeetingLists(PageBean<MeetBean> pageBean) {
-        MeetingAdapter adapter=new MeetingAdapter(pageBean.getList(),getContext());
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(adapter);
-        adapter.addItemClickListener(new ItemClick<MeetBean>() {
-            @Override
-            public void onItemClick(View view, MeetBean meetBean, int position) {
-                startActivity(new Intent(getContext(), AddMeeting.class)
-                        .putExtra("meet",meetBean).putExtra("id",id));
-            }
-        });
+        meets.addAll(pageBean.getList());
+        if(null==adapter){
+            adapter=new MeetingAdapter(meets,getContext());
+            recyclerView.setAdapter(adapter);
+            adapter.addItemClickListener(new ItemClick<MeetBean>() {
+                @Override
+                public void onItemClick(View view, MeetBean meetBean, int position) {
+                    startActivity(new Intent(getContext(), AddMeeting.class)
+                            .putExtra("meet",meetBean).putExtra("id",id));
+                }
+            });
+        }else{
+            adapter.notifyDataSetChanged();
+        }
     }
     @Override
     public void onDestroyView() {

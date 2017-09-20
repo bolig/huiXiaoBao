@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 
 import com.dhitoshi.refreshlayout.SmartRefreshLayout;
 import com.dhitoshi.refreshlayout.api.RefreshLayout;
+import com.dhitoshi.refreshlayout.listener.OnLoadmoreListener;
 import com.dhitoshi.refreshlayout.listener.OnRefreshListener;
 import com.dhitoshi.xfrs.huixiaobao.Bean.GiftBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.PageBean;
@@ -28,6 +29,9 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -43,6 +47,8 @@ public class Gift extends BaseFragment implements GiftManage.View {
     private int id;
     private int page=1;
     private GiftPresenter giftPresenter;
+    private List<GiftBean> gifts;
+    private GiftAdapter adapter;
     public Gift() {
 
     }
@@ -75,27 +81,48 @@ public class Gift extends BaseFragment implements GiftManage.View {
     }
 
     private void initViews() {
+        gifts=new ArrayList<>();
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         giftPresenter = new GiftPresenter(this,getContext());
         smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
+                gifts.removeAll(gifts);
                 page=1;
+                giftPresenter.getGiftLists(String.valueOf(id), String.valueOf(page),smartRefreshLayout);
+            }
+        });
+        int size=gifts.size();
+        if(size>=10&&size%10==0){
+            smartRefreshLayout.setEnableLoadmore(true);
+        }else{
+            smartRefreshLayout.setEnableLoadmore(false);
+        }
+        smartRefreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
+            @Override
+            public void onLoadmore(RefreshLayout refreshlayout) {
+                ++page;
                 giftPresenter.getGiftLists(String.valueOf(id), String.valueOf(page),smartRefreshLayout);
             }
         });
     }
     @Override
     public void getGiftLists(PageBean<GiftBean> pageBean) {
-        GiftAdapter adapter=new GiftAdapter(pageBean.getList(),getContext());
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(adapter);
-        adapter.addItemClickListener(new ItemClick<GiftBean>() {
-            @Override
-            public void onItemClick(View view, GiftBean giftBean, int position) {
-                startActivity(new Intent(getContext(), AddGift.class)
-                        .putExtra("gift",giftBean).putExtra("id",id));
-            }
-        });
+        gifts.addAll(pageBean.getList());
+        if(adapter==null){
+            adapter=new GiftAdapter(gifts,getContext());
+            recyclerView.setAdapter(adapter);
+            adapter.addItemClickListener(new ItemClick<GiftBean>() {
+                @Override
+                public void onItemClick(View view, GiftBean giftBean, int position) {
+                    startActivity(new Intent(getContext(), AddGift.class)
+                            .putExtra("gift",giftBean).putExtra("id",id));
+                }
+            });
+        }else{
+            adapter.notifyDataSetChanged();
+        }
+
     }
     @Override
     public void onDestroyView() {

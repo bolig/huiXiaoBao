@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import com.dhitoshi.refreshlayout.SmartRefreshLayout;
 import com.dhitoshi.refreshlayout.api.RefreshLayout;
+import com.dhitoshi.refreshlayout.listener.OnLoadmoreListener;
 import com.dhitoshi.refreshlayout.listener.OnRefreshListener;
 import com.dhitoshi.xfrs.huixiaobao.Bean.BaseBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
@@ -29,6 +30,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -64,11 +66,30 @@ public class ProductType extends BaseView implements ProductTypeManage.View{
         initBaseViews();
         setTitle("产品类型");
         setRightIcon(R.mipmap.add);
+        productTypes=new ArrayList<>();
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        listener = new SwipeItemLayout.OnSwipeItemTouchListener(this);
+        recyclerView.addOnItemTouchListener(listener);
         smartRefreshLayout.autoRefresh();
         productTypePresenter=new ProductTypePresenter(this,this);
         smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
+                productTypes.removeAll(productTypes);
+                page=1;
+                productTypePresenter.getItemType(String.valueOf(page),smartRefreshLayout);
+            }
+        });
+        int size=productTypes.size();
+        if(size>=10&&size%10==0){
+            smartRefreshLayout.setEnableLoadmore(true);
+        }else{
+            smartRefreshLayout.setEnableLoadmore(false);
+        }
+        smartRefreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
+            @Override
+            public void onLoadmore(RefreshLayout refreshlayout) {
+                ++page;
                 productTypePresenter.getItemType(String.valueOf(page),smartRefreshLayout);
             }
         });
@@ -79,22 +100,23 @@ public class ProductType extends BaseView implements ProductTypeManage.View{
     }
     @Override
     public void getItemType(HttpBean<PageBean<BaseBean>> httpBean) {
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        productTypes=httpBean.getData().getList();
-        adapter=new SetTypeAdapter(productTypes,this);
-        recyclerView.setAdapter(adapter);
-        listener = new SwipeItemLayout.OnSwipeItemTouchListener(this);
-        recyclerView.addOnItemTouchListener(listener);
-        adapter.addDeleteCallback(new DeleteCallback() {
-            @Override
-            public void delete(int id,int position) {
-                deletePosition=position;
-                String token= SharedPreferencesUtil.Obtain(ProductType.this,"token","").toString();
-                LoadingDialog dialog = LoadingDialog.build(ProductType.this).setLoadingTitle("删除中");
-                dialog.show();
-                productTypePresenter.deleteItemType(token,String.valueOf(id),dialog);
-            }
-        });
+        productTypes.addAll(httpBean.getData().getList());
+        if(adapter==null){
+            adapter=new SetTypeAdapter(productTypes,this);
+            recyclerView.setAdapter(adapter);
+            adapter.addDeleteCallback(new DeleteCallback() {
+                @Override
+                public void delete(int id,int position) {
+                    deletePosition=position;
+                    String token= SharedPreferencesUtil.Obtain(ProductType.this,"token","").toString();
+                    LoadingDialog dialog = LoadingDialog.build(ProductType.this).setLoadingTitle("删除中");
+                    dialog.show();
+                    productTypePresenter.deleteItemType(token,String.valueOf(id),dialog);
+                }
+            });
+        }else{
+            adapter.notifyDataSetChanged();
+        }
     }
 
     @Override

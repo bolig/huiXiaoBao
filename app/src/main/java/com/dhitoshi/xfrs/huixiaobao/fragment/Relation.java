@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.dhitoshi.refreshlayout.SmartRefreshLayout;
 import com.dhitoshi.refreshlayout.api.RefreshLayout;
+import com.dhitoshi.refreshlayout.listener.OnLoadmoreListener;
 import com.dhitoshi.refreshlayout.listener.OnRefreshListener;
 import com.dhitoshi.xfrs.huixiaobao.Bean.PageBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.RelationBean;
@@ -21,6 +22,10 @@ import com.dhitoshi.xfrs.huixiaobao.view.AddRelation;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -35,6 +40,8 @@ public class Relation extends BaseFragment implements RelationManage.View {
     private int id;
     private int page=1;
     private  RelationPresenter relationPresenter;
+    private List<RelationBean> relations;
+    private RelationAdapter adapter;
     public Relation() {
     }
     @Override
@@ -65,27 +72,48 @@ public class Relation extends BaseFragment implements RelationManage.View {
     }
 
     private void initView() {
+        relations=new ArrayList<>();
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         relationPresenter = new RelationPresenter(this,getContext());
         smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
+                relations.removeAll(relations);
                 page=1;
+                relationPresenter.getRelationLists(String.valueOf(id), String.valueOf(page),smartRefreshLayout);
+            }
+        });
+        int size=relations.size();
+        if(size>=10&&size%10==0){
+            smartRefreshLayout.setEnableLoadmore(true);
+        }else{
+            smartRefreshLayout.setEnableLoadmore(false);
+        }
+        smartRefreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
+            @Override
+            public void onLoadmore(RefreshLayout refreshlayout) {
+                ++page;
                 relationPresenter.getRelationLists(String.valueOf(id), String.valueOf(page),smartRefreshLayout);
             }
         });
     }
     @Override
     public void getRelationLists(PageBean<RelationBean> pageBean) {
-        RelationAdapter adapter=new RelationAdapter(pageBean.getList(),getContext());
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(adapter);
-        adapter.addItemClickListener(new ItemClick<RelationBean>() {
-            @Override
-            public void onItemClick(View view, RelationBean relationBean, int position) {
-                startActivity(new Intent(getContext(), AddRelation.class)
-                        .putExtra("relation",relationBean).putExtra("id",id));
-            }
-        });
+        relations.addAll(pageBean.getList());
+        if(null==adapter){
+            adapter=new RelationAdapter(relations,getContext());
+            recyclerView.setAdapter(adapter);
+            adapter.addItemClickListener(new ItemClick<RelationBean>() {
+                @Override
+                public void onItemClick(View view, RelationBean relationBean, int position) {
+                    startActivity(new Intent(getContext(), AddRelation.class)
+                            .putExtra("relation",relationBean).putExtra("id",id));
+                }
+            });
+        }else {
+            adapter.notifyDataSetChanged();
+        }
+
     }
     @Override
     public void onDestroyView() {

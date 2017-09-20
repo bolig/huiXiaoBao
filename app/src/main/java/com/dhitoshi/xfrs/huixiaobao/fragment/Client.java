@@ -90,6 +90,8 @@ public class Client extends BaseFragment implements ClientManage.View, View.OnTo
     private String type="2";
     private String area="2";
     private String order="6";
+    private List<ClientBean> clients;
+    private  ClientAdapter adapter;
     public Client() {
     }
     @Override
@@ -112,10 +114,15 @@ public class Client extends BaseFragment implements ClientManage.View, View.OnTo
         return view;
     }
     private void initViews() {
+        clients=new ArrayList<>();
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.addItemDecoration(new MyDecoration(getContext(), LinearLayoutManager.HORIZONTAL, R.drawable.divider_line));
         clientPresenter = new ClientPresenter(this,getContext());
         smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
+                clients.removeAll(clients);
+                page=1;
                 Map<String, String> map = new HashMap<>();
                 map.put("type", type);
                 map.put("area", area);
@@ -124,9 +131,16 @@ public class Client extends BaseFragment implements ClientManage.View, View.OnTo
                 clientPresenter.getClientList(map,smartRefreshLayout);
             }
         });
+        int size=clients.size();
+        if(size>=10&&size%10==0){
+            smartRefreshLayout.setEnableLoadmore(true);
+        }else{
+            smartRefreshLayout.setEnableLoadmore(false);
+        }
         smartRefreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
+                ++page;
                 Map<String, String> map = new HashMap<>();
                 map.put("type", type);
                 map.put("area", area);
@@ -191,6 +205,7 @@ public class Client extends BaseFragment implements ClientManage.View, View.OnTo
                     roleText.setCompoundDrawables(null, null, down, null);
                     roleText.setTextColor(Color.parseColor("#666666"));
                     screen_oldPosition = -1;
+                    smartRefreshLayout.autoRefresh();
                 }
             });
         } else {
@@ -341,18 +356,21 @@ public class Client extends BaseFragment implements ClientManage.View, View.OnTo
     //获取客户列表
     @Override
     public void getClientList(PageBean<ClientBean> pageBean) {
+        clients.addAll(pageBean.getList());
         Log.e("TAG", "客户数量" + pageBean.getList().size());
-        Log.e("TAG", "next" + pageBean.getNextPage());
-        ClientAdapter adapter = new ClientAdapter(pageBean.getList(), getContext());
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.addItemDecoration(new MyDecoration(getContext(), LinearLayoutManager.HORIZONTAL, R.drawable.divider_line));
-        recyclerView.setAdapter(adapter);
-        adapter.addItemClickListener(new ItemClick<ClientBean>() {
-            @Override
-            public void onItemClick(View view, ClientBean clientBean, int position) {
-                startActivity(new Intent(getContext(), ClientInfo.class).putExtra("info", clientBean));
-            }
-        });
+        if(null==adapter){
+            adapter = new ClientAdapter(clients, getContext());
+            recyclerView.setAdapter(adapter);
+            adapter.addItemClickListener(new ItemClick<ClientBean>() {
+                @Override
+                public void onItemClick(View view, ClientBean clientBean, int position) {
+                    startActivity(new Intent(getContext(), ClientInfo.class).putExtra("info", clientBean));
+                }
+            });
+        }else{
+            adapter.notifyDataSetChanged();
+        }
+
     }
     //获取筛选条件信息
     @Override
