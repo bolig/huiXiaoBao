@@ -72,6 +72,16 @@ public class AddAreaOne extends BaseView implements AddAreaManage.View {
         });
     }
 
+    @Override
+    public void addArea(String result) {
+
+    }
+
+    @Override
+    public void editArea(String result) {
+
+    }
+
     @OnClick(R.id.right_icon)
     public void onViewClicked() {
         startActivity(new Intent(this,AddArea.class));

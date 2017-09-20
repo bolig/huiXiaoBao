@@ -85,7 +85,8 @@
         <activity android:name=".view.AddPermission" />
         <activity android:name=".view.AddAreaThree" />
         <activity android:name=".view.Login" />
-        <activity android:name=".view.Welcome"></activity>
+        <activity android:name=".view.Welcome" />
+        <activity android:name=".view.SelectType"></activity>
     </application>
 
 </manifest>

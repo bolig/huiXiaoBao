@@ -30,7 +30,7 @@ public class CommonObserver<T> implements Observer<T> {
     }
     @Override
     public void onError(@NonNull Throwable e) {
-        result.OnFail(e.toString());
+        result.OnFail("网络君不给力,请稍后尝试...");
     }
     @Override
     public void onComplete() {

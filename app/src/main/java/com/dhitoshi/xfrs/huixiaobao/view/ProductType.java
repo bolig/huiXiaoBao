@@ -55,13 +55,11 @@ public class ProductType extends BaseView implements ProductTypeManage.View{
         EventBus.getDefault().register(this);
         initViews();
     }
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
     }
-
     private void initViews() {
         initBaseViews();
         setTitle("产品类型");
@@ -119,7 +117,6 @@ public class ProductType extends BaseView implements ProductTypeManage.View{
             adapter.notifyDataSetChanged();
         }
     }
-
     @Override
     public void deleteItemType(String result) {
         Toast.makeText(this,result,Toast.LENGTH_SHORT).show();

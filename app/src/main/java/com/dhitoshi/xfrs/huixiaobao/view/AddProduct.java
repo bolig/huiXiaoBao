@@ -139,6 +139,7 @@ public class AddProduct extends BaseView implements AddProductManage.View{
         startActivityForResult(new Intent(this,Area.class).putExtra("type",0),0);
     }
     private void selectType() {
+        startActivityForResult(new Intent(this,SelectType.class).putExtra("selected",productType.getText().toString()),6);
     }
     @Override
     public void addItem(String result) {
@@ -154,7 +155,7 @@ public class AddProduct extends BaseView implements AddProductManage.View{
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(resultCode==200){
+        if(resultCode==600){
             switch (requestCode){
                 case 6:
                     type_id=data.getStringExtra("id");

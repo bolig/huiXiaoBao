@@ -57,4 +57,9 @@ public class Permission extends BaseView implements PermissionManage.View{
         PermissionAdapter adapter=new PermissionAdapter(httpBean.getData(),this);
         recyclerView.setAdapter(adapter);
     }
+
+    @Override
+    public void deleteArea(String result) {
+
+    }
 }

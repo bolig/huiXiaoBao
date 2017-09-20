@@ -215,16 +215,16 @@
                 android:textColor="#BFBFBF"
                 android:textColorHint="#BFBFBF"
                 android:textSize="14dp" />
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="5dp"
-                android:background="#eee"></View>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:layout_marginLeft="20dp"
-                android:gravity="center_vertical"
-                android:text="上传图片" />
+            <!--<View-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="5dp"-->
+                <!--android:background="#eee"></View>-->
+            <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="40dp"-->
+                <!--android:layout_marginLeft="20dp"-->
+                <!--android:gravity="center_vertical"-->
+                <!--android:text="上传图片" />-->
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

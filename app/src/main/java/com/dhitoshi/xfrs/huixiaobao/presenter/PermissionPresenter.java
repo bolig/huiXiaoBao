@@ -4,6 +4,7 @@ import android.content.Context;
 import com.dhitoshi.refreshlayout.SmartRefreshLayout;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.UserRole;
+import com.dhitoshi.xfrs.huixiaobao.Dialog.LoadingDialog;
 import com.dhitoshi.xfrs.huixiaobao.Interface.Callback;
 import com.dhitoshi.xfrs.huixiaobao.Interface.PermissionManage;
 import com.dhitoshi.xfrs.huixiaobao.model.PermissionModel;
@@ -26,6 +27,16 @@ public class PermissionPresenter implements PermissionManage.Presenter{
             @Override
             public void get(HttpBean<List<UserRole>> httpBean) {
                 view.getGroupLists(httpBean);
+            }
+        });
+    }
+
+    @Override
+    public void deleteArea(String id, String token, LoadingDialog dialog) {
+        model.deleteArea(id, token, dialog, new Callback<HttpBean<Object>>() {
+            @Override
+            public void get(HttpBean<Object> httpBean) {
+                view.deleteArea(httpBean.getStatus().getMsg());
             }
         });
     }

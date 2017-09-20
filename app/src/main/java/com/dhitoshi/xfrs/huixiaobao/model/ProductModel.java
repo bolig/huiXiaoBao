@@ -25,7 +25,7 @@ public class ProductModel implements ProductManage.Model{
     @Override
     public void getItem(String page,final SmartRefreshLayout smartRefreshLayout, final Callback<HttpBean<PageBean<ProductBean>>> callback) {
         MyHttp http=MyHttp.getInstance();
-        http.send(http.getHttpService().getItem(),new CommonObserver(new HttpResult<HttpBean<PageBean<ProductBean>>>() {
+        http.send(http.getHttpService().getItem(page),new CommonObserver(new HttpResult<HttpBean<PageBean<ProductBean>>>() {
             @Override
             public void OnSuccess(HttpBean<PageBean<ProductBean>> httpBean) {
                 smartRefreshLayout.finishRefresh();

@@ -1,61 +1,50 @@
 package com.dhitoshi.xfrs.huixiaobao.model;
-
 import android.content.Context;
 import android.widget.Toast;
-
-import com.dhitoshi.refreshlayout.SmartRefreshLayout;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
-import com.dhitoshi.xfrs.huixiaobao.Bean.ProductBean;
-import com.dhitoshi.xfrs.huixiaobao.Bean.UserRole;
 import com.dhitoshi.xfrs.huixiaobao.Dialog.LoadingDialog;
+import com.dhitoshi.xfrs.huixiaobao.Interface.AddPermissionManage;
 import com.dhitoshi.xfrs.huixiaobao.Interface.Callback;
-import com.dhitoshi.xfrs.huixiaobao.Interface.PermissionManage;
-import com.dhitoshi.xfrs.huixiaobao.Interface.ProductManage;
 import com.dhitoshi.xfrs.huixiaobao.common.CommonObserver;
 import com.dhitoshi.xfrs.huixiaobao.http.HttpResult;
 import com.dhitoshi.xfrs.huixiaobao.http.MyHttp;
-
-import java.util.List;
-
-import static com.dhitoshi.xfrs.huixiaobao.R.id.smartRefreshLayout;
-
+import java.util.Map;
 /**
- * Created by dxs on 2017/9/16.
+ * Created by dxs on 2017/9/15.
  */
-
-public class PermissionModel implements PermissionManage.Model{
+public class AddPermissionModel implements AddPermissionManage.Model{
     private Context context;
-    public PermissionModel(Context context) {
+    public AddPermissionModel(Context context) {
         this.context = context;
     }
     @Override
-    public void getGroupLists(String token, final SmartRefreshLayout smartRefreshLayout, final Callback<HttpBean<List<UserRole>>> callback) {
+    public void addGroup(Map<String, String> map, final LoadingDialog dialog, final Callback<HttpBean<Object>> callback) {
         MyHttp http=MyHttp.getInstance();
-        http.send(http.getHttpService().getGroupLists(token),new CommonObserver(new HttpResult<HttpBean<List<UserRole>>>() {
+        http.send(http.getHttpService().addGroup(map),new CommonObserver(new HttpResult<HttpBean<Object>>() {
             @Override
-            public void OnSuccess(HttpBean<List<UserRole>> httpBean) {
-                smartRefreshLayout.finishRefresh();
+            public void OnSuccess(HttpBean<Object> httpBean) {
+                dialog.dismiss();
                 if(httpBean.getStatus().getCode()==200){
                     callback.get(httpBean);
                 }else{
                     Toast.makeText(context,httpBean.getStatus().getMsg(),Toast.LENGTH_SHORT).show();
                 }
             }
+
             @Override
             public void OnFail(String msg) {
-                smartRefreshLayout.finishRefresh();
+                dialog.dismiss();
                 Toast.makeText(context,msg,Toast.LENGTH_SHORT).show();
             }
         }));
     }
-
     @Override
-    public void deleteArea(String id, String token, final LoadingDialog dialog, final Callback<HttpBean<Object>> callback) {
+    public void editGroup(Map<String, String> map, final LoadingDialog dialog, final Callback<HttpBean<Object>> callback) {
         MyHttp http=MyHttp.getInstance();
-        http.send(http.getHttpService().deleteArea(id,token),new CommonObserver(new HttpResult<HttpBean<Object>>() {
+        http.send(http.getHttpService().editGroup(map),new CommonObserver(new HttpResult<HttpBean<Object>>() {
             @Override
             public void OnSuccess(HttpBean<Object> httpBean) {
-               dialog.dismiss();
+                dialog.dismiss();
                 if(httpBean.getStatus().getCode()==200){
                     callback.get(httpBean);
                 }else{

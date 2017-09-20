@@ -21,18 +21,14 @@ import com.dhitoshi.xfrs.huixiaobao.Bean.KidBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.MeetBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.PageBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.ProductBean;
-import com.dhitoshi.xfrs.huixiaobao.Bean.ProductTypeBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.RelationBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.ScreenBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.SpendBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.UserBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.UserRole;
 import com.dhitoshi.xfrs.huixiaobao.Bean.VisitBean;
-import com.dhitoshi.xfrs.huixiaobao.fragment.Relation;
-
 import java.util.List;
 import java.util.Map;
-
 import io.reactivex.Observable;
 import okhttp3.RequestBody;
 import retrofit2.http.Body;
@@ -68,10 +64,10 @@ public interface HttpService {
     Observable<HttpBean<Object>> checkRepeat(@Query("area") String area,@Query("phone") String phone,@Query("id") String id);
     //获取产品类别
     @GET("item/itemType")
-    Observable<HttpBean<PageBean<BaseBean>>> getItemType();
+    Observable<HttpBean<PageBean<BaseBean>>> getItemType(@Query("page") String page);
     //获取产品列表
     @GET("item/item")
-    Observable<HttpBean<PageBean<ProductBean>>> getItem();
+    Observable<HttpBean<PageBean<ProductBean>>> getItem(@Query("page") String page);
     //获取消费所需列表
     @GET("customer/spending/listForSpending")
     Observable<HttpBean<InfoAddSpendBean>> getListForSpending();
