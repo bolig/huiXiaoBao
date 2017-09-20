@@ -1,10 +1,13 @@
 package com.dhitoshi.xfrs.huixiaobao.Bean;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by dxs on 2017/9/6.
  */
 
-public class KidBean {
+public class KidBean implements Parcelable {
     /**
      * id : 3
      * name : 店员一
@@ -79,4 +82,49 @@ public class KidBean {
     public void setParent_id(String parent_id) {
         this.parent_id = parent_id;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.id);
+        dest.writeString(this.name);
+        dest.writeString(this.admin);
+        dest.writeString(this.phone);
+        dest.writeString(this.address);
+        dest.writeString(this.notes);
+        dest.writeInt(this.is_employee);
+        dest.writeInt(this.if_repeat);
+        dest.writeString(this.parent_id);
+    }
+
+    public KidBean() {
+    }
+
+    protected KidBean(Parcel in) {
+        this.id = in.readInt();
+        this.name = in.readString();
+        this.admin = in.readString();
+        this.phone = in.readString();
+        this.address = in.readString();
+        this.notes = in.readString();
+        this.is_employee = in.readInt();
+        this.if_repeat = in.readInt();
+        this.parent_id = in.readString();
+    }
+
+    public static final Parcelable.Creator<KidBean> CREATOR = new Parcelable.Creator<KidBean>() {
+        @Override
+        public KidBean createFromParcel(Parcel source) {
+            return new KidBean(source);
+        }
+
+        @Override
+        public KidBean[] newArray(int size) {
+            return new KidBean[size];
+        }
+    };
 }

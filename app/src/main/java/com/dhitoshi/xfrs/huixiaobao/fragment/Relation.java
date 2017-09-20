@@ -83,12 +83,7 @@ public class Relation extends BaseFragment implements RelationManage.View {
                 relationPresenter.getRelationLists(String.valueOf(id), String.valueOf(page),smartRefreshLayout);
             }
         });
-        int size=relations.size();
-        if(size>=10&&size%10==0){
-            smartRefreshLayout.setEnableLoadmore(true);
-        }else{
-            smartRefreshLayout.setEnableLoadmore(false);
-        }
+
         smartRefreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
@@ -100,6 +95,12 @@ public class Relation extends BaseFragment implements RelationManage.View {
     @Override
     public void getRelationLists(PageBean<RelationBean> pageBean) {
         relations.addAll(pageBean.getList());
+        int size=relations.size();
+        if(size>=10&&size%10==0){
+            smartRefreshLayout.setEnableLoadmore(true);
+        }else{
+            smartRefreshLayout.setEnableLoadmore(false);
+        }
         if(null==adapter){
             adapter=new RelationAdapter(relations,getContext());
             recyclerView.setAdapter(adapter);

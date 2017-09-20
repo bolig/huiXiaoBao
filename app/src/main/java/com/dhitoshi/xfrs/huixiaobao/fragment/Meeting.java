@@ -89,12 +89,7 @@ public class Meeting extends BaseFragment implements MeetingManage.View {
                 meetPresenter.getMeetingLists(String.valueOf(id), String.valueOf(page),smartRefreshLayout);
             }
         });
-        int size=meets.size();
-        if(size>=10&&size%10==0){
-            smartRefreshLayout.setEnableLoadmore(true);
-        }else{
-            smartRefreshLayout.setEnableLoadmore(false);
-        }
+
         smartRefreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
@@ -106,6 +101,12 @@ public class Meeting extends BaseFragment implements MeetingManage.View {
     @Override
     public void getMeetingLists(PageBean<MeetBean> pageBean) {
         meets.addAll(pageBean.getList());
+        int size=meets.size();
+        if(size>=10&&size%10==0){
+            smartRefreshLayout.setEnableLoadmore(true);
+        }else{
+            smartRefreshLayout.setEnableLoadmore(false);
+        }
         if(null==adapter){
             adapter=new MeetingAdapter(meets,getContext());
             recyclerView.setAdapter(adapter);

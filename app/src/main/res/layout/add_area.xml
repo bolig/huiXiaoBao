@@ -33,135 +33,11 @@
                 android:paddingRight="20dp">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:text="购买日期："
-                    android:textColor="#666666"
-                    android:textSize="14dp" />
-
-                <TextView
-                    android:id="@+id/spend_date"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:drawableRight="@mipmap/right"
-                    android:gravity="center_vertical"
-                    android:text="请选择"
-                    android:textColor="#BFBFBF" />
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_marginLeft="20dp"
-                android:background="#D9D9D9"></View>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:text="购买产品："
-                    android:textColor="#666666"
-                    android:textSize="14dp" />
-
-                <TextView
-                    android:id="@+id/spend_product"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:drawableRight="@mipmap/right"
-                    android:gravity="center_vertical"
-                    android:text="请选择"
-                    android:textColor="#BFBFBF" />
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_marginLeft="20dp"
-                android:background="#D9D9D9"></View>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:text="购买地点："
-                    android:textColor="#666666"
-                    android:textSize="14dp" />
-
-                <TextView
-                    android:id="@+id/spend_location"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:drawableRight="@mipmap/right"
-                    android:gravity="center_vertical"
-                    android:text="请选择"
-                    android:textColor="#BFBFBF" />
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_marginLeft="20dp"
-                android:background="#D9D9D9"></View>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:text="销  售  员："
-                    android:textColor="#666666"
-                    android:textSize="14dp" />
-
-                <TextView
-                    android:id="@+id/spend_saleMan"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:drawableRight="@mipmap/right"
-                    android:gravity="center_vertical"
-                    android:text="请选择"
-                    android:textColor="#BFBFBF" />
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_marginLeft="20dp"
-                android:background="#D9D9D9"></View>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp">
-
-                <TextView
 
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
-                    android:text="单        价："
+                    android:text="地区名称："
                     android:textColor="#666666"
                     android:textSize="14dp" />
 
@@ -176,7 +52,6 @@
                     android:textColorHint="#BFBFBF"
                     android:textSize="14dp" />
             </LinearLayout>
-
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
@@ -193,7 +68,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
-                    android:text="数        量："
+                    android:text="负  责  人："
                     android:textColor="#666666"
                     android:textSize="14dp" />
 
@@ -208,7 +83,6 @@
                     android:textColorHint="#BFBFBF"
                     android:textSize="14dp" />
             </LinearLayout>
-
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
@@ -225,46 +99,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
-                    android:text="折扣比例："
-                    android:textColor="#666666"
-                    android:textSize="14dp" />
-
-                <EditText
-                    android:id="@+id/spend_discount"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@null"
-                    android:hint="请输入"
-                    android:textColor="@color/colorPrimary"
-                    android:textColorHint="#BFBFBF"
-                    android:textSize="14dp" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="%"
-                    android:textSize="14dp"
-                    android:textColor="@color/colorPrimary"
-                    />
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_marginLeft="20dp"
-                android:background="#D9D9D9"></View>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:text="实收金额："
+                    android:text="电话："
                     android:textColor="#666666"
                     android:textSize="14dp" />
 
@@ -279,7 +114,6 @@
                     android:textColorHint="#BFBFBF"
                     android:textSize="14dp" />
             </LinearLayout>
-
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
@@ -296,7 +130,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
-                    android:text="应收欠款："
+                    android:text="地址："
                     android:textColor="#666666"
                     android:textSize="14dp" />
 
@@ -311,8 +145,6 @@
                     android:textColorHint="#BFBFBF"
                     android:textSize="14dp" />
             </LinearLayout>
-
-
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
@@ -323,28 +155,26 @@
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:paddingLeft="20dp"
-                android:paddingRight="20dp">
-
+                android:paddingRight="20dp"
+                >
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
-                    android:text="实发数量："
+                    android:text="员工节点"
                     android:textColor="#666666"
-                    android:textSize="14dp" />
-
-                <EditText
-                    android:id="@+id/spend_acNum"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@null"
-                    android:hint="请输入"
-                    android:textColor="@color/colorPrimary"
-                    android:textColorHint="#BFBFBF"
-                    android:textSize="14dp" />
+                    android:textSize="14dp"
+                    />
+                <CheckBox
+                    android:id="@+id/meet_attend"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/check"
+                    android:button="@null"
+                    android:layout_gravity="center_vertical"
+                    />
             </LinearLayout>
-
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
@@ -355,41 +185,37 @@
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:paddingLeft="20dp"
-                android:paddingRight="20dp">
-
+                android:paddingRight="20dp"
+                >
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
-                    android:text="寄存数量："
+                    android:text="到        会"
                     android:textColor="#666666"
-                    android:textSize="14dp" />
-
-                <EditText
-                    android:id="@+id/spend_waitNum"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@null"
-                    android:hint="请输入"
-                    android:textColor="@color/colorPrimary"
-                    android:textColorHint="#BFBFBF"
-                    android:textSize="14dp" />
+                    android:textSize="14dp"
+                    />
+                <CheckBox
+                    android:id="@+id/meet_attend"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/check"
+                    android:button="@null"
+                    android:layout_gravity="center_vertical"
+                    />
             </LinearLayout>
-
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
                 android:layout_marginLeft="20dp"
                 android:background="#D9D9D9"></View>
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
                 android:layout_marginLeft="20dp"
                 android:gravity="center_vertical"
                 android:text="备注" />
-
             <EditText
                 android:id="@+id/spend_notes"
                 android:layout_width="match_parent"

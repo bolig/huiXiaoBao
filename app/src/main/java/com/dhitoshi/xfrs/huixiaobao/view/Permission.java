@@ -34,6 +34,7 @@ public class Permission extends BaseView implements PermissionManage.View{
     private void initViews() {
         initBaseViews();
         setTitle("权限组");
+        setRightIcon(R.mipmap.add);
         smartRefreshLayout.autoRefresh();
         smartRefreshLayout.setEnableLoadmore(false);
         permissionPresenter=new PermissionPresenter(this,this);

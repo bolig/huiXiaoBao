@@ -86,12 +86,6 @@ public class Visit extends BaseFragment implements VisitManage.View {
                 visitPresenter.getFeedbackLists(String.valueOf(id), String.valueOf(page),smartRefreshLayout);
             }
         });
-        int size=visits.size();
-        if(size>=10&&size%10==0){
-            smartRefreshLayout.setEnableLoadmore(true);
-        }else{
-            smartRefreshLayout.setEnableLoadmore(false);
-        }
         smartRefreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
@@ -103,6 +97,12 @@ public class Visit extends BaseFragment implements VisitManage.View {
     @Override
     public void getFeedbackLists(PageBean<VisitBean> pageBean) {
         visits.addAll(pageBean.getList());
+        int size=visits.size();
+        if(size>=10&&size%10==0){
+            smartRefreshLayout.setEnableLoadmore(true);
+        }else{
+            smartRefreshLayout.setEnableLoadmore(false);
+        }
         if(adapter==null){
             adapter = new VisitAdapter(visits, getContext());
             recyclerView.setAdapter(adapter);

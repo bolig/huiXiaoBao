@@ -92,12 +92,7 @@ public class Gift extends BaseFragment implements GiftManage.View {
                 giftPresenter.getGiftLists(String.valueOf(id), String.valueOf(page),smartRefreshLayout);
             }
         });
-        int size=gifts.size();
-        if(size>=10&&size%10==0){
-            smartRefreshLayout.setEnableLoadmore(true);
-        }else{
-            smartRefreshLayout.setEnableLoadmore(false);
-        }
+
         smartRefreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
@@ -109,6 +104,12 @@ public class Gift extends BaseFragment implements GiftManage.View {
     @Override
     public void getGiftLists(PageBean<GiftBean> pageBean) {
         gifts.addAll(pageBean.getList());
+        int size=gifts.size();
+        if(size>=10&&size%10==0){
+            smartRefreshLayout.setEnableLoadmore(true);
+        }else{
+            smartRefreshLayout.setEnableLoadmore(false);
+        }
         if(adapter==null){
             adapter=new GiftAdapter(gifts,getContext());
             recyclerView.setAdapter(adapter);

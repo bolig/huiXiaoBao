@@ -80,12 +80,7 @@ public class ProductType extends BaseView implements ProductTypeManage.View{
                 productTypePresenter.getItemType(String.valueOf(page),smartRefreshLayout);
             }
         });
-        int size=productTypes.size();
-        if(size>=10&&size%10==0){
-            smartRefreshLayout.setEnableLoadmore(true);
-        }else{
-            smartRefreshLayout.setEnableLoadmore(false);
-        }
+
         smartRefreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
@@ -101,6 +96,12 @@ public class ProductType extends BaseView implements ProductTypeManage.View{
     @Override
     public void getItemType(HttpBean<PageBean<BaseBean>> httpBean) {
         productTypes.addAll(httpBean.getData().getList());
+        int size=productTypes.size();
+        if(size>=10&&size%10==0){
+            smartRefreshLayout.setEnableLoadmore(true);
+        }else{
+            smartRefreshLayout.setEnableLoadmore(false);
+        }
         if(adapter==null){
             adapter=new SetTypeAdapter(productTypes,this);
             recyclerView.setAdapter(adapter);

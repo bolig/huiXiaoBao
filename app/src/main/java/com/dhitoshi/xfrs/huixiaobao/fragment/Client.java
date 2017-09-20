@@ -131,12 +131,7 @@ public class Client extends BaseFragment implements ClientManage.View, View.OnTo
                 clientPresenter.getClientList(map,smartRefreshLayout);
             }
         });
-        int size=clients.size();
-        if(size>=10&&size%10==0){
-            smartRefreshLayout.setEnableLoadmore(true);
-        }else{
-            smartRefreshLayout.setEnableLoadmore(false);
-        }
+
         smartRefreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
@@ -357,6 +352,12 @@ public class Client extends BaseFragment implements ClientManage.View, View.OnTo
     @Override
     public void getClientList(PageBean<ClientBean> pageBean) {
         clients.addAll(pageBean.getList());
+        int size=clients.size();
+        if(size>=10&&size%10==0){
+            smartRefreshLayout.setEnableLoadmore(true);
+        }else{
+            smartRefreshLayout.setEnableLoadmore(false);
+        }
         Log.e("TAG", "客户数量" + pageBean.getList().size());
         if(null==adapter){
             adapter = new ClientAdapter(clients, getContext());

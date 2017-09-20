@@ -82,12 +82,7 @@ public class Product extends BaseView implements ProductManage.View {
                 productPresenter.getItem(String.valueOf(page),smartRefreshLayout);
             }
         });
-        int size=products.size();
-        if(size>=10&&size%10==0){
-            smartRefreshLayout.setEnableLoadmore(true);
-        }else{
-            smartRefreshLayout.setEnableLoadmore(false);
-        }
+
         smartRefreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
@@ -99,6 +94,12 @@ public class Product extends BaseView implements ProductManage.View {
     @Override
     public void getItem(HttpBean<PageBean<ProductBean>> httpBean) {
         products.addAll(httpBean.getData().getList());
+        int size=products.size();
+        if(size>=10&&size%10==0){
+            smartRefreshLayout.setEnableLoadmore(true);
+        }else{
+            smartRefreshLayout.setEnableLoadmore(false);
+        }
         if(adapter==null){
             adapter = new SetProductAdapter(products, this);
             recyclerView.setAdapter(adapter);
