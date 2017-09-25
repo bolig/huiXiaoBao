@@ -20,8 +20,8 @@ public class UserPresenter implements UserManage.Presenter{
         model=new UserModel(context);
     }
     @Override
-    public void getUserList(final String page, final SmartRefreshLayout smartRefreshLayout) {
-        model.getUserList(page, smartRefreshLayout, new Callback<HttpBean<PageBean<UserBean>>>() {
+    public void getUserList(String token,final String page, final SmartRefreshLayout smartRefreshLayout) {
+        model.getUserList(token,page, smartRefreshLayout, new Callback<HttpBean<PageBean<UserBean>>>() {
             @Override
             public void get(HttpBean<PageBean<UserBean>> httpBean) {
                 view.getUserList(httpBean);

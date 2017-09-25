@@ -26,6 +26,7 @@ import com.dhitoshi.xfrs.huixiaobao.adapter.UserAdapter;
 import com.dhitoshi.xfrs.huixiaobao.common.MyDecoration;
 import com.dhitoshi.xfrs.huixiaobao.common.PopupMenu;
 import com.dhitoshi.xfrs.huixiaobao.presenter.UserPresenter;
+import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -84,14 +85,14 @@ public class UserList extends BaseView implements UserManage.View {
             public void onRefresh(RefreshLayout refreshlayout) {
                 userBeens.removeAll(userBeens);
                 page = 1;
-                userPresenter.getUserList(String.valueOf(page), smartRefreshLayout);
+                userPresenter.getUserList(SharedPreferencesUtil.Obtain(UserList.this,"token","").toString(),String.valueOf(page), smartRefreshLayout);
             }
         });
         smartRefreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
                 ++page;
-                userPresenter.getUserList(String.valueOf(page), smartRefreshLayout);
+                userPresenter.getUserList(SharedPreferencesUtil.Obtain(UserList.this,"token","").toString(),String.valueOf(page), smartRefreshLayout);
             }
         });
     }

@@ -12,9 +12,9 @@ public interface UserManage {
         void getUserList(HttpBean<PageBean<UserBean>> httpBean);
     }
     interface Model{
-        void getUserList(String id, SmartRefreshLayout smartRefreshLayout, Callback<HttpBean<PageBean<UserBean>>> callback);
+        void getUserList(String token,String page, SmartRefreshLayout smartRefreshLayout, Callback<HttpBean<PageBean<UserBean>>> callback);
     }
     interface Presenter{
-        void getUserList(String id, SmartRefreshLayout smartRefreshLayout);
+        void getUserList(String token,String page, SmartRefreshLayout smartRefreshLayout);
     }
 }

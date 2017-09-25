@@ -4,9 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.widget.TextView;
 
-import com.dhitoshi.xfrs.huixiaobao.Bean.AreaBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.KidBean;
-import com.dhitoshi.xfrs.huixiaobao.Bean.KidBeanX;
 import com.dhitoshi.xfrs.huixiaobao.R;
 import com.dhitoshi.xfrs.huixiaobao.common.BaseAdapter;
 import com.dhitoshi.xfrs.huixiaobao.common.BaseRecyclerHolder;

@@ -10,9 +10,7 @@ import com.dhitoshi.xfrs.huixiaobao.R;
 import com.dhitoshi.xfrs.huixiaobao.common.BaseAdapter;
 import com.dhitoshi.xfrs.huixiaobao.common.BaseRecyclerHolder;
 import com.dhitoshi.xfrs.huixiaobao.view.AddArea;
-import com.dhitoshi.xfrs.huixiaobao.view.AddAreaOne;
 import com.dhitoshi.xfrs.huixiaobao.view.AddAreaTwo;
-import com.dhitoshi.xfrs.huixiaobao.view.AddProductType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +34,7 @@ public class AddAreaOneAdapter extends BaseAdapter<AreaBean> {
                 context.startActivity(new Intent(context,AddAreaTwo.class)
                         .putExtra("title",mList.get(position).getName())
                         .putExtra("parent_id",mList.get(position).getId())
-                        .putExtra("kidx",(ArrayList)mList.get(position).getKid()));
+                        .putExtra("kid",(ArrayList)mList.get(position).getKid()));
             }
         });
         holder.getView(R.id.area_update).setOnClickListener(new View.OnClickListener() {

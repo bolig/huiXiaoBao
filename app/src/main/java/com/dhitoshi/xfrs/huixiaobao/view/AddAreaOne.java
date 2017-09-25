@@ -10,10 +10,9 @@ import com.dhitoshi.refreshlayout.api.RefreshLayout;
 import com.dhitoshi.refreshlayout.listener.OnRefreshListener;
 import com.dhitoshi.xfrs.huixiaobao.Bean.AreaBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
-import com.dhitoshi.xfrs.huixiaobao.Bean.KidBeanX;
+import com.dhitoshi.xfrs.huixiaobao.Bean.KidBean;
 import com.dhitoshi.xfrs.huixiaobao.Dialog.LoadingDialog;
 import com.dhitoshi.xfrs.huixiaobao.Event.AddAreaOneEvent;
-import com.dhitoshi.xfrs.huixiaobao.Event.GiftEvent;
 import com.dhitoshi.xfrs.huixiaobao.Interface.DeleteCallback;
 import com.dhitoshi.xfrs.huixiaobao.Interface.SetAreaManage;
 import com.dhitoshi.xfrs.huixiaobao.R;
@@ -135,7 +134,7 @@ public class AddAreaOne extends BaseView implements SetAreaManage.View {
                 areaBean.setParent_id(map.get("parent_id"));
                 areaBean.setIf_repeat(Integer.parseInt(map.get("if_repeat")));
                 areaBean.setIs_employee(Integer.parseInt(map.get("is_employee")));
-                areaBean.setKid(new ArrayList<KidBeanX>());
+                areaBean.setKid(new ArrayList<KidBean>());
             }
         }
         adapter.notifyDataSetChanged();
@@ -151,7 +150,7 @@ public class AddAreaOne extends BaseView implements SetAreaManage.View {
         areaBean.setParent_id(map.get("parent_id"));
         areaBean.setIf_repeat(Integer.parseInt(map.get("if_repeat")));
         areaBean.setIs_employee(Integer.parseInt(map.get("is_employee")));
-        areaBean.setKid(new ArrayList<KidBeanX>());
+        areaBean.setKid(new ArrayList<KidBean>());
         areaBeens.add(areaBean);
         adapter.notifyDataSetChanged();
     }

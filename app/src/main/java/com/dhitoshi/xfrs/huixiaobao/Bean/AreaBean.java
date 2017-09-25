@@ -20,7 +20,7 @@ public class AreaBean implements Parcelable {
     private int is_employee;
     private int if_repeat;
     private String parent_id;
-    private List<KidBeanX> kid;
+    private List<KidBean> kid;
     public int getId() {
         return id;
     }
@@ -75,10 +75,10 @@ public class AreaBean implements Parcelable {
     public void setParent_id(String parent_id) {
         this.parent_id = parent_id;
     }
-    public List<KidBeanX> getKid() {
+    public List<KidBean> getKid() {
         return kid;
     }
-    public void setKid(List<KidBeanX> kid) {
+    public void setKid(List<KidBean> kid) {
         this.kid = kid;
     }
 
@@ -114,7 +114,7 @@ public class AreaBean implements Parcelable {
         this.is_employee = in.readInt();
         this.if_repeat = in.readInt();
         this.parent_id = in.readString();
-        this.kid = in.createTypedArrayList(KidBeanX.CREATOR);
+        this.kid = in.createTypedArrayList(KidBean.CREATOR);
     }
 
     public static final Parcelable.Creator<AreaBean> CREATOR = new Parcelable.Creator<AreaBean>() {

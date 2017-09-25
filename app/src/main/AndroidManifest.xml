@@ -81,7 +81,6 @@
         <activity android:name=".view.AddArea" />
         <activity android:name=".view.AddAreaOne" />
         <activity android:name=".view.AddAreaTwo" />
-        <activity android:name=".view.AddAreaThree" />
         <activity android:name=".view.AddProductType" />
         <activity android:name=".view.AddUser" />
         <activity android:name=".view.AddPermission" />

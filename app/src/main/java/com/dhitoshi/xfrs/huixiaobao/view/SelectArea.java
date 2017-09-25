@@ -8,13 +8,11 @@ import android.view.View;
 import com.dhitoshi.xfrs.huixiaobao.Bean.AreaBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.KidBean;
-import com.dhitoshi.xfrs.huixiaobao.Bean.KidBeanX;
 import com.dhitoshi.xfrs.huixiaobao.Interface.AreaManage;
 import com.dhitoshi.xfrs.huixiaobao.Interface.ItemClick;
 import com.dhitoshi.xfrs.huixiaobao.R;
 import com.dhitoshi.xfrs.huixiaobao.adapter.AreaAdapter;
 import com.dhitoshi.xfrs.huixiaobao.adapter.KidAdapter;
-import com.dhitoshi.xfrs.huixiaobao.adapter.KidXAdapter;
 import com.dhitoshi.xfrs.huixiaobao.common.MyDecoration;
 import com.dhitoshi.xfrs.huixiaobao.presenter.AreaPresenter;
 
@@ -27,14 +25,10 @@ public class SelectArea extends BaseView implements AreaManage.View {
     RecyclerView recyclerviewOne;
     @BindView(R.id.recyclerview_two)
     RecyclerView recyclerviewTwo;
-    @BindView(R.id.recyclerview_three)
-    RecyclerView recyclerviewThree;
     private AreaAdapter areaAdapter;
-    private KidXAdapter kidXAdapter;
     private KidAdapter kidAdapter;
     private List<AreaBean> areas;
     private AreaPresenter areaPresenter;
-    private List<KidBeanX> kidBeanXes;
     private List<KidBean> kidBeens;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +40,6 @@ public class SelectArea extends BaseView implements AreaManage.View {
     private void initViews() {
         initBaseViews();
         setTitle("地区");
-        kidBeanXes=new ArrayList<>();
         kidBeens=new ArrayList<>();
         areaPresenter=new AreaPresenter(this,this);
         areaPresenter.getAreaLists();
@@ -54,8 +47,6 @@ public class SelectArea extends BaseView implements AreaManage.View {
         recyclerviewOne.setLayoutManager(new LinearLayoutManager(this));
         recyclerviewTwo.addItemDecoration(new MyDecoration(this, LinearLayoutManager.HORIZONTAL, R.drawable.divider_line));
         recyclerviewTwo.setLayoutManager(new LinearLayoutManager(this));
-        recyclerviewThree.addItemDecoration(new MyDecoration(this, LinearLayoutManager.HORIZONTAL, R.drawable.divider_line));
-        recyclerviewThree.setLayoutManager(new LinearLayoutManager(this));
     }
     @Override
     public void getAreaLists(HttpBean<List<AreaBean>> httpBean) {
@@ -63,49 +54,24 @@ public class SelectArea extends BaseView implements AreaManage.View {
         areaAdapter=new AreaAdapter(areas,this);
         recyclerviewOne.setAdapter(areaAdapter);
         if(areas.size()>0){
-            kidBeanXes.addAll(areas.get(0).getKid());
-            kidXAdapter=new KidXAdapter(kidBeanXes,this);
-            recyclerviewTwo.setAdapter(kidXAdapter);
-        }
-        if(kidBeanXes.size()>0){
-            kidBeens.addAll(kidBeanXes.get(0).getKid());
+            kidBeens.addAll(areas.get(0).getKid());
             kidAdapter=new KidAdapter(kidBeens,this);
-            recyclerviewThree.setAdapter(kidAdapter);
+            recyclerviewTwo.setAdapter(kidAdapter);
         }
         areaAdapter.addItemClickListener(new ItemClick<AreaBean>() {
             @Override
             public void onItemClick(View view, AreaBean areaBean, int position) {
                 areaAdapter.setSelected(areaBean.getName());
                 areaAdapter.notifyDataSetChanged();
-                kidBeanXes.removeAll(kidBeanXes);
-                kidBeanXes.addAll(areaBean.getKid());
-                if(kidBeanXes.size()>0){
-                    kidBeens.removeAll(kidBeens);
-                    kidBeens.addAll(kidBeanXes.get(0).getKid());
-                    kidAdapter.notifyDataSetChanged();
-                    kidXAdapter.notifyDataSetChanged();
+                kidBeens.removeAll(kidBeens);
+                kidBeens.addAll(areaBean.getKid());
+                kidAdapter.notifyDataSetChanged();
+                if(kidBeens.size()>0){
+
                 }else{
                     Intent it=new Intent();
                     it.putExtra("area_id",String.valueOf(areaBean.getId()));
                     it.putExtra("area_name",areaBean.getName());
-                    setResult(200,it);
-                    finish();
-                }
-            }
-        });
-        kidXAdapter.addItemClickListener(new ItemClick<KidBeanX>() {
-            @Override
-            public void onItemClick(View view, KidBeanX kidBeanX, int position) {
-                kidXAdapter.setSelected(kidBeanX.getName());
-                kidXAdapter.notifyDataSetChanged();
-                kidBeens.removeAll(kidBeens);
-                kidBeens.addAll(kidBeanX.getKid());
-                if(kidBeens.size()>0){
-                    kidAdapter.notifyDataSetChanged();
-                }else{
-                    Intent it=new Intent();
-                    it.putExtra("area_id",String.valueOf(kidBeanX.getId()));
-                    it.putExtra("area_name",kidBeanX.getName());
                     setResult(200,it);
                     finish();
                 }

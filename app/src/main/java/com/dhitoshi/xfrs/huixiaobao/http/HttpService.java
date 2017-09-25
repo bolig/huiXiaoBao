@@ -110,7 +110,7 @@ public interface HttpService {
     Observable<HttpBean<Object>> deleteItemType(@Query("token") String token,@Query("id") String id);
     //获得用户列表
     @GET("user/detailList")
-    Observable<HttpBean<PageBean<UserBean>>> getUserList(@Query("page") String page);
+    Observable<HttpBean<PageBean<UserBean>>> getUserList(@Query("token") String token,@Query("page") String page);
     //删除权限组
     @GET("group/delete")//id name area is_super notes token
     Observable<HttpBean<Object>> deleteGroup(@Query("id") String id,@Query("token") String token);

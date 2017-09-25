@@ -32,20 +32,6 @@
             android:background="@android:color/white"
             >
         </android.support.v7.widget.RecyclerView>
-        <View
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:background="#eeeeee"
-            ></View>
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/screen_three"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:minHeight="200dp"
-            android:background="@android:color/white"
-            >
-        </android.support.v7.widget.RecyclerView>
     </LinearLayout>
     <View
         android:id="@+id/shade"

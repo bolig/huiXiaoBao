@@ -5,15 +5,12 @@ import android.content.Intent;
 import android.view.View;
 
 import com.dhitoshi.xfrs.huixiaobao.Bean.KidBean;
-import com.dhitoshi.xfrs.huixiaobao.Bean.KidBeanX;
 import com.dhitoshi.xfrs.huixiaobao.Interface.DeleteCallback;
 import com.dhitoshi.xfrs.huixiaobao.R;
 import com.dhitoshi.xfrs.huixiaobao.common.BaseAdapter;
 import com.dhitoshi.xfrs.huixiaobao.common.BaseRecyclerHolder;
 import com.dhitoshi.xfrs.huixiaobao.view.AddArea;
-import com.dhitoshi.xfrs.huixiaobao.view.AddAreaTwo;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
