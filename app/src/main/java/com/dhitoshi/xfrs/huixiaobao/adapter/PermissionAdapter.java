@@ -8,6 +8,7 @@ import com.dhitoshi.xfrs.huixiaobao.Interface.DeleteCallback;
 import com.dhitoshi.xfrs.huixiaobao.R;
 import com.dhitoshi.xfrs.huixiaobao.common.BaseAdapter;
 import com.dhitoshi.xfrs.huixiaobao.common.BaseRecyclerHolder;
+import com.dhitoshi.xfrs.huixiaobao.utils.DensityUtil;
 import com.dhitoshi.xfrs.huixiaobao.view.AddPermission;
 import com.dhitoshi.xfrs.huixiaobao.view.AddProduct;
 
@@ -40,6 +41,9 @@ public class PermissionAdapter extends BaseAdapter<UserRole>{
                 deleteCallback.delete(mList.get(position).getId(),position);
             }
         });
+        if(position==mList.size()-1){
+            holder.itemView.setPadding(0,0,0, DensityUtil.dp2px(10));
+        }
     }
     public void addDeleteCallback(DeleteCallback deleteCallback) {
         this.deleteCallback = deleteCallback;

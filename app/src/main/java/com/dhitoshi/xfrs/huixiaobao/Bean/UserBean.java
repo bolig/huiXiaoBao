@@ -1,10 +1,13 @@
 package com.dhitoshi.xfrs.huixiaobao.Bean;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by dxs on 2017/9/12.
  */
 
-public class UserBean {
+public class UserBean implements Parcelable {
 
     /**
      * id : 2
@@ -103,4 +106,55 @@ public class UserBean {
     public void setToken(String token) {
         this.token = token;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.id);
+        dest.writeString(this.name);
+        dest.writeString(this.truename);
+        dest.writeString(this.area);
+        dest.writeString(this.group);
+        dest.writeString(this.phone);
+        dest.writeString(this.email);
+        dest.writeInt(this.CRM);
+        dest.writeInt(this.APP);
+        dest.writeString(this.token);
+        dest.writeString(this.head);
+        dest.writeString(this.area_id);
+    }
+
+    public UserBean() {
+    }
+
+    protected UserBean(Parcel in) {
+        this.id = in.readInt();
+        this.name = in.readString();
+        this.truename = in.readString();
+        this.area = in.readString();
+        this.group = in.readString();
+        this.phone = in.readString();
+        this.email = in.readString();
+        this.CRM = in.readInt();
+        this.APP = in.readInt();
+        this.token = in.readString();
+        this.head = in.readString();
+        this.area_id = in.readString();
+    }
+
+    public static final Parcelable.Creator<UserBean> CREATOR = new Parcelable.Creator<UserBean>() {
+        @Override
+        public UserBean createFromParcel(Parcel source) {
+            return new UserBean(source);
+        }
+
+        @Override
+        public UserBean[] newArray(int size) {
+            return new UserBean[size];
+        }
+    };
 }

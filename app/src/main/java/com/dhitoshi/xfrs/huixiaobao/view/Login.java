@@ -72,6 +72,7 @@ public class Login extends AppCompatActivity implements LoginManage.View, View.O
         SharedPreferencesUtil.Save(this, "truename", userBean.getTruename());
         SharedPreferencesUtil.Save(this, "id", userBean.getId());
         SharedPreferencesUtil.Save(this, "token", userBean.getToken());
+        SharedPreferencesUtil.Save(this, "head", userBean.getHead());
         SharedPreferencesUtil.Save(this, "isRemeber",check.isChecked());
         startActivity(new Intent(this, Theme.class));
         finish();

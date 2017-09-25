@@ -91,11 +91,11 @@ public class Theme extends AppCompatActivity {
 
         return themeFragments;
     }
-    @NeedsPermission(Manifest.permission.CALL_PHONE)
+    @NeedsPermission({Manifest.permission.CALL_PHONE,Manifest.permission.WRITE_EXTERNAL_STORAGE})
     void call(){
 
     }
-    @OnShowRationale(Manifest.permission.CALL_PHONE)
+    @OnShowRationale({Manifest.permission.CALL_PHONE,Manifest.permission.WRITE_EXTERNAL_STORAGE})
     void ShowRationaleFoCall(PermissionRequest request){
         request.proceed();
     }

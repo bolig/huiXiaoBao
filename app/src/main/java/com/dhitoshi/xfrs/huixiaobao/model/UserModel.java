@@ -33,6 +33,7 @@ public class UserModel implements UserManage.Model{
             @Override
             public void OnSuccess(HttpBean<PageBean<UserBean>> httpBean) {
                 smartRefreshLayout.finishRefresh();
+                smartRefreshLayout.finishLoadmore();
                 if(httpBean.getStatus().getCode()==200){
                     callback.get(httpBean);
                 }else{
@@ -42,6 +43,7 @@ public class UserModel implements UserManage.Model{
             @Override
             public void OnFail(String msg) {
                 smartRefreshLayout.finishRefresh();
+                smartRefreshLayout.finishLoadmore();
                 Toast.makeText(context,msg,Toast.LENGTH_SHORT).show();
             }
         }));

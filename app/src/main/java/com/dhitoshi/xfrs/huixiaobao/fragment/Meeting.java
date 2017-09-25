@@ -116,6 +116,7 @@ public class Meeting extends BaseFragment implements MeetingManage.View {
         } else {
             smartRefreshLayout.setEnableLoadmore(false);
         }
+        smartRefreshLayout.setVisibility(size==0?View.GONE:View.VISIBLE);
         empty.setVisibility(size==0?View.VISIBLE:View.GONE);
         if (null == adapter) {
             adapter = new MeetingAdapter(meets, getContext());

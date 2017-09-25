@@ -18,7 +18,8 @@
             android:id="@+id/contact_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:dividerHeight="1dp"
+            android:dividerHeight="0.5dp"
+            android:divider="#eee"
             >
         </ListView>
         <dxs.dhitoshi.com.index.IndexView
@@ -44,6 +45,7 @@
         android:background="@android:color/white"
         >
         <TextView
+            android:id="@+id/contact_area"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="选择客户地区"
@@ -55,6 +57,7 @@
             android:layout_marginLeft="20dp"
             />
         <TextView
+            android:id="@+id/contact_commit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="确定"

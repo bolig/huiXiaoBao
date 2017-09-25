@@ -1,6 +1,7 @@
 package com.dhitoshi.xfrs.huixiaobao.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dhitoshi.xfrs.huixiaobao.R;
+import com.dhitoshi.xfrs.huixiaobao.view.OwnMeeting;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -75,7 +77,7 @@ public class Work extends Fragment {
                 Toast.makeText(getContext(),"开发中，敬请期待",Toast.LENGTH_SHORT).show();
                 break;
             case R.id.work_meet:
-                Toast.makeText(getContext(),"开发中，敬请期待",Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getContext(), OwnMeeting.class));
                 break;
             case R.id.work_target:
                 Toast.makeText(getContext(),"开发中，敬请期待",Toast.LENGTH_SHORT).show();

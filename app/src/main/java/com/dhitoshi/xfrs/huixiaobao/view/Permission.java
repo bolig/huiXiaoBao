@@ -35,7 +35,6 @@ public class Permission extends BaseView implements PermissionManage.View{
     @BindView(R.id.smartRefreshLayout)
     SmartRefreshLayout smartRefreshLayout;
     private PermissionPresenter permissionPresenter;
-    private  String token;
     private PermissionAdapter adapter;
     private int deletePosition=-1;
     private List<UserRole> userRoles;
@@ -63,12 +62,11 @@ public class Permission extends BaseView implements PermissionManage.View{
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         smartRefreshLayout.setEnableLoadmore(false);
         permissionPresenter=new PermissionPresenter(this,this);
-        token= SharedPreferencesUtil.Obtain(this,"token","").toString();
         smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
                 userRoles.removeAll(userRoles);
-                permissionPresenter.getGroupLists(token,smartRefreshLayout);
+                permissionPresenter.getGroupLists(SharedPreferencesUtil.Obtain(Permission.this,"token","").toString(),smartRefreshLayout);
             }
         });
     }

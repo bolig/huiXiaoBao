@@ -4,6 +4,8 @@ import com.dhitoshi.xfrs.huixiaobao.Bean.RelationBean;
 import com.dhitoshi.xfrs.huixiaobao.R;
 import com.dhitoshi.xfrs.huixiaobao.common.BaseAdapter;
 import com.dhitoshi.xfrs.huixiaobao.common.BaseRecyclerHolder;
+import com.dhitoshi.xfrs.huixiaobao.utils.DensityUtil;
+
 import java.util.List;
 /**
  * Created by dxs on 2017/9/11.
@@ -21,5 +23,8 @@ public class RelationAdapter extends BaseAdapter<RelationBean> {
         holder.setText(R.id.relation_relation,item.getRelation());
         holder.setText(R.id.relation_phone,item.getPhone());
         holder.setText(R.id.relation_email,item.getEmail());
+        if(position==mList.size()-1){
+            holder.itemView.setPadding(0,0,0, DensityUtil.dp2px(10));
+        }
     }
 }

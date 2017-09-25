@@ -13,7 +13,6 @@ import java.util.List;
  * Created by dxs on 2017/8/21.
  */
 public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseRecyclerHolder> {
-
     private List<T> mList;
     private Context context;
     private int layoutId;
@@ -28,12 +27,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseRecyclerHo
     }
     @Override
     public BaseRecyclerHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view;
-//        if(mList.size()==0){
-//            view= LayoutInflater.from(context).inflate(R.layout.empty,parent,false);
-//        }else{
-            view= LayoutInflater.from(context).inflate(layoutId,parent,false);
-       // }
+        View view= LayoutInflater.from(context).inflate(layoutId,parent,false);
         return BaseRecyclerHolder.getBaseRecyclerHolder(view,contentLength,context);
     }
     @Override
@@ -47,7 +41,6 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseRecyclerHo
                 }
             }
         });
-
     }
     @Override
     public int getItemCount() {

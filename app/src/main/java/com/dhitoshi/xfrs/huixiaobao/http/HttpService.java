@@ -6,6 +6,7 @@ import com.dhitoshi.xfrs.huixiaobao.Bean.AddProductBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.AddRelationBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.AddSpendBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.AddVisitBean;
+import com.dhitoshi.xfrs.huixiaobao.Bean.ApplyMeetBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.AreaBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.BaseBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.ClientBean;
@@ -19,9 +20,12 @@ import com.dhitoshi.xfrs.huixiaobao.Bean.InfoAddSpendBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.InfoAddVisitBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.KidBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.MeetBean;
+import com.dhitoshi.xfrs.huixiaobao.Bean.OwnMeetBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.PageBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.ProductBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.RelationBean;
+import com.dhitoshi.xfrs.huixiaobao.Bean.RemindBean;
+import com.dhitoshi.xfrs.huixiaobao.Bean.ResourceBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.ScreenBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.SpendBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.UserBean;
@@ -113,6 +117,28 @@ public interface HttpService {
     //删除地区
     @GET("area/delete")//id name area is_super notes token
     Observable<HttpBean<Object>> deleteArea(@Query("id") String id,@Query("token") String token);
+    //我的资源
+    @GET("customer/myResource")
+    Observable<HttpBean<ResourceBean>> getMyResource(@Query("token") String token);
+    //客户提醒
+    @GET("customer/Remind")
+    Observable<HttpBean<RemindBean>> getRemind(@Query("token") String token);
+    //我的举办中会议
+    @GET("Meeting/listForNow")
+    Observable<HttpBean<PageBean<OwnMeetBean>>> getListForNow(@Query("token") String token,@Query("page") String page);
+    //我的待举办会议
+    @GET("Meeting/listForFuture")
+    Observable<HttpBean<PageBean<OwnMeetBean>>> getListForFuture(@Query("token") String token,@Query("page") String page);
+    //我的已举办会议
+    @GET("Meeting/listForPast")
+    Observable<HttpBean<PageBean<OwnMeetBean>>> getListForPast(@Query("token") String token,@Query("page") String page);
+    //正在进行的会议
+    @GET("MeetingType/listForNow")
+    Observable<HttpBean<PageBean<ApplyMeetBean>>> getMeetForNow(@Query("token") String token,@Query("page") String page);
+    //已过期的会议
+    @GET("MeetingType/listForPast")
+    Observable<HttpBean<PageBean<ApplyMeetBean>>> getMeetForPast(@Query("token") String token,@Query("page") String page);
+
 
     //更改密码
     @POST("resetPassword")
@@ -122,7 +148,7 @@ public interface HttpService {
     Observable<HttpBean<UserBean>> login(@QueryMap Map<String,String> map);
     //注册
     @POST("signUp")
-    Observable<Integer> signUp(@Body RequestBody body);
+    Observable<HttpBean<Object>> signUp(@QueryMap Map<String,String> map);
     //添加客户
     @POST("customer/add")
     Observable<HttpBean<ClientBean>> addClient(@Body AddClientBean addClientBean);
@@ -173,10 +199,13 @@ public interface HttpService {
     Observable<HttpBean<Object>> editItemType(@Query("id") String id,@Query("token") String token,@Query("name") String name);
     //导入通讯录
     @POST("customer/addFast")
-    Observable<HttpBean<Object>> addFast(@Query("name") String name,@Query("phone") String phone,@Query("area") String area);
+    Observable<HttpBean<Object>> addFast(@QueryMap Map<String,String> map);
     //快速新增
     @POST("fastSign")//name password group area CRM APP
     Observable<HttpBean<Object>> fastSign(@QueryMap Map<String,String> map);
+    //修改用户
+    @POST("user/edit")
+    Observable<HttpBean<Object>> editUser(@QueryMap Map<String,String> map);
     //添加权限组
     @POST("group/add")//name area is_super notes token
     Observable<HttpBean<Object>> addGroup(@QueryMap Map<String,String> map);

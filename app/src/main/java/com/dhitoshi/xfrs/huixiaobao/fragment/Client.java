@@ -326,28 +326,25 @@ public class Client extends BaseFragment implements ClientManage.View, View.OnTo
             @Override
             public void onMenuItemClick(Menu menu, int position) {
                 switch (position) {
+//                    case 0:
+//                        break;
                     case 0:
-                        break;
-                    case 1:
                         it = new Intent(getContext(), AddClient.class);
                         startActivity(it);
                         break;
-                    case 2:
+                    case 1:
                         it = new Intent(getContext(), Query.class);
                         startActivity(it);
                         break;
-                    case 3:
+                    case 2:
                         it = new Intent(getContext(), Remind.class);
                         startActivity(it);
                         break;
-                    case 4:
+                    case 3:
                         it = new Intent(getContext(), Resource.class);
                         startActivity(it);
                         break;
-                    case 5:
-
-                        break;
-                    case 6:
+                    case 4:
                         it = new Intent(getContext(), Contact.class);
                         startActivity(it);
                         break;
@@ -359,10 +356,10 @@ public class Client extends BaseFragment implements ClientManage.View, View.OnTo
     //初始化菜单数据
     private void initMenuData() {
         menus = new ArrayList<>();
-        drawable = getContext().getResources().getDrawable(R.mipmap.scan);
-        drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
-        menu = new Menu("扫一扫", drawable);
-        menus.add(menu);
+//        drawable = getContext().getResources().getDrawable(R.mipmap.scan);
+//        drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+//        menu = new Menu("扫一扫", drawable);
+//        menus.add(menu);
         drawable = getContext().getResources().getDrawable(R.mipmap.add_client);
         drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
         menu = new Menu("新增客户", drawable);
@@ -378,10 +375,6 @@ public class Client extends BaseFragment implements ClientManage.View, View.OnTo
         drawable = getContext().getResources().getDrawable(R.mipmap.resource);
         drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
         menu = new Menu("我的资源", drawable);
-        menus.add(menu);
-        drawable = getContext().getResources().getDrawable(R.mipmap.location);
-        drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
-        menu = new Menu("周边客户", drawable);
         menus.add(menu);
         drawable = getContext().getResources().getDrawable(R.mipmap.resource);
         drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());

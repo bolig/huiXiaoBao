@@ -9,19 +9,17 @@
     android:focusableInTouchMode="true"
     android:clipToPadding="true"
    >
-    <include
-        layout="@layout/toolbar"
-        ></include>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/white"
-        >
+        android:background="@android:color/white">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            >
+            android:orientation="vertical">
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="5dp"
@@ -59,8 +57,8 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:background="@null"
-                            android:singleLine="true"
                             android:hint="请输入"
+                            android:singleLine="true"
                             android:textColor="@color/colorPrimary"
                             android:textColorHint="#BFBFBF"
                             android:textSize="14dp" />
@@ -128,14 +126,15 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    >
 
-                    <ImageView
+                    <com.dhitoshi.xfrs.huixiaobao.common.CircleImageView
                         android:id="@+id/client_head"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@mipmap/head" />
-
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:src="@mipmap/head"
+                        />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -171,9 +170,9 @@
                     android:layout_weight="1"
                     android:background="@null"
                     android:hint="请输入"
-                    android:singleLine="true"
-                    android:maxLength="11"
                     android:inputType="phone"
+                    android:maxLength="11"
+                    android:singleLine="true"
                     android:textColor="@color/colorPrimary"
                     android:textColorHint="#BFBFBF"
                     android:textSize="14dp" />
@@ -264,8 +263,8 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@null"
-                    android:singleLine="true"
                     android:hint="请输入"
+                    android:singleLine="true"
                     android:textColor="@color/colorPrimary"
                     android:textColorHint="#BFBFBF"
                     android:textSize="14dp" />
@@ -425,8 +424,8 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@null"
-                    android:singleLine="true"
                     android:hint="请输入"
+                    android:singleLine="true"
                     android:textColor="@color/colorPrimary"
                     android:textColorHint="#BFBFBF"
                     android:textSize="14dp" />
@@ -523,8 +522,8 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@null"
-                    android:singleLine="true"
                     android:hint="请输入"
+                    android:singleLine="true"
                     android:textColor="@color/colorPrimary"
                     android:textColorHint="#BFBFBF"
                     android:textSize="14dp" />
@@ -568,6 +567,7 @@
                 android:layout_height="0.5dp"
                 android:layout_marginLeft="20dp"
                 android:background="#D9D9D9"></View>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
@@ -596,6 +596,7 @@
                 android:layout_height="0.5dp"
                 android:layout_marginLeft="20dp"
                 android:background="#D9D9D9"></View>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
@@ -651,4 +652,8 @@
                 android:textSize="14dp" />
         </LinearLayout>
     </ScrollView>
+
+    <include
+        layout="@layout/toolbar"
+        ></include>
 </LinearLayout>

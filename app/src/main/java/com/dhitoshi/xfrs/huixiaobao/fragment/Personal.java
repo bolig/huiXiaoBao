@@ -8,7 +8,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.dhitoshi.xfrs.huixiaobao.R;
+import com.dhitoshi.xfrs.huixiaobao.common.CircleImageView;
+import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
+import com.dhitoshi.xfrs.huixiaobao.view.ApplyMeeting;
 import com.dhitoshi.xfrs.huixiaobao.view.Setting;
 
 import butterknife.BindView;
@@ -21,7 +25,12 @@ public class Personal extends Fragment {
     @BindView(R.id.title)
     TextView title;
     Unbinder unbinder;
+    @BindView(R.id.personal_name)
+    TextView personalName;
+    @BindView(R.id.personal_head)
+    CircleImageView personalHead;
     private Intent it;
+
     public Personal() {
     }
 
@@ -45,6 +54,8 @@ public class Personal extends Fragment {
 
     private void initViews() {
         title.setText("我的");
+        personalName.setText(SharedPreferencesUtil.Obtain(getContext(), "truename", "").toString());
+        Glide.with(this).load(SharedPreferencesUtil.Obtain(getContext(),"head","").toString()).placeholder(R.mipmap.head).error(R.mipmap.head).into(personalHead);
     }
 
     @Override
@@ -57,12 +68,14 @@ public class Personal extends Fragment {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.personal_setting:
-                it=new Intent(getContext(), Setting.class);
+                it = new Intent(getContext(), Setting.class);
                 startActivity(it);
                 break;
             case R.id.personal_share:
                 break;
             case R.id.personal_meeting:
+                it = new Intent(getContext(), ApplyMeeting.class);
+                startActivity(it);
                 break;
             case R.id.personal_help:
                 break;

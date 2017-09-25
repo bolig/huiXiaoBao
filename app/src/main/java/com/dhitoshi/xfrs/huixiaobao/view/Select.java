@@ -13,6 +13,7 @@ import com.dhitoshi.xfrs.huixiaobao.Bean.GiftBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HobbyBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.IllBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.ProductBean;
+import com.dhitoshi.xfrs.huixiaobao.Bean.UserRole;
 import com.dhitoshi.xfrs.huixiaobao.Interface.CheckBoxClick;
 import com.dhitoshi.xfrs.huixiaobao.Interface.ItemClick;
 import com.dhitoshi.xfrs.huixiaobao.R;
@@ -21,6 +22,7 @@ import com.dhitoshi.xfrs.huixiaobao.adapter.IllAdapter;
 import com.dhitoshi.xfrs.huixiaobao.adapter.ProductAdapter;
 import com.dhitoshi.xfrs.huixiaobao.adapter.SelectAdapter;
 import com.dhitoshi.xfrs.huixiaobao.adapter.SelectGiftAdapter;
+import com.dhitoshi.xfrs.huixiaobao.adapter.SelectUserRoleAdapter;
 import com.dhitoshi.xfrs.huixiaobao.common.MyDecoration;
 import java.util.ArrayList;
 import butterknife.BindView;
@@ -79,6 +81,9 @@ public class Select extends BaseView {
             case 8:
                 setTitle("选择经手人");
                 break;
+            case 10:
+                setTitle("选择权限组");
+                break;
         }
     }
     private void initData() {
@@ -102,8 +107,36 @@ public class Select extends BaseView {
             case 7:
                 initGift();
                 break;
+            case 10:
+                initUserRole();
         }
     }
+    //选择权限组
+    private void initUserRole() {
+        SelectUserRoleAdapter adapter=new SelectUserRoleAdapter(content,this,select);
+        selectRecyclerView.setAdapter(adapter);
+        adapter.addItemClickListener(new ItemClick<UserRole>() {
+            @Override
+            public void onItemClick(View view, UserRole UserRole, int position) {
+                Intent it=new Intent();
+                it.putExtra("id",String.valueOf(UserRole.getId()));
+                it.putExtra("name",UserRole.getName());
+                setResult(200,it);
+                finish();
+            }
+        });
+        adapter.addCheckBoxClick(new CheckBoxClick() {
+            @Override
+            public void check(boolean isChecked, String name, int id) {
+                Intent it=new Intent();
+                it.putExtra("id",String.valueOf(id));
+                it.putExtra("name",name);
+                setResult(200,it);
+                finish();
+            }
+        });
+    }
+
     //选择赠送名称
     private void initGift() {
         SelectGiftAdapter adapter=new SelectGiftAdapter(content,this,select);

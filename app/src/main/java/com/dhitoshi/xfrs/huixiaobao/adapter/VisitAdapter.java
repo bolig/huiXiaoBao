@@ -5,6 +5,8 @@ import com.dhitoshi.xfrs.huixiaobao.Bean.VisitBean;
 import com.dhitoshi.xfrs.huixiaobao.R;
 import com.dhitoshi.xfrs.huixiaobao.common.BaseAdapter;
 import com.dhitoshi.xfrs.huixiaobao.common.BaseRecyclerHolder;
+import com.dhitoshi.xfrs.huixiaobao.utils.DensityUtil;
+
 import java.util.List;
 
 /**
@@ -26,5 +28,8 @@ public class VisitAdapter extends BaseAdapter<VisitBean> {
         holder.setText(R.id.visit_next,item.getNexttime());
         holder.setText(R.id.visit_name,item.getFeedman_name());
         holder.setText(R.id.visit_date,item.getCreatetime());
+        if(position==mList.size()-1){
+            holder.itemView.setPadding(0,0,0, DensityUtil.dp2px(10));
+        }
     }
 }

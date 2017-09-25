@@ -14,7 +14,7 @@
         android:paddingTop="10dp"
         android:text="index"
         android:textSize="12dp"
-        android:background="#d6d6d6"
+        android:background="#efefef"
         android:textColor="#666666"
         />
     <LinearLayout
@@ -22,8 +22,8 @@
         android:layout_height="wrap_content"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
-        android:paddingBottom="15dp"
-        android:paddingTop="15dp"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
         android:background="@android:color/white"
         android:gravity="center_vertical"
         >
@@ -40,12 +40,14 @@
             android:layout_marginLeft="10dp"
             >
             <TextView
+                android:id="@+id/contact_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="王小明"
                 android:textSize="12dp"
                 />
             <TextView
+                android:id="@+id/contact_phone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="13500000000"
@@ -54,13 +56,14 @@
                 />
         </LinearLayout>
         <CheckBox
-            android:id="@+id/multiple_select"
+            android:id="@+id/contact_check"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:button="@null"
             android:background="@drawable/check"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
             />
     </LinearLayout>
 </LinearLayout>

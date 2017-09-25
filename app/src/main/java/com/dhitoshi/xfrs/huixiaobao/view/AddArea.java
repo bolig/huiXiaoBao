@@ -48,7 +48,6 @@ public class AddArea extends BaseView implements AddAreaManage.View{
     private String is_employee="";
     private String if_repeat="";
     private String parent_id="";
-    private String token;
     private Intent it;
     private Map<String,String> map;
     private  int type=-4;//-1 编辑 0--  1-- 2--
@@ -68,8 +67,6 @@ public class AddArea extends BaseView implements AddAreaManage.View{
         map=new HashMap<>();
         addAreaPresenter=new AddAreaPresenter(this,this);
         type=it.getIntExtra("type",-4);
-        token=SharedPreferencesUtil.Obtain(this,"token","").toString();
-        Log.e("TAG","type---->>>"+type);
         if(type<0){
             initAreainfo();
         }else{
@@ -103,7 +100,7 @@ public class AddArea extends BaseView implements AddAreaManage.View{
             map.put("name",name);
             map.put("notes",notes);
             map.put("admin",admin);
-            map.put("token",token);
+            map.put("token",SharedPreferencesUtil.Obtain(this,"token","").toString());
             map.put("phone",phone);
             map.put("address",address);
             map.put("is_employee",is_employee);
@@ -113,7 +110,6 @@ public class AddArea extends BaseView implements AddAreaManage.View{
             dialog.show();
             if(type<0) {
                 map.put("id",String.valueOf(id));
-                Log.e("TAG","map--->>>"+map.toString());
                 addAreaPresenter.editArea(map,dialog);
             }else{
                 addAreaPresenter.addArea(map,dialog);
@@ -132,7 +128,6 @@ public class AddArea extends BaseView implements AddAreaManage.View{
         notes = areaNotes.getText().toString();
         is_employee=areaEmployee.isChecked()?"1":"0";
         if_repeat=areaRepeat.isChecked()?"1":"0";
-        token= SharedPreferencesUtil.Obtain(this,"token","").toString();
         return true;
     }
     @Override

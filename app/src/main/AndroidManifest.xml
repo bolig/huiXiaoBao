@@ -6,6 +6,8 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <!-- 拨号权限 -->
     <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:name=".app.MyApplication"
@@ -83,10 +85,15 @@
         <activity android:name=".view.AddProductType" />
         <activity android:name=".view.AddUser" />
         <activity android:name=".view.AddPermission" />
-        <activity android:name=".view.AddAreaThree" />
         <activity android:name=".view.Login" />
         <activity android:name=".view.Welcome" />
-        <activity android:name=".view.SelectType"></activity>
+        <activity android:name=".view.SelectType" />
+        <activity android:name=".view.FastSign" />
+        <activity android:name=".view.ClientList" />
+        <activity android:name=".view.OwnMeeting" />
+        <activity android:name=".view.ApplyMeeting" />
+        <activity android:name=".view.ApplyMeetingInfo" />
+        <activity android:name=".view.Apply"></activity>
     </application>
 
 </manifest>

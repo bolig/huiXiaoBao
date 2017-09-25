@@ -28,7 +28,7 @@ public class SelectDateDialog extends Dialog {
     private TextView confirm;
     private DatePicker datePicker;
     private String s;
-    private String time;
+    private String time="";
     private DateCallBack call;
     public SelectDateDialog(@NonNull Context context) {
         super(context,android.R.style.Theme_Holo_Light_Dialog_NoActionBar);

@@ -3,7 +3,11 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.util.SparseArray;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+import com.dhitoshi.xfrs.huixiaobao.R;
 
 public class BaseRecyclerHolder extends RecyclerView.ViewHolder {
     SparseArray<View> mView;
@@ -32,5 +36,13 @@ public class BaseRecyclerHolder extends RecyclerView.ViewHolder {
     public void setText(int viewId,String text) {
         TextView tv=getView(viewId);
         tv.setText(text);
+    }
+    public void setImageResource(int viewId,String url) {
+        ImageView circleImageView=getView(viewId);
+        Glide.with(context).load(url).placeholder(R.mipmap.head).error(R.mipmap.head).into(circleImageView);
+    }
+    public void setImageResource(int viewId,String url,int resId) {
+        ImageView circleImageView=getView(viewId);
+        Glide.with(context).load(url).placeholder(resId).error(resId).into(circleImageView);
     }
 }

@@ -6,6 +6,8 @@ import com.alibaba.mobileim.YWAPI;
 import com.alibaba.mobileim.aop.AdviceBinder;
 import com.alibaba.mobileim.aop.PointCutEnum;
 import com.alibaba.wxlib.util.SysUtil;
+import com.dhitoshi.xfrs.huixiaobao.utils.CrashHandler;
+
 /**
  * Created by dxs on 2017/8/31.
  */
@@ -23,6 +25,7 @@ public class MyApplication extends Application {
             YWAPI.init(this, APP_KEY);
         }
         AdviceBinder.bindAdvice(PointCutEnum.CHATTING_FRAGMENT_UI_POINTCUT,ChattingCustomAdviceSample.class);
+        // CrashHandler.getInstance().init(this);
     }
     @Override
     protected void attachBaseContext(Context base) {
