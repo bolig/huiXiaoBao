@@ -3,6 +3,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import com.dhitoshi.xfrs.huixiaobao.R;
+import com.dhitoshi.xfrs.huixiaobao.utils.ActivityManager;
 import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
 
 import butterknife.ButterKnife;
@@ -34,6 +35,8 @@ public class Setting extends BaseView {
             case R.id.exit:
                 startActivity(new Intent(this,Login.class));
                 SharedPreferencesUtil.Obtain(this,"token","");
+                SharedPreferencesUtil.Save(this, "isRemeber",false);
+                ActivityManager.destoryActivity("Theme");
                 finish();
                 break;
         }

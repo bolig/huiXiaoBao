@@ -1,6 +1,7 @@
 package com.dhitoshi.xfrs.huixiaobao.view;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -17,17 +18,21 @@ import com.dhitoshi.xfrs.huixiaobao.Bean.IllBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.InfoAddClientBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.PositionBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.SexBean;
+import com.dhitoshi.xfrs.huixiaobao.Dialog.HeadPopup;
 import com.dhitoshi.xfrs.huixiaobao.Dialog.LoadingDialog;
 import com.dhitoshi.xfrs.huixiaobao.Event.ClientEvent;
 import com.dhitoshi.xfrs.huixiaobao.Event.InfoEvent;
 import com.dhitoshi.xfrs.huixiaobao.Interface.AddClientManage;
+import com.dhitoshi.xfrs.huixiaobao.Interface.AreaCallback;
 import com.dhitoshi.xfrs.huixiaobao.Interface.DateCallBack;
 import com.dhitoshi.xfrs.huixiaobao.Interface.ItemClick;
+import com.dhitoshi.xfrs.huixiaobao.Interface.MyDismiss;
 import com.dhitoshi.xfrs.huixiaobao.R;
 import com.dhitoshi.xfrs.huixiaobao.adapter.ClientTypeAdapter;
 import com.dhitoshi.xfrs.huixiaobao.adapter.PositionAdapter;
 import com.dhitoshi.xfrs.huixiaobao.adapter.SexAdapter;
 import com.dhitoshi.xfrs.huixiaobao.common.CircleImageView;
+import com.dhitoshi.xfrs.huixiaobao.common.PopupArea;
 import com.dhitoshi.xfrs.huixiaobao.common.SelectDateDialog;
 import com.dhitoshi.xfrs.huixiaobao.common.SelectDialog;
 import com.dhitoshi.xfrs.huixiaobao.presenter.AddClientPresenter;
@@ -109,7 +114,7 @@ public class AddClient extends BaseView implements AddClientManage.View {
     private ArrayList<IllBean> ills;
     private List<PositionBean> positions;
     private List<CustomerTypeBean> customerTypes;
-
+    private HeadPopup headPopup;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -358,7 +363,16 @@ public class AddClient extends BaseView implements AddClientManage.View {
 
     //上传头像
     private void uploadHead() {
-
+        if (null == headPopup) {
+            headPopup = HeadPopup.Build(this,clientHead).init();
+            headPopup.show();
+        } else {
+            if (!headPopup.isShowing()) {
+                headPopup.show();
+            } else {
+                headPopup.dismisss();
+            }
+        }
     }
 
     //查重

@@ -153,7 +153,6 @@ public class Client extends BaseFragment implements ClientManage.View, View.OnTo
                 clientPresenter.getClientList(map, smartRefreshLayout);
             }
         });
-
         smartRefreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {

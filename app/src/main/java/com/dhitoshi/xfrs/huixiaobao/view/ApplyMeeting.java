@@ -13,6 +13,7 @@ import com.dhitoshi.xfrs.huixiaobao.common.OnTabSelectListener;
 import com.dhitoshi.xfrs.huixiaobao.common.SegmentTabLayout;
 import com.dhitoshi.xfrs.huixiaobao.fragment.Expired;
 import com.dhitoshi.xfrs.huixiaobao.fragment.OnGoing;
+import com.dhitoshi.xfrs.huixiaobao.utils.ActivityManager;
 import com.dhitoshi.xfrs.huixiaobao.utils.SystemBarTintManager;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,9 +35,17 @@ public class ApplyMeeting extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.apply_meeting);
+        ActivityManager.addDestoryActivity(this,"ApplyMeeting");
         ButterKnife.bind(this);
         initViews();
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ActivityManager.destoryActivity("ApplyMeeting");
+    }
+
     private void initViews() {
         applySegement.setTabData(mTitles);
         applySegement.setOnTabSelectListener(new OnTabSelectListener() {

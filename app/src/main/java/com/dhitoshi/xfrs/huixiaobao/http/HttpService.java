@@ -20,6 +20,7 @@ import com.dhitoshi.xfrs.huixiaobao.Bean.InfoAddSpendBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.InfoAddVisitBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.KidBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.MeetBean;
+import com.dhitoshi.xfrs.huixiaobao.Bean.MoreMeetInfo;
 import com.dhitoshi.xfrs.huixiaobao.Bean.OwnMeetBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.PageBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.ProductBean;
@@ -138,7 +139,14 @@ public interface HttpService {
     //已过期的会议
     @GET("MeetingType/listForPast")
     Observable<HttpBean<PageBean<ApplyMeetBean>>> getMeetForPast(@Query("token") String token,@Query("page") String page);
-
+    //参会客户列表
+//    @GET("Meeting/customerList")
+//    Observable<>
+    //获取会议详情
+    @GET("MeetingType/articleBody")
+    Observable<MoreMeetInfo> getArticleBody(@Query("aid") String aid, @Query("id") String id);
+    //
+    //
 
     //更改密码
     @POST("resetPassword")
@@ -218,4 +226,10 @@ public interface HttpService {
     //编辑地区
     @POST("area/edit")
     Observable<HttpBean<Object>> editArea(@QueryMap Map<String,String> map);
+    //申办会议
+    @POST("Meeting/add")
+    Observable<Object> applyMeeting(@QueryMap Map<String,String> map);
+    //上传头像
+    @POST("customer/eidtHead")
+    Observable<Object> eidtHead(@Query("id") String id);
 }

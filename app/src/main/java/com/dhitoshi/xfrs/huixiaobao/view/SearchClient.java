@@ -1,4 +1,5 @@
 package com.dhitoshi.xfrs.huixiaobao.view;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.dhitoshi.refreshlayout.SmartRefreshLayout;
@@ -71,6 +73,8 @@ public class SearchClient extends AppCompatActivity implements SearchClientManag
                         if (searchText.isEmpty()) {
                             Toast.makeText(SearchClient.this, "搜索条件不能为空", Toast.LENGTH_SHORT).show();
                         } else {
+                            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                            imm.hideSoftInputFromWindow(getWindow().peekDecorView().getWindowToken(), 0);
                             smartRefreshLayout.autoRefresh();
                         }
                         break;

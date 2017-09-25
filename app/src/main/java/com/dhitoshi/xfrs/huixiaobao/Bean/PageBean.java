@@ -3,7 +3,6 @@ import java.util.List;
 /**
  * Created by dxs on 2017/9/7.
  */
-
 public class PageBean<T> {
     private List<T> list;
     private int nextPage;
