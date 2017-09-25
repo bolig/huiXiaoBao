@@ -17,7 +17,6 @@ public class CommonObserver<T> implements Observer<T> {
 
     public CommonObserver(HttpResult<T> result) {
         this.result = result;
-
     }
     @Override
     public void onSubscribe(@NonNull Disposable d) {

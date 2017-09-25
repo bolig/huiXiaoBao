@@ -4,6 +4,7 @@ import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+import okhttp3.Call;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -15,9 +16,6 @@ public class MyHttp {
     private Retrofit retrofit;
     private HttpService httpService;
     private static MyHttp http;
-//    public JSONObject json=new JSONObject();//请求body json
-//    public  final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
-//    public RequestBody requestBody;
     public MyHttp() {
         OkHttpClient.Builder httpcientBuilder = new OkHttpClient.Builder();
         retrofit=new Retrofit.Builder()
@@ -41,10 +39,6 @@ public class MyHttp {
     public HttpService getHttpService() {
         return httpService;
     }
-//    public HttpService postHttpService() {
-//        requestBody = RequestBody.create(JSON,json.toString());
-//        return httpService;
-//    }
     public void send(Observable observable,Observer observer){
       observable.subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())

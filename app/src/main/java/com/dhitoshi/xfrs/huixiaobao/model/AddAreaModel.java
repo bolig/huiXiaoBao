@@ -1,5 +1,4 @@
 package com.dhitoshi.xfrs.huixiaobao.model;
-
 import android.content.Context;
 import android.widget.Toast;
 
@@ -18,7 +17,6 @@ import com.dhitoshi.xfrs.huixiaobao.utils.LoginUtil;
 
 import java.util.List;
 import java.util.Map;
-
 /**
  * Created by dxs on 2017/9/9.
  */
@@ -28,8 +26,6 @@ public class AddAreaModel implements AddAreaManage.Model {
     public AddAreaModel(Context context) {
         this.context = context;
     }
-
-
     @Override
     public void addArea(final Map<String,String> map, final LoadingDialog dialog, final Callback<HttpBean<KidBean>> callback) {
         final MyHttp http=MyHttp.getInstance();
@@ -60,7 +56,6 @@ public class AddAreaModel implements AddAreaManage.Model {
             }
         }));
     }
-
     @Override
     public void editArea(final Map<String,String> map, final LoadingDialog dialog, final Callback<HttpBean<Object>> callback) {
         MyHttp http=MyHttp.getInstance();

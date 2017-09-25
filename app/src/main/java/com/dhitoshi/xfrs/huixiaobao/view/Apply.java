@@ -2,6 +2,7 @@ package com.dhitoshi.xfrs.huixiaobao.view;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.dhitoshi.xfrs.huixiaobao.Interface.DateCallBack;
@@ -17,8 +18,11 @@ public class Apply extends BaseView {
     TextView applyStart;
     @BindView(R.id.apply_end)
     TextView applyEnd;
+    @BindView(R.id.apply_area)
+    EditText applyArea;
     private String starttime = "";
     private String endtime = "";
+    //private String
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,12 +30,14 @@ public class Apply extends BaseView {
         ButterKnife.bind(this);
         initViews();
     }
+
     private void initViews() {
         initBaseViews();
         setTitle("申请举办");
         setRightText("提交");
     }
-    @OnClick({R.id.apply_start, R.id.apply_end})
+
+    @OnClick({R.id.apply_start, R.id.apply_end, R.id.right_text})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.apply_start:
@@ -40,7 +46,13 @@ public class Apply extends BaseView {
             case R.id.apply_end:
                 selectend();
                 break;
+            case R.id.right_text:
+                commit();
+                break;
         }
+    }
+    private void commit() {
+
     }
     private void selectend() {
         SelectDateDialog dialog = new SelectDateDialog(this);

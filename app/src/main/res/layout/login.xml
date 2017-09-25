@@ -120,7 +120,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@android:color/white"
-        android:text="2016-2020  四川幸福人生智慧科技有限公司"
+        android:text="©2016-2020  四川幸福人生智慧科技有限公司"
         android:gravity="center"
         android:layout_marginBottom="14dp"
         android:textSize="9dp"

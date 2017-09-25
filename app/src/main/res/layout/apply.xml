@@ -11,7 +11,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="5dp"
-        android:background="#e6e6e6"
+        android:background="#efefef"
         ></View>
     <LinearLayout
         android:layout_width="match_parent"
@@ -27,15 +27,17 @@
             android:textColor="#666666"
             android:textSize="14dp" />
 
-        <TextView
-            android:id="@+id/apply_address"
+        <EditText
+            android:id="@+id/apply_area"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:drawableRight="@mipmap/right"
-            android:gravity="center_vertical"
-            android:text="请选择"
-            android:textColor="#BFBFBF" />
+            android:background="@null"
+            android:hint="请输入"
+            android:singleLine="true"
+            android:textColor="@color/colorPrimary"
+            android:textColorHint="#BFBFBF"
+            android:textSize="14dp" />
     </LinearLayout>
     <View
         android:layout_width="match_parent"

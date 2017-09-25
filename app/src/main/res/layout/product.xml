@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:fitsSystemWindows="true"
-    android:background="#e6e6e6"
+    android:background="#efefef"
     >
     <include layout="@layout/toolbar"></include>
     <include layout="@layout/base_recyclerview"></include>
