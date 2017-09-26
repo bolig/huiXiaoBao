@@ -212,12 +212,12 @@ public class AddGift extends BaseView implements AddGiftManage.View{
         salesmen= (ArrayList<BaseBean>) httpBean.getData().getSalesman();
         if(giftBean!=null){
             for (int j = 0; j < addresses.size(); j++) {
-                if(giftBean.getSaleaddress().equals(addresses.get(j).getName())){
+                if(addresses.get(j).getName().equals(giftBean.getSaleaddress())){
                     saleaddress=String.valueOf(addresses.get(j).getId());
                 }
             }
             for (int k = 0; k < salesmen.size(); k++) {
-                if(giftBean.getSalesman().equals(salesmen.get(k).getName())){
+                if(salesmen.get(k).getName().equals(giftBean.getSalesman())){
                     salesman=String.valueOf(salesmen.get(k).getId());
                 }
             }

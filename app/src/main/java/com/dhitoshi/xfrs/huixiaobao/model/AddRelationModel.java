@@ -9,9 +9,11 @@ import com.dhitoshi.xfrs.huixiaobao.Bean.RelationBean;
 import com.dhitoshi.xfrs.huixiaobao.Dialog.LoadingDialog;
 import com.dhitoshi.xfrs.huixiaobao.Interface.AddRelationManage;
 import com.dhitoshi.xfrs.huixiaobao.Interface.Callback;
+import com.dhitoshi.xfrs.huixiaobao.Interface.LoginCall;
 import com.dhitoshi.xfrs.huixiaobao.common.CommonObserver;
 import com.dhitoshi.xfrs.huixiaobao.http.HttpResult;
 import com.dhitoshi.xfrs.huixiaobao.http.MyHttp;
+import com.dhitoshi.xfrs.huixiaobao.utils.LoginUtil;
 
 /**
  * Created by dxs on 2017/9/15.
@@ -24,7 +26,7 @@ public class AddRelationModel implements AddRelationManage.Model{
     }
 
     @Override
-    public void addRelation(String token,AddRelationBean addRelationBean, final LoadingDialog dialog, final Callback<HttpBean<RelationBean>> callback) {
+    public void addRelation(final String token, final AddRelationBean addRelationBean, final LoadingDialog dialog, final Callback<HttpBean<RelationBean>> callback) {
         MyHttp http=MyHttp.getInstance();
         http.send(http.getHttpService().addRelation(token,addRelationBean),new CommonObserver(new HttpResult<HttpBean<RelationBean>>() {
             @Override
@@ -32,7 +34,15 @@ public class AddRelationModel implements AddRelationManage.Model{
                 dialog.dismiss();
                 if(httpBean.getStatus().getCode()==200){
                     callback.get(httpBean);
-                }else{
+                }else if(httpBean.getStatus().getCode()==600){
+                    LoginUtil.autoLogin(context, new LoginCall() {
+                        @Override
+                        public void autoLogin(String token) {
+                            addRelation(token, addRelationBean, dialog, callback);
+                        }
+                    });
+                }
+                else{
                     Toast.makeText(context,httpBean.getStatus().getMsg(),Toast.LENGTH_SHORT).show();
                 }
             }
@@ -45,12 +55,21 @@ public class AddRelationModel implements AddRelationManage.Model{
         }));
     }
     @Override
-    public void getListForRelation(String token,final Callback<HttpBean<InfoAddRelationBean>> callback) {
+    public void getListForRelation(final String token, final Callback<HttpBean<InfoAddRelationBean>> callback) {
         MyHttp http=MyHttp.getInstance();
         http.send(http.getHttpService().getListForRelation(token),new CommonObserver(new HttpResult<HttpBean<InfoAddRelationBean>>() {
             @Override
             public void OnSuccess(HttpBean<InfoAddRelationBean> httpBean) {
-                callback.get(httpBean);
+                if(httpBean.getStatus().getCode()==200){
+                    callback.get(httpBean);
+                }else if(httpBean.getStatus().getCode()==600){
+                    LoginUtil.autoLogin(context, new LoginCall() {
+                        @Override
+                        public void autoLogin(String token) {
+                          getListForRelation(token, callback);
+                        }
+                    });
+                }
             }
 
             @Override
@@ -60,7 +79,7 @@ public class AddRelationModel implements AddRelationManage.Model{
         }));
     }
     @Override
-    public void editRelation(String token,AddRelationBean addRelationBean, final LoadingDialog dialog, final Callback<HttpBean<RelationBean>> callback) {
+    public void editRelation(final String token, final AddRelationBean addRelationBean, final LoadingDialog dialog, final Callback<HttpBean<RelationBean>> callback) {
         MyHttp http=MyHttp.getInstance();
         http.send(http.getHttpService().editRelation(token,addRelationBean),new CommonObserver(new HttpResult<HttpBean<RelationBean>>() {
             @Override
@@ -68,7 +87,15 @@ public class AddRelationModel implements AddRelationManage.Model{
                 dialog.dismiss();
                 if(httpBean.getStatus().getCode()==200){
                     callback.get(httpBean);
-                }else{
+                }else if(httpBean.getStatus().getCode()==600){
+                    LoginUtil.autoLogin(context, new LoginCall() {
+                        @Override
+                        public void autoLogin(String token) {
+                           editRelation(token, addRelationBean, dialog, callback);
+                        }
+                    });
+                }
+                else{
                     Toast.makeText(context,httpBean.getStatus().getMsg(),Toast.LENGTH_SHORT).show();
                 }
             }

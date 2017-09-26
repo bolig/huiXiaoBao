@@ -28,7 +28,7 @@ public class SetAreaModel implements SetAreaManage.Model {
         this.context = context;
     }
     @Override
-    public void getAreaLists(String token,final SmartRefreshLayout smartRefreshLayout, final Callback<HttpBean<List<AreaBean>>> callback) {
+    public void getAreaLists(final String token, final SmartRefreshLayout smartRefreshLayout, final Callback<HttpBean<List<AreaBean>>> callback) {
         MyHttp http=MyHttp.getInstance();
         http.send(http.getHttpService().getAreaLists(token),new CommonObserver(new HttpResult<HttpBean<List<AreaBean>>>() {
             @Override
@@ -36,7 +36,15 @@ public class SetAreaModel implements SetAreaManage.Model {
                 smartRefreshLayout.finishRefresh();
                 if(httpBean.getStatus().getCode()==200){
                     callback.get(httpBean);
-                }else{
+                }else if(httpBean.getStatus().getCode()==600){
+                    LoginUtil.autoLogin(context, new LoginCall() {
+                        @Override
+                        public void autoLogin(String token) {
+                            getAreaLists(token, smartRefreshLayout, callback);
+                        }
+                    });
+                }
+                else{
                     Toast.makeText(context,httpBean.getStatus().getMsg(),Toast.LENGTH_SHORT).show();
                 }
             }

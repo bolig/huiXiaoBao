@@ -21,7 +21,7 @@ public class AddMeetingClientModel implements AddMeetingClientManage.Model{
         this.context = context;
     }
     @Override
-    public void addCustomer(Map<String, String> map, final LoadingDialog dialog, final Callback<HttpBean<Object>> callback) {
+    public void addCustomer(final Map<String, String> map, final LoadingDialog dialog, final Callback<HttpBean<Object>> callback) {
         MyHttp http=MyHttp.getInstance();
         http.send(http.getHttpService().addCustomer(map),new CommonObserver(new HttpResult<HttpBean<Object>>() {
             @Override
@@ -33,7 +33,8 @@ public class AddMeetingClientModel implements AddMeetingClientManage.Model{
                     LoginUtil.autoLogin(context, new LoginCall() {
                         @Override
                         public void autoLogin(String token) {
-
+                            map.put("token",token);
+                            addCustomer(map, dialog, callback);
                         }
                     });
                 }

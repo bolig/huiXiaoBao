@@ -10,10 +10,12 @@ import com.dhitoshi.xfrs.huixiaobao.Bean.SpendBean;
 import com.dhitoshi.xfrs.huixiaobao.Dialog.LoadingDialog;
 import com.dhitoshi.xfrs.huixiaobao.Interface.AddSpendManage;
 import com.dhitoshi.xfrs.huixiaobao.Interface.Callback;
+import com.dhitoshi.xfrs.huixiaobao.Interface.LoginCall;
 import com.dhitoshi.xfrs.huixiaobao.common.CommonObserver;
 import com.dhitoshi.xfrs.huixiaobao.fragment.Client;
 import com.dhitoshi.xfrs.huixiaobao.http.HttpResult;
 import com.dhitoshi.xfrs.huixiaobao.http.MyHttp;
+import com.dhitoshi.xfrs.huixiaobao.utils.LoginUtil;
 
 /**
  * Created by dxs on 2017/9/13.
@@ -24,7 +26,7 @@ public class AddSpendModel implements AddSpendManage.Model{
         this.context = context;
     }
     @Override
-    public void addSpend(String token,AddSpendBean addSpendBean, final LoadingDialog dialog, final Callback<HttpBean<SpendBean>> callback) {
+    public void addSpend(final String token, final AddSpendBean addSpendBean, final LoadingDialog dialog, final Callback<HttpBean<SpendBean>> callback) {
         MyHttp http=MyHttp.getInstance();
         http.send(http.getHttpService().addSpend(token,addSpendBean),new CommonObserver(new HttpResult<HttpBean<SpendBean>>() {
             @Override
@@ -32,7 +34,15 @@ public class AddSpendModel implements AddSpendManage.Model{
                 dialog.dismiss();
                 if(httpBean.getStatus().getCode()==200){
                     callback.get(httpBean);
-                }else{
+                }else if(httpBean.getStatus().getCode()==600){
+                    LoginUtil.autoLogin(context, new LoginCall() {
+                        @Override
+                        public void autoLogin(String token) {
+                           addSpend(token, addSpendBean, dialog, callback);
+                        }
+                    });
+                }
+                else{
                     Toast.makeText(context,httpBean.getStatus().getMsg(),Toast.LENGTH_SHORT).show();
                 }
             }
@@ -45,12 +55,21 @@ public class AddSpendModel implements AddSpendManage.Model{
         }));
     }
     @Override
-    public void getListForSpending(String token,final Callback<HttpBean<InfoAddSpendBean>> callback) {
+    public void getListForSpending(final String token, final Callback<HttpBean<InfoAddSpendBean>> callback) {
         MyHttp http=MyHttp.getInstance();
         http.send(http.getHttpService().getListForSpending(token),new CommonObserver(new HttpResult<HttpBean<InfoAddSpendBean>>() {
             @Override
             public void OnSuccess(HttpBean<InfoAddSpendBean> httpBean) {
-                callback.get(httpBean);
+                if(httpBean.getStatus().getCode()==200){
+                    callback.get(httpBean);
+                }else if(httpBean.getStatus().getCode()==600){
+                    LoginUtil.autoLogin(context, new LoginCall() {
+                        @Override
+                        public void autoLogin(String token) {
+                          getListForSpending(token, callback);
+                        }
+                    });
+                }
             }
             @Override
             public void OnFail(String msg) {
@@ -60,7 +79,7 @@ public class AddSpendModel implements AddSpendManage.Model{
     }
 
     @Override
-    public void editSpend(String token,AddSpendBean addSpendBean, final LoadingDialog dialog, final Callback<HttpBean<SpendBean>> callback) {
+    public void editSpend(final String token, final AddSpendBean addSpendBean, final LoadingDialog dialog, final Callback<HttpBean<SpendBean>> callback) {
         MyHttp http=MyHttp.getInstance();
         http.send(http.getHttpService().editSpend(token,addSpendBean),new CommonObserver(new HttpResult<HttpBean<SpendBean>>() {
             @Override
@@ -68,7 +87,15 @@ public class AddSpendModel implements AddSpendManage.Model{
                 dialog.dismiss();
                 if(httpBean.getStatus().getCode()==200){
                     callback.get(httpBean);
-                }else{
+                }else if(httpBean.getStatus().getCode()==600){
+                    LoginUtil.autoLogin(context, new LoginCall() {
+                        @Override
+                        public void autoLogin(String token) {
+                            editSpend(token, addSpendBean, dialog, callback);
+                        }
+                    });
+                }
+                else{
                     Toast.makeText(context,httpBean.getStatus().getMsg(),Toast.LENGTH_SHORT).show();
                 }
             }

@@ -118,7 +118,7 @@ public class FastSign extends BaseView implements FastSignManage.View{
             return false;
         }
         if (area.isEmpty()) {
-            Toast.makeText(this, "请选择所属地区", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "请选择所属部门", Toast.LENGTH_SHORT).show();
             return false;
         }
         if (password.isEmpty()) {

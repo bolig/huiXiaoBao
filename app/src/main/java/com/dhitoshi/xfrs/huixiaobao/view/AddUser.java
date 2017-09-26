@@ -70,7 +70,6 @@ public class AddUser extends BaseView implements AddUserManage.View {
     private String password="";
     private String CRM="";
     private String APP="";
-    private String token="";
     private Map<String, String> map;
     private UserBean userBean;
     private AddUserPresenter addUserPresenter;
@@ -91,7 +90,7 @@ public class AddUser extends BaseView implements AddUserManage.View {
         setRightText("确定");
         addUserPresenter = new AddUserPresenter(this, this);
 
-        addUserPresenter.getGroupLists(token);
+        addUserPresenter.getGroupLists(SharedPreferencesUtil.Obtain(this,"token","").toString());
         if (userBean != null) {
             llPswd.setVisibility(View.GONE);
             llName.setVisibility(View.GONE);
@@ -146,7 +145,7 @@ public class AddUser extends BaseView implements AddUserManage.View {
             map.put("email", email);
             map.put("CRM", CRM);
             map.put("APP", APP);
-            token = SharedPreferencesUtil.Obtain(this, "token", "").toString();
+            String token = SharedPreferencesUtil.Obtain(this, "token", "").toString();
             map.put("token", token);
             LoadingDialog dialog = LoadingDialog.build(this).setLoadingTitle("提交中");
             dialog.show();
@@ -175,7 +174,7 @@ public class AddUser extends BaseView implements AddUserManage.View {
                 return false;
             }
             if (area.isEmpty()) {
-                Toast.makeText(this, "请选择所属地区", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "请选择所属部门", Toast.LENGTH_SHORT).show();
                 return false;
             }
             if (password.isEmpty()) {
@@ -236,7 +235,7 @@ public class AddUser extends BaseView implements AddUserManage.View {
         userRoles = (ArrayList<UserRole>) httpBean.getData();
         if (userBean != null) {
             for (int j = 0; j < userRoles.size(); j++) {
-                if (userBean.getGroup().equals(userRoles.get(j).getName())) {
+                if (userRoles.get(j).getName().equals(userBean.getGroup())) {
                     group = String.valueOf(userRoles.get(j).getId());
                 }
             }

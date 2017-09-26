@@ -22,7 +22,7 @@ public class LoginUtil {
             @Override
             public void OnSuccess(HttpBean<UserBean> httpBean) {
                 if(httpBean.getStatus().getCode()==200){
-                    SharedPreferencesUtil.Obtain(context,"token",httpBean.getData().getToken());
+                    SharedPreferencesUtil.Save(context,"token",httpBean.getData().getToken());
                     call.autoLogin(httpBean.getData().getToken());
                 }else{
                     Toast.makeText(context,httpBean.getStatus().getMsg(),Toast.LENGTH_SHORT).show();

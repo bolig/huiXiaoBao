@@ -8,9 +8,11 @@ import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.PageBean;
 import com.dhitoshi.xfrs.huixiaobao.Interface.Callback;
 import com.dhitoshi.xfrs.huixiaobao.Interface.GiftManage;
+import com.dhitoshi.xfrs.huixiaobao.Interface.LoginCall;
 import com.dhitoshi.xfrs.huixiaobao.common.CommonObserver;
 import com.dhitoshi.xfrs.huixiaobao.http.HttpResult;
 import com.dhitoshi.xfrs.huixiaobao.http.MyHttp;
+import com.dhitoshi.xfrs.huixiaobao.utils.LoginUtil;
 
 /**
  * Created by dxs on 2017/9/7.
@@ -23,7 +25,7 @@ public class GiftModel implements GiftManage.Model{
         this.context = context;
     }
     @Override
-    public void getGiftLists(String token,String userid, String page, final SmartRefreshLayout smartRefreshLayout, final Callback<HttpBean<PageBean<GiftBean>>> callback) {
+    public void getGiftLists(final String token, final String userid, final String page, final SmartRefreshLayout smartRefreshLayout, final Callback<HttpBean<PageBean<GiftBean>>> callback) {
         MyHttp http=MyHttp.getInstance();
         http.send(http.getHttpService().getGiftLists(token,userid, page),new CommonObserver(new HttpResult<HttpBean<PageBean<GiftBean>>>() {
             @Override
@@ -32,7 +34,15 @@ public class GiftModel implements GiftManage.Model{
                 smartRefreshLayout.finishLoadmore();
                 if(httpBean.getStatus().getCode()==200){
                     callback.get(httpBean);
-                }else{
+                }else if(httpBean.getStatus().getCode()==600){
+                    LoginUtil.autoLogin(context, new LoginCall() {
+                        @Override
+                        public void autoLogin(String token) {
+                            getGiftLists(token, userid, page, smartRefreshLayout, callback);
+                        }
+                    });
+                }
+                else{
                     Toast.makeText(context,httpBean.getStatus().getMsg(),Toast.LENGTH_SHORT).show();
                 }
             }

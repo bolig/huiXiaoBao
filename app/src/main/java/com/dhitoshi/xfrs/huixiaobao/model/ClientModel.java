@@ -29,7 +29,7 @@ public class ClientModel implements ClientManage.Model{
         this.context = context;
     }
     @Override
-    public void getClientList(Map<String,String> map, final SmartRefreshLayout smartRefreshLayout, final Callback<HttpBean<PageBean<ClientBean>>> callback) {
+    public void getClientList(final Map<String,String> map, final SmartRefreshLayout smartRefreshLayout, final Callback<HttpBean<PageBean<ClientBean>>> callback) {
         MyHttp http=MyHttp.getInstance();
         http.send(http.getHttpService().getClientList(map),new CommonObserver(new HttpResult<HttpBean<PageBean<ClientBean>>>() {
             @Override
@@ -38,7 +38,15 @@ public class ClientModel implements ClientManage.Model{
                 smartRefreshLayout.finishRefresh();
                 if(httpBean.getStatus().getCode()==200){
                     callback.get(httpBean);
-                }else{
+                }else if(httpBean.getStatus().getCode()==600){
+                    LoginUtil.autoLogin(context, new LoginCall() {
+                        @Override
+                        public void autoLogin(String token) {
+                           getClientList(map, smartRefreshLayout, callback);
+                        }
+                    });
+                }
+                else{
                     Toast.makeText(context,httpBean.getStatus().getMsg(),Toast.LENGTH_SHORT).show();
                 }
             }

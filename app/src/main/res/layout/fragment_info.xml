@@ -207,7 +207,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
-                    android:text="所属地区"
+                    android:text="所属部门"
                     android:textColor="#666666"
                     android:textSize="15dp"
                     />

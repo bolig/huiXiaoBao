@@ -38,7 +38,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
-                    android:text="地区名称："
+                    android:text="部门名称："
                     android:textColor="#666666"
                     android:textSize="14dp" />
 

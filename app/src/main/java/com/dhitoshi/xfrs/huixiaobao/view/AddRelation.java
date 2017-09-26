@@ -290,12 +290,12 @@ public class AddRelation extends BaseView implements AddRelationManage.View{
         positions=httpBean.getData().getPosition();
         if(relationBean!=null){
             for (int i = 0; i < relations.size(); i++) {
-                if(relationBean.getRelation().equals(relations.get(i).getName())){
+                if(relations.get(i).getName().equals(relationBean.getRelation())){
                     relation=String.valueOf(relations.get(i).getId());
                 }
             }
             for (int j = 0; j < positions.size(); j++) {
-                if(relationBean.getPosition().equals(positions.get(j).getName())){
+                if(positions.get(j).getName().equals(relationBean.getPosition())){
                     workPosition=String.valueOf(positions.get(j).getId());
                 }
             }

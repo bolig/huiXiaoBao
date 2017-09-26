@@ -234,12 +234,12 @@ public class AddVisit extends BaseView implements AddVisitManage.View{
         feedtypes=httpBean.getData().getFeedtype();
         if(visitBean!=null){
             for (int i = 0; i < feedmen.size(); i++) {
-                if(visitBean.getFeedman_name().equals(feedmen.get(i).getName())){
+                if(feedmen.get(i).getName().equals(visitBean.getFeedman_name())){
                     feedman=String.valueOf(feedmen.get(i).getId());
                 }
             }
             for (int j = 0; j < feedtypes.size(); j++) {
-                if(visitBean.getFeedtype().equals(feedtypes.get(j).getName())){
+                if(feedtypes.get(j).getName().equals(visitBean.getFeedtype())){
                     feedtype=String.valueOf(feedtypes.get(j).getId());
                 }
             }

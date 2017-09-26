@@ -40,7 +40,7 @@ public class SelectArea extends BaseView implements AreaManage.View {
     }
     private void initViews() {
         initBaseViews();
-        setTitle("地区");
+        setTitle("部门");
         kidBeens=new ArrayList<>();
         areaPresenter=new AreaPresenter(this,this);
         String token= SharedPreferencesUtil.Obtain(this,"token","").toString();

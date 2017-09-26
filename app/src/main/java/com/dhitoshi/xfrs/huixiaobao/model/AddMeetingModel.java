@@ -9,9 +9,12 @@ import com.dhitoshi.xfrs.huixiaobao.Bean.MeetBean;
 import com.dhitoshi.xfrs.huixiaobao.Dialog.LoadingDialog;
 import com.dhitoshi.xfrs.huixiaobao.Interface.AddMeetingManage;
 import com.dhitoshi.xfrs.huixiaobao.Interface.Callback;
+import com.dhitoshi.xfrs.huixiaobao.Interface.LoginCall;
 import com.dhitoshi.xfrs.huixiaobao.common.CommonObserver;
 import com.dhitoshi.xfrs.huixiaobao.http.HttpResult;
 import com.dhitoshi.xfrs.huixiaobao.http.MyHttp;
+import com.dhitoshi.xfrs.huixiaobao.utils.LoginUtil;
+
 /**
  * Created by dxs on 2017/9/15.
  */
@@ -22,7 +25,7 @@ public class AddMeetingModel implements AddMeetingManage.Model{
         this.context = context;
     }
     @Override
-    public void addMeeting(String token,AddMeetBean addMeetBean,final LoadingDialog dialog,  final Callback<HttpBean<MeetBean>> callback) {
+    public void addMeeting(final String token, final AddMeetBean addMeetBean, final LoadingDialog dialog, final Callback<HttpBean<MeetBean>> callback) {
         MyHttp http=MyHttp.getInstance();
         http.send(http.getHttpService().addMeet(token,addMeetBean),new CommonObserver(new HttpResult<HttpBean<MeetBean>>() {
             @Override
@@ -30,7 +33,15 @@ public class AddMeetingModel implements AddMeetingManage.Model{
                 dialog.dismiss();
                 if(httpBean.getStatus().getCode()==200){
                     callback.get(httpBean);
-                }else{
+                }else if(httpBean.getStatus().getCode()==600){
+                    LoginUtil.autoLogin(context, new LoginCall() {
+                        @Override
+                        public void autoLogin(String token) {
+                            addMeeting(token, addMeetBean, dialog, callback);
+                        }
+                    });
+                }
+                else{
                     Toast.makeText(context,httpBean.getStatus().getMsg(),Toast.LENGTH_SHORT).show();
                 }
             }
@@ -43,12 +54,21 @@ public class AddMeetingModel implements AddMeetingManage.Model{
         }));
     }
     @Override
-    public void getListForMeeting(String token,final Callback<HttpBean<InfoAddMeetBean>> callback) {
+    public void getListForMeeting(final String token, final Callback<HttpBean<InfoAddMeetBean>> callback) {
         MyHttp http=MyHttp.getInstance();
         http.send(http.getHttpService().getListForMeeting(token),new CommonObserver(new HttpResult<HttpBean<InfoAddMeetBean>>() {
             @Override
             public void OnSuccess(HttpBean<InfoAddMeetBean> httpBean) {
-                callback.get(httpBean);
+                if(httpBean.getStatus().getCode()==200) {
+                    callback.get(httpBean);
+                }else if(httpBean.getStatus().getCode()==600){
+                    LoginUtil.autoLogin(context, new LoginCall() {
+                        @Override
+                        public void autoLogin(String token) {
+                           getListForMeeting(token, callback);
+                        }
+                    });
+                }
             }
 
             @Override
@@ -58,7 +78,7 @@ public class AddMeetingModel implements AddMeetingManage.Model{
         }));
     }
     @Override
-    public void editMeeting(String token,AddMeetBean addMeetBean, final LoadingDialog dialog, final Callback<HttpBean<MeetBean>> callback) {
+    public void editMeeting(final String token, final AddMeetBean addMeetBean, final LoadingDialog dialog, final Callback<HttpBean<MeetBean>> callback) {
         MyHttp http=MyHttp.getInstance();
         http.send(http.getHttpService().editMeet(token,addMeetBean),new CommonObserver(new HttpResult<HttpBean<MeetBean>>() {
             @Override
@@ -66,7 +86,15 @@ public class AddMeetingModel implements AddMeetingManage.Model{
                 dialog.dismiss();
                 if(httpBean.getStatus().getCode()==200){
                     callback.get(httpBean);
-                }else{
+                }else if(httpBean.getStatus().getCode()==600){
+                    LoginUtil.autoLogin(context, new LoginCall() {
+                        @Override
+                        public void autoLogin(String token) {
+                           editMeeting(token, addMeetBean, dialog, callback);
+                        }
+                    });
+                }
+                else{
                     Toast.makeText(context,httpBean.getStatus().getMsg(),Toast.LENGTH_SHORT).show();
                 }
             }

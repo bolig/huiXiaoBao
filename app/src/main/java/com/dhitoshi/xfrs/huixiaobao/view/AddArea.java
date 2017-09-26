@@ -61,7 +61,7 @@ public class AddArea extends BaseView implements AddAreaManage.View{
     }
     private void initViews() {
         initBaseViews();
-        setTitle("地区");
+        setTitle(type<0?"编辑部门":"添加部门");
         setRightText("确定");
         it=getIntent();
         map=new HashMap<>();

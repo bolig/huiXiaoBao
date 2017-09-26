@@ -2,6 +2,7 @@ package com.dhitoshi.xfrs.huixiaobao.Interface;
 import com.dhitoshi.xfrs.huixiaobao.Bean.ClientBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.GiftBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
+import com.dhitoshi.xfrs.huixiaobao.Bean.InfoQuery;
 import com.dhitoshi.xfrs.huixiaobao.Bean.MeetBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.PageBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.RelationBean;
@@ -15,7 +16,7 @@ import java.util.Map;
  */
 public interface QueryManage {
     interface View{
-       void getListForSearch(HttpBean<Object> httpBean);
+       void getListForSearch(HttpBean<InfoQuery> httpBean);
         void getSearchOne(HttpBean<PageBean<ClientBean>> httpBean);
         void getSearchTwo(HttpBean<PageBean<SpendBean>> httpBean);
         void getSearchThree(HttpBean<PageBean<VisitBean>> httpBean);
@@ -24,7 +25,7 @@ public interface QueryManage {
         void getSearchSix(HttpBean<PageBean<MeetBean>> httpBean);
     }
     interface Model{
-        void getListForSearch(String token,Callback<HttpBean<Object>> callback);
+        void getListForSearch(String token,Callback<HttpBean<InfoQuery>> callback);
         void getSearchOne(Map<String,String> map, LoadingDialog dialog, Callback<HttpBean<PageBean<ClientBean>>> callback);
         void getSearchTwo(Map<String,String> map, LoadingDialog dialog,Callback<HttpBean<PageBean<SpendBean>>> callback);
         void getSearchThree(Map<String,String> map, LoadingDialog dialog,Callback<HttpBean<PageBean<VisitBean>>> callback);

@@ -8,6 +8,7 @@ import com.dhitoshi.xfrs.huixiaobao.Interface.AddMeetingClientManage;
 import com.dhitoshi.xfrs.huixiaobao.R;
 import com.dhitoshi.xfrs.huixiaobao.model.AddMeetingClientModel;
 import com.dhitoshi.xfrs.huixiaobao.presenter.AddMeetingClientPresenter;
+import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -66,6 +67,8 @@ public class AddMeetClient extends BaseView implements AddMeetingClientManage.Vi
         map.put("idcard",idcard);
         map.put("phone",phone);
         map.put("meetingid",meetingid);
+        String token= SharedPreferencesUtil.Obtain(this,"token","").toString();
+        map.put("token",token);
         LoadingDialog dialog = LoadingDialog.build(this).setLoadingTitle("提交中");
         dialog.show();
         addMeetingClientPresenter.addCustomer(map,dialog);

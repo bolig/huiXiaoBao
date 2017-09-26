@@ -9,9 +9,11 @@ import com.dhitoshi.xfrs.huixiaobao.Bean.VisitBean;
 import com.dhitoshi.xfrs.huixiaobao.Dialog.LoadingDialog;
 import com.dhitoshi.xfrs.huixiaobao.Interface.AddVisitManage;
 import com.dhitoshi.xfrs.huixiaobao.Interface.Callback;
+import com.dhitoshi.xfrs.huixiaobao.Interface.LoginCall;
 import com.dhitoshi.xfrs.huixiaobao.common.CommonObserver;
 import com.dhitoshi.xfrs.huixiaobao.http.HttpResult;
 import com.dhitoshi.xfrs.huixiaobao.http.MyHttp;
+import com.dhitoshi.xfrs.huixiaobao.utils.LoginUtil;
 
 /**
  * Created by dxs on 2017/9/15.
@@ -25,7 +27,7 @@ public class AddVisitModel implements AddVisitManage.Model{
     }
 
     @Override
-    public void addVisit(String token,AddVisitBean addVisitBean, final LoadingDialog dialog, final Callback<HttpBean<VisitBean>> callback) {
+    public void addVisit(final String token, final AddVisitBean addVisitBean, final LoadingDialog dialog, final Callback<HttpBean<VisitBean>> callback) {
         MyHttp http=MyHttp.getInstance();
         http.send(http.getHttpService().addVisit(token,addVisitBean),new CommonObserver(new HttpResult<HttpBean<VisitBean>>() {
             @Override
@@ -33,7 +35,15 @@ public class AddVisitModel implements AddVisitManage.Model{
                 dialog.dismiss();
                 if(httpBean.getStatus().getCode()==200){
                     callback.get(httpBean);
-                }else{
+                }else if(httpBean.getStatus().getCode()==600){
+                    LoginUtil.autoLogin(context, new LoginCall() {
+                        @Override
+                        public void autoLogin(String token) {
+                           addVisit(token, addVisitBean, dialog, callback);
+                        }
+                    });
+                }
+                else{
                     Toast.makeText(context,httpBean.getStatus().getMsg(),Toast.LENGTH_SHORT).show();
                 }
             }
@@ -47,12 +57,21 @@ public class AddVisitModel implements AddVisitManage.Model{
     }
 
     @Override
-    public void getListForVisit(String token,final Callback<HttpBean<InfoAddVisitBean>> callback) {
+    public void getListForVisit(final String token, final Callback<HttpBean<InfoAddVisitBean>> callback) {
         MyHttp http=MyHttp.getInstance();
         http.send(http.getHttpService().getListForVisit(token),new CommonObserver(new HttpResult<HttpBean<InfoAddVisitBean>>() {
             @Override
             public void OnSuccess(HttpBean<InfoAddVisitBean> httpBean) {
-                callback.get(httpBean);
+                if(httpBean.getStatus().getCode()==200) {
+                    callback.get(httpBean);
+                }else if(httpBean.getStatus().getCode()==600){
+                    LoginUtil.autoLogin(context, new LoginCall() {
+                        @Override
+                        public void autoLogin(String token) {
+                           getListForVisit(token, callback);
+                        }
+                    });
+                }
             }
 
             @Override
@@ -63,7 +82,7 @@ public class AddVisitModel implements AddVisitManage.Model{
     }
 
     @Override
-    public void editVisit(String token,AddVisitBean addVisitBean, final LoadingDialog dialog, final Callback<HttpBean<VisitBean>> callback) {
+    public void editVisit(final String token, final AddVisitBean addVisitBean, final LoadingDialog dialog, final Callback<HttpBean<VisitBean>> callback) {
         MyHttp http=MyHttp.getInstance();
         http.send(http.getHttpService().editVisit(token,addVisitBean),new CommonObserver(new HttpResult<HttpBean<VisitBean>>() {
             @Override
@@ -71,7 +90,15 @@ public class AddVisitModel implements AddVisitManage.Model{
                 dialog.dismiss();
                 if(httpBean.getStatus().getCode()==200){
                     callback.get(httpBean);
-                }else{
+                }else if(httpBean.getStatus().getCode()==600){
+                    LoginUtil.autoLogin(context, new LoginCall() {
+                        @Override
+                        public void autoLogin(String token) {
+                           editVisit(token, addVisitBean, dialog, callback);
+                        }
+                    });
+                }
+                else{
                     Toast.makeText(context,httpBean.getStatus().getMsg(),Toast.LENGTH_SHORT).show();
                 }
             }

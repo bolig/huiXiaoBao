@@ -25,7 +25,7 @@ public class MoreMeetInfoModel implements MoreMeetInfoManage.Model {
         this.context = context;
     }
     @Override
-    public void getArticleBody(String token,String aid, String id, final SmartRefreshLayout smartRefreshLayout, final Callback<HttpBean<MoreMeetInfoBean>> callback) {
+    public void getArticleBody(final String token, final String aid, final String id, final SmartRefreshLayout smartRefreshLayout, final Callback<HttpBean<MoreMeetInfoBean>> callback) {
         MyHttp http=MyHttp.getInstance();
         http.send(http.getHttpService().getArticleBody(token,aid, id),new CommonObserver(new HttpResult<HttpBean<MoreMeetInfoBean>>() {
             @Override
@@ -37,7 +37,7 @@ public class MoreMeetInfoModel implements MoreMeetInfoManage.Model {
                     LoginUtil.autoLogin(context, new LoginCall() {
                         @Override
                         public void autoLogin(String token) {
-
+                            getArticleBody(token, aid, id, smartRefreshLayout, callback);
                         }
                     });
                 }

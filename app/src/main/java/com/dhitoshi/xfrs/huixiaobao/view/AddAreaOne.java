@@ -53,7 +53,7 @@ public class AddAreaOne extends BaseView implements SetAreaManage.View {
     }
     private void initViews() {
         initBaseViews();
-        setTitle("地区");
+        setTitle("部门");
         setRightIcon(R.mipmap.add);
         areaBeens=new ArrayList<>();
         smartRefreshLayout.autoRefresh();

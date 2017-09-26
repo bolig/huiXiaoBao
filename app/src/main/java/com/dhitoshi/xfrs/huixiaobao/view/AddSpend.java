@@ -284,17 +284,17 @@ public class AddSpend extends BaseView implements AddSpendManage.View{
         salesman= (ArrayList<BaseBean>) httpBean.getData().getSalesman();
         if(spendBean!=null){
             for (int i = 0; i < item.size(); i++) {
-                if(spendBean.getItem_name().equals(item.get(i).getName())){
+                if(item.get(i).getName().equals(spendBean.getItem_name())){
                     productId=String.valueOf(item.get(i).getId());
                 }
             }
             for (int j = 0; j < saleaddress.size(); j++) {
-                if(spendBean.getBuyaddress().equals(saleaddress.get(j).getName())){
+                if(saleaddress.get(j).getName().equals(spendBean.getBuyaddress())){
                     addressId=String.valueOf(saleaddress.get(j).getId());
                 }
             }
             for (int k = 0; k < salesman.size(); k++) {
-                if(spendBean.getSaleman_name().equals(salesman.get(k).getName())){
+                if(salesman.get(k).getName().equals(spendBean.getSaleman_name())){
                     saleManId=String.valueOf(salesman.get(k).getId());
                 }
             }

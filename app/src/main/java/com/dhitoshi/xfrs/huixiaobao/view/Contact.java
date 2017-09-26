@@ -21,6 +21,7 @@ import com.dhitoshi.xfrs.huixiaobao.Interface.ContactManage;
 import com.dhitoshi.xfrs.huixiaobao.R;
 import com.dhitoshi.xfrs.huixiaobao.adapter.ContactAdapter;
 import com.dhitoshi.xfrs.huixiaobao.presenter.ContactPresenter;
+import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -176,7 +177,7 @@ public class Contact extends BaseView implements ContactManage.View{
             return;
         }
         if(area.isEmpty()){
-            Toast.makeText(this,"请选择客户地区",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,"请选择客户部门",Toast.LENGTH_SHORT).show();
             return;
         }
         if(map==null){
@@ -185,6 +186,7 @@ public class Contact extends BaseView implements ContactManage.View{
         map.put("name",contactName.substring(0,contactName.length()-1));
         map.put("phone",phone.substring(0,phone.length()-1));
         map.put("area",area);
+        map.put("token", SharedPreferencesUtil.Obtain(this,"token","").toString());
         LoadingDialog dialog = LoadingDialog.build(this).setLoadingTitle("提交中");
         dialog.show();
         contactPresenter.addFast(map,dialog);

@@ -240,17 +240,17 @@ public class AddMeeting extends BaseView implements AddMeetingManage.View {
         salesmen = (ArrayList<BaseBean>) httpBean.getData().getSalesman();
         if(meetBean!=null){
             for (int i = 0; i < usertypes.size(); i++) {
-                if(meetBean.getUsertype().equals(usertypes.get(i).getName())){
+                if(usertypes.get(i).getName().equals(meetBean.getUsertype())){
                     usertype=String.valueOf(usertypes.get(i).getId());
                 }
             }
             for (int j = 0; j < types.size(); j++) {
-                if(meetBean.getType().equals(types.get(j).getName())){
+                if(types.get(j).getName().equals(meetBean.getType())){
                     type=String.valueOf(types.get(j).getId());
                 }
             }
             for (int k = 0; k < salesmen.size(); k++) {
-                if(meetBean.getSalesman().equals(salesmen.get(k).getName())){
+                if(salesmen.get(k).getName().equals(meetBean.getSalesman())){
                     salesman=String.valueOf(salesmen.get(k).getId());
                 }
             }

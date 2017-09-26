@@ -10,9 +10,11 @@ import com.dhitoshi.xfrs.huixiaobao.Bean.InfoAddClientBean;
 import com.dhitoshi.xfrs.huixiaobao.Dialog.LoadingDialog;
 import com.dhitoshi.xfrs.huixiaobao.Interface.AddClientManage;
 import com.dhitoshi.xfrs.huixiaobao.Interface.Callback;
+import com.dhitoshi.xfrs.huixiaobao.Interface.LoginCall;
 import com.dhitoshi.xfrs.huixiaobao.common.CommonObserver;
 import com.dhitoshi.xfrs.huixiaobao.http.HttpResult;
 import com.dhitoshi.xfrs.huixiaobao.http.MyHttp;
+import com.dhitoshi.xfrs.huixiaobao.utils.LoginUtil;
 
 import java.util.List;
 import java.util.Map;
@@ -29,7 +31,7 @@ public class AddClientModel implements AddClientManage.Model {
     }
 
     @Override
-    public void addClient(String token,AddClientBean addClientBean, final LoadingDialog dialog, final Callback<HttpBean<ClientBean>> callback) {
+    public void addClient(String token, final AddClientBean addClientBean, final LoadingDialog dialog, final Callback<HttpBean<ClientBean>> callback) {
         MyHttp http=MyHttp.getInstance();
         http.send(http.getHttpService().addClient(token,addClientBean),new CommonObserver(new HttpResult<HttpBean<ClientBean>>() {
 
@@ -38,7 +40,15 @@ public class AddClientModel implements AddClientManage.Model {
                 dialog.dismiss();
                 if(httpBean.getStatus().getCode()==200){
                     callback.get(httpBean);
-                }else{
+                }else if(httpBean.getStatus().getCode()==600){
+                    LoginUtil.autoLogin(context, new LoginCall() {
+                        @Override
+                        public void autoLogin(String token) {
+                           addClient(token,addClientBean,dialog,callback);
+                        }
+                    });
+                }
+                else{
                     Toast.makeText(context,httpBean.getStatus().getMsg(),Toast.LENGTH_SHORT).show();
                 }
             }
@@ -52,7 +62,7 @@ public class AddClientModel implements AddClientManage.Model {
     }
 
     @Override
-    public void editClient(String token,AddClientBean addClientBean, final LoadingDialog dialog, final Callback<HttpBean<ClientBean>> callback) {
+    public void editClient(String token, final AddClientBean addClientBean, final LoadingDialog dialog, final Callback<HttpBean<ClientBean>> callback) {
         MyHttp http=MyHttp.getInstance();
         http.send(http.getHttpService().editClient(token,addClientBean),new CommonObserver(new HttpResult<HttpBean<ClientBean>>() {
 
@@ -61,7 +71,15 @@ public class AddClientModel implements AddClientManage.Model {
                 dialog.dismiss();
                 if(httpBean.getStatus().getCode()==200){
                     callback.get(httpBean);
-                }else{
+                }else if(httpBean.getStatus().getCode()==600){
+                    LoginUtil.autoLogin(context, new LoginCall() {
+                        @Override
+                        public void autoLogin(String token) {
+                            editClient(token,addClientBean,dialog,callback);
+                        }
+                    });
+                }
+                else{
                     Toast.makeText(context,httpBean.getStatus().getMsg(),Toast.LENGTH_SHORT).show();
                 }
             }

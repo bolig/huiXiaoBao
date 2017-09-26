@@ -18,6 +18,7 @@ import com.dhitoshi.xfrs.huixiaobao.Bean.InfoAddMeetBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.InfoAddRelationBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.InfoAddSpendBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.InfoAddVisitBean;
+import com.dhitoshi.xfrs.huixiaobao.Bean.InfoQuery;
 import com.dhitoshi.xfrs.huixiaobao.Bean.KidBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.MeetBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.MoreMeetInfoBean;
@@ -168,7 +169,7 @@ public interface HttpService {
     Observable<HttpBean<PageBean<MeetBean>>> getSearchSix(@QueryMap Map<String,String> map);
     //高级查询所需列表
     @GET("customer/listForSearch")
-    Observable<HttpBean<Object>> getListForSearch(String token);
+    Observable<HttpBean<InfoQuery>> getListForSearch(@Query("token") String token);
 
 
     //更改密码
@@ -251,7 +252,7 @@ public interface HttpService {
     Observable<HttpBean<Object>> editArea(@QueryMap Map<String,String> map);
     //申办会议
     @POST("Meeting/add")
-    Observable<Object> applyMeeting(@QueryMap Map<String,String> map);
+    Observable<HttpBean<Object>> applyMeeting(@QueryMap Map<String,String> map);
     //上传头像
     @POST("customer/eidtHead")
     Observable<Object> eidtHead(@Query("token") String token,@Query("id") String id);

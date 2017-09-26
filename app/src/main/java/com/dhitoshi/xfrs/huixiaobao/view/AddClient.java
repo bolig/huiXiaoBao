@@ -210,33 +210,37 @@ public class AddClient extends BaseView implements AddClientManage.View {
         positions = httpBean.getData().getPosition();
         customerTypes = httpBean.getData().getCustomerType();
         if (clientBean != null) {
-            for (int i = 0; i < clientBean.getHobby().size(); i++) {
-                for (int j = 0; j < hobbys.size(); j++) {
-                    if (clientBean.getHobby().get(i).getHobbyname().equals(hobbys.get(j).getName())) {
-                        if (hobby.isEmpty()) {
-                            hobby += String.valueOf(hobbys.get(j).getId());
+            if(clientBean.getHobby()!=null){
+                for (int i = 0; i < clientBean.getHobby().size(); i++) {
+                    for (int j = 0; j < hobbys.size(); j++) {
+                        if (clientBean.getHobby().get(i).getHobbyname().equals(hobbys.get(j).getName())) {
+                            if (hobby.isEmpty()) {
+                                hobby += String.valueOf(hobbys.get(j).getId());
+                            }
+                            hobby += "," + String.valueOf(hobbys.get(j).getId());
                         }
-                        hobby += "," + String.valueOf(hobbys.get(j).getId());
                     }
                 }
             }
-            for (int i = 0; i < clientBean.getIll().size(); i++) {
-                for (int j = 0; j < ills.size(); j++) {
-                    if (clientBean.getIll().get(i).getIllname().equals(ills.get(j).getName())) {
-                        if (ill.isEmpty()) {
-                            ill += String.valueOf(ills.get(j).getId());
-                        }
-                        ill += "," + String.valueOf(ills.get(j).getId());
-                    }
-                }
-            }
+           if(clientBean.getIll()!=null){
+               for (int i = 0; i < clientBean.getIll().size(); i++) {
+                   for (int j = 0; j < ills.size(); j++) {
+                       if (clientBean.getIll().get(i).getIllname().equals(ills.get(j).getName())) {
+                           if (ill.isEmpty()) {
+                               ill += String.valueOf(ills.get(j).getId());
+                           }
+                           ill += "," + String.valueOf(ills.get(j).getId());
+                       }
+                   }
+               }
+           }
             for (int m = 0; m < positions.size(); m++) {
-                if (clientBean.getPosition().equals(positions.get(m).getName())) {
+                if (positions.get(m).getName().equals(clientBean.getPosition())) {
                     workPosition = String.valueOf(positions.get(m).getId());
                 }
             }
             for (int k = 0; k < customerTypes.size(); k++) {
-                if (clientBean.getType().equals(customerTypes.get(k).getName())) {
+                if (customerTypes.get(k).getName().equals(clientBean.getType())) {
                     type = String.valueOf(customerTypes.get(k).getId());
                 }
             }
@@ -314,7 +318,7 @@ public class AddClient extends BaseView implements AddClientManage.View {
             return false;
         }
         if (area.isEmpty()) {
-            Toast.makeText(this, "请选择地区", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "请选择部门", Toast.LENGTH_SHORT).show();
             return false;
         }
         telPhone = clientTelphone.getText().toString();

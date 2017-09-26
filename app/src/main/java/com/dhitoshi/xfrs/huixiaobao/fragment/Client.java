@@ -151,6 +151,8 @@ public class Client extends BaseFragment implements ClientManage.View, View.OnTo
                 map.put("area", area);
                 map.put("order", order);
                 map.put("page", String.valueOf(page));
+                String token=SharedPreferencesUtil.Obtain(getContext(),"token","").toString();
+                map.put("token",token);
                 clientPresenter.getClientList(map, smartRefreshLayout);
             }
         });
@@ -163,6 +165,8 @@ public class Client extends BaseFragment implements ClientManage.View, View.OnTo
                 map.put("area", area);
                 map.put("order", order);
                 map.put("page", String.valueOf(page));
+                String token=SharedPreferencesUtil.Obtain(getContext(),"token","").toString();
+                map.put("token",token);
                 clientPresenter.getClientList(map, smartRefreshLayout);
             }
         });
