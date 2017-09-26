@@ -23,8 +23,8 @@ public class ProductPresenter implements ProductManage.Presenter{
         model=new ProductModel(context);
     }
     @Override
-    public void getItem(String page,SmartRefreshLayout smartRefreshLayout) {
-        model.getItem(page,smartRefreshLayout,new Callback<HttpBean<PageBean<ProductBean>>>() {
+    public void getItem(String token,String page,SmartRefreshLayout smartRefreshLayout) {
+        model.getItem(token,page,smartRefreshLayout,new Callback<HttpBean<PageBean<ProductBean>>>() {
             @Override
             public void get(HttpBean<PageBean<ProductBean>> httpBean) {
                 view.getItem(httpBean);

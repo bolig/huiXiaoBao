@@ -27,7 +27,7 @@ public class ExpiredModel implements ExpiredManage.Model {
     @Override
     public void getMeetForPast(String token, final String page, final SmartRefreshLayout smartRefreshLayout, final Callback<HttpBean<PageBean<ApplyMeetBean>>> callback) {
         MyHttp http=MyHttp.getInstance();
-        http.send(http.getHttpService().getMeetForNow(token, page),new CommonObserver(new HttpResult<HttpBean<PageBean<ApplyMeetBean>>>() {
+        http.send(http.getHttpService().getMeetForPast(token, page),new CommonObserver(new HttpResult<HttpBean<PageBean<ApplyMeetBean>>>() {
             @Override
             public void OnSuccess(HttpBean<PageBean<ApplyMeetBean>> httpBean) {
                 smartRefreshLayout.finishRefresh();

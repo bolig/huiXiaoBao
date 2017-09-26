@@ -11,9 +11,9 @@ public interface MeetingManage {
         void getMeetingLists(PageBean<MeetBean> pageBean);
     }
     interface Model{
-        void getMeetingLists(String userid, String page, SmartRefreshLayout smartRefreshLayout, Callback<HttpBean<PageBean<MeetBean>>> callback);
+        void getMeetingLists(String token,String userid, String page, SmartRefreshLayout smartRefreshLayout, Callback<HttpBean<PageBean<MeetBean>>> callback);
     }
     interface Prsenter{
-        void getMeetingLists(String userid, String page,SmartRefreshLayout smartRefreshLayout);
+        void getMeetingLists(String token,String userid, String page,SmartRefreshLayout smartRefreshLayout);
     }
 }

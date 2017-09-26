@@ -42,6 +42,7 @@ import com.dhitoshi.xfrs.huixiaobao.common.PopupArea;
 import com.dhitoshi.xfrs.huixiaobao.common.PopupMenu;
 import com.dhitoshi.xfrs.huixiaobao.common.PopupScreen;
 import com.dhitoshi.xfrs.huixiaobao.presenter.ClientPresenter;
+import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
 import com.dhitoshi.xfrs.huixiaobao.view.AddClient;
 import com.dhitoshi.xfrs.huixiaobao.view.ClientInfo;
 import com.dhitoshi.xfrs.huixiaobao.view.Contact;
@@ -165,7 +166,7 @@ public class Client extends BaseFragment implements ClientManage.View, View.OnTo
                 clientPresenter.getClientList(map, smartRefreshLayout);
             }
         });
-        clientPresenter.getSelectCustomer();
+        clientPresenter.getSelectCustomer(SharedPreferencesUtil.Obtain(getContext(),"token","").toString());
         clientMenu.setOnTouchListener(this);
         down = getContext().getResources().getDrawable(R.mipmap.down);
         down.setBounds(0, 0, down.getMinimumWidth(), down.getMinimumHeight());

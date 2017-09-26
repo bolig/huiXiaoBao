@@ -25,9 +25,9 @@ public class AddVisitModel implements AddVisitManage.Model{
     }
 
     @Override
-    public void addVisit(AddVisitBean addVisitBean, final LoadingDialog dialog, final Callback<HttpBean<VisitBean>> callback) {
+    public void addVisit(String token,AddVisitBean addVisitBean, final LoadingDialog dialog, final Callback<HttpBean<VisitBean>> callback) {
         MyHttp http=MyHttp.getInstance();
-        http.send(http.getHttpService().addVisit(addVisitBean),new CommonObserver(new HttpResult<HttpBean<VisitBean>>() {
+        http.send(http.getHttpService().addVisit(token,addVisitBean),new CommonObserver(new HttpResult<HttpBean<VisitBean>>() {
             @Override
             public void OnSuccess(HttpBean<VisitBean> httpBean) {
                 dialog.dismiss();
@@ -47,9 +47,9 @@ public class AddVisitModel implements AddVisitManage.Model{
     }
 
     @Override
-    public void getListForVisit(final Callback<HttpBean<InfoAddVisitBean>> callback) {
+    public void getListForVisit(String token,final Callback<HttpBean<InfoAddVisitBean>> callback) {
         MyHttp http=MyHttp.getInstance();
-        http.send(http.getHttpService().getListForVisit(),new CommonObserver(new HttpResult<HttpBean<InfoAddVisitBean>>() {
+        http.send(http.getHttpService().getListForVisit(token),new CommonObserver(new HttpResult<HttpBean<InfoAddVisitBean>>() {
             @Override
             public void OnSuccess(HttpBean<InfoAddVisitBean> httpBean) {
                 callback.get(httpBean);
@@ -63,9 +63,9 @@ public class AddVisitModel implements AddVisitManage.Model{
     }
 
     @Override
-    public void editVisit(AddVisitBean addVisitBean, final LoadingDialog dialog, final Callback<HttpBean<VisitBean>> callback) {
+    public void editVisit(String token,AddVisitBean addVisitBean, final LoadingDialog dialog, final Callback<HttpBean<VisitBean>> callback) {
         MyHttp http=MyHttp.getInstance();
-        http.send(http.getHttpService().editVisit(addVisitBean),new CommonObserver(new HttpResult<HttpBean<VisitBean>>() {
+        http.send(http.getHttpService().editVisit(token,addVisitBean),new CommonObserver(new HttpResult<HttpBean<VisitBean>>() {
             @Override
             public void OnSuccess(HttpBean<VisitBean> httpBean) {
                 dialog.dismiss();

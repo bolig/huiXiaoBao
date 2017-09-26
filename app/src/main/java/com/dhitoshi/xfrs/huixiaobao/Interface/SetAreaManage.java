@@ -15,11 +15,11 @@ public interface SetAreaManage {
         void deleteArea(String result);
     }
     interface Model{
-        void getAreaLists(SmartRefreshLayout smartRefreshLayout,Callback<HttpBean<List<AreaBean>>> callback);
+        void getAreaLists(String token,SmartRefreshLayout smartRefreshLayout,Callback<HttpBean<List<AreaBean>>> callback);
         void deleteArea(String id, String token, LoadingDialog dialog,Callback<HttpBean<Object>> callback);
     }
     interface Presenter{
-        void getAreaLists(SmartRefreshLayout smartRefreshLayout);
+        void getAreaLists(String token,SmartRefreshLayout smartRefreshLayout);
         void deleteArea(String id,String token,LoadingDialog dialog);
     }
 

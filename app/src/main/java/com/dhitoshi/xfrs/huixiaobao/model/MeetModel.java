@@ -22,9 +22,9 @@ public class MeetModel implements MeetingManage.Model{
     }
 
     @Override
-    public void getMeetingLists(String userid, String page, final SmartRefreshLayout smartRefreshLayout, final Callback<HttpBean<PageBean<MeetBean>>> callback) {
+    public void getMeetingLists(String token,String userid, String page, final SmartRefreshLayout smartRefreshLayout, final Callback<HttpBean<PageBean<MeetBean>>> callback) {
         MyHttp http=MyHttp.getInstance();
-        http.send(http.getHttpService().getMeetingLists(userid, page),new CommonObserver(new HttpResult<HttpBean<PageBean<MeetBean>>>() {
+        http.send(http.getHttpService().getMeetingLists(token,userid, page),new CommonObserver(new HttpResult<HttpBean<PageBean<MeetBean>>>() {
             @Override
             public void OnSuccess(HttpBean<PageBean<MeetBean>> httpBean) {
                 smartRefreshLayout.finishRefresh();

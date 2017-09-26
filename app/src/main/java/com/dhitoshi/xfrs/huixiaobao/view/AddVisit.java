@@ -20,6 +20,8 @@ import com.dhitoshi.xfrs.huixiaobao.adapter.CommonAdapter;
 import com.dhitoshi.xfrs.huixiaobao.common.SelectDateDialog;
 import com.dhitoshi.xfrs.huixiaobao.common.SelectDialog;
 import com.dhitoshi.xfrs.huixiaobao.presenter.AddVisitPresenter;
+import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
+
 import org.greenrobot.eventbus.EventBus;
 import java.util.ArrayList;
 import java.util.List;
@@ -73,7 +75,8 @@ public class AddVisit extends BaseView implements AddVisitManage.View{
         }
         setRightText("提交");
         addVisitPresenter=new AddVisitPresenter(this,this);
-        addVisitPresenter.getListForVisit();
+        String token= SharedPreferencesUtil.Obtain(this,"token","").toString();
+        addVisitPresenter.getListForVisit(token);
     }
     private void initVisitInfo() {
         visitSalesman.setText(visitBean.getFeedman_name());
@@ -169,12 +172,13 @@ public class AddVisit extends BaseView implements AddVisitManage.View{
             bean.setNexttime(nexttime);
             LoadingDialog dialog = LoadingDialog.build(this).setLoadingTitle("提交中");
             dialog.show();
+            String token= SharedPreferencesUtil.Obtain(this,"token","").toString();
             if(visitBean==null){
                 bean.setUserid(String.valueOf(userId));
-                addVisitPresenter.addVisit(bean,dialog);
+                addVisitPresenter.addVisit(token,bean,dialog);
             }else{
                 bean.setId(String.valueOf(visitBean.getId()));
-                addVisitPresenter.editVisit(bean,dialog);
+                addVisitPresenter.editVisit(token,bean,dialog);
             }
         }
     }

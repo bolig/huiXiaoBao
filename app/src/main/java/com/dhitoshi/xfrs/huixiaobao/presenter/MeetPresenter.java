@@ -19,8 +19,8 @@ public class MeetPresenter implements MeetingManage.Prsenter{
         meetModel=new MeetModel(context);
     }
     @Override
-    public void getMeetingLists(String userid, String page, SmartRefreshLayout smartRefreshLayout) {
-        meetModel.getMeetingLists(userid, page,smartRefreshLayout, new Callback<HttpBean<PageBean<MeetBean>>>() {
+    public void getMeetingLists(String token,String userid, String page, SmartRefreshLayout smartRefreshLayout) {
+        meetModel.getMeetingLists(token,userid, page,smartRefreshLayout, new Callback<HttpBean<PageBean<MeetBean>>>() {
             @Override
             public void get(HttpBean<PageBean<MeetBean>> httpBean) {
                 view.getMeetingLists(httpBean.getData());

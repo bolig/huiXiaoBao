@@ -21,6 +21,7 @@ import com.dhitoshi.xfrs.huixiaobao.Interface.MeetingManage;
 import com.dhitoshi.xfrs.huixiaobao.R;
 import com.dhitoshi.xfrs.huixiaobao.adapter.MeetingAdapter;
 import com.dhitoshi.xfrs.huixiaobao.presenter.MeetPresenter;
+import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
 import com.dhitoshi.xfrs.huixiaobao.view.AddMeeting;
 
 import org.greenrobot.eventbus.EventBus;
@@ -94,7 +95,8 @@ public class Meeting extends BaseFragment implements MeetingManage.View {
             public void onRefresh(RefreshLayout refreshlayout) {
                 meets.removeAll(meets);
                 page = 1;
-                meetPresenter.getMeetingLists(String.valueOf(id), String.valueOf(page), smartRefreshLayout);
+                String token= SharedPreferencesUtil.Obtain(getContext(),"token","").toString();
+                meetPresenter.getMeetingLists(token,String.valueOf(id), String.valueOf(page), smartRefreshLayout);
             }
         });
 
@@ -102,7 +104,8 @@ public class Meeting extends BaseFragment implements MeetingManage.View {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
                 ++page;
-                meetPresenter.getMeetingLists(String.valueOf(id), String.valueOf(page), smartRefreshLayout);
+                String token= SharedPreferencesUtil.Obtain(getContext(),"token","").toString();
+                meetPresenter.getMeetingLists(token,String.valueOf(id), String.valueOf(page), smartRefreshLayout);
             }
         });
     }

@@ -66,7 +66,8 @@ public class AddAreaOne extends BaseView implements SetAreaManage.View {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
                 areaBeens.removeAll(areaBeens);
-                setAreaPresenter.getAreaLists(smartRefreshLayout);
+                String token= SharedPreferencesUtil.Obtain(AddAreaOne.this,"token","").toString();
+                setAreaPresenter.getAreaLists(token,smartRefreshLayout);
             }
         });
 

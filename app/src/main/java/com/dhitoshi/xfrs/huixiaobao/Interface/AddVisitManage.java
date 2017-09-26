@@ -17,14 +17,14 @@ public interface AddVisitManage {
         void  getListForVisit(HttpBean<InfoAddVisitBean> httpBean);
     }
     interface Model{
-        void addVisit(AddVisitBean addVisitBean, LoadingDialog dialog, Callback<HttpBean<VisitBean>> callback);
-        void getListForVisit(Callback<HttpBean<InfoAddVisitBean>> callback);
-        void editVisit(AddVisitBean addVisitBean,LoadingDialog dialog,Callback<HttpBean<VisitBean>> callback);
+        void addVisit(String token,AddVisitBean addVisitBean, LoadingDialog dialog, Callback<HttpBean<VisitBean>> callback);
+        void getListForVisit(String token,Callback<HttpBean<InfoAddVisitBean>> callback);
+        void editVisit(String token,AddVisitBean addVisitBean,LoadingDialog dialog,Callback<HttpBean<VisitBean>> callback);
     }
     interface Presenter{
-        void addVisit(AddVisitBean addVisitBean,LoadingDialog dialog);
-        void editVisit(AddVisitBean addVisitBean,LoadingDialog dialog);
-        void getListForVisit();
+        void addVisit(String token,AddVisitBean addVisitBean,LoadingDialog dialog);
+        void editVisit(String token,AddVisitBean addVisitBean,LoadingDialog dialog);
+        void getListForVisit(String token);
     }
 
 }

@@ -25,6 +25,7 @@ import com.dhitoshi.xfrs.huixiaobao.adapter.ClientAdapter;
 import com.dhitoshi.xfrs.huixiaobao.common.ClearEditText;
 import com.dhitoshi.xfrs.huixiaobao.common.MyDecoration;
 import com.dhitoshi.xfrs.huixiaobao.presenter.SearchClientPresenter;
+import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
 import com.dhitoshi.xfrs.huixiaobao.utils.SystemBarTintManager;
 
 import butterknife.BindView;
@@ -87,7 +88,8 @@ public class SearchClient extends AppCompatActivity implements SearchClientManag
         smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
-                searchClientPresenter.searchClientList(searchText, String.valueOf(page), smartRefreshLayout);
+                String token= SharedPreferencesUtil.Obtain(SearchClient.this,"token","").toString();
+                searchClientPresenter.searchClientList(token,searchText, String.valueOf(page), smartRefreshLayout);
             }
         });
     }

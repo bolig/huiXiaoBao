@@ -11,9 +11,9 @@ public interface SpendManage {
         void getSpendingLists(PageBean<SpendBean> pageBean);
     }
     interface Model{
-        void getSpendingLists(String userid, String page, SmartRefreshLayout smartRefreshLayout, Callback<HttpBean<PageBean<SpendBean>>> callback);
+        void getSpendingLists(String token,String userid, String page, SmartRefreshLayout smartRefreshLayout, Callback<HttpBean<PageBean<SpendBean>>> callback);
     }
     interface Prsenter{
-        void getSpendingLists(String userid, String page,SmartRefreshLayout smartRefreshLayout);
+        void getSpendingLists(String token,String userid, String page,SmartRefreshLayout smartRefreshLayout);
     }
 }

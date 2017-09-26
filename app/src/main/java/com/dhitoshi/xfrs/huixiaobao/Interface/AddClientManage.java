@@ -23,16 +23,16 @@ public interface AddClientManage {
         void checkRepeat(String result);
     }
     interface Model{
-        void addClient(AddClientBean addClientBean, LoadingDialog dialog, Callback<HttpBean<ClientBean>> callback);
-        void editClient(AddClientBean addClientBean, LoadingDialog dialog,Callback<HttpBean<ClientBean>> callback);
-        void getInfoForAdd(Callback<HttpBean<InfoAddClientBean>> callback);
-        void checkRepeat(LoadingDialog dialog,String area,String phone,String id,Callback<HttpBean<Object>> callback);
+        void addClient(String token,AddClientBean addClientBean, LoadingDialog dialog, Callback<HttpBean<ClientBean>> callback);
+        void editClient(String token,AddClientBean addClientBean, LoadingDialog dialog,Callback<HttpBean<ClientBean>> callback);
+        void getInfoForAdd(String token,Callback<HttpBean<InfoAddClientBean>> callback);
+        void checkRepeat(String token,LoadingDialog dialog,String area,String phone,String id,Callback<HttpBean<Object>> callback);
     }
     interface Presenter{
-        void addClient(AddClientBean addClientBean, LoadingDialog dialog);
-        void editClient(AddClientBean addClientBean, LoadingDialog dialog);
-        void getInfoForAdd();
-        void checkRepeat(LoadingDialog dialog,String area,String phone,String id);
+        void addClient(String token,AddClientBean addClientBean, LoadingDialog dialog);
+        void editClient(String token,AddClientBean addClientBean, LoadingDialog dialog);
+        void getInfoForAdd(String token);
+        void checkRepeat(String token,LoadingDialog dialog,String area,String phone,String id);
     }
 
 }

@@ -19,9 +19,9 @@ public class SearchClientModel implements SearchClientManage.Model{
         this.context = context;
     }
     @Override
-    public void searchClientList(String search, String page, final SmartRefreshLayout smartRefreshLayout, final Callback<HttpBean<PageBean<ClientBean>>> callback) {
+    public void searchClientList(String token,String search, String page, final SmartRefreshLayout smartRefreshLayout, final Callback<HttpBean<PageBean<ClientBean>>> callback) {
         MyHttp http=MyHttp.getInstance();
-        http.send(http.getHttpService().searchClientList(search, page),new CommonObserver(new HttpResult<HttpBean<PageBean<ClientBean>>>() {
+        http.send(http.getHttpService().searchClientList(token,search, page),new CommonObserver(new HttpResult<HttpBean<PageBean<ClientBean>>>() {
             @Override
             public void OnSuccess(HttpBean<PageBean<ClientBean>> httpBean) {
                 smartRefreshLayout.finishRefresh();

@@ -19,36 +19,36 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            >
 
-            <RelativeLayout
-
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:background="@android:color/white"
-                android:clickable="true"
-                android:gravity="center_vertical"
                 android:paddingLeft="20dp"
-                android:paddingRight="15dp">
+                android:paddingRight="20dp"
+                android:background="@android:color/white"
+                >
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
                     android:text="查询结果："
-                    android:textColor="#333333"
+                    android:textColor="#666666"
                     android:textSize="14dp" />
 
                 <TextView
                     android:id="@+id/query_result"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:drawablePadding="8dp"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
                     android:drawableRight="@mipmap/right"
-                    android:textColor="#333333"
-                    android:textSize="14dp" />
-            </RelativeLayout>
-
+                    android:gravity="center_vertical|right"
+                    android:drawablePadding="10dp"
+                    android:text="请选择"
+                    android:textColor="#BFBFBF" />
+            </LinearLayout>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="40dp"

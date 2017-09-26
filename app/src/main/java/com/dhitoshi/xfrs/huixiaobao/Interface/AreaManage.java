@@ -11,10 +11,10 @@ public interface AreaManage {
         void getAreaLists(HttpBean<List<AreaBean>> httpBean);
     }
     interface Model{
-        void getAreaLists(Callback<HttpBean<List<AreaBean>>> callback);
+        void getAreaLists(String token,Callback<HttpBean<List<AreaBean>>> callback);
     }
     interface Presenter{
-        void getAreaLists();
+        void getAreaLists(String token);
     }
 
 }

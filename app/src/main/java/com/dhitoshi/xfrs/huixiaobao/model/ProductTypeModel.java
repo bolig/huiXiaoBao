@@ -25,9 +25,9 @@ public class ProductTypeModel implements ProductTypeManage.Model{
         this.context = context;
     }
     @Override
-    public void getItemType(String page,final SmartRefreshLayout smartRefreshLayout, final Callback<HttpBean<PageBean<BaseBean>>> callback) {
+    public void getItemType(String token,String page,final SmartRefreshLayout smartRefreshLayout, final Callback<HttpBean<PageBean<BaseBean>>> callback) {
         MyHttp http=MyHttp.getInstance();
-        http.send(http.getHttpService().getItemType(page),new CommonObserver(new HttpResult<HttpBean<PageBean<BaseBean>>>() {
+        http.send(http.getHttpService().getItemType(token,page),new CommonObserver(new HttpResult<HttpBean<PageBean<BaseBean>>>() {
             @Override
             public void OnSuccess(HttpBean<PageBean<BaseBean>> httpBean) {
                 smartRefreshLayout.finishRefresh();

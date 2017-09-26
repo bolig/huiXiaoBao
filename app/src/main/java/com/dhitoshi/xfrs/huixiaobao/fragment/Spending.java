@@ -21,6 +21,7 @@ import com.dhitoshi.xfrs.huixiaobao.Interface.SpendManage;
 import com.dhitoshi.xfrs.huixiaobao.R;
 import com.dhitoshi.xfrs.huixiaobao.adapter.SpendAdapter;
 import com.dhitoshi.xfrs.huixiaobao.presenter.SpendPresenter;
+import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
 import com.dhitoshi.xfrs.huixiaobao.view.AddSpend;
 
 import org.greenrobot.eventbus.EventBus;
@@ -95,14 +96,16 @@ public class Spending extends BaseFragment implements SpendManage.View {
             public void onRefresh(RefreshLayout refreshlayout) {
                 spends.removeAll(spends);
                 page = 1;
-                spendPresenter.getSpendingLists(String.valueOf(id), String.valueOf(page), smartRefreshLayout);
+                String token= SharedPreferencesUtil.Obtain(getContext(),"token","").toString();
+                spendPresenter.getSpendingLists(token,String.valueOf(id), String.valueOf(page), smartRefreshLayout);
             }
         });
         smartRefreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
                 ++page;
-                spendPresenter.getSpendingLists(String.valueOf(id), String.valueOf(page), smartRefreshLayout);
+                String token= SharedPreferencesUtil.Obtain(getContext(),"token","").toString();
+                spendPresenter.getSpendingLists(token,String.valueOf(id), String.valueOf(page), smartRefreshLayout);
             }
         });
     }

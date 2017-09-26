@@ -19,14 +19,14 @@ public interface AddMeetingManage {
         void  getListForMeeting(HttpBean<InfoAddMeetBean> httpBean);
     }
     interface Model{
-        void addMeeting(AddMeetBean addMeetBean, LoadingDialog dialog, Callback<HttpBean<MeetBean>> callback);
-        void getListForMeeting(Callback<HttpBean<InfoAddMeetBean>> callback);
-        void editMeeting(AddMeetBean addMeetBean,LoadingDialog dialog,Callback<HttpBean<MeetBean>> callback);
+        void addMeeting(String token,AddMeetBean addMeetBean, LoadingDialog dialog, Callback<HttpBean<MeetBean>> callback);
+        void getListForMeeting(String token,Callback<HttpBean<InfoAddMeetBean>> callback);
+        void editMeeting(String token,AddMeetBean addMeetBean,LoadingDialog dialog,Callback<HttpBean<MeetBean>> callback);
     }
     interface Presenter{
-        void addMeeting(AddMeetBean addMeetBean,LoadingDialog dialog);
-        void editMeeting(AddMeetBean addMeetBean,LoadingDialog dialog);
-        void getListForMeeting();
+        void addMeeting(String token,AddMeetBean addMeetBean,LoadingDialog dialog);
+        void editMeeting(String token,AddMeetBean addMeetBean,LoadingDialog dialog);
+        void getListForMeeting(String token);
     }
 
 }

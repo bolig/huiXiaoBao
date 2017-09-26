@@ -20,9 +20,9 @@ public class SpendModel implements SpendManage.Model{
         this.context = context;
     }
     @Override
-    public void getSpendingLists(String userid, String page, final SmartRefreshLayout smartRefreshLayout, final Callback<HttpBean<PageBean<SpendBean>>> callback) {
+    public void getSpendingLists(String token,String userid, String page, final SmartRefreshLayout smartRefreshLayout, final Callback<HttpBean<PageBean<SpendBean>>> callback) {
         MyHttp http=MyHttp.getInstance();
-        http.send(http.getHttpService().getSpendingLists(userid, page),new CommonObserver(new HttpResult<HttpBean<PageBean<SpendBean>>>() {
+        http.send(http.getHttpService().getSpendingLists(token,userid, page),new CommonObserver(new HttpResult<HttpBean<PageBean<SpendBean>>>() {
             @Override
             public void OnSuccess(HttpBean<PageBean<SpendBean>> httpBean) {
                 smartRefreshLayout.finishRefresh();

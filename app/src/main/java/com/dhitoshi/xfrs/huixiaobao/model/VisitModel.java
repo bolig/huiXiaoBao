@@ -22,9 +22,9 @@ public class VisitModel implements VisitManage.Model{
         this.context = context;
     }
     @Override
-    public void getFeedbackLists(String userid, String page, final SmartRefreshLayout smartRefreshLayout, final Callback<HttpBean<PageBean<VisitBean>>> callback) {
+    public void getFeedbackLists(String token,String userid, String page, final SmartRefreshLayout smartRefreshLayout, final Callback<HttpBean<PageBean<VisitBean>>> callback) {
         MyHttp http=MyHttp.getInstance();
-        http.send(http.getHttpService().getFeedbackLists(userid, page),new CommonObserver(new HttpResult<HttpBean<PageBean<VisitBean>>>() {
+        http.send(http.getHttpService().getFeedbackLists(token,userid, page),new CommonObserver(new HttpResult<HttpBean<PageBean<VisitBean>>>() {
             @Override
             public void OnSuccess(HttpBean<PageBean<VisitBean>> httpBean) {
                 smartRefreshLayout.finishRefresh();

@@ -17,8 +17,8 @@ public class AreaPresenter implements AreaManage.Presenter{
         areaModel=new AreaModel(context);
     }
     @Override
-    public void getAreaLists() {
-        areaModel.getAreaLists(new Callback<HttpBean<List<AreaBean>>>() {
+    public void getAreaLists(String token) {
+        areaModel.getAreaLists(token,new Callback<HttpBean<List<AreaBean>>>() {
             @Override
             public void get(HttpBean<List<AreaBean>> httpBean) {
                 view.getAreaLists(httpBean);

@@ -22,8 +22,8 @@ public class AddSpendPresenter implements AddSpendManage.Presenter {
         model=new AddSpendModel(context);
     }
     @Override
-    public void addSpend(AddSpendBean addSpendBean, LoadingDialog dialog) {
-        model.addSpend(addSpendBean,dialog, new Callback<HttpBean<SpendBean>>() {
+    public void addSpend(String token,AddSpendBean addSpendBean, LoadingDialog dialog) {
+        model.addSpend(token,addSpendBean,dialog, new Callback<HttpBean<SpendBean>>() {
             @Override
             public void get(HttpBean<SpendBean> httpBean) {
                 view.addSpend(httpBean.getStatus().getMsg());
@@ -31,8 +31,8 @@ public class AddSpendPresenter implements AddSpendManage.Presenter {
         });
     }
     @Override
-    public void editSpend(AddSpendBean addSpendBean,LoadingDialog dialog) {
-        model.editSpend(addSpendBean,dialog, new Callback<HttpBean<SpendBean>>() {
+    public void editSpend(String token,AddSpendBean addSpendBean,LoadingDialog dialog) {
+        model.editSpend(token,addSpendBean,dialog, new Callback<HttpBean<SpendBean>>() {
             @Override
             public void get(HttpBean<SpendBean> httpBean) {
                 view.editSpend(httpBean.getStatus().getMsg());
@@ -40,8 +40,8 @@ public class AddSpendPresenter implements AddSpendManage.Presenter {
         });
     }
     @Override
-    public void getListForSpending() {
-        model.getListForSpending(new Callback<HttpBean<InfoAddSpendBean>>() {
+    public void getListForSpending(String token) {
+        model.getListForSpending(token,new Callback<HttpBean<InfoAddSpendBean>>() {
             @Override
             public void get(HttpBean<InfoAddSpendBean> httpBean) {
                 view.getListForSpending(httpBean);

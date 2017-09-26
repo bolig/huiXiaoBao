@@ -22,9 +22,9 @@ public class AddProductModel implements AddProductManage.Model {
         this.context = context;
     }
     @Override
-    public void addItem(final AddProductBean addProductBean, final LoadingDialog dialog, final Callback<HttpBean<Object>> callback) {
+    public void addItem(String token,final AddProductBean addProductBean, final LoadingDialog dialog, final Callback<HttpBean<Object>> callback) {
         MyHttp http=MyHttp.getInstance();
-        http.send(http.getHttpService().addItem(addProductBean),new CommonObserver(new HttpResult<HttpBean<Object>>() {
+        http.send(http.getHttpService().addItem(token,addProductBean),new CommonObserver(new HttpResult<HttpBean<Object>>() {
             @Override
             public void OnSuccess(HttpBean<Object> httpBean) {
                 dialog.dismiss();
@@ -35,7 +35,7 @@ public class AddProductModel implements AddProductManage.Model {
                         @Override
                         public void autoLogin(String token) {
                            addProductBean.setToken(token);
-                            addItem(addProductBean,dialog,callback);
+                            addItem(token,addProductBean,dialog,callback);
                         }
                     });
                 }
@@ -51,9 +51,9 @@ public class AddProductModel implements AddProductManage.Model {
         }));
     }
     @Override
-    public void editItem(final AddProductBean addProductBean, final LoadingDialog dialog, final Callback<HttpBean<Object>> callback) {
+    public void editItem(String token,final AddProductBean addProductBean, final LoadingDialog dialog, final Callback<HttpBean<Object>> callback) {
         MyHttp http=MyHttp.getInstance();
-        http.send(http.getHttpService().editItem(addProductBean),new CommonObserver(new HttpResult<HttpBean<Object>>() {
+        http.send(http.getHttpService().editItem(token,addProductBean),new CommonObserver(new HttpResult<HttpBean<Object>>() {
             @Override
             public void OnSuccess(HttpBean<Object> httpBean) {
                 dialog.dismiss();
@@ -64,7 +64,7 @@ public class AddProductModel implements AddProductManage.Model {
                         @Override
                         public void autoLogin(String token) {
                             addProductBean.setToken(token);
-                            editItem(addProductBean,dialog,callback);
+                            editItem(token,addProductBean,dialog,callback);
                         }
                     });
                 }

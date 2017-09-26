@@ -15,11 +15,11 @@ public interface ProductManage {
         void deleteItem(String result);
     }
     interface Model{
-        void getItem(String page,SmartRefreshLayout smartRefreshLayout,Callback<HttpBean<PageBean<ProductBean>>> callback);
+        void getItem(String token,String page,SmartRefreshLayout smartRefreshLayout,Callback<HttpBean<PageBean<ProductBean>>> callback);
         void deleteItem(String token, String id, LoadingDialog dialog,Callback<HttpBean<Object>> callback);
     }
     interface Presenter{
-        void getItem(String page,SmartRefreshLayout smartRefreshLayout);
+        void getItem(String token,String page,SmartRefreshLayout smartRefreshLayout);
         void deleteItem(String token,String id,LoadingDialog dialog);
     }
 }

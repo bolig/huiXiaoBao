@@ -28,9 +28,9 @@ public class SetAreaModel implements SetAreaManage.Model {
         this.context = context;
     }
     @Override
-    public void getAreaLists(final SmartRefreshLayout smartRefreshLayout, final Callback<HttpBean<List<AreaBean>>> callback) {
+    public void getAreaLists(String token,final SmartRefreshLayout smartRefreshLayout, final Callback<HttpBean<List<AreaBean>>> callback) {
         MyHttp http=MyHttp.getInstance();
-        http.send(http.getHttpService().getAreaLists(),new CommonObserver(new HttpResult<HttpBean<List<AreaBean>>>() {
+        http.send(http.getHttpService().getAreaLists(token),new CommonObserver(new HttpResult<HttpBean<List<AreaBean>>>() {
             @Override
             public void OnSuccess(HttpBean<List<AreaBean>> httpBean) {
                 smartRefreshLayout.finishRefresh();

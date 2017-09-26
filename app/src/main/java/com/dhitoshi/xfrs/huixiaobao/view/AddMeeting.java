@@ -23,6 +23,7 @@ import com.dhitoshi.xfrs.huixiaobao.adapter.CommonAdapter;
 import com.dhitoshi.xfrs.huixiaobao.common.SelectDateDialog;
 import com.dhitoshi.xfrs.huixiaobao.common.SelectDialog;
 import com.dhitoshi.xfrs.huixiaobao.presenter.AddMeetingPresenter;
+import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -79,7 +80,8 @@ public class AddMeeting extends BaseView implements AddMeetingManage.View {
         }
         setRightText("提交");
         addMeetingPresenter = new AddMeetingPresenter(this,this);
-        addMeetingPresenter.getListForMeeting();
+        String token= SharedPreferencesUtil.Obtain(this,"token","").toString();
+        addMeetingPresenter.getListForMeeting(token);
         meetAttend.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -138,12 +140,13 @@ public class AddMeeting extends BaseView implements AddMeetingManage.View {
             bean.setUsertype(usertype);
             LoadingDialog dialog = LoadingDialog.build(this).setLoadingTitle("提交中");
             dialog.show();
+            String token= SharedPreferencesUtil.Obtain(this,"token","").toString();
             if(meetBean==null){
                 bean.setUserid(String.valueOf(userId));
-                addMeetingPresenter.addMeeting(bean,dialog);
+                addMeetingPresenter.addMeeting(token,bean,dialog);
             }else {
                 bean.setId(String.valueOf(meetBean.getId()));
-                addMeetingPresenter.editMeeting(bean,dialog);
+                addMeetingPresenter.editMeeting(token,bean,dialog);
             }
         }
     }

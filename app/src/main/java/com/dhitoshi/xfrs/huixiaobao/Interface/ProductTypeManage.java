@@ -14,11 +14,11 @@ public interface ProductTypeManage {
         void deleteItemType(String result);
     }
     interface Model{
-        void getItemType(String page,SmartRefreshLayout smartRefreshLayout, Callback<HttpBean<PageBean<BaseBean>>> callback);
+        void getItemType(String token,String page,SmartRefreshLayout smartRefreshLayout, Callback<HttpBean<PageBean<BaseBean>>> callback);
         void deleteItemType(String token, String id, LoadingDialog dialog,Callback<HttpBean<Object>> callback);
     }
     interface Presenter{
-        void getItemType(String page,SmartRefreshLayout smartRefreshLayout);
+        void getItemType(String token,String page,SmartRefreshLayout smartRefreshLayout);
         void deleteItemType(String token,String id,LoadingDialog dialog);
     }
 }

@@ -21,6 +21,7 @@ import com.dhitoshi.xfrs.huixiaobao.Interface.RelationManage;
 import com.dhitoshi.xfrs.huixiaobao.R;
 import com.dhitoshi.xfrs.huixiaobao.adapter.RelationAdapter;
 import com.dhitoshi.xfrs.huixiaobao.presenter.RelationPresenter;
+import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
 import com.dhitoshi.xfrs.huixiaobao.view.AddRelation;
 
 import org.greenrobot.eventbus.EventBus;
@@ -93,7 +94,8 @@ public class Relation extends BaseFragment implements RelationManage.View {
             public void onRefresh(RefreshLayout refreshlayout) {
                 relations.removeAll(relations);
                 page = 1;
-                relationPresenter.getRelationLists(String.valueOf(id), String.valueOf(page), smartRefreshLayout);
+                String token= SharedPreferencesUtil.Obtain(getContext(),"token","").toString();
+                relationPresenter.getRelationLists(token,String.valueOf(id), String.valueOf(page), smartRefreshLayout);
             }
         });
 
@@ -101,7 +103,8 @@ public class Relation extends BaseFragment implements RelationManage.View {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
                 ++page;
-                relationPresenter.getRelationLists(String.valueOf(id), String.valueOf(page), smartRefreshLayout);
+                String token= SharedPreferencesUtil.Obtain(getContext(),"token","").toString();
+                relationPresenter.getRelationLists(token,String.valueOf(id), String.valueOf(page), smartRefreshLayout);
             }
         });
     }

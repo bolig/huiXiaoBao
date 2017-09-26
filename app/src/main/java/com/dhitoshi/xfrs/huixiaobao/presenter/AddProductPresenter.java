@@ -19,8 +19,8 @@ public class AddProductPresenter implements AddProductManage.Presenter{
         model=new AddProductModel(context);
     }
     @Override
-    public void addItem(AddProductBean addProductBean, LoadingDialog dialog) {
-        model.addItem(addProductBean, dialog, new Callback<HttpBean<Object>>() {
+    public void addItem(String token,AddProductBean addProductBean, LoadingDialog dialog) {
+        model.addItem(token,addProductBean, dialog, new Callback<HttpBean<Object>>() {
             @Override
             public void get(HttpBean<Object> httpBean) {
                 view.addItem(httpBean.getStatus().getMsg());
@@ -28,8 +28,8 @@ public class AddProductPresenter implements AddProductManage.Presenter{
         });
     }
     @Override
-    public void editItem(AddProductBean addProductBean, LoadingDialog dialog) {
-        model.editItem(addProductBean, dialog, new Callback<HttpBean<Object>>() {
+    public void editItem(String token,AddProductBean addProductBean, LoadingDialog dialog) {
+        model.editItem(token,addProductBean, dialog, new Callback<HttpBean<Object>>() {
             @Override
             public void get(HttpBean<Object> httpBean) {
                 view.editItem(httpBean.getStatus().getMsg());

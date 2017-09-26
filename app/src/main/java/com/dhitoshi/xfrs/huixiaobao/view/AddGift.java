@@ -22,6 +22,7 @@ import com.dhitoshi.xfrs.huixiaobao.adapter.DialogAdapter;
 import com.dhitoshi.xfrs.huixiaobao.common.SelectDateDialog;
 import com.dhitoshi.xfrs.huixiaobao.common.SelectDialog;
 import com.dhitoshi.xfrs.huixiaobao.presenter.AddGiftPresenter;
+import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -71,7 +72,8 @@ public class AddGift extends BaseView implements AddGiftManage.View{
         }
         setRightText("提交");
         addGiftPresenter=new AddGiftPresenter(this,this);
-        addGiftPresenter.getListForGift();
+        String token= SharedPreferencesUtil.Obtain(this,"token","").toString();
+        addGiftPresenter.getListForGift(token);
     }
     private void initGiftInfo() {
         createtime=giftBean.getCreatetime();
@@ -120,12 +122,13 @@ public class AddGift extends BaseView implements AddGiftManage.View{
             bean.setNotes(giftNotes.getText().toString());
             LoadingDialog dialog = LoadingDialog.build(this).setLoadingTitle("提交中");
             dialog.show();
+            String token= SharedPreferencesUtil.Obtain(this,"token","").toString();
             if(null==giftBean){
                 bean.setUserid(String.valueOf(userId));
-                addGiftPresenter.addGift(bean,dialog);
+                addGiftPresenter.addGift(token,bean,dialog);
             }else{
                 bean.setId(String.valueOf(giftBean.getId()));
-                addGiftPresenter.editGift(bean,dialog);
+                addGiftPresenter.editGift(token,bean,dialog);
             }
         }
     }

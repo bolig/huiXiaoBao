@@ -19,8 +19,8 @@ public class RelationPresenter implements RelationManage.Prsenter{
         relationModel=new RelationModel(context);
     }
     @Override
-    public void getRelationLists(String userid, String page, SmartRefreshLayout smartRefreshLayout) {
-        relationModel.getRelationLists(userid, page,smartRefreshLayout, new Callback<HttpBean<PageBean<RelationBean>>>() {
+    public void getRelationLists(String token,String userid, String page, SmartRefreshLayout smartRefreshLayout) {
+        relationModel.getRelationLists(token,userid, page,smartRefreshLayout, new Callback<HttpBean<PageBean<RelationBean>>>() {
             @Override
             public void get(HttpBean<PageBean<RelationBean>> httpBean) {
                 view.getRelationLists(httpBean.getData());

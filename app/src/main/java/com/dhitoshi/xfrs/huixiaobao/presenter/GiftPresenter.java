@@ -19,8 +19,8 @@ public class GiftPresenter implements GiftManage.Prsenter{
         giftModel=new GiftModel(context);
     }
     @Override
-    public void getGiftLists(String userid, String page, SmartRefreshLayout smartRefreshLayout) {
-        giftModel.getGiftLists(userid, page, smartRefreshLayout,new Callback<HttpBean<PageBean<GiftBean>>>() {
+    public void getGiftLists(String token,String userid, String page, SmartRefreshLayout smartRefreshLayout) {
+        giftModel.getGiftLists(token,userid, page, smartRefreshLayout,new Callback<HttpBean<PageBean<GiftBean>>>() {
             @Override
             public void get(HttpBean<PageBean<GiftBean>> httpBean) {
                 view.getGiftLists(httpBean.getData());

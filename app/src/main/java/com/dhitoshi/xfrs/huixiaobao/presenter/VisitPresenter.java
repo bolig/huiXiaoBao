@@ -19,8 +19,8 @@ public class VisitPresenter implements VisitManage.Prsenter{
         visitModel=new VisitModel(context);
     }
     @Override
-    public void getFeedbackLists(String userid, String page, SmartRefreshLayout smartRefreshLayout) {
-        visitModel.getFeedbackLists(userid, page,smartRefreshLayout, new Callback<HttpBean<PageBean<VisitBean>>>() {
+    public void getFeedbackLists(String token,String userid, String page, SmartRefreshLayout smartRefreshLayout) {
+        visitModel.getFeedbackLists(token,userid, page,smartRefreshLayout, new Callback<HttpBean<PageBean<VisitBean>>>() {
             @Override
             public void get(HttpBean<PageBean<VisitBean>> httpBean) {
                 view.getFeedbackLists(httpBean.getData());

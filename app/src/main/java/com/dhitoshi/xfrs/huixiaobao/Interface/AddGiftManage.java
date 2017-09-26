@@ -16,14 +16,14 @@ public interface AddGiftManage {
         void  getListForGift(HttpBean<InfoAddGiftBean> httpBean);
     }
     interface Model{
-        void addGift(AddGiftBean addGiftBean, LoadingDialog dialog, Callback<HttpBean<GiftBean>> callback);
-        void getListForGift(Callback<HttpBean<InfoAddGiftBean>> callback);
-        void editGift(AddGiftBean addGiftBean,LoadingDialog dialog, Callback<HttpBean<GiftBean>> callback);
+        void addGift(String token,AddGiftBean addGiftBean, LoadingDialog dialog, Callback<HttpBean<GiftBean>> callback);
+        void getListForGift(String token,Callback<HttpBean<InfoAddGiftBean>> callback);
+        void editGift(String token,AddGiftBean addGiftBean,LoadingDialog dialog, Callback<HttpBean<GiftBean>> callback);
     }
     interface Presenter{
-        void addGift(AddGiftBean addGiftBean,LoadingDialog dialog);
-        void editGift(AddGiftBean addGiftBean,LoadingDialog dialog);
-        void getListForGift();
+        void addGift(String token,AddGiftBean addGiftBean,LoadingDialog dialog);
+        void editGift(String token,AddGiftBean addGiftBean,LoadingDialog dialog);
+        void getListForGift(String token);
     }
 
 }

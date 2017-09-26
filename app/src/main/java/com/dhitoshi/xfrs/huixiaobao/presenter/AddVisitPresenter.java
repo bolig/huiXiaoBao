@@ -25,8 +25,8 @@ public class AddVisitPresenter implements AddVisitManage.Presenter{
     }
 
     @Override
-    public void addVisit(AddVisitBean addVisitBean, LoadingDialog dialog) {
-        model.addVisit(addVisitBean,dialog, new Callback<HttpBean<VisitBean>>() {
+    public void addVisit(String token,AddVisitBean addVisitBean, LoadingDialog dialog) {
+        model.addVisit(token,addVisitBean,dialog, new Callback<HttpBean<VisitBean>>() {
             @Override
             public void get(HttpBean<VisitBean> httpBean) {
                 view.addVisit(httpBean.getStatus().getMsg());
@@ -35,8 +35,8 @@ public class AddVisitPresenter implements AddVisitManage.Presenter{
     }
 
     @Override
-    public void editVisit(AddVisitBean addVisitBean,LoadingDialog dialog) {
-        model.editVisit(addVisitBean,dialog, new Callback<HttpBean<VisitBean>>() {
+    public void editVisit(String token,AddVisitBean addVisitBean,LoadingDialog dialog) {
+        model.editVisit(token,addVisitBean,dialog, new Callback<HttpBean<VisitBean>>() {
             @Override
             public void get(HttpBean<VisitBean> httpBean) {
                 view.editVisit(httpBean.getStatus().getMsg());
@@ -45,8 +45,8 @@ public class AddVisitPresenter implements AddVisitManage.Presenter{
     }
 
     @Override
-    public void getListForVisit() {
-        model.getListForVisit(new Callback<HttpBean<InfoAddVisitBean>>() {
+    public void getListForVisit(String token) {
+        model.getListForVisit(token,new Callback<HttpBean<InfoAddVisitBean>>() {
             @Override
             public void get(HttpBean<InfoAddVisitBean> httpBean) {
                 view.getListForVisit(httpBean);

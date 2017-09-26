@@ -21,6 +21,7 @@ import com.dhitoshi.xfrs.huixiaobao.Interface.ItemClick;
 import com.dhitoshi.xfrs.huixiaobao.R;
 import com.dhitoshi.xfrs.huixiaobao.adapter.GiftAdapter;
 import com.dhitoshi.xfrs.huixiaobao.presenter.GiftPresenter;
+import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
 import com.dhitoshi.xfrs.huixiaobao.view.AddGift;
 
 import org.greenrobot.eventbus.EventBus;
@@ -95,7 +96,8 @@ public class Gift extends BaseFragment implements GiftManage.View {
             public void onRefresh(RefreshLayout refreshlayout) {
                 gifts.removeAll(gifts);
                 page = 1;
-                giftPresenter.getGiftLists(String.valueOf(id), String.valueOf(page), smartRefreshLayout);
+                String token= SharedPreferencesUtil.Obtain(getContext(),"token","").toString();
+                giftPresenter.getGiftLists(token,String.valueOf(id), String.valueOf(page), smartRefreshLayout);
             }
         });
 
@@ -103,7 +105,8 @@ public class Gift extends BaseFragment implements GiftManage.View {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
                 ++page;
-                giftPresenter.getGiftLists(String.valueOf(id), String.valueOf(page), smartRefreshLayout);
+                String token= SharedPreferencesUtil.Obtain(getContext(),"token","").toString();
+                giftPresenter.getGiftLists(token,String.valueOf(id), String.valueOf(page), smartRefreshLayout);
             }
         });
     }

@@ -25,6 +25,7 @@ import com.dhitoshi.xfrs.huixiaobao.adapter.SexAdapter;
 import com.dhitoshi.xfrs.huixiaobao.common.SelectDateDialog;
 import com.dhitoshi.xfrs.huixiaobao.common.SelectDialog;
 import com.dhitoshi.xfrs.huixiaobao.presenter.AddRelationPresenter;
+import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -86,7 +87,8 @@ public class AddRelation extends BaseView implements AddRelationManage.View{
         }
         setRightText("提交");
         addRelationPresenter=new AddRelationPresenter(this,this);
-        addRelationPresenter.getListForRelation();
+        String token= SharedPreferencesUtil.Obtain(this,"token","").toString();
+        addRelationPresenter.getListForRelation(token);
     }
     private void initRelationInfo() {
         name=relationBean.getName();
@@ -214,12 +216,13 @@ public class AddRelation extends BaseView implements AddRelationManage.View{
             bean.setNotes(relationNotes.getText().toString());
             LoadingDialog dialog = LoadingDialog.build(this).setLoadingTitle("提交中");
             dialog.show();
+            String token= SharedPreferencesUtil.Obtain(this,"token","").toString();
             if(relationBean==null){
                 bean.setUserid(String.valueOf(userId));
-                addRelationPresenter.addRelation(bean,dialog);
+                addRelationPresenter.addRelation(token,bean,dialog);
             }else{
                 bean.setId(String.valueOf(relationBean.getId()));
-                addRelationPresenter.editRelation(bean,dialog);
+                addRelationPresenter.editRelation(token,bean,dialog);
             }
         }
     }

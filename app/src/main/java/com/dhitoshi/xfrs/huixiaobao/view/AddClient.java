@@ -134,7 +134,7 @@ public class AddClient extends BaseView implements AddClientManage.View {
         }
         setRightText("提交");
         addClientPresenter = new AddClientPresenter(this, this);
-        addClientPresenter.getInfoForAdd();
+        addClientPresenter.getInfoForAdd(SharedPreferencesUtil.Obtain(this,"token","").toString());
     }
 
     private void initClientInfo() {
@@ -274,11 +274,12 @@ public class AddClient extends BaseView implements AddClientManage.View {
             addClientBean.setEntryman(clientEntryMan.getText().toString());
             LoadingDialog dialog = LoadingDialog.build(this).setLoadingTitle("提交中");
             dialog.show();
+            String token=SharedPreferencesUtil.Obtain(this,"token","").toString();
             if (null == clientBean) {
-                addClientPresenter.addClient(addClientBean, dialog);
+                addClientPresenter.addClient(token,addClientBean, dialog);
             } else {
                 addClientBean.setId(String.valueOf(clientBean.getId()));
-                addClientPresenter.editClient(addClientBean, dialog);
+                addClientPresenter.editClient(token,addClientBean, dialog);
             }
         }
     }
@@ -384,10 +385,11 @@ public class AddClient extends BaseView implements AddClientManage.View {
         }
         LoadingDialog dialog = LoadingDialog.build(this).setLoadingTitle("查重中");
         dialog.show();
+        String token=SharedPreferencesUtil.Obtain(this,"token","").toString();
         if (null == clientBean) {
-            addClientPresenter.checkRepeat(dialog, String.valueOf(areaId), phone, "");
+            addClientPresenter.checkRepeat(token,dialog, String.valueOf(areaId), phone, "");
         } else {
-            addClientPresenter.checkRepeat(dialog, "", phone, String.valueOf(clientBean.getId()));
+            addClientPresenter.checkRepeat(token,dialog, "", phone, String.valueOf(clientBean.getId()));
         }
 
     }

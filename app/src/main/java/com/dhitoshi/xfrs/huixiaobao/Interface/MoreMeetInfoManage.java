@@ -16,10 +16,10 @@ public interface MoreMeetInfoManage {
         void getArticleBody(HttpBean<MoreMeetInfoBean> httpBean);
     }
     interface Model{
-        void getArticleBody(@Query("aid") String aid, @Query("id") String id, SmartRefreshLayout smartRefreshLayout, Callback<HttpBean<MoreMeetInfoBean>> callback);
+        void getArticleBody(String token, String aid, String id, SmartRefreshLayout smartRefreshLayout, Callback<HttpBean<MoreMeetInfoBean>> callback);
     }
     interface Presenter{
-        void getArticleBody(@Query("aid") String aid, @Query("id") String id, SmartRefreshLayout smartRefreshLayout);
+        void getArticleBody(String token,String aid, String id, SmartRefreshLayout smartRefreshLayout);
     }
 
 }

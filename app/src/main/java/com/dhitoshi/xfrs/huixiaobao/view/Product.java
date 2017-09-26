@@ -85,7 +85,8 @@ public class Product extends BaseView implements ProductManage.View {
             public void onRefresh(RefreshLayout refreshlayout) {
                 products.removeAll(products);
                 page = 1;
-                productPresenter.getItem(String.valueOf(page), smartRefreshLayout);
+                String token= SharedPreferencesUtil.Obtain(Product.this,"token","").toString();
+                productPresenter.getItem(token,String.valueOf(page), smartRefreshLayout);
             }
         });
 
@@ -93,7 +94,8 @@ public class Product extends BaseView implements ProductManage.View {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
                 ++page;
-                productPresenter.getItem(String.valueOf(page), smartRefreshLayout);
+                String token= SharedPreferencesUtil.Obtain(Product.this,"token","").toString();
+                productPresenter.getItem(token,String.valueOf(page), smartRefreshLayout);
             }
         });
     }

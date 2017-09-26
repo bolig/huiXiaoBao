@@ -25,8 +25,8 @@ public class AddGiftPresenter implements AddGiftManage.Presenter{
     }
 
     @Override
-    public void addGift(AddGiftBean addGiftBean, LoadingDialog dialog) {
-        model.addGift(addGiftBean,dialog, new Callback<HttpBean<GiftBean>>() {
+    public void addGift(String token,AddGiftBean addGiftBean, LoadingDialog dialog) {
+        model.addGift(token,addGiftBean,dialog, new Callback<HttpBean<GiftBean>>() {
             @Override
             public void get(HttpBean<GiftBean> httpBean) {
                 view.addGift(httpBean.getStatus().getMsg());
@@ -35,8 +35,8 @@ public class AddGiftPresenter implements AddGiftManage.Presenter{
     }
 
     @Override
-    public void editGift(AddGiftBean addGiftBean, LoadingDialog dialog) {
-        model.editGift(addGiftBean,dialog, new Callback<HttpBean<GiftBean>>() {
+    public void editGift(String token,AddGiftBean addGiftBean, LoadingDialog dialog) {
+        model.editGift(token,addGiftBean,dialog, new Callback<HttpBean<GiftBean>>() {
             @Override
             public void get(HttpBean<GiftBean> httpBean) {
                 view.editGift(httpBean.getStatus().getMsg());
@@ -45,8 +45,8 @@ public class AddGiftPresenter implements AddGiftManage.Presenter{
     }
 
     @Override
-    public void getListForGift() {
-        model.getListForGift(new Callback<HttpBean<InfoAddGiftBean>>() {
+    public void getListForGift(String token) {
+        model.getListForGift(token,new Callback<HttpBean<InfoAddGiftBean>>() {
             @Override
             public void get(HttpBean<InfoAddGiftBean> httpBean) {
                 view.getListForGift(httpBean);

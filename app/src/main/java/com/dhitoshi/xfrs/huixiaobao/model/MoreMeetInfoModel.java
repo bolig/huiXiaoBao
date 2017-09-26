@@ -25,9 +25,9 @@ public class MoreMeetInfoModel implements MoreMeetInfoManage.Model {
         this.context = context;
     }
     @Override
-    public void getArticleBody(@Query("aid") String aid, @Query("id") String id, final SmartRefreshLayout smartRefreshLayout, final Callback<HttpBean<MoreMeetInfoBean>> callback) {
+    public void getArticleBody(String token,String aid, String id, final SmartRefreshLayout smartRefreshLayout, final Callback<HttpBean<MoreMeetInfoBean>> callback) {
         MyHttp http=MyHttp.getInstance();
-        http.send(http.getHttpService().getArticleBody(aid, id),new CommonObserver(new HttpResult<HttpBean<MoreMeetInfoBean>>() {
+        http.send(http.getHttpService().getArticleBody(token,aid, id),new CommonObserver(new HttpResult<HttpBean<MoreMeetInfoBean>>() {
             @Override
             public void OnSuccess(HttpBean<MoreMeetInfoBean> httpBean) {
                 smartRefreshLayout.finishRefresh();

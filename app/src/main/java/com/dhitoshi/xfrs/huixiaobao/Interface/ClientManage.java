@@ -18,10 +18,10 @@ public interface ClientManage {
     }
     interface Model{
         void getClientList(Map<String,String> map,SmartRefreshLayout smartRefreshLayout, Callback<HttpBean<PageBean<ClientBean>>> callback);
-        void getSelectCustomer(Callback<HttpBean<ScreenBean>> callback);
+        void getSelectCustomer(String token,Callback<HttpBean<ScreenBean>> callback);
     }
     interface Prsenter{
         void getClientList(Map<String,String> map, SmartRefreshLayout smartRefreshLayout);
-        void getSelectCustomer();
+        void getSelectCustomer(String token);
     }
 }

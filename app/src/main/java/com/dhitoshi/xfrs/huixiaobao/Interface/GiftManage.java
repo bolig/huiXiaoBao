@@ -11,9 +11,9 @@ public interface GiftManage {
         void getGiftLists(PageBean<GiftBean> pageBean);
     }
     interface Model{
-        void getGiftLists(String userid, String page, SmartRefreshLayout smartRefreshLayout, Callback<HttpBean<PageBean<GiftBean>>> callback);
+        void getGiftLists(String token,String userid, String page, SmartRefreshLayout smartRefreshLayout, Callback<HttpBean<PageBean<GiftBean>>> callback);
     }
     interface Prsenter{
-        void getGiftLists(String userid, String page,SmartRefreshLayout smartRefreshLayout);
+        void getGiftLists(String token,String userid, String page,SmartRefreshLayout smartRefreshLayout);
     }
 }

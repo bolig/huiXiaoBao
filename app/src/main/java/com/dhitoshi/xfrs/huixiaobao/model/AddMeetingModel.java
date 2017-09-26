@@ -22,9 +22,9 @@ public class AddMeetingModel implements AddMeetingManage.Model{
         this.context = context;
     }
     @Override
-    public void addMeeting(AddMeetBean addMeetBean,final LoadingDialog dialog,  final Callback<HttpBean<MeetBean>> callback) {
+    public void addMeeting(String token,AddMeetBean addMeetBean,final LoadingDialog dialog,  final Callback<HttpBean<MeetBean>> callback) {
         MyHttp http=MyHttp.getInstance();
-        http.send(http.getHttpService().addMeet(addMeetBean),new CommonObserver(new HttpResult<HttpBean<MeetBean>>() {
+        http.send(http.getHttpService().addMeet(token,addMeetBean),new CommonObserver(new HttpResult<HttpBean<MeetBean>>() {
             @Override
             public void OnSuccess(HttpBean<MeetBean> httpBean) {
                 dialog.dismiss();
@@ -43,9 +43,9 @@ public class AddMeetingModel implements AddMeetingManage.Model{
         }));
     }
     @Override
-    public void getListForMeeting(final Callback<HttpBean<InfoAddMeetBean>> callback) {
+    public void getListForMeeting(String token,final Callback<HttpBean<InfoAddMeetBean>> callback) {
         MyHttp http=MyHttp.getInstance();
-        http.send(http.getHttpService().getListForMeeting(),new CommonObserver(new HttpResult<HttpBean<InfoAddMeetBean>>() {
+        http.send(http.getHttpService().getListForMeeting(token),new CommonObserver(new HttpResult<HttpBean<InfoAddMeetBean>>() {
             @Override
             public void OnSuccess(HttpBean<InfoAddMeetBean> httpBean) {
                 callback.get(httpBean);
@@ -58,9 +58,9 @@ public class AddMeetingModel implements AddMeetingManage.Model{
         }));
     }
     @Override
-    public void editMeeting(AddMeetBean addMeetBean, final LoadingDialog dialog, final Callback<HttpBean<MeetBean>> callback) {
+    public void editMeeting(String token,AddMeetBean addMeetBean, final LoadingDialog dialog, final Callback<HttpBean<MeetBean>> callback) {
         MyHttp http=MyHttp.getInstance();
-        http.send(http.getHttpService().editMeet(addMeetBean),new CommonObserver(new HttpResult<HttpBean<MeetBean>>() {
+        http.send(http.getHttpService().editMeet(token,addMeetBean),new CommonObserver(new HttpResult<HttpBean<MeetBean>>() {
             @Override
             public void OnSuccess(HttpBean<MeetBean> httpBean) {
                 dialog.dismiss();

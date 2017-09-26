@@ -24,6 +24,7 @@ import com.dhitoshi.xfrs.huixiaobao.common.CommonObserver;
 import com.dhitoshi.xfrs.huixiaobao.common.MyDecoration;
 import com.dhitoshi.xfrs.huixiaobao.http.HttpResult;
 import com.dhitoshi.xfrs.huixiaobao.http.MyHttp;
+import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -79,7 +80,8 @@ public class SelectType extends BaseView {
 
     private void getItemType(int page) {
         MyHttp http = MyHttp.getInstance();
-        http.send(http.getHttpService().getItemType(String.valueOf(page)), new CommonObserver(new HttpResult<HttpBean<PageBean<BaseBean>>>() {
+        String token= SharedPreferencesUtil.Obtain(this,"token","").toString();
+        http.send(http.getHttpService().getItemType(token,String.valueOf(page)), new CommonObserver(new HttpResult<HttpBean<PageBean<BaseBean>>>() {
             @Override
             public void OnSuccess(HttpBean<PageBean<BaseBean>> httpBean) {
                 smartRefreshLayout.finishRefresh();

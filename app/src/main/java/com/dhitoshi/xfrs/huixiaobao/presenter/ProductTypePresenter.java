@@ -19,8 +19,8 @@ public class ProductTypePresenter implements ProductTypeManage.Presenter{
         model=new ProductTypeModel(context);
     }
     @Override
-    public void getItemType(String page,SmartRefreshLayout smartRefreshLayout) {
-       model.getItemType(page,smartRefreshLayout, new Callback<HttpBean<PageBean<BaseBean>>>() {
+    public void getItemType(String token,String page,SmartRefreshLayout smartRefreshLayout) {
+       model.getItemType(token,page,smartRefreshLayout, new Callback<HttpBean<PageBean<BaseBean>>>() {
            @Override
            public void get(HttpBean<PageBean<BaseBean>> httpBean) {
                view.getItemType(httpBean);

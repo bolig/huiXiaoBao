@@ -20,8 +20,8 @@ public class MoreMeetInfoPresenter implements MoreMeetInfoManage.Presenter{
         model=new MoreMeetInfoModel(context);
     }
     @Override
-    public void getArticleBody(@Query("aid") String aid, @Query("id") String id, SmartRefreshLayout smartRefreshLayout) {
-        model.getArticleBody(aid, id, smartRefreshLayout, new Callback<HttpBean<MoreMeetInfoBean>>() {
+    public void getArticleBody(String token, String aid, String id, SmartRefreshLayout smartRefreshLayout) {
+        model.getArticleBody(token,aid, id, smartRefreshLayout, new Callback<HttpBean<MoreMeetInfoBean>>() {
             @Override
             public void get(HttpBean<MoreMeetInfoBean> httpBean) {
                 view.getArticleBody(httpBean);

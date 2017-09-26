@@ -96,6 +96,7 @@ public class Apply extends BaseView implements ApplyMeetingManage.View{
         map.put("starttime", starttime);
         map.put("endtime", endtime);
         map.put("note", note);
+        map.put("token",SharedPreferencesUtil.Obtain(this,"token","").toString());
         applyMeetingPresenter.applyMeeting(map,dialog);
     }
     private void selectend() {

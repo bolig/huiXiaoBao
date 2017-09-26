@@ -24,9 +24,9 @@ public class AddSpendModel implements AddSpendManage.Model{
         this.context = context;
     }
     @Override
-    public void addSpend(AddSpendBean addSpendBean, final LoadingDialog dialog, final Callback<HttpBean<SpendBean>> callback) {
+    public void addSpend(String token,AddSpendBean addSpendBean, final LoadingDialog dialog, final Callback<HttpBean<SpendBean>> callback) {
         MyHttp http=MyHttp.getInstance();
-        http.send(http.getHttpService().addSpend(addSpendBean),new CommonObserver(new HttpResult<HttpBean<SpendBean>>() {
+        http.send(http.getHttpService().addSpend(token,addSpendBean),new CommonObserver(new HttpResult<HttpBean<SpendBean>>() {
             @Override
             public void OnSuccess(HttpBean<SpendBean> httpBean) {
                 dialog.dismiss();
@@ -45,9 +45,9 @@ public class AddSpendModel implements AddSpendManage.Model{
         }));
     }
     @Override
-    public void getListForSpending(final Callback<HttpBean<InfoAddSpendBean>> callback) {
+    public void getListForSpending(String token,final Callback<HttpBean<InfoAddSpendBean>> callback) {
         MyHttp http=MyHttp.getInstance();
-        http.send(http.getHttpService().getListForSpending(),new CommonObserver(new HttpResult<HttpBean<InfoAddSpendBean>>() {
+        http.send(http.getHttpService().getListForSpending(token),new CommonObserver(new HttpResult<HttpBean<InfoAddSpendBean>>() {
             @Override
             public void OnSuccess(HttpBean<InfoAddSpendBean> httpBean) {
                 callback.get(httpBean);
@@ -60,9 +60,9 @@ public class AddSpendModel implements AddSpendManage.Model{
     }
 
     @Override
-    public void editSpend(AddSpendBean addSpendBean, final LoadingDialog dialog, final Callback<HttpBean<SpendBean>> callback) {
+    public void editSpend(String token,AddSpendBean addSpendBean, final LoadingDialog dialog, final Callback<HttpBean<SpendBean>> callback) {
         MyHttp http=MyHttp.getInstance();
-        http.send(http.getHttpService().editSpend(addSpendBean),new CommonObserver(new HttpResult<HttpBean<SpendBean>>() {
+        http.send(http.getHttpService().editSpend(token,addSpendBean),new CommonObserver(new HttpResult<HttpBean<SpendBean>>() {
             @Override
             public void OnSuccess(HttpBean<SpendBean> httpBean) {
                 dialog.dismiss();

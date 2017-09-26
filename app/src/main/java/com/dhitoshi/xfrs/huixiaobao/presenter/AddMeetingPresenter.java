@@ -20,8 +20,8 @@ public class AddMeetingPresenter implements AddMeetingManage.Presenter{
         model=new AddMeetingModel(context);
     }
     @Override
-    public void addMeeting(AddMeetBean addMeetBean, LoadingDialog dialog) {
-        model.addMeeting(addMeetBean,dialog, new Callback<HttpBean<MeetBean>>() {
+    public void addMeeting(String token,AddMeetBean addMeetBean, LoadingDialog dialog) {
+        model.addMeeting(token,addMeetBean,dialog, new Callback<HttpBean<MeetBean>>() {
             @Override
             public void get(HttpBean<MeetBean> httpBean) {
                 view.addMeeting(httpBean.getStatus().getMsg());
@@ -29,8 +29,8 @@ public class AddMeetingPresenter implements AddMeetingManage.Presenter{
         });
     }
     @Override
-    public void editMeeting(AddMeetBean addMeetBean, LoadingDialog dialog) {
-        model.editMeeting(addMeetBean,dialog, new Callback<HttpBean<MeetBean>>() {
+    public void editMeeting(String token,AddMeetBean addMeetBean, LoadingDialog dialog) {
+        model.editMeeting(token,addMeetBean,dialog, new Callback<HttpBean<MeetBean>>() {
             @Override
             public void get(HttpBean<MeetBean> httpBean) {
                 view.editMeeting(httpBean.getStatus().getMsg());
@@ -38,8 +38,8 @@ public class AddMeetingPresenter implements AddMeetingManage.Presenter{
         });
     }
     @Override
-    public void getListForMeeting() {
-        model.getListForMeeting(new Callback<HttpBean<InfoAddMeetBean>>() {
+    public void getListForMeeting(String token) {
+        model.getListForMeeting(token,new Callback<HttpBean<InfoAddMeetBean>>() {
             @Override
             public void get(HttpBean<InfoAddMeetBean> httpBean) {
                 view.getListForMeeting(httpBean);

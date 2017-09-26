@@ -21,9 +21,9 @@ public class RelationModel implements RelationManage.Model{
         this.context = context;
     }
     @Override
-    public void getRelationLists(String userid, String page, final SmartRefreshLayout smartRefreshLayout, final Callback<HttpBean<PageBean<RelationBean>>> callback) {
+    public void getRelationLists(String token,String userid, String page, final SmartRefreshLayout smartRefreshLayout, final Callback<HttpBean<PageBean<RelationBean>>> callback) {
         MyHttp http=MyHttp.getInstance();
-        http.send(http.getHttpService().getRelationLists(userid, page),new CommonObserver(new HttpResult<HttpBean<PageBean<RelationBean>>>() {
+        http.send(http.getHttpService().getRelationLists(token,userid, page),new CommonObserver(new HttpResult<HttpBean<PageBean<RelationBean>>>() {
             @Override
             public void OnSuccess(HttpBean<PageBean<RelationBean>> httpBean) {
                 smartRefreshLayout.finishRefresh();

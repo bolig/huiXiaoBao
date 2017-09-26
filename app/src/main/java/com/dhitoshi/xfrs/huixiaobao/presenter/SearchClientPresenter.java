@@ -20,8 +20,8 @@ public class SearchClientPresenter implements SearchClientManage.Prsenter{
         model=new SearchClientModel(context);
     }
     @Override
-    public void searchClientList(String search, String page, SmartRefreshLayout smartRefreshLayout) {
-        model.searchClientList(search, page, smartRefreshLayout, new Callback<HttpBean<PageBean<ClientBean>>>() {
+    public void searchClientList(String token,String search, String page, SmartRefreshLayout smartRefreshLayout) {
+        model.searchClientList(token,search, page, smartRefreshLayout, new Callback<HttpBean<PageBean<ClientBean>>>() {
             @Override
             public void get(HttpBean<PageBean<ClientBean>> httpBean) {
                 view.searchClientList(httpBean.getData());

@@ -82,7 +82,8 @@ public class ProductType extends BaseView implements ProductTypeManage.View {
             public void onRefresh(RefreshLayout refreshlayout) {
                 productTypes.removeAll(productTypes);
                 page = 1;
-                productTypePresenter.getItemType(String.valueOf(page), smartRefreshLayout);
+                String token= SharedPreferencesUtil.Obtain(ProductType.this,"token","").toString();
+                productTypePresenter.getItemType(token,String.valueOf(page), smartRefreshLayout);
             }
         });
 
@@ -90,7 +91,8 @@ public class ProductType extends BaseView implements ProductTypeManage.View {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
                 ++page;
-                productTypePresenter.getItemType(String.valueOf(page), smartRefreshLayout);
+                String token= SharedPreferencesUtil.Obtain(ProductType.this,"token","").toString();
+                productTypePresenter.getItemType(token,String.valueOf(page), smartRefreshLayout);
             }
         });
     }

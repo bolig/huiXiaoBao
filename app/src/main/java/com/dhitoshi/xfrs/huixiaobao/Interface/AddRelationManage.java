@@ -19,14 +19,14 @@ public interface AddRelationManage {
         void  getListForRelation(HttpBean<InfoAddRelationBean> httpBean);
     }
     interface Model{
-        void addRelation(AddRelationBean addRelationBean, LoadingDialog dialog, Callback<HttpBean<RelationBean>> callback);
-        void getListForRelation(Callback<HttpBean<InfoAddRelationBean>> callback);
-        void editRelation(AddRelationBean addRelationBean, LoadingDialog dialog,Callback<HttpBean<RelationBean>> callback);
+        void addRelation(String token,AddRelationBean addRelationBean, LoadingDialog dialog, Callback<HttpBean<RelationBean>> callback);
+        void getListForRelation(String token,Callback<HttpBean<InfoAddRelationBean>> callback);
+        void editRelation(String token,AddRelationBean addRelationBean, LoadingDialog dialog,Callback<HttpBean<RelationBean>> callback);
     }
     interface Presenter{
-        void addRelation(AddRelationBean addRelationBean, LoadingDialog dialog);
-        void editRelation(AddRelationBean addRelationBean, LoadingDialog dialog);
-        void getListForRelation();
+        void addRelation(String token,AddRelationBean addRelationBean, LoadingDialog dialog);
+        void editRelation(String token,AddRelationBean addRelationBean, LoadingDialog dialog);
+        void getListForRelation(String token);
     }
 
 }

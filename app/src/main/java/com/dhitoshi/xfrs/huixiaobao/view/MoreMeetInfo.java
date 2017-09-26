@@ -1,7 +1,6 @@
 package com.dhitoshi.xfrs.huixiaobao.view;
 import android.os.Bundle;
 import android.webkit.WebView;
-
 import com.dhitoshi.refreshlayout.SmartRefreshLayout;
 import com.dhitoshi.refreshlayout.api.RefreshLayout;
 import com.dhitoshi.refreshlayout.listener.OnRefreshListener;
@@ -10,6 +9,7 @@ import com.dhitoshi.xfrs.huixiaobao.Bean.MoreMeetInfoBean;
 import com.dhitoshi.xfrs.huixiaobao.Interface.MoreMeetInfoManage;
 import com.dhitoshi.xfrs.huixiaobao.R;
 import com.dhitoshi.xfrs.huixiaobao.presenter.MoreMeetInfoPresenter;
+import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -38,7 +38,8 @@ public class MoreMeetInfo extends BaseView implements MoreMeetInfoManage.View {
         smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
-                moreMeetInfoPresenter.getArticleBody(aid,id,smartRefreshLayout);
+                String token= SharedPreferencesUtil.Obtain(MoreMeetInfo.this,"token","").toString();
+                moreMeetInfoPresenter.getArticleBody(token,aid,id,smartRefreshLayout);
             }
         });
         setTitle("加载中...");

@@ -29,9 +29,9 @@ public class AddClientModel implements AddClientManage.Model {
     }
 
     @Override
-    public void addClient(AddClientBean addClientBean, final LoadingDialog dialog, final Callback<HttpBean<ClientBean>> callback) {
+    public void addClient(String token,AddClientBean addClientBean, final LoadingDialog dialog, final Callback<HttpBean<ClientBean>> callback) {
         MyHttp http=MyHttp.getInstance();
-        http.send(http.getHttpService().addClient(addClientBean),new CommonObserver(new HttpResult<HttpBean<ClientBean>>() {
+        http.send(http.getHttpService().addClient(token,addClientBean),new CommonObserver(new HttpResult<HttpBean<ClientBean>>() {
 
             @Override
             public void OnSuccess(HttpBean<ClientBean> httpBean) {
@@ -52,9 +52,9 @@ public class AddClientModel implements AddClientManage.Model {
     }
 
     @Override
-    public void editClient(AddClientBean addClientBean, final LoadingDialog dialog, final Callback<HttpBean<ClientBean>> callback) {
+    public void editClient(String token,AddClientBean addClientBean, final LoadingDialog dialog, final Callback<HttpBean<ClientBean>> callback) {
         MyHttp http=MyHttp.getInstance();
-        http.send(http.getHttpService().editClient(addClientBean),new CommonObserver(new HttpResult<HttpBean<ClientBean>>() {
+        http.send(http.getHttpService().editClient(token,addClientBean),new CommonObserver(new HttpResult<HttpBean<ClientBean>>() {
 
             @Override
             public void OnSuccess(HttpBean<ClientBean> httpBean) {
@@ -74,9 +74,9 @@ public class AddClientModel implements AddClientManage.Model {
     }
 
     @Override
-    public void getInfoForAdd(final Callback<HttpBean<InfoAddClientBean>> callback) {
+    public void getInfoForAdd(String token,final Callback<HttpBean<InfoAddClientBean>> callback) {
         MyHttp http=MyHttp.getInstance();
-        http.send(http.getHttpService().getInfoForAdd(),new CommonObserver(new HttpResult<HttpBean<InfoAddClientBean>>() {
+        http.send(http.getHttpService().getInfoForAdd(token),new CommonObserver(new HttpResult<HttpBean<InfoAddClientBean>>() {
             @Override
             public void OnSuccess(HttpBean<InfoAddClientBean> httpBean) {
                 callback.get(httpBean);
@@ -88,9 +88,9 @@ public class AddClientModel implements AddClientManage.Model {
         }));
     }
     @Override
-    public void checkRepeat(final LoadingDialog dialog,String area, String phone,String id, final Callback<HttpBean<Object>> callback) {
+    public void checkRepeat(String token,final LoadingDialog dialog,String area, String phone,String id, final Callback<HttpBean<Object>> callback) {
         MyHttp http=MyHttp.getInstance();
-        http.send(http.getHttpService().checkRepeat(area, phone,id),new CommonObserver(new HttpResult<HttpBean<Object>>() {
+        http.send(http.getHttpService().checkRepeat(token,area, phone,id),new CommonObserver(new HttpResult<HttpBean<Object>>() {
             @Override
             public void OnSuccess(HttpBean<Object> httpBean) {
                 dialog.dismiss();

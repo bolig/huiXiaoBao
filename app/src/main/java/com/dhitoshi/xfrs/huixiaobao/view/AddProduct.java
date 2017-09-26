@@ -94,11 +94,12 @@ public class AddProduct extends BaseView implements AddProductManage.View{
             bean.setToken(SharedPreferencesUtil.Obtain(this,"token","").toString());
             LoadingDialog dialog = LoadingDialog.build(this).setLoadingTitle("提交中");
             dialog.show();
+            String token= SharedPreferencesUtil.Obtain(this,"token","").toString();
             if(productBean==null) {
-                addProductPresenter.addItem(bean,dialog);
+                addProductPresenter.addItem(token,bean,dialog);
             }else{
                 bean.setId(String.valueOf(productBean.getId()));
-                addProductPresenter.editItem(bean,dialog);
+                addProductPresenter.editItem(token,bean,dialog);
             }
         }
     }

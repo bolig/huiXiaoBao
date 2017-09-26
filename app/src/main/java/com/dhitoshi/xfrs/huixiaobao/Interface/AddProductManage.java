@@ -12,11 +12,11 @@ public interface AddProductManage {
         void editItem(String result);
     }
     interface Model{
-        void addItem(AddProductBean addProductBean, LoadingDialog dialog,Callback<HttpBean<Object>> callback);
-        void editItem(AddProductBean addProductBean,LoadingDialog dialog,Callback<HttpBean<Object>> callback);
+        void addItem(String token,AddProductBean addProductBean, LoadingDialog dialog,Callback<HttpBean<Object>> callback);
+        void editItem(String token,AddProductBean addProductBean,LoadingDialog dialog,Callback<HttpBean<Object>> callback);
     }
     interface Presenter{
-        void addItem(AddProductBean addProductBean,LoadingDialog dialog);
-        void editItem(AddProductBean addProductBean,LoadingDialog dialog);
+        void addItem(String token,AddProductBean addProductBean,LoadingDialog dialog);
+        void editItem(String token,AddProductBean addProductBean,LoadingDialog dialog);
     }
 }

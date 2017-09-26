@@ -23,9 +23,9 @@ public class AddGiftModel implements AddGiftManage.Model{
         this.context = context;
     }
     @Override
-    public void addGift(AddGiftBean addGiftBean, final LoadingDialog dialog, final Callback<HttpBean<GiftBean>> callback) {
+    public void addGift(String token,AddGiftBean addGiftBean, final LoadingDialog dialog, final Callback<HttpBean<GiftBean>> callback) {
         MyHttp http=MyHttp.getInstance();
-        http.send(http.getHttpService().addGift(addGiftBean),new CommonObserver(new HttpResult<HttpBean<GiftBean>>() {
+        http.send(http.getHttpService().addGift(token,addGiftBean),new CommonObserver(new HttpResult<HttpBean<GiftBean>>() {
             @Override
             public void OnSuccess(HttpBean<GiftBean> httpBean) {
                 dialog.dismiss();
@@ -45,9 +45,9 @@ public class AddGiftModel implements AddGiftManage.Model{
     }
 
     @Override
-    public void getListForGift(final Callback<HttpBean<InfoAddGiftBean>> callback) {
+    public void getListForGift(String token,final Callback<HttpBean<InfoAddGiftBean>> callback) {
         MyHttp http=MyHttp.getInstance();
-        http.send(http.getHttpService().getListForGift(),new CommonObserver(new HttpResult<HttpBean<InfoAddGiftBean>>() {
+        http.send(http.getHttpService().getListForGift(token),new CommonObserver(new HttpResult<HttpBean<InfoAddGiftBean>>() {
             @Override
             public void OnSuccess(HttpBean<InfoAddGiftBean> httpBean) {
                 callback.get(httpBean);
@@ -61,9 +61,9 @@ public class AddGiftModel implements AddGiftManage.Model{
     }
 
     @Override
-    public void editGift(AddGiftBean addGiftBean, final LoadingDialog dialog, final Callback<HttpBean<GiftBean>> callback) {
+    public void editGift(String token,AddGiftBean addGiftBean, final LoadingDialog dialog, final Callback<HttpBean<GiftBean>> callback) {
         MyHttp http=MyHttp.getInstance();
-        http.send(http.getHttpService().editGift(addGiftBean),new CommonObserver(new HttpResult<HttpBean<GiftBean>>() {
+        http.send(http.getHttpService().editGift(token,addGiftBean),new CommonObserver(new HttpResult<HttpBean<GiftBean>>() {
             @Override
             public void OnSuccess(HttpBean<GiftBean> httpBean) {
                 dialog.dismiss();

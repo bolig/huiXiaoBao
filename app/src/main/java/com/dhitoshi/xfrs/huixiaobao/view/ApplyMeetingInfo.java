@@ -18,8 +18,6 @@ import butterknife.OnClick;
 public class ApplyMeetingInfo extends BaseView {
     @BindView(R.id.info_image)
     ImageView infoImage;
-    @BindView(R.id.apply_body)
-    TextView applyBody;
     @BindView(R.id.apply_cst)
     TextView applyCst;
     @BindView(R.id.apply_title)
@@ -53,7 +51,6 @@ public class ApplyMeetingInfo extends BaseView {
         applyTitle.setText(applyMeetBean.getName());
         applyStart.setText(applyMeetBean.getStarttime());
         applyEnd.setText(applyMeetBean.getEndtime());
-        applyBody.setText(applyMeetBean.getBody() + "人");
         applyCst.setText("￥" + applyMeetBean.getCost());
     }
 

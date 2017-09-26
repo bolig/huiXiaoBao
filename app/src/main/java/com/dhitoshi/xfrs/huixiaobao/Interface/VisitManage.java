@@ -11,9 +11,9 @@ public interface VisitManage {
         void getFeedbackLists(PageBean<VisitBean> pageBean);
     }
     interface Model{
-        void getFeedbackLists(String userid, String page, SmartRefreshLayout smartRefreshLayout, Callback<HttpBean<PageBean<VisitBean>>> callback);
+        void getFeedbackLists(String token,String userid, String page, SmartRefreshLayout smartRefreshLayout, Callback<HttpBean<PageBean<VisitBean>>> callback);
     }
     interface Prsenter{
-        void getFeedbackLists(String userid,String page,SmartRefreshLayout smartRefreshLayout);
+        void getFeedbackLists(String token,String userid,String page,SmartRefreshLayout smartRefreshLayout);
     }
 }

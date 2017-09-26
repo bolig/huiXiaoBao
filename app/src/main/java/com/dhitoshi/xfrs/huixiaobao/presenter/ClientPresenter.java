@@ -31,8 +31,8 @@ public class ClientPresenter implements ClientManage.Prsenter{
         });
     }
     @Override
-    public void getSelectCustomer() {
-        clientModel.getSelectCustomer(new Callback<HttpBean<ScreenBean>>() {
+    public void getSelectCustomer(String token) {
+        clientModel.getSelectCustomer(token,new Callback<HttpBean<ScreenBean>>() {
             @Override
             public void get(HttpBean<ScreenBean> httpBean) {
                 view.getSelectCustomer(httpBean.getData());

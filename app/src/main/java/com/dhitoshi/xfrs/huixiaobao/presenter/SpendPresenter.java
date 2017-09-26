@@ -21,8 +21,8 @@ public class SpendPresenter implements SpendManage.Prsenter{
         spendModel=new SpendModel(context);
     }
     @Override
-    public void getSpendingLists(String userid, String page, SmartRefreshLayout smartRefreshLayout) {
-        spendModel.getSpendingLists(userid, page,smartRefreshLayout, new Callback<HttpBean<PageBean<SpendBean>>>() {
+    public void getSpendingLists(String token,String userid, String page, SmartRefreshLayout smartRefreshLayout) {
+        spendModel.getSpendingLists(token,userid, page,smartRefreshLayout, new Callback<HttpBean<PageBean<SpendBean>>>() {
             @Override
             public void get(HttpBean<PageBean<SpendBean>> httpBean) {
                 view.getSpendingLists(httpBean.getData());

@@ -24,9 +24,9 @@ public class AddRelationModel implements AddRelationManage.Model{
     }
 
     @Override
-    public void addRelation(AddRelationBean addRelationBean, final LoadingDialog dialog, final Callback<HttpBean<RelationBean>> callback) {
+    public void addRelation(String token,AddRelationBean addRelationBean, final LoadingDialog dialog, final Callback<HttpBean<RelationBean>> callback) {
         MyHttp http=MyHttp.getInstance();
-        http.send(http.getHttpService().addRelation(addRelationBean),new CommonObserver(new HttpResult<HttpBean<RelationBean>>() {
+        http.send(http.getHttpService().addRelation(token,addRelationBean),new CommonObserver(new HttpResult<HttpBean<RelationBean>>() {
             @Override
             public void OnSuccess(HttpBean<RelationBean> httpBean) {
                 dialog.dismiss();
@@ -45,9 +45,9 @@ public class AddRelationModel implements AddRelationManage.Model{
         }));
     }
     @Override
-    public void getListForRelation(final Callback<HttpBean<InfoAddRelationBean>> callback) {
+    public void getListForRelation(String token,final Callback<HttpBean<InfoAddRelationBean>> callback) {
         MyHttp http=MyHttp.getInstance();
-        http.send(http.getHttpService().getListForRelation(),new CommonObserver(new HttpResult<HttpBean<InfoAddRelationBean>>() {
+        http.send(http.getHttpService().getListForRelation(token),new CommonObserver(new HttpResult<HttpBean<InfoAddRelationBean>>() {
             @Override
             public void OnSuccess(HttpBean<InfoAddRelationBean> httpBean) {
                 callback.get(httpBean);
@@ -60,9 +60,9 @@ public class AddRelationModel implements AddRelationManage.Model{
         }));
     }
     @Override
-    public void editRelation(AddRelationBean addRelationBean, final LoadingDialog dialog, final Callback<HttpBean<RelationBean>> callback) {
+    public void editRelation(String token,AddRelationBean addRelationBean, final LoadingDialog dialog, final Callback<HttpBean<RelationBean>> callback) {
         MyHttp http=MyHttp.getInstance();
-        http.send(http.getHttpService().editRelation(addRelationBean),new CommonObserver(new HttpResult<HttpBean<RelationBean>>() {
+        http.send(http.getHttpService().editRelation(token,addRelationBean),new CommonObserver(new HttpResult<HttpBean<RelationBean>>() {
             @Override
             public void OnSuccess(HttpBean<RelationBean> httpBean) {
                 dialog.dismiss();

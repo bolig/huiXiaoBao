@@ -11,9 +11,9 @@ public interface RelationManage {
         void getRelationLists(PageBean<RelationBean> pageBean);
     }
     interface Model{
-        void getRelationLists(String userid, String page, SmartRefreshLayout smartRefreshLayout, Callback<HttpBean<PageBean<RelationBean>>> callback);
+        void getRelationLists(String token,String userid, String page, SmartRefreshLayout smartRefreshLayout, Callback<HttpBean<PageBean<RelationBean>>> callback);
     }
     interface Prsenter{
-        void getRelationLists(String userid, String page,SmartRefreshLayout smartRefreshLayout);
+        void getRelationLists(String token,String userid, String page,SmartRefreshLayout smartRefreshLayout);
     }
 }

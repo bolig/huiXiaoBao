@@ -17,14 +17,14 @@ public interface AddSpendManage {
         void getListForSpending(HttpBean<InfoAddSpendBean> httpBean);
     }
     interface Model{
-        void addSpend(AddSpendBean addSpendBean, LoadingDialog dialog,Callback<HttpBean<SpendBean>> callback);
-        void getListForSpending(Callback<HttpBean<InfoAddSpendBean>> callback);
-        void editSpend(AddSpendBean addSpendBean,LoadingDialog dialog,Callback<HttpBean<SpendBean>> callback);
+        void addSpend(String token,AddSpendBean addSpendBean, LoadingDialog dialog,Callback<HttpBean<SpendBean>> callback);
+        void getListForSpending(String token,Callback<HttpBean<InfoAddSpendBean>> callback);
+        void editSpend(String token,AddSpendBean addSpendBean,LoadingDialog dialog,Callback<HttpBean<SpendBean>> callback);
     }
     interface Presenter{
-        void addSpend(AddSpendBean addSpendBean,LoadingDialog dialog);
-        void editSpend(AddSpendBean addSpendBean,LoadingDialog dialog);
-        void getListForSpending();
+        void addSpend(String token,AddSpendBean addSpendBean,LoadingDialog dialog);
+        void editSpend(String token,AddSpendBean addSpendBean,LoadingDialog dialog);
+        void getListForSpending(String token);
     }
 
 }

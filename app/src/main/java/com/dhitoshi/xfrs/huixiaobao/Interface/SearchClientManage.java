@@ -15,10 +15,10 @@ public interface SearchClientManage {
         void searchClientList(PageBean<ClientBean> pageBean);
     }
     interface Model{
-        void searchClientList(String search,String page, SmartRefreshLayout smartRefreshLayout, Callback<HttpBean<PageBean<ClientBean>>> callback);
+        void searchClientList(String token,String search,String page, SmartRefreshLayout smartRefreshLayout, Callback<HttpBean<PageBean<ClientBean>>> callback);
     }
     interface Prsenter{
-        void searchClientList(String search,String page, SmartRefreshLayout smartRefreshLayout);
+        void searchClientList(String token,String search,String page, SmartRefreshLayout smartRefreshLayout);
 
     }
 }

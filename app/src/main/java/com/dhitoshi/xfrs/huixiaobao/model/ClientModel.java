@@ -10,9 +10,11 @@ import com.dhitoshi.xfrs.huixiaobao.Bean.PageBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.ScreenBean;
 import com.dhitoshi.xfrs.huixiaobao.Interface.Callback;
 import com.dhitoshi.xfrs.huixiaobao.Interface.ClientManage;
+import com.dhitoshi.xfrs.huixiaobao.Interface.LoginCall;
 import com.dhitoshi.xfrs.huixiaobao.common.CommonObserver;
 import com.dhitoshi.xfrs.huixiaobao.http.HttpResult;
 import com.dhitoshi.xfrs.huixiaobao.http.MyHttp;
+import com.dhitoshi.xfrs.huixiaobao.utils.LoginUtil;
 import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
 
 import java.util.List;
@@ -49,12 +51,21 @@ public class ClientModel implements ClientManage.Model{
         }));
     }
     @Override
-    public void getSelectCustomer(final Callback<HttpBean<ScreenBean>> callback) {
+    public void getSelectCustomer(String token,final Callback<HttpBean<ScreenBean>> callback) {
         MyHttp http=MyHttp.getInstance();
-        http.send(http.getHttpService().getSelectCustomer(),new CommonObserver(new HttpResult<HttpBean<ScreenBean>>() {
+        http.send(http.getHttpService().getSelectCustomer(token),new CommonObserver(new HttpResult<HttpBean<ScreenBean>>() {
             @Override
             public void OnSuccess(HttpBean<ScreenBean> httpBean) {
-                callback.get(httpBean);
+                if(httpBean.getStatus().getCode()==200){
+                    callback.get(httpBean);
+                }else if(httpBean.getStatus().getCode()==600){
+                    LoginUtil.autoLogin(context, new LoginCall() {
+                        @Override
+                        public void autoLogin(String token) {
+                            getSelectCustomer(token,callback);
+                        }
+                    });
+                }
             }
 
             @Override

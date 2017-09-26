@@ -24,8 +24,8 @@ public class SetAreaPresenter implements SetAreaManage.Presenter{
         setAreaModel=new SetAreaModel(context);
     }
     @Override
-    public void getAreaLists(SmartRefreshLayout smartRefreshLayout) {
-        setAreaModel.getAreaLists(smartRefreshLayout, new Callback<HttpBean<List<AreaBean>>>() {
+    public void getAreaLists(String token,SmartRefreshLayout smartRefreshLayout) {
+        setAreaModel.getAreaLists(token,smartRefreshLayout, new Callback<HttpBean<List<AreaBean>>>() {
             @Override
             public void get(HttpBean<List<AreaBean>> httpBean) {
                 view.getAreaLists(httpBean);

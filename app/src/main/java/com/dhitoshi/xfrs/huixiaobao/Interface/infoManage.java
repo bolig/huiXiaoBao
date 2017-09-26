@@ -14,11 +14,11 @@ public interface infoManage {
         void getSelectCustomer(ScreenBean screenBean);
     }
     interface Model{
-        void getClientList(String type, String area, String order, String page, Callback<HttpBean<List<ClientBean>>> callback);
-        void getSelectCustomer(Callback<HttpBean<ScreenBean>> callback);
+        void getClientList(String token,String type, String area, String order, String page, Callback<HttpBean<List<ClientBean>>> callback);
+        void getSelectCustomer(String token,Callback<HttpBean<ScreenBean>> callback);
     }
     interface Prsenter{
-        void getClientList(String type, String area, String order, String page);
-        void getSelectCustomer();
+        void getClientList(String token,String type, String area, String order, String page);
+        void getSelectCustomer(String token);
     }
 }

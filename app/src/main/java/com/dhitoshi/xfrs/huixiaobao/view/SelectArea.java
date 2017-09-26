@@ -15,6 +15,7 @@ import com.dhitoshi.xfrs.huixiaobao.adapter.AreaAdapter;
 import com.dhitoshi.xfrs.huixiaobao.adapter.KidAdapter;
 import com.dhitoshi.xfrs.huixiaobao.common.MyDecoration;
 import com.dhitoshi.xfrs.huixiaobao.presenter.AreaPresenter;
+import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +43,8 @@ public class SelectArea extends BaseView implements AreaManage.View {
         setTitle("地区");
         kidBeens=new ArrayList<>();
         areaPresenter=new AreaPresenter(this,this);
-        areaPresenter.getAreaLists();
+        String token= SharedPreferencesUtil.Obtain(this,"token","").toString();
+        areaPresenter.getAreaLists(token);
         recyclerviewOne.addItemDecoration(new MyDecoration(this, LinearLayoutManager.HORIZONTAL, R.drawable.divider_line));
         recyclerviewOne.setLayoutManager(new LinearLayoutManager(this));
         recyclerviewTwo.addItemDecoration(new MyDecoration(this, LinearLayoutManager.HORIZONTAL, R.drawable.divider_line));

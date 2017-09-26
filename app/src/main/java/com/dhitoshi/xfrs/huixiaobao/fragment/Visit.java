@@ -21,6 +21,7 @@ import com.dhitoshi.xfrs.huixiaobao.Interface.VisitManage;
 import com.dhitoshi.xfrs.huixiaobao.R;
 import com.dhitoshi.xfrs.huixiaobao.adapter.VisitAdapter;
 import com.dhitoshi.xfrs.huixiaobao.presenter.VisitPresenter;
+import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
 import com.dhitoshi.xfrs.huixiaobao.view.AddVisit;
 
 import org.greenrobot.eventbus.EventBus;
@@ -94,14 +95,16 @@ public class Visit extends BaseFragment implements VisitManage.View {
             public void onRefresh(RefreshLayout refreshlayout) {
                 visits.removeAll(visits);
                 page = 1;
-                visitPresenter.getFeedbackLists(String.valueOf(id), String.valueOf(page), smartRefreshLayout);
+                String token= SharedPreferencesUtil.Obtain(getContext(),"token","").toString();
+                visitPresenter.getFeedbackLists(token,String.valueOf(id), String.valueOf(page), smartRefreshLayout);
             }
         });
         smartRefreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
                 ++page;
-                visitPresenter.getFeedbackLists(String.valueOf(id), String.valueOf(page), smartRefreshLayout);
+                String token= SharedPreferencesUtil.Obtain(getContext(),"token","").toString();
+                visitPresenter.getFeedbackLists(token,String.valueOf(id), String.valueOf(page), smartRefreshLayout);
             }
         });
     }

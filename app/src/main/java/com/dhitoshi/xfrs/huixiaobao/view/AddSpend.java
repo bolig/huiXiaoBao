@@ -27,6 +27,7 @@ import com.dhitoshi.xfrs.huixiaobao.adapter.PositionAdapter;
 import com.dhitoshi.xfrs.huixiaobao.common.SelectDateDialog;
 import com.dhitoshi.xfrs.huixiaobao.common.SelectDialog;
 import com.dhitoshi.xfrs.huixiaobao.presenter.AddSpendPresenter;
+import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -95,7 +96,8 @@ public class AddSpend extends BaseView implements AddSpendManage.View{
         }
         setRightText("提交");
         addSpendPresenter=new AddSpendPresenter(this,this);
-        addSpendPresenter.getListForSpending();
+        String token= SharedPreferencesUtil.Obtain(this,"token","").toString();
+        addSpendPresenter.getListForSpending(token);
     }
     private void initSpendInfo() {
         createtime=spendBean.getCreatetime();
@@ -159,12 +161,13 @@ public class AddSpend extends BaseView implements AddSpendManage.View{
            bean.setNotes(spendNotes.getText().toString());
            LoadingDialog dialog = LoadingDialog.build(this).setLoadingTitle("提交中");
            dialog.show();
+           String token= SharedPreferencesUtil.Obtain(this,"token","").toString();
            if(null==spendBean){
                bean.setUserid(String.valueOf(userId));
-               addSpendPresenter.addSpend(bean,dialog);
+               addSpendPresenter.addSpend(token,bean,dialog);
            }else{
                bean.setId(String.valueOf(spendBean.getId()));
-               addSpendPresenter.editSpend(bean,dialog);
+               addSpendPresenter.editSpend(token,bean,dialog);
            }
        }
     }

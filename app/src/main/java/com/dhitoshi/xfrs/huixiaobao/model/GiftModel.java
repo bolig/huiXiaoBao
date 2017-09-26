@@ -23,9 +23,9 @@ public class GiftModel implements GiftManage.Model{
         this.context = context;
     }
     @Override
-    public void getGiftLists(String userid, String page, final SmartRefreshLayout smartRefreshLayout, final Callback<HttpBean<PageBean<GiftBean>>> callback) {
+    public void getGiftLists(String token,String userid, String page, final SmartRefreshLayout smartRefreshLayout, final Callback<HttpBean<PageBean<GiftBean>>> callback) {
         MyHttp http=MyHttp.getInstance();
-        http.send(http.getHttpService().getGiftLists(userid, page),new CommonObserver(new HttpResult<HttpBean<PageBean<GiftBean>>>() {
+        http.send(http.getHttpService().getGiftLists(token,userid, page),new CommonObserver(new HttpResult<HttpBean<PageBean<GiftBean>>>() {
             @Override
             public void OnSuccess(HttpBean<PageBean<GiftBean>> httpBean) {
                 smartRefreshLayout.finishRefresh();

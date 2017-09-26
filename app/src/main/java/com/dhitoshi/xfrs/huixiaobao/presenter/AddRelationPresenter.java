@@ -24,8 +24,8 @@ public class AddRelationPresenter implements AddRelationManage.Presenter{
     }
 
     @Override
-    public void addRelation(AddRelationBean addRelationBean, LoadingDialog dialog) {
-        model.addRelation(addRelationBean,dialog, new Callback<HttpBean<RelationBean>>() {
+    public void addRelation(String token,AddRelationBean addRelationBean, LoadingDialog dialog) {
+        model.addRelation(token,addRelationBean,dialog, new Callback<HttpBean<RelationBean>>() {
             @Override
             public void get(HttpBean<RelationBean> httpBean) {
                 view.addRelation(httpBean.getStatus().getMsg());
@@ -34,8 +34,8 @@ public class AddRelationPresenter implements AddRelationManage.Presenter{
     }
 
     @Override
-    public void editRelation(AddRelationBean addRelationBean,LoadingDialog dialog) {
-        model.editRelation(addRelationBean,dialog, new Callback<HttpBean<RelationBean>>() {
+    public void editRelation(String token,AddRelationBean addRelationBean,LoadingDialog dialog) {
+        model.editRelation(token,addRelationBean,dialog, new Callback<HttpBean<RelationBean>>() {
             @Override
             public void get(HttpBean<RelationBean> httpBean) {
                 view.editRelation(httpBean.getStatus().getMsg());
@@ -43,8 +43,8 @@ public class AddRelationPresenter implements AddRelationManage.Presenter{
         });
     }
     @Override
-    public void getListForRelation() {
-        model.getListForRelation(new Callback<HttpBean<InfoAddRelationBean>>() {
+    public void getListForRelation(String token) {
+        model.getListForRelation(token,new Callback<HttpBean<InfoAddRelationBean>>() {
             @Override
             public void get(HttpBean<InfoAddRelationBean> httpBean) {
                 view.getListForRelation(httpBean);

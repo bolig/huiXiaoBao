@@ -26,8 +26,8 @@ public class AddClientPresenter implements AddClientManage.Presenter{
         addClientModel=new AddClientModel(context);
     }
     @Override
-    public void addClient(AddClientBean addClientBean, LoadingDialog dialog) {
-        addClientModel.addClient(addClientBean,dialog, new Callback<HttpBean<ClientBean>>() {
+    public void addClient(String token,AddClientBean addClientBean, LoadingDialog dialog) {
+        addClientModel.addClient(token,addClientBean,dialog, new Callback<HttpBean<ClientBean>>() {
             @Override
             public void get(HttpBean<ClientBean> httpBean) {
                 view.addClient(httpBean.getStatus().getMsg());
@@ -36,8 +36,8 @@ public class AddClientPresenter implements AddClientManage.Presenter{
     }
 
     @Override
-    public void editClient(AddClientBean addClientBean,LoadingDialog dialog) {
-        addClientModel.editClient(addClientBean,dialog, new Callback<HttpBean<ClientBean>>() {
+    public void editClient(String token,AddClientBean addClientBean,LoadingDialog dialog) {
+        addClientModel.editClient(token,addClientBean,dialog, new Callback<HttpBean<ClientBean>>() {
             @Override
             public void get(HttpBean<ClientBean> httpBean) {
                 view.editClient(httpBean);
@@ -46,8 +46,8 @@ public class AddClientPresenter implements AddClientManage.Presenter{
     }
 
     @Override
-    public void getInfoForAdd() {
-        addClientModel.getInfoForAdd(new Callback<HttpBean<InfoAddClientBean>>() {
+    public void getInfoForAdd(String token) {
+        addClientModel.getInfoForAdd(token,new Callback<HttpBean<InfoAddClientBean>>() {
             @Override
             public void get(HttpBean<InfoAddClientBean> httpBean) {
                 view.getInfoForAdd(httpBean);
@@ -55,8 +55,8 @@ public class AddClientPresenter implements AddClientManage.Presenter{
         });
     }
     @Override
-    public void checkRepeat(LoadingDialog dialog,String area, String phone,String id) {
-        addClientModel.checkRepeat(dialog,area, phone,id, new Callback<HttpBean<Object>>() {
+    public void checkRepeat(String token,LoadingDialog dialog,String area, String phone,String id) {
+        addClientModel.checkRepeat(token,dialog,area, phone,id, new Callback<HttpBean<Object>>() {
             @Override
             public void get(HttpBean<Object> httpBean) {
                 view.checkRepeat(httpBean.getStatus().getMsg());
