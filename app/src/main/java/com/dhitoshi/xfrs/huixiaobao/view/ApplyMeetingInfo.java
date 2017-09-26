@@ -61,6 +61,7 @@ public class ApplyMeetingInfo extends BaseView {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.more_info:
+                startActivity(new Intent(this,MoreMeetInfo.class).putExtra("id",applyMeetBean.getId()).putExtra("body",applyMeetBean.getBody()));
                 break;
             case R.id.to_apply:
                 startActivity(new Intent(this,Apply.class).putExtra("id",applyMeetBean.getId()));

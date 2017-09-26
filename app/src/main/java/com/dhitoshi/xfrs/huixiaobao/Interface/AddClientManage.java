@@ -8,6 +8,9 @@ import com.dhitoshi.xfrs.huixiaobao.Dialog.LoadingDialog;
 
 import java.util.List;
 import java.util.Map;
+
+import retrofit2.http.Query;
+
 /**
  * Created by dxs on 2017/9/8.
  */
@@ -18,7 +21,6 @@ public interface AddClientManage {
         void editClient(HttpBean<ClientBean> httpBean);
         void getInfoForAdd(HttpBean<InfoAddClientBean> httpBean);
         void checkRepeat(String result);
-
     }
     interface Model{
         void addClient(AddClientBean addClientBean, LoadingDialog dialog, Callback<HttpBean<ClientBean>> callback);

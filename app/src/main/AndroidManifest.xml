@@ -93,7 +93,8 @@
         <activity android:name=".view.ApplyMeeting" />
         <activity android:name=".view.ApplyMeetingInfo" />
         <activity android:name=".view.Apply" />
-        <activity android:name=".view.MoreMeetINfo"></activity>
+        <activity android:name=".view.MoreMeetInfo" />
+        <activity android:name=".view.AddMeetClient"></activity>
     </application>
 
 </manifest>

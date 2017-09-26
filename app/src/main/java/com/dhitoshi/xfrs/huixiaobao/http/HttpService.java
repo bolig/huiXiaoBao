@@ -20,7 +20,7 @@ import com.dhitoshi.xfrs.huixiaobao.Bean.InfoAddSpendBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.InfoAddVisitBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.KidBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.MeetBean;
-import com.dhitoshi.xfrs.huixiaobao.Bean.MoreMeetInfo;
+import com.dhitoshi.xfrs.huixiaobao.Bean.MoreMeetInfoBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.OwnMeetBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.PageBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.ProductBean;
@@ -144,7 +144,7 @@ public interface HttpService {
 //    Observable<>
     //获取会议详情
     @GET("MeetingType/articleBody")
-    Observable<MoreMeetInfo> getArticleBody(@Query("aid") String aid, @Query("id") String id);
+    Observable<HttpBean<MoreMeetInfoBean>> getArticleBody(@Query("aid") String aid, @Query("id") String id);
     //
     //
 
@@ -232,4 +232,7 @@ public interface HttpService {
     //上传头像
     @POST("customer/eidtHead")
     Observable<Object> eidtHead(@Query("id") String id);
+    //添加参会客户
+    @POST("Meeting/addCustomer")
+    Observable<Object> addCustomer(@QueryMap Map<String,String> map);
 }
