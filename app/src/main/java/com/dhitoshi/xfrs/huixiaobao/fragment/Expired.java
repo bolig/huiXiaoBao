@@ -122,7 +122,7 @@ public class Expired extends BaseFragment implements ExpiredManage.View {
             adapter.addItemClickListener(new ItemClick<ApplyMeetBean>() {
                 @Override
                 public void onItemClick(View view, ApplyMeetBean applyMeetBean, int position) {
-                    startActivity(new Intent(getContext(), ApplyMeetingInfo.class).putExtra("apply",applyMeetBean));
+                    startActivity(new Intent(getContext(), ApplyMeetingInfo.class).putExtra("apply",applyMeetBean).putExtra("type",2));
                 }
             });
         } else {

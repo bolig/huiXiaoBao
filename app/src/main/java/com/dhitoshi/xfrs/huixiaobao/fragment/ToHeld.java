@@ -1,5 +1,6 @@
 package com.dhitoshi.xfrs.huixiaobao.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -21,6 +22,8 @@ import com.dhitoshi.xfrs.huixiaobao.R;
 import com.dhitoshi.xfrs.huixiaobao.adapter.OwnMeetAdapter;
 import com.dhitoshi.xfrs.huixiaobao.presenter.ToHeldPresenter;
 import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
+import com.dhitoshi.xfrs.huixiaobao.view.ApplyMeetingInfo;
+import com.dhitoshi.xfrs.huixiaobao.view.EditApplyMeet;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -111,7 +114,7 @@ public class ToHeld extends BaseFragment implements ToHeldManage.View{
             adapter.addItemClickListener(new ItemClick<OwnMeetBean>() {
                 @Override
                 public void onItemClick(View view, OwnMeetBean ownMeetBean, int position) {
-
+                    startActivity(new Intent(getContext(), EditApplyMeet.class).putExtra("own",ownMeetBean).putExtra("type",2));
                 }
             });
         } else {

@@ -22,6 +22,7 @@ import com.dhitoshi.xfrs.huixiaobao.adapter.ApplyAdapter;
 import com.dhitoshi.xfrs.huixiaobao.presenter.OnGoingPresenter;
 import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
 import com.dhitoshi.xfrs.huixiaobao.view.ApplyMeetingInfo;
+import com.dhitoshi.xfrs.huixiaobao.view.EditApplyMeet;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -113,7 +114,7 @@ public class OnGoing extends BaseFragment implements OnGoingManage.View {
             adapter.addItemClickListener(new ItemClick<ApplyMeetBean>() {
                 @Override
                 public void onItemClick(View view, ApplyMeetBean applyMeetBean, int position) {
-                    startActivity(new Intent(getContext(), ApplyMeetingInfo.class).putExtra("apply",applyMeetBean));
+                    startActivity(new Intent(getContext(), ApplyMeetingInfo.class).putExtra("apply",applyMeetBean).putExtra("type",1));
                 }
             });
         } else {

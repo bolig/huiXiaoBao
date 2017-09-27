@@ -1,6 +1,7 @@
 package com.dhitoshi.xfrs.huixiaobao.view;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -26,14 +27,17 @@ public class ApplyMeetingInfo extends BaseView {
     TextView applyStart;
     @BindView(R.id.apply_end)
     TextView applyEnd;
+    @BindView(R.id.to_apply)
+    TextView toApply;
     private ApplyMeetBean applyMeetBean;
+    private int type = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.apply_meeting_info);
         ButterKnife.bind(this);
-        ActivityManager.addDestoryActivity(this,"ApplyMeetingInfo");
+        ActivityManager.addDestoryActivity(this, "ApplyMeetingInfo");
         initViews();
     }
 
@@ -52,16 +56,28 @@ public class ApplyMeetingInfo extends BaseView {
         applyStart.setText(applyMeetBean.getStarttime());
         applyEnd.setText(applyMeetBean.getEndtime());
         applyCst.setText("￥" + applyMeetBean.getCost());
+        type = getIntent().getIntExtra("type", 0);
+        initEvents();
     }
-
+    private void initEvents() {
+        switch (type){
+            case 1:
+                toApply.setClickable(true);
+                break;
+            case 2:
+                toApply.setClickable(false);
+                toApply.setBackgroundColor(Color.parseColor("#efefef"));
+                break;
+        }
+    }
     @OnClick({R.id.more_info, R.id.to_apply})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.more_info:
-                startActivity(new Intent(this,MoreMeetInfo.class).putExtra("id",applyMeetBean.getId()).putExtra("body",applyMeetBean.getBody()));
+                startActivity(new Intent(this, MoreMeetInfo.class).putExtra("id", applyMeetBean.getId()).putExtra("body", applyMeetBean.getBody()));
                 break;
             case R.id.to_apply:
-                startActivity(new Intent(this,Apply.class).putExtra("id",applyMeetBean.getId()));
+                startActivity(new Intent(this, Apply.class).putExtra("id", applyMeetBean.getId()));
                 break;
         }
     }

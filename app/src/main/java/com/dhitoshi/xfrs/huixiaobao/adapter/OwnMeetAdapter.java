@@ -20,7 +20,7 @@ public class OwnMeetAdapter extends BaseAdapter<OwnMeetBean> {
     @Override
     public void covert(BaseRecyclerHolder holder, List<OwnMeetBean> mList, int position) {
         holder.setText(R.id.apply_name,mList.get(position).getType().getName());
-        holder.setText(R.id.apply_time,mList.get(position).getStarttime()+"至"+mList.get(position).getEndtime());
+        holder.setText(R.id.apply_time,mList.get(position).getStarttime());
         holder.setText(R.id.apply_end,mList.get(position).getEndtime());
     }
 }

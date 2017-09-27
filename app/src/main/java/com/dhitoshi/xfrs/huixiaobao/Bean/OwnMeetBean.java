@@ -1,10 +1,13 @@
 package com.dhitoshi.xfrs.huixiaobao.Bean;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by dxs on 2017/9/24.
  */
 
-public class OwnMeetBean {
+public class OwnMeetBean implements Parcelable {
 
     /**
      * id : 3
@@ -76,4 +79,44 @@ public class OwnMeetBean {
     }
 
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.id);
+        dest.writeParcelable(this.type, flags);
+        dest.writeString(this.location);
+        dest.writeString(this.starttime);
+        dest.writeString(this.endtime);
+        dest.writeString(this.note);
+        dest.writeInt(this.days);
+    }
+
+    public OwnMeetBean() {
+    }
+
+    protected OwnMeetBean(Parcel in) {
+        this.id = in.readInt();
+        this.type = in.readParcelable(TypeBean.class.getClassLoader());
+        this.location = in.readString();
+        this.starttime = in.readString();
+        this.endtime = in.readString();
+        this.note = in.readString();
+        this.days = in.readInt();
+    }
+
+    public static final Parcelable.Creator<OwnMeetBean> CREATOR = new Parcelable.Creator<OwnMeetBean>() {
+        @Override
+        public OwnMeetBean createFromParcel(Parcel source) {
+            return new OwnMeetBean(source);
+        }
+
+        @Override
+        public OwnMeetBean[] newArray(int size) {
+            return new OwnMeetBean[size];
+        }
+    };
 }

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#efefef"
+    >
+    <include layout="@layout/toolbar"></include>
+    <include layout="@layout/base_recyclerview"></include>
+    <include layout="@layout/empty"></include>
+    <include layout="@layout/error"></include>
+</LinearLayout>

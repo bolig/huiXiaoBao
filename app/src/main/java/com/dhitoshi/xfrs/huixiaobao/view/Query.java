@@ -32,6 +32,7 @@ import com.dhitoshi.xfrs.huixiaobao.adapter.PositionAdapter;
 import com.dhitoshi.xfrs.huixiaobao.adapter.SexAdapter;
 import com.dhitoshi.xfrs.huixiaobao.common.SelectDateDialog;
 import com.dhitoshi.xfrs.huixiaobao.common.SelectDialog;
+import com.dhitoshi.xfrs.huixiaobao.common.SerializableMap;
 import com.dhitoshi.xfrs.huixiaobao.presenter.QueryPresenter;
 import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
 
@@ -279,7 +280,7 @@ public class Query extends BaseView implements QueryManage.View{
         dialog.setTitle("选择结束日期").setTime(createtimeEnd.getText().toString()).getDate(new DateCallBack() {
             @Override
             public void getDate(String date) {
-                createtime_st = date;
+                createtime_end= date;
                 createtimeEnd.setText(date);
                 createtimeEnd.setTextColor(getResources().getColor(R.color.colorPrimary));
             }
@@ -291,7 +292,7 @@ public class Query extends BaseView implements QueryManage.View{
         dialog.setTitle("选择开始日期").setTime(createtimeStart.getText().toString()).getDate(new DateCallBack() {
             @Override
             public void getDate(String date) {
-                createtime_end = date;
+                createtime_st = date;
                 createtimeStart.setText(date);
                 createtimeStart.setTextColor(getResources().getColor(R.color.colorPrimary));
             }
@@ -367,7 +368,6 @@ public class Query extends BaseView implements QueryManage.View{
             if(map==null){ map=new HashMap<>();}
             map.put("token",SharedPreferencesUtil.Obtain(this,"token","").toString());
             map.put("type",type);
-            map.put("page","1");
             LoadingDialog dialog = LoadingDialog.build(this).setLoadingTitle("提交中");
             dialog.show();
             if(type.equals("2")){
@@ -376,14 +376,12 @@ public class Query extends BaseView implements QueryManage.View{
                 map.put("buyaddress",buyaddress);
                 map.put("buytime_st",buytime_st);
                 map.put("buytime_end",buytime_end);
-                queryPresenter.getSearchTwo(map,dialog);
             }
             else if(type.equals("3")){
                 map.put("feedback_time_st",feedback_time_st);
                 map.put("feedback_time_end",feedback_time_end);
                 map.put("feedback_time_st_un",feedback_time_st_un);
                 map.put("feedback_time_end_un",feedback_time_end_un);
-                queryPresenter.getSearchThree(map,dialog);
             }else{
                 map.put("area",area);
                 map.put("name",name);
@@ -397,22 +395,14 @@ public class Query extends BaseView implements QueryManage.View{
                 map.put("createtime_st",createtime_st);
                 map.put("createtime_end",createtime_end);
                 map.put("sex",sex);
-                switch (type){
-                    case "1":
-                        queryPresenter.getSearchOne(map,dialog);
-                        break;
-                    case "4":
-                        queryPresenter.getSearchFour(map,dialog);
-                        break;
-                    case "5":
-                        queryPresenter.getSearchFive(map,dialog);
-                        break;
-                    case "6":
-                        queryPresenter.getSearchSix(map,dialog);
-                        break;
-                }
             }
         }
+        SerializableMap tmpmap=new SerializableMap();
+        tmpmap.setMap(map);
+        Bundle bundle=new Bundle();
+        bundle.putString("type",type);
+        bundle.putParcelable("map",tmpmap);
+        startActivity(new Intent(this,QueryResult.class).putExtra("bundle",bundle));
     }
     private boolean juge() {
        if(type.equals("2")){
@@ -505,29 +495,5 @@ public class Query extends BaseView implements QueryManage.View{
         positions=httpBean.getData().getPosition();
         saleaddresses=httpBean.getData().getSaleaddress();
         salesmen= (ArrayList<BaseBean>) httpBean.getData().getSalesman();
-    }
-    @Override
-    public void getSearchOne(HttpBean<PageBean<ClientBean>> httpBean) {
-
-    }
-    @Override
-    public void getSearchTwo(HttpBean<PageBean<SpendBean>> httpBean) {
-
-    }
-    @Override
-    public void getSearchThree(HttpBean<PageBean<VisitBean>> httpBean) {
-
-    }
-    @Override
-    public void getSearchFour(HttpBean<PageBean<RelationBean>> httpBean) {
-
-    }
-    @Override
-    public void getSearchFive(HttpBean<PageBean<GiftBean>> httpBean) {
-
-    }
-    @Override
-    public void getSearchSix(HttpBean<PageBean<MeetBean>> httpBean) {
-
     }
 }

@@ -38,7 +38,7 @@
             android:textColor="#333333"
             />
         <TextView
-            android:id="@+id/apply_start"
+            android:id="@+id/infoMeet_start"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="14dp"
@@ -61,7 +61,30 @@
             android:textColor="#333333"
             />
         <TextView
-            android:id="@+id/apply_end"
+            android:id="@+id/infoMeet_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14dp"
+            android:layout_marginLeft="10dp"
+            android:textColor="#333333"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="10dp"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="活动地点:"
+            android:textSize="14dp"
+            android:textColor="#333333"
+            />
+        <TextView
+            android:id="@+id/infoMeet_area"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="14dp"
@@ -84,7 +107,7 @@
             android:textColor="#333333"
             />
         <TextView
-            android:id="@+id/apply_cst"
+            android:id="@+id/infoMeet_cost"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="13dp"
@@ -112,12 +135,30 @@
         android:layout_marginRight="20dp"
         >
         <TextView
-            android:id="@+id/to_apply"
-            android:layout_width="match_parent"
+            android:id="@+id/to_enter"
+            android:layout_width="0dp"
+            android:layout_weight="3"
             android:layout_height="wrap_content"
             android:background="@drawable/query_click"
             android:clickable="true"
-            android:text="申请举办"
+            android:text="人员录入"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="20dp"
+            android:gravity="center"
+            android:textColor="@android:color/white"
+            android:textSize="18dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            />
+        <TextView
+            android:id="@+id/to_attend"
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:layout_height="wrap_content"
+            android:background="@drawable/query_click"
+            android:clickable="true"
+            android:text="考勤"
+            android:layout_marginLeft="30dp"
             android:layout_gravity="bottom"
             android:layout_marginBottom="20dp"
             android:gravity="center"
