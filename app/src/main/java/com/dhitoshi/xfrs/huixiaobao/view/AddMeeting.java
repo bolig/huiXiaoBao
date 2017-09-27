@@ -15,6 +15,7 @@ import com.dhitoshi.xfrs.huixiaobao.Bean.InfoAddMeetBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.MeetBean;
 import com.dhitoshi.xfrs.huixiaobao.Dialog.LoadingDialog;
 import com.dhitoshi.xfrs.huixiaobao.Event.MeetingEvent;
+import com.dhitoshi.xfrs.huixiaobao.Event.QueryResultEvent;
 import com.dhitoshi.xfrs.huixiaobao.Interface.AddMeetingManage;
 import com.dhitoshi.xfrs.huixiaobao.Interface.DateCallBack;
 import com.dhitoshi.xfrs.huixiaobao.Interface.ItemClick;
@@ -62,7 +63,7 @@ public class AddMeeting extends BaseView implements AddMeetingManage.View {
     private List<BaseBean> usertypes;
     private List<BaseBean> types;
     private ArrayList<BaseBean> salesmen;
-
+    private int from=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,6 +74,7 @@ public class AddMeeting extends BaseView implements AddMeetingManage.View {
     private void initViews() {
         initBaseViews();
         userId = getIntent().getIntExtra("id", 0);
+        from = getIntent().getIntExtra("type", 0);
         meetBean = getIntent().getParcelableExtra("meet");
         setTitle(meetBean == null ? "新增会议记录" : "编辑会议记录");
         if (null != meetBean) {
@@ -230,7 +232,12 @@ public class AddMeeting extends BaseView implements AddMeetingManage.View {
     @Override
     public void editMeeting(String result) {
         Toast.makeText(this, result, Toast.LENGTH_SHORT).show();
-        EventBus.getDefault().post(new MeetingEvent(1));
+        if(from==1){
+            EventBus.getDefault().post(new QueryResultEvent(1));
+        }else {
+            EventBus.getDefault().post(new MeetingEvent(1));
+        }
+
         finish();
     }
     @Override

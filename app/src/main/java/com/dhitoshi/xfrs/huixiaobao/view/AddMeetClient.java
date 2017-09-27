@@ -4,11 +4,15 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.dhitoshi.xfrs.huixiaobao.Dialog.LoadingDialog;
+import com.dhitoshi.xfrs.huixiaobao.Event.GiftEvent;
+import com.dhitoshi.xfrs.huixiaobao.Event.MeetClientEvent;
 import com.dhitoshi.xfrs.huixiaobao.Interface.AddMeetingClientManage;
 import com.dhitoshi.xfrs.huixiaobao.R;
 import com.dhitoshi.xfrs.huixiaobao.model.AddMeetingClientModel;
 import com.dhitoshi.xfrs.huixiaobao.presenter.AddMeetingClientPresenter;
 import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -41,7 +45,7 @@ public class AddMeetClient extends BaseView implements AddMeetingClientManage.Vi
         initBaseViews();
         setRightText("提交");
         addMeetingClientPresenter=new AddMeetingClientPresenter(this,this);
-        meetingid=String.valueOf(getIntent().getIntExtra("id",0));
+        meetingid=getIntent().getStringExtra("id");
     }
     @OnClick(R.id.right_text)
     public void onViewClicked() {
@@ -75,6 +79,9 @@ public class AddMeetClient extends BaseView implements AddMeetingClientManage.Vi
     }
     @Override
     public void addCustomer(String result) {
+        Toast.makeText(this,result,Toast.LENGTH_SHORT).show();
+        EventBus.getDefault().post(new MeetClientEvent(1));
+        finish();
 
     }
 }

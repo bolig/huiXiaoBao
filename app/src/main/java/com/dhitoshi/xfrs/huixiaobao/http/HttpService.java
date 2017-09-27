@@ -21,10 +21,12 @@ import com.dhitoshi.xfrs.huixiaobao.Bean.InfoAddVisitBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.InfoQuery;
 import com.dhitoshi.xfrs.huixiaobao.Bean.KidBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.MeetBean;
+import com.dhitoshi.xfrs.huixiaobao.Bean.MeetClientBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.MoreMeetInfoBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.OwnMeetBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.PageBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.ProductBean;
+import com.dhitoshi.xfrs.huixiaobao.Bean.QueryResultBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.RelationBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.RemindBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.ResourceBean;
@@ -144,29 +146,29 @@ public interface HttpService {
     @GET("MeetingType/listForPast")
     Observable<HttpBean<PageBean<ApplyMeetBean>>> getMeetForPast(@Query("token") String token,@Query("page") String page);
     //参会客户列表
-//    @GET("Meeting/customerList")
-//    Observable<>
+    @GET("Meeting/customerList")
+    Observable<HttpBean<PageBean<MeetClientBean>>> getCustomerList(@QueryMap Map<String,String> map);
     //获取会议详情
     @GET("MeetingType/articleBody")
     Observable<HttpBean<MoreMeetInfoBean>> getArticleBody(@Query("token") String token,@Query("aid") String aid, @Query("id") String id);
     //高级查询（基本信息）
     @GET("customer/searchA")
-    Observable<HttpBean<PageBean<ClientBean>>> getSearchOne(@QueryMap Map<String,String> map);
+    Observable<HttpBean<PageBean<QueryResultBean<ClientBean>>>> getSearchOne(@QueryMap Map<String,String> map);
     //高级查询（消费记录）
     @GET("customer/searchA")
-    Observable<HttpBean<PageBean<SpendBean>>> getSearchTwo(@QueryMap Map<String,String> map);
+    Observable<HttpBean<PageBean<QueryResultBean<SpendBean>>>> getSearchTwo(@QueryMap Map<String,String> map);
     //高级查询（回访记录）
     @GET("customer/searchA")
-    Observable<HttpBean<PageBean<VisitBean>>> getSearchThree(@QueryMap Map<String,String> map);
+    Observable<HttpBean<PageBean<QueryResultBean<VisitBean>>>> getSearchThree(@QueryMap Map<String,String> map);
     //高级查询（社会关系）
     @GET("customer/searchA")
-    Observable<HttpBean<PageBean<RelationBean>>> getSearchFour(@QueryMap Map<String,String> map);
+    Observable<HttpBean<PageBean<QueryResultBean<RelationBean>>>> getSearchFour(@QueryMap Map<String,String> map);
     //高级查询（赠品记录）
     @GET("customer/searchA")
-    Observable<HttpBean<PageBean<GiftBean>>> getSearchFive(@QueryMap Map<String,String> map);
+    Observable<HttpBean<PageBean<QueryResultBean<GiftBean>>>> getSearchFive(@QueryMap Map<String,String> map);
     //高级查询（参会记录）
     @GET("customer/searchA")
-    Observable<HttpBean<PageBean<MeetBean>>> getSearchSix(@QueryMap Map<String,String> map);
+    Observable<HttpBean<PageBean<QueryResultBean<MeetBean>>>> getSearchSix(@QueryMap Map<String,String> map);
     //高级查询所需列表
     @GET("customer/listForSearch")
     Observable<HttpBean<InfoQuery>> getListForSearch(@Query("token") String token);
@@ -258,5 +260,5 @@ public interface HttpService {
     Observable<Object> eidtHead(@Query("token") String token,@Query("id") String id);
     //添加参会客户
     @POST("Meeting/addCustomer")
-    Observable<Object> addCustomer(@QueryMap Map<String,String> map);
+    Observable<HttpBean<Object>> addCustomer(@QueryMap Map<String,String> map);
 }

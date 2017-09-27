@@ -13,6 +13,7 @@ import com.dhitoshi.xfrs.huixiaobao.Bean.PositionBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.RelationBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.SexBean;
 import com.dhitoshi.xfrs.huixiaobao.Dialog.LoadingDialog;
+import com.dhitoshi.xfrs.huixiaobao.Event.QueryResultEvent;
 import com.dhitoshi.xfrs.huixiaobao.Event.RelationEvent;
 import com.dhitoshi.xfrs.huixiaobao.Event.SpendEvent;
 import com.dhitoshi.xfrs.huixiaobao.Interface.AddRelationManage;
@@ -70,6 +71,7 @@ public class AddRelation extends BaseView implements AddRelationManage.View{
     private List<BaseBean> positions;
     private RelationBean relationBean;
     private AddRelationPresenter addRelationPresenter;
+    private int type=1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,6 +82,7 @@ public class AddRelation extends BaseView implements AddRelationManage.View{
     private void initViews() {
         initBaseViews();
         userId=getIntent().getIntExtra("id",0);
+        type=getIntent().getIntExtra("type",0);
         relationBean=getIntent().getParcelableExtra("relation");
         setTitle(relation==null?"新增关系记录":"编辑关系记录");
         if(null!=relationBean){
@@ -281,7 +284,12 @@ public class AddRelation extends BaseView implements AddRelationManage.View{
     @Override
     public void editRelation(String result) {
         Toast.makeText(this,result,Toast.LENGTH_SHORT).show();
-        EventBus.getDefault().post(new RelationEvent(1));
+        if(type==1){
+            EventBus.getDefault().post(new QueryResultEvent(1));
+        }else{
+            EventBus.getDefault().post(new RelationEvent(1));
+        }
+
         finish();
     }
     @Override

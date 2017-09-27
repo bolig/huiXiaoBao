@@ -16,7 +16,7 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        final String APP_KEY = "23015524";
+        final String APP_KEY = "24607089";
         SysUtil.setApplication(this);
         if(SysUtil.isTCMSServiceProcess(this)){
             return;

@@ -126,7 +126,7 @@ public class Apply extends BaseView implements ApplyMeetingManage.View{
     public void applyMeeting(String result) {
         Toast.makeText(this,result,Toast.LENGTH_SHORT).show();
         ActivityManager.destoryActivity("ApplyMeeting");
-        ActivityManager.destoryActivity("ApplyMeeting");
+        ActivityManager.destoryActivity("ApplyMeetingInfo");
         finish();
 
     }

@@ -11,6 +11,7 @@ import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.InfoAddVisitBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.VisitBean;
 import com.dhitoshi.xfrs.huixiaobao.Dialog.LoadingDialog;
+import com.dhitoshi.xfrs.huixiaobao.Event.QueryResultEvent;
 import com.dhitoshi.xfrs.huixiaobao.Event.VisitEvent;
 import com.dhitoshi.xfrs.huixiaobao.Interface.AddVisitManage;
 import com.dhitoshi.xfrs.huixiaobao.Interface.DateCallBack;
@@ -58,6 +59,7 @@ public class AddVisit extends BaseView implements AddVisitManage.View{
     private ArrayList<BaseBean> feedmen;
     private List<BaseBean> feedtypes;
     private AddVisitPresenter addVisitPresenter;
+    private int type=1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +70,7 @@ public class AddVisit extends BaseView implements AddVisitManage.View{
     private void initViews() {
         initBaseViews();
         userId=getIntent().getIntExtra("id",0);
+        type=getIntent().getIntExtra("type",0);
         visitBean=getIntent().getParcelableExtra("visit");
         setTitle(visitBean==null?"新增回访记录":"编辑回访记录");
         if(visitBean!=null){
@@ -225,7 +228,11 @@ public class AddVisit extends BaseView implements AddVisitManage.View{
     @Override
     public void editVisit(String result) {
         Toast.makeText(this,result,Toast.LENGTH_SHORT).show();
-        EventBus.getDefault().post(new VisitEvent(1));
+        if(type==1){
+            EventBus.getDefault().post(new QueryResultEvent(1));
+        }else{
+            EventBus.getDefault().post(new VisitEvent(1));
+        }
         finish();
     }
     @Override

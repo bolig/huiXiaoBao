@@ -14,6 +14,7 @@ import com.dhitoshi.xfrs.huixiaobao.Bean.ProductBean;
 import com.dhitoshi.xfrs.huixiaobao.Dialog.LoadingDialog;
 import com.dhitoshi.xfrs.huixiaobao.Event.GiftEvent;
 import com.dhitoshi.xfrs.huixiaobao.Event.MeetingEvent;
+import com.dhitoshi.xfrs.huixiaobao.Event.QueryResultEvent;
 import com.dhitoshi.xfrs.huixiaobao.Interface.AddGiftManage;
 import com.dhitoshi.xfrs.huixiaobao.Interface.DateCallBack;
 import com.dhitoshi.xfrs.huixiaobao.Interface.ItemClick;
@@ -55,6 +56,7 @@ public class AddGift extends BaseView implements AddGiftManage.View{
     private List<BaseBean> addresses;
     private ArrayList<BaseBean> salesmen;
     private AddGiftPresenter addGiftPresenter;
+    private int type=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +67,7 @@ public class AddGift extends BaseView implements AddGiftManage.View{
     private void initViews() {
         initBaseViews();
         userId=getIntent().getIntExtra("id",0);
+        type=getIntent().getIntExtra("type",0);
         giftBean=getIntent().getParcelableExtra("gift");
         setTitle(null==giftBean?"新增赠品记录":"编辑赠品记录");
         if(null!=giftBean){
@@ -202,7 +205,11 @@ public class AddGift extends BaseView implements AddGiftManage.View{
     @Override
     public void editGift(String result) {
         Toast.makeText(this,result,Toast.LENGTH_SHORT).show();
-        EventBus.getDefault().post(new GiftEvent(1));
+        if(type==1){
+            EventBus.getDefault().post(new QueryResultEvent(1));
+        }else{
+            EventBus.getDefault().post(new GiftEvent(1));
+        }
         finish();
     }
     @Override

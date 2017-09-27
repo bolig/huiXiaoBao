@@ -1,5 +1,4 @@
 package com.dhitoshi.xfrs.huixiaobao.view;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -44,7 +43,6 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
 public class Query extends BaseView implements QueryManage.View{
     @BindView(R.id.query_result)
     TextView queryResult;
@@ -100,8 +98,8 @@ public class Query extends BaseView implements QueryManage.View{
     private String company="";
     private String vip_id="";
     private String workPosition="";
-    private String salemanid;
-    private String itemid;
+    private String salemanid="";
+    private String itemid="";
     private String buyaddress="";
     private String totalnum_st="";
     private String totalnum_end="";
@@ -368,8 +366,6 @@ public class Query extends BaseView implements QueryManage.View{
             if(map==null){ map=new HashMap<>();}
             map.put("token",SharedPreferencesUtil.Obtain(this,"token","").toString());
             map.put("type",type);
-            LoadingDialog dialog = LoadingDialog.build(this).setLoadingTitle("提交中");
-            dialog.show();
             if(type.equals("2")){
                 map.put("salemanid",salemanid);
                 map.put("itemid",itemid);
@@ -403,6 +399,7 @@ public class Query extends BaseView implements QueryManage.View{
         bundle.putString("type",type);
         bundle.putParcelable("map",tmpmap);
         startActivity(new Intent(this,QueryResult.class).putExtra("bundle",bundle));
+        finish();
     }
     private boolean juge() {
        if(type.equals("2")){

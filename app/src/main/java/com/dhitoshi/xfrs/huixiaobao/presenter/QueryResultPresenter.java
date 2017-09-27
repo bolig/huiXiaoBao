@@ -8,6 +8,7 @@ import com.dhitoshi.xfrs.huixiaobao.Bean.GiftBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.MeetBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.PageBean;
+import com.dhitoshi.xfrs.huixiaobao.Bean.QueryResultBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.RelationBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.SpendBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.VisitBean;
@@ -31,9 +32,9 @@ public class QueryResultPresenter implements QueryResultManage.Presenter{
     }
     @Override
     public void getSearchOne(Map<String, String> map, SmartRefreshLayout smartRefreshLayout) {
-        model.getSearchOne(map, smartRefreshLayout, new Callback<HttpBean<PageBean<ClientBean>>>() {
+        model.getSearchOne(map, smartRefreshLayout, new Callback<HttpBean<PageBean<QueryResultBean<ClientBean>>>>() {
             @Override
-            public void get(HttpBean<PageBean<ClientBean>> httpBean) {
+            public void get(HttpBean<PageBean<QueryResultBean<ClientBean>>> httpBean) {
                 view.getSearchOne(httpBean);
             }
         });
@@ -41,9 +42,9 @@ public class QueryResultPresenter implements QueryResultManage.Presenter{
 
     @Override
     public void getSearchTwo(Map<String, String> map,SmartRefreshLayout smartRefreshLayout) {
-        model.getSearchTwo(map, smartRefreshLayout, new Callback<HttpBean<PageBean<SpendBean>>>() {
+        model.getSearchTwo(map, smartRefreshLayout, new Callback<HttpBean<PageBean<QueryResultBean<SpendBean>>>>() {
             @Override
-            public void get(HttpBean<PageBean<SpendBean>> httpBean) {
+            public void get(HttpBean<PageBean<QueryResultBean<SpendBean>>> httpBean) {
                 view.getSearchTwo(httpBean);
             }
         });
@@ -51,9 +52,9 @@ public class QueryResultPresenter implements QueryResultManage.Presenter{
 
     @Override
     public void getSearchThree(Map<String, String> map,SmartRefreshLayout smartRefreshLayout) {
-        model.getSearchThree(map, smartRefreshLayout, new Callback<HttpBean<PageBean<VisitBean>>>() {
+        model.getSearchThree(map, smartRefreshLayout, new Callback<HttpBean<PageBean<QueryResultBean<VisitBean>>>>() {
             @Override
-            public void get(HttpBean<PageBean<VisitBean>> httpBean) {
+            public void get(HttpBean<PageBean<QueryResultBean<VisitBean>>> httpBean) {
                 view.getSearchThree(httpBean);
             }
         });
@@ -61,9 +62,9 @@ public class QueryResultPresenter implements QueryResultManage.Presenter{
 
     @Override
     public void getSearchFour(Map<String, String> map, SmartRefreshLayout smartRefreshLayout) {
-        model.getSearchFour(map, smartRefreshLayout, new Callback<HttpBean<PageBean<RelationBean>>>() {
+        model.getSearchFour(map, smartRefreshLayout, new Callback<HttpBean<PageBean<QueryResultBean<RelationBean>>>>() {
             @Override
-            public void get(HttpBean<PageBean<RelationBean>> httpBean) {
+            public void get(HttpBean<PageBean<QueryResultBean<RelationBean>>> httpBean) {
                 view.getSearchFour(httpBean);
             }
         });
@@ -71,9 +72,9 @@ public class QueryResultPresenter implements QueryResultManage.Presenter{
 
     @Override
     public void getSearchFive(Map<String, String> map, SmartRefreshLayout smartRefreshLayout) {
-        model.getSearchFive(map, smartRefreshLayout, new Callback<HttpBean<PageBean<GiftBean>>>() {
+        model.getSearchFive(map, smartRefreshLayout, new Callback<HttpBean<PageBean<QueryResultBean<GiftBean>>>>() {
             @Override
-            public void get(HttpBean<PageBean<GiftBean>> httpBean) {
+            public void get(HttpBean<PageBean<QueryResultBean<GiftBean>>> httpBean) {
                 view.getSearchFive(httpBean);
             }
         });
@@ -81,9 +82,9 @@ public class QueryResultPresenter implements QueryResultManage.Presenter{
 
     @Override
     public void getSearchSix(Map<String, String> map, SmartRefreshLayout smartRefreshLayout) {
-        model.getSearchSix(map, smartRefreshLayout, new Callback<HttpBean<PageBean<MeetBean>>>() {
+        model.getSearchSix(map, smartRefreshLayout, new Callback<HttpBean<PageBean<QueryResultBean<MeetBean>>>>() {
             @Override
-            public void get(HttpBean<PageBean<MeetBean>> httpBean) {
+            public void get(HttpBean<PageBean<QueryResultBean<MeetBean>>> httpBean) {
                 view.getSearchSix(httpBean);
             }
         });

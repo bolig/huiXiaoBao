@@ -17,6 +17,7 @@ import com.dhitoshi.xfrs.huixiaobao.Bean.SaleaddressBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.SalesmanBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.SpendBean;
 import com.dhitoshi.xfrs.huixiaobao.Dialog.LoadingDialog;
+import com.dhitoshi.xfrs.huixiaobao.Event.QueryResultEvent;
 import com.dhitoshi.xfrs.huixiaobao.Event.SpendEvent;
 import com.dhitoshi.xfrs.huixiaobao.Interface.AddSpendManage;
 import com.dhitoshi.xfrs.huixiaobao.Interface.DateCallBack;
@@ -79,6 +80,7 @@ public class AddSpend extends BaseView implements AddSpendManage.View{
     private List<BaseBean> saleaddress;
     private ArrayList<BaseBean> salesman;
     private int userId;
+    private int type=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,6 +91,7 @@ public class AddSpend extends BaseView implements AddSpendManage.View{
     private void initViews() {
         initBaseViews();
         userId=getIntent().getIntExtra("id",0);
+        type=getIntent().getIntExtra("type",0);
         spendBean = getIntent().getParcelableExtra("spend");
         setTitle(null == spendBean ? "新增消费记录" : "编辑消费记录");
         if (null != spendBean) {
@@ -273,7 +276,11 @@ public class AddSpend extends BaseView implements AddSpendManage.View{
     @Override
     public void editSpend(String result) {
         Toast.makeText(this,result, Toast.LENGTH_SHORT).show();
-        EventBus.getDefault().post(new SpendEvent(1));
+        if(type==1){
+            EventBus.getDefault().post(new SpendEvent(1));
+        }else{
+            EventBus.getDefault().post(new QueryResultEvent(1));
+        }
         finish();
     }
     //获得添加消费所需列表
@@ -310,7 +317,6 @@ public class AddSpend extends BaseView implements AddSpendManage.View{
                     spendProduct.setTextColor(getResources().getColor(R.color.colorPrimary));
                     break;
                 case 4:
-
                     saleManId=data.getStringExtra("id");
                     spendSaleMan.setText(data.getStringExtra("name"));
                     spendSaleMan.setTextColor(getResources().getColor(R.color.colorPrimary));
