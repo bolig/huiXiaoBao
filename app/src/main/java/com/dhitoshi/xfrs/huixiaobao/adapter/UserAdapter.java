@@ -34,5 +34,6 @@ public class UserAdapter extends BaseAdapter<UserBean> {
                     context.startActivity(phoneIntent);
                 }
             });
+        holder.setImageResource(R.id.client_head,item.getHead());
     }
 }

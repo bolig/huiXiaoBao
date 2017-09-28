@@ -16,7 +16,7 @@ public class LoginUtil {
     public static void autoLogin(final Context context, final LoginCall call){
         final MyHttp http=new MyHttp();
         Map<String, String> map = new HashMap<>();
-        map.put("name", SharedPreferencesUtil.Obtain(context,"name","").toString());
+        map.put("name", SharedPreferencesUtil.Obtain(context,"account","").toString());
         map.put("password", SharedPreferencesUtil.Obtain(context,"password","").toString());
         http.send(http.getHttpService().login(map),new CommonObserver(new HttpResult<HttpBean<UserBean>>() {
             @Override

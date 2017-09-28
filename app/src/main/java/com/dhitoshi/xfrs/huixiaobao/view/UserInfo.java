@@ -2,6 +2,8 @@ package com.dhitoshi.xfrs.huixiaobao.view;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
+
 import com.bumptech.glide.Glide;
 import com.dhitoshi.xfrs.huixiaobao.Dialog.HeadPopup;
 import com.dhitoshi.xfrs.huixiaobao.R;
@@ -19,7 +21,7 @@ public class UserInfo extends BaseView {
     @BindView(R.id.user_email)
     EditText userEmail;
     @BindView(R.id.user_head)
-    CircleImageView userHead;
+    ImageView userHead;
     private HeadPopup headPopup;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +38,7 @@ public class UserInfo extends BaseView {
         userName.setText(SharedPreferencesUtil.Obtain(this, "truename", "").toString());
         userPhone.setText(SharedPreferencesUtil.Obtain(this, "phone", "").toString());
         userEmail.setText(SharedPreferencesUtil.Obtain(this, "email", "").toString());
-        Glide.with(this).load(SharedPreferencesUtil.Obtain(this, "head", "").toString()).placeholder(R.mipmap.head).error(R.mipmap.head).into(userHead);
+        loadHead(SharedPreferencesUtil.Obtain(this, "head", "").toString(),userHead);
     }
     @OnClick({R.id.right_text, R.id.update_head})
     public void onViewClicked(View view) {

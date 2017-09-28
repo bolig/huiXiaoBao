@@ -9,8 +9,13 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 import com.dhitoshi.xfrs.huixiaobao.R;
+import com.dhitoshi.xfrs.huixiaobao.common.GlideCircleTransform;
+import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
 import com.dhitoshi.xfrs.huixiaobao.utils.SystemBarTintManager;
 
 /**
@@ -69,6 +74,9 @@ public class BaseView extends AppCompatActivity implements View.OnTouchListener{
         rightIcon.setImageResource(resourceId);
 
         rightIcon.setColorFilter(getResources().getColor(android.R.color.white));
+    }
+    public void loadHead(String url, ImageView view){
+        Glide.with(this).load(url).placeholder(R.mipmap.head).error(R.mipmap.head).transform(new GlideCircleTransform(this)).into(view);
     }
     public void setStatusTint(int resId) {
         // 创建状态栏的管理实例

@@ -118,7 +118,6 @@ public class Visit extends BaseFragment implements VisitManage.View {
         } else {
             smartRefreshLayout.setEnableLoadmore(false);
         }
-        smartRefreshLayout.setVisibility(size==0?View.GONE:View.VISIBLE);
         empty.setVisibility(size==0?View.VISIBLE:View.GONE);
         if (adapter == null) {
             adapter = new VisitAdapter(visits, getContext());

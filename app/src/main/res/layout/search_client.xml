@@ -42,4 +42,5 @@
             />
     </LinearLayout>
     <include layout="@layout/base_recyclerview"></include>
+    <include layout="@layout/error"></include>
 </LinearLayout>

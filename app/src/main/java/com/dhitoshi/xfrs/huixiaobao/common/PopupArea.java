@@ -9,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.PopupWindow;
+import android.widget.TextView;
+
 import com.dhitoshi.xfrs.huixiaobao.Bean.AreaBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.KidBean;
 import com.dhitoshi.xfrs.huixiaobao.Interface.AreaCallback;
@@ -33,6 +35,9 @@ public class PopupArea {
     private KidAdapter kidAdapter;
     private List<KidBean> kidBeens;
     private AreaCallback areaCallback;
+    private TextView ok;
+    private String id;
+    private String name;
     public PopupArea(Context context, View view) {
         this.parent = view;
         this.context=context;
@@ -44,6 +49,7 @@ public class PopupArea {
     public PopupArea init(List<AreaBean> areas){
         LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = layoutInflater.inflate(R.layout.screen_area, null);
+        ok=(TextView) view.findViewById(R.id.ok);
         one=(RecyclerView) view.findViewById(R.id.screen_one);
         two=(RecyclerView) view.findViewById(R.id.screen_two);
         one.addItemDecoration(new MyDecoration(context, LinearLayoutManager.HORIZONTAL, R.drawable.divider_line));
@@ -70,6 +76,13 @@ public class PopupArea {
                 popupWindow.dismiss();
             }
         });
+        ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                areaCallback.getArea(id,name);
+                popupWindow.dismiss();
+            }
+        });
         areaAdapter.addItemClickListener(new ItemClick<AreaBean>() {
             @Override
             public void onItemClick(View view, AreaBean areaBean, int position) {
@@ -78,12 +91,8 @@ public class PopupArea {
                 kidBeens.removeAll(kidBeens);
                 kidBeens.addAll(areaBean.getKid());
                 kidAdapter.notifyDataSetChanged();
-                if(kidBeens.size()>0){
-
-                }else{
-                    areaCallback.getArea(String.valueOf(areaBean.getId()),areaBean.getName());
-                    popupWindow.dismiss();
-                }
+                id=String.valueOf(areaBean.getId());
+                name=areaBean.getName();
             }
         });
         kidAdapter.addItemClickListener(new ItemClick<KidBean>() {

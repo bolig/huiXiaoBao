@@ -118,7 +118,6 @@ public class Relation extends BaseFragment implements RelationManage.View {
         } else {
             smartRefreshLayout.setEnableLoadmore(false);
         }
-        smartRefreshLayout.setVisibility(size==0?View.GONE:View.VISIBLE);
         empty.setVisibility(size==0?View.VISIBLE:View.GONE);
         if (null == adapter) {
             adapter = new RelationAdapter(relations, getContext());

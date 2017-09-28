@@ -106,7 +106,6 @@ public class OnGoing extends BaseFragment implements OnGoingManage.View {
         } else {
             smartRefreshLayout.setEnableLoadmore(false);
         }
-        smartRefreshLayout.setVisibility(size==0?View.GONE:View.VISIBLE);
         empty.setVisibility(size==0?View.VISIBLE:View.GONE);
         if (null == adapter) {
             adapter = new ApplyAdapter(applyMeetBeens, getContext());

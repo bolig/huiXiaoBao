@@ -119,7 +119,6 @@ public class Spending extends BaseFragment implements SpendManage.View {
         } else {
             smartRefreshLayout.setEnableLoadmore(false);
         }
-        smartRefreshLayout.setVisibility(size==0?View.GONE:View.VISIBLE);
         empty.setVisibility(size==0?View.VISIBLE:View.GONE);
         if (adapter == null) {
             adapter = new SpendAdapter(spends, getContext());

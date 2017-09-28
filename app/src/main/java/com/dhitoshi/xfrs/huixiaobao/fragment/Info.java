@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide;
 import com.dhitoshi.xfrs.huixiaobao.Bean.ClientBean;
 import com.dhitoshi.xfrs.huixiaobao.Event.InfoEvent;
 import com.dhitoshi.xfrs.huixiaobao.R;
+import com.dhitoshi.xfrs.huixiaobao.common.GlideCircleTransform;
 import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
 
 import org.greenrobot.eventbus.EventBus;
@@ -97,9 +98,9 @@ public class Info extends Fragment {
     }
 
     private void initViews() {
-
         infoName.setText(clientBean.getName());
-        Glide.with(this).load(SharedPreferencesUtil.Obtain(getContext(),"head","").toString()).placeholder(R.mipmap.head).error(R.mipmap.head).into(infoHead);
+        Glide.with(this).load(clientBean.getHead()).placeholder(R.mipmap.head).error(R.mipmap.head)
+                .transform(new GlideCircleTransform(getContext())).into(infoHead);
         infoSex.setText(clientBean.getSex());
         infoBirthday.setText(clientBean.getBirthday());
         infoPhone.setText(clientBean.getPhone());

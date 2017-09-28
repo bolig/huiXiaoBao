@@ -34,6 +34,6 @@ public class QueryClientAdapter extends BaseAdapter<QueryResultBean<ClientBean>>
                     context.startActivity(phoneIntent);
                 }
             });
-           // holder.setText(R.id.client_name,item.getName());
+         holder.setImageResource(R.id.client_head,mList.get(position).getHead());
     }
 }

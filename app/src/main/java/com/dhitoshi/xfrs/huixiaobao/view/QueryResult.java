@@ -244,7 +244,6 @@ public class QueryResult extends BaseView implements QueryResultManage.View {
         } else {
             smartRefreshLayout.setEnableLoadmore(false);
         }
-        smartRefreshLayout.setVisibility(size==0?View.GONE:View.VISIBLE);
         empty.setVisibility(size==0?View.VISIBLE:View.GONE);
         if (spendAdapter == null) {
             spendAdapter = new SpendAdapter(spends, this);
@@ -276,7 +275,6 @@ public class QueryResult extends BaseView implements QueryResultManage.View {
         } else {
             smartRefreshLayout.setEnableLoadmore(false);
         }
-        smartRefreshLayout.setVisibility(size==0?View.GONE:View.VISIBLE);
         empty.setVisibility(size==0?View.VISIBLE:View.GONE);
         if (visitAdapter == null) {
             visitAdapter = new VisitAdapter(visits,this);
@@ -308,7 +306,6 @@ public class QueryResult extends BaseView implements QueryResultManage.View {
         } else {
             smartRefreshLayout.setEnableLoadmore(false);
         }
-        smartRefreshLayout.setVisibility(size==0?View.GONE:View.VISIBLE);
         empty.setVisibility(size==0?View.VISIBLE:View.GONE);
         if (null == relationAdapter) {
             relationAdapter = new RelationAdapter(relations,this);
@@ -336,7 +333,6 @@ public class QueryResult extends BaseView implements QueryResultManage.View {
                 userIds.add(httpBean.getData().getList().get(i).getId());
             }
         }
-        smartRefreshLayout.setVisibility(size==0?View.GONE:View.VISIBLE);
         empty.setVisibility(gifts.size()==0?View.VISIBLE:View.GONE);
         if (size >= 10 && size % 10 == 0) {
             smartRefreshLayout.setEnableLoadmore(true);
@@ -373,7 +369,6 @@ public class QueryResult extends BaseView implements QueryResultManage.View {
         } else {
             smartRefreshLayout.setEnableLoadmore(false);
         }
-        smartRefreshLayout.setVisibility(size==0?View.GONE:View.VISIBLE);
         empty.setVisibility(size==0?View.VISIBLE:View.GONE);
         if (null == meetingAdapter) {
             meetingAdapter = new MeetingAdapter(meets, this);

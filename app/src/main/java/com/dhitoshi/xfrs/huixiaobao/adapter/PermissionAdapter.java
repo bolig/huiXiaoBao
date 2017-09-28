@@ -1,7 +1,10 @@
 package com.dhitoshi.xfrs.huixiaobao.adapter;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.dhitoshi.xfrs.huixiaobao.Bean.UserRole;
 import com.dhitoshi.xfrs.huixiaobao.Interface.DeleteCallback;
@@ -42,7 +45,9 @@ public class PermissionAdapter extends BaseAdapter<UserRole>{
             }
         });
         if(position==mList.size()-1){
-            holder.itemView.setPadding(0,0,0, DensityUtil.dp2px(10));
+            RecyclerView.LayoutParams params= (RecyclerView.LayoutParams) holder.itemView.getLayoutParams();
+            params.setMargins( DensityUtil.dp2px(20), DensityUtil.dp2px(5), DensityUtil.dp2px(20), DensityUtil.dp2px(10));
+            holder.itemView.setLayoutParams(params);
         }
     }
     public void addDeleteCallback(DeleteCallback deleteCallback) {

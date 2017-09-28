@@ -9,9 +9,9 @@ public class ResourceBean {
     private List<ClientBean> customer_today;
     private List<ClientBean> customer_week;
     private List<ClientBean> feedback_today;
-    private List<Object> sale_month;
-    private List<Object> sale_today;
-    private List<Object> sale_week;
+    private List<SpendBean> sale_month;
+    private List<SpendBean> sale_today;
+    private List<SpendBean> sale_week;
     private int customer_month_count;
     private int customer_now_count;
     private int customer_today_count;
@@ -61,27 +61,27 @@ public class ResourceBean {
         this.feedback_today = feedback_today;
     }
 
-    public List<Object> getSale_month() {
+    public List<SpendBean> getSale_month() {
         return sale_month;
     }
 
-    public void setSale_month(List<Object> sale_month) {
+    public void setSale_month(List<SpendBean> sale_month) {
         this.sale_month = sale_month;
     }
 
-    public List<Object> getSale_today() {
+    public List<SpendBean> getSale_today() {
         return sale_today;
     }
 
-    public void setSale_today(List<Object> sale_today) {
+    public void setSale_today(List<SpendBean> sale_today) {
         this.sale_today = sale_today;
     }
 
-    public List<Object> getSale_week() {
+    public List<SpendBean> getSale_week() {
         return sale_week;
     }
 
-    public void setSale_week(List<Object> sale_week) {
+    public void setSale_week(List<SpendBean> sale_week) {
         this.sale_week = sale_week;
     }
 

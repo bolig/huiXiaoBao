@@ -5,7 +5,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:fitsSystemWindows="true"
+    android:background="#efefef"
     >
     <include layout="@layout/toolbar"></include>
-    <include layout="@layout/base_recyclerview"></include>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/sales_recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+    </android.support.v7.widget.RecyclerView>
 </LinearLayout>

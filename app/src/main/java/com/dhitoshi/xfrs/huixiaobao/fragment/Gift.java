@@ -115,7 +115,6 @@ public class Gift extends BaseFragment implements GiftManage.View {
     public void getGiftLists(PageBean<GiftBean> pageBean) {
         gifts.addAll(pageBean.getList());
         int size = gifts.size();
-        smartRefreshLayout.setVisibility(size==0?View.GONE:View.VISIBLE);
         empty.setVisibility(gifts.size()==0?View.VISIBLE:View.GONE);
         if (size >= 10 && size % 10 == 0) {
             smartRefreshLayout.setEnableLoadmore(true);

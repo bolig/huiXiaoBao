@@ -31,7 +31,6 @@
                 android:id="@+id/relation_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="产品名称"
                 android:textSize="14dp"
                 android:textColor="#333333"
                 />
@@ -53,7 +52,6 @@
                 android:id="@+id/relation_relation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="产品名称"
                 android:textSize="14dp"
                 android:textColor="#333333"
                 />
@@ -75,7 +73,6 @@
                 android:id="@+id/relation_phone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="产品名称"
                 android:textSize="14dp"
                 android:textColor="#333333"
                 />
@@ -97,7 +94,6 @@
                 android:id="@+id/relation_email"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="产品名称"
                 android:textSize="14dp"
                 android:textColor="#333333"
                 />

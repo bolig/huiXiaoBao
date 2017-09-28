@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.dhitoshi.xfrs.huixiaobao.R;
+import com.dhitoshi.xfrs.huixiaobao.common.GlideCircleTransform;
 import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
 import com.dhitoshi.xfrs.huixiaobao.view.ApplyMeeting;
 import com.dhitoshi.xfrs.huixiaobao.view.Setting;
@@ -56,7 +57,8 @@ public class Personal extends Fragment {
     private void initViews() {
         title.setText("我的");
         personalName.setText(SharedPreferencesUtil.Obtain(getContext(), "truename", "").toString());
-        Glide.with(this).load(SharedPreferencesUtil.Obtain(getContext(),"head","").toString()).placeholder(R.mipmap.head).error(R.mipmap.head).into(personalHead);
+        Glide.with(this).load(SharedPreferencesUtil.Obtain(getContext(),"head","").toString())
+                .placeholder(R.mipmap.head).error(R.mipmap.head).transform(new GlideCircleTransform(getContext())).into(personalHead);
     }
 
     @Override

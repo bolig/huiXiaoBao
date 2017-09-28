@@ -11,6 +11,7 @@ import com.dhitoshi.refreshlayout.listener.OnRefreshListener;
 import com.dhitoshi.xfrs.huixiaobao.Bean.ClientBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.ResourceBean;
+import com.dhitoshi.xfrs.huixiaobao.Bean.SpendBean;
 import com.dhitoshi.xfrs.huixiaobao.Interface.ResourceManage;
 import com.dhitoshi.xfrs.huixiaobao.R;
 import com.dhitoshi.xfrs.huixiaobao.presenter.ResourcePresenter;
@@ -45,6 +46,9 @@ public class Resource extends BaseView implements ResourceManage.View {
     private ArrayList<ClientBean> customer_today;
     private ArrayList<ClientBean> customer_week;
     private ArrayList<ClientBean> feedback_today;
+    private ArrayList<SpendBean> sale_today;
+    private ArrayList<SpendBean> sale_week;
+    private ArrayList<SpendBean> sale_month;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +61,7 @@ public class Resource extends BaseView implements ResourceManage.View {
         setTitle("我的资源");
         resourcePresenter = new ResourcePresenter(this, this);
         smartRefreshLayout.autoRefresh();
+        smartRefreshLayout.setDisableContentWhenRefresh(true);//是否在刷新的时候禁止列表的操作
         smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
@@ -79,6 +84,9 @@ public class Resource extends BaseView implements ResourceManage.View {
         customer_today= (ArrayList<ClientBean>) httpBean.getData().getCustomer_today();
         customer_week= (ArrayList<ClientBean>) httpBean.getData().getCustomer_week();
         feedback_today= (ArrayList<ClientBean>) httpBean.getData().getFeedback_today();
+        sale_today= (ArrayList<SpendBean>) httpBean.getData().getSale_today();
+        sale_week= (ArrayList<SpendBean>) httpBean.getData().getSale_week();
+        sale_month= (ArrayList<SpendBean>) httpBean.getData().getSale_month();
     }
     @OnClick({R.id.now_client, R.id.today_client, R.id.week_client, R.id.mouth_client, R.id.today_sales,
             R.id.week_sales, R.id.mouth_sales, R.id.visit_client})
@@ -117,10 +125,28 @@ public class Resource extends BaseView implements ResourceManage.View {
                 }
                 break;
             case R.id.today_sales:
+                if(sale_today.size()==0){
+                    Toast.makeText(this,"今天没有销售额",Toast.LENGTH_SHORT).show();
+                }else{
+                    startActivity(new Intent(this,SalesInfo.class).putParcelableArrayListExtra("spends",sale_today)
+                            .putExtra("title","今天没有销售额"));
+                }
                 break;
             case R.id.week_sales:
+                if(sale_week.size()==0){
+                    Toast.makeText(this,"本周没有销售额",Toast.LENGTH_SHORT).show();
+                }else{
+                    startActivity(new Intent(this,SalesInfo.class).putParcelableArrayListExtra("spends",sale_week)
+                            .putExtra("title","本周没有销售额"));
+                }
                 break;
             case R.id.mouth_sales:
+                if(sale_month.size()==0){
+                    Toast.makeText(this,"本月没有销售额",Toast.LENGTH_SHORT).show();
+                }else{
+                    startActivity(new Intent(this,SalesInfo.class).putParcelableArrayListExtra("spends",sale_month)
+                            .putExtra("title","本月没有销售额"));
+                }
                 break;
             case R.id.visit_client:
                 if(feedback_today.size()==0){

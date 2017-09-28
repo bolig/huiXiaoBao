@@ -73,7 +73,6 @@
         <activity android:name=".view.Permission" />
         <activity android:name=".view.Product" />
         <activity android:name=".view.ProductType" />
-        <activity android:name=".view.PersonalClient" />
         <activity android:name=".view.AddProduct" />
         <activity android:name=".view.UserList" />
         <activity android:name=".view.SearchClient" />
@@ -99,7 +98,8 @@
         <activity android:name=".view.EditApplyMeet" />
         <activity android:name=".view.EnterClient" />
         <activity android:name=".view.UserInfo" />
-        <activity android:name=".view.UpdatePassword"></activity>
+        <activity android:name=".view.UpdatePassword" />
+        <activity android:name=".view.SalesInfo"></activity>
     </application>
 
 </manifest>

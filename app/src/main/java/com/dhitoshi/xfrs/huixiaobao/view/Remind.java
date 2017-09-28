@@ -60,6 +60,7 @@ public class Remind extends BaseView implements RemindManage.View {
         setTitle("客户提醒");
         remindPresenter = new RemindPresenter(this, this);
         smartRefreshLayout.autoRefresh();
+        smartRefreshLayout.setDisableContentWhenRefresh(true);//是否在刷新的时候禁止列表的操作
         smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
@@ -68,7 +69,6 @@ public class Remind extends BaseView implements RemindManage.View {
         });
 
     }
-
     @Override
     public void getRemind(HttpBean<RemindBean> httpBean) {
         birthday_today= (ArrayList<ClientBean>) httpBean.getData().getBirthday_today();

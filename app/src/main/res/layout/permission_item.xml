@@ -19,7 +19,7 @@
             android:id="@+id/permission_position"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="市场总监"
+
             android:textSize="15dp"
             android:textColor="#333333"
             />
@@ -27,7 +27,6 @@
             android:id="@+id/permission_area"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="总公司"
             android:textColor="@color/colorPrimary"
             android:layout_alignParentRight="true"
             />
@@ -39,7 +38,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="40dp"
-        android:text="市场总监作为高级管理者，一般不需要查看什么市 场总监作为高级管理者。"
         android:textColor="#666666"
         android:gravity="center_vertical"
         android:textSize="14dp"
