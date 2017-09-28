@@ -56,6 +56,7 @@ public class LoginModel implements LoginManage.Model {
                         }
                     });
                 }else{
+                    dialog.dismiss();
                     Toast.makeText(context,httpBean.getStatus().getMsg(),Toast.LENGTH_SHORT).show();
                 }
             }

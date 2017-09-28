@@ -35,18 +35,17 @@ import com.dhitoshi.xfrs.huixiaobao.Bean.SpendBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.UserBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.UserRole;
 import com.dhitoshi.xfrs.huixiaobao.Bean.VisitBean;
-
 import java.util.List;
 import java.util.Map;
 import io.reactivex.Observable;
 import okhttp3.RequestBody;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.PartMap;
 import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
-
-import static com.dhitoshi.xfrs.huixiaobao.R.mipmap.area;
 
 /**
  * Created by dxs on 2017/5/27.
@@ -176,7 +175,7 @@ public interface HttpService {
 
     //更改密码
     @POST("resetPassword")
-    Observable<Integer> resetPassword(@QueryMap Map<String,String> map);
+    Observable<HttpBean<Object>> resetPassword(@QueryMap Map<String,String> map);
     //登录
     @POST("login")
     Observable<HttpBean<UserBean>> login(@QueryMap Map<String,String> map);
@@ -256,8 +255,9 @@ public interface HttpService {
     @POST("Meeting/add")
     Observable<HttpBean<Object>> applyMeeting(@QueryMap Map<String,String> map);
     //上传头像
+    @Multipart
     @POST("customer/eidtHead")
-    Observable<Object> eidtHead(@Query("token") String token,@Query("id") String id);
+    Observable<Object> eidtHead(@PartMap Map<String, RequestBody> params);
     //添加参会客户
     @POST("Meeting/addCustomer")
     Observable<HttpBean<Object>> addCustomer(@QueryMap Map<String,String> map);

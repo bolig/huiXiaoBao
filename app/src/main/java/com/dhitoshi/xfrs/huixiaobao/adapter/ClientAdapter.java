@@ -30,6 +30,6 @@ public class ClientAdapter extends BaseAdapter<ClientBean> {
                     context.startActivity(phoneIntent);
                 }
             });
-           // holder.setText(R.id.client_name,item.getName());
+           holder.setImageResource(R.id.client_head,item.getHead());
     }
 }

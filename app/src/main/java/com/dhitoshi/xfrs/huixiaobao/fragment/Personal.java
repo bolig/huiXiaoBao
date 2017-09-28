@@ -6,14 +6,15 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.dhitoshi.xfrs.huixiaobao.R;
-import com.dhitoshi.xfrs.huixiaobao.common.CircleImageView;
 import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
 import com.dhitoshi.xfrs.huixiaobao.view.ApplyMeeting;
 import com.dhitoshi.xfrs.huixiaobao.view.Setting;
+import com.dhitoshi.xfrs.huixiaobao.view.UserInfo;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,7 +29,7 @@ public class Personal extends Fragment {
     @BindView(R.id.personal_name)
     TextView personalName;
     @BindView(R.id.personal_head)
-    CircleImageView personalHead;
+    ImageView personalHead;
     private Intent it;
 
     public Personal() {
@@ -64,9 +65,13 @@ public class Personal extends Fragment {
         unbinder.unbind();
     }
 
-    @OnClick({R.id.personal_setting, R.id.personal_share, R.id.personal_meeting, R.id.personal_help})
+    @OnClick({R.id.personal_setting, R.id.personal_share, R.id.personal_meeting, R.id.personal_help,R.id.personal_info})
     public void onViewClicked(View view) {
         switch (view.getId()) {
+            case R.id.personal_info:
+                it = new Intent(getContext(), UserInfo.class);
+                startActivity(it);
+                break;
             case R.id.personal_setting:
                 it = new Intent(getContext(), Setting.class);
                 startActivity(it);

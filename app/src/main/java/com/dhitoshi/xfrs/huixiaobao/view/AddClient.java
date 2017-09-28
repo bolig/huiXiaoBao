@@ -1,14 +1,13 @@
 package com.dhitoshi.xfrs.huixiaobao.view;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.dhitoshi.xfrs.huixiaobao.Bean.AddClientBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.ClientBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.CustomerTypeBean;
@@ -23,29 +22,28 @@ import com.dhitoshi.xfrs.huixiaobao.Dialog.LoadingDialog;
 import com.dhitoshi.xfrs.huixiaobao.Event.ClientEvent;
 import com.dhitoshi.xfrs.huixiaobao.Event.InfoEvent;
 import com.dhitoshi.xfrs.huixiaobao.Interface.AddClientManage;
-import com.dhitoshi.xfrs.huixiaobao.Interface.AreaCallback;
 import com.dhitoshi.xfrs.huixiaobao.Interface.DateCallBack;
 import com.dhitoshi.xfrs.huixiaobao.Interface.ItemClick;
-import com.dhitoshi.xfrs.huixiaobao.Interface.MyDismiss;
 import com.dhitoshi.xfrs.huixiaobao.R;
 import com.dhitoshi.xfrs.huixiaobao.adapter.ClientTypeAdapter;
 import com.dhitoshi.xfrs.huixiaobao.adapter.PositionAdapter;
 import com.dhitoshi.xfrs.huixiaobao.adapter.SexAdapter;
-import com.dhitoshi.xfrs.huixiaobao.common.CircleImageView;
-import com.dhitoshi.xfrs.huixiaobao.common.PopupArea;
 import com.dhitoshi.xfrs.huixiaobao.common.SelectDateDialog;
 import com.dhitoshi.xfrs.huixiaobao.common.SelectDialog;
+import com.dhitoshi.xfrs.huixiaobao.http.MyHttp;
 import com.dhitoshi.xfrs.huixiaobao.presenter.AddClientPresenter;
 import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
-
 import org.greenrobot.eventbus.EventBus;
-
+import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-
+import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 
 public class AddClient extends BaseView implements AddClientManage.View {
     @BindView(R.id.client_name)
@@ -87,7 +85,7 @@ public class AddClient extends BaseView implements AddClientManage.View {
     @BindView(R.id.client_entryMan)
     TextView clientEntryMan;
     @BindView(R.id.client_head)
-    CircleImageView clientHead;
+    ImageView clientHead;
     private String name;
     private String sex = "";
     private String birthday = "";
@@ -122,7 +120,6 @@ public class AddClient extends BaseView implements AddClientManage.View {
         ButterKnife.bind(this);
         initViews();
     }
-
     private void initViews() {
         initBaseViews();
         clientBean = getIntent().getParcelableExtra("info");
@@ -136,7 +133,6 @@ public class AddClient extends BaseView implements AddClientManage.View {
         addClientPresenter = new AddClientPresenter(this, this);
         addClientPresenter.getInfoForAdd(SharedPreferencesUtil.Obtain(this,"token","").toString());
     }
-
     private void initClientInfo() {
         name = clientBean.getName();
         clientName.setText(clientBean.getName());
@@ -185,7 +181,6 @@ public class AddClient extends BaseView implements AddClientManage.View {
         clientIll.setTextColor(getResources().getColor(R.color.colorPrimary));
         clientNotes.setText(clientBean.getNotes());
     }
-
     //添加客户
     @Override
     public void addClient(String result) {
@@ -193,7 +188,6 @@ public class AddClient extends BaseView implements AddClientManage.View {
         EventBus.getDefault().post(new ClientEvent(1));
         finish();
     }
-
     //编辑客户
     @Override
     public void editClient(HttpBean<ClientBean> httpBean) {
@@ -201,7 +195,6 @@ public class AddClient extends BaseView implements AddClientManage.View {
         EventBus.getDefault().post(new InfoEvent(1, httpBean.getData()));
         finish();
     }
-
     //获取添加客户所需列表
     @Override
     public void getInfoForAdd(HttpBean<InfoAddClientBean> httpBean) {
@@ -246,13 +239,11 @@ public class AddClient extends BaseView implements AddClientManage.View {
             }
         }
     }
-
     //查重
     @Override
     public void checkRepeat(String result) {
         Toast.makeText(this, result, Toast.LENGTH_SHORT).show();
     }
-
     //提交
     private void commit() {
         if (juge()) {
@@ -287,7 +278,6 @@ public class AddClient extends BaseView implements AddClientManage.View {
             }
         }
     }
-
     //提交检查
     private boolean juge() {
         name = clientName.getText().toString();
@@ -365,9 +355,8 @@ public class AddClient extends BaseView implements AddClientManage.View {
         }
         return true;
     }
-
-    //上传头像
-    private void uploadHead() {
+    //选择头像
+    private void selectHead(){
         if (null == headPopup) {
             headPopup = HeadPopup.Build(this,clientHead).init();
             headPopup.show();
@@ -379,7 +368,18 @@ public class AddClient extends BaseView implements AddClientManage.View {
             }
         }
     }
-
+    //上传头像
+    private void uploadHead(File file,String id,String token) {
+        MyHttp http=MyHttp.getInstance();
+        Map<String, RequestBody> partMap = new HashMap<>();
+        RequestBody fileBody = RequestBody.create(MediaType.parse("image/*"), file);
+        partMap.put("file\"; filename=\""+file.getName()+"\"", fileBody);
+        RequestBody idBody = RequestBody.create(MediaType.parse("text/plain"), id);
+        partMap.put(id , idBody);
+        RequestBody toknBody = RequestBody.create(MediaType.parse("text/plain"), token);
+        partMap.put(token , toknBody);
+       // http.send();
+    }
     //查重
     private void checkRepeat() {
         phone = clientPhone.getText().toString();
@@ -397,7 +397,6 @@ public class AddClient extends BaseView implements AddClientManage.View {
         }
 
     }
-
     //拨打电话
     private void call() {
         phone = clientPhone.getText().toString();
@@ -408,7 +407,6 @@ public class AddClient extends BaseView implements AddClientManage.View {
         Intent phoneIntent = new Intent("android.intent.action.CALL", Uri.parse("tel:" + phone));
         startActivity(phoneIntent);
     }
-
     @OnClick({R.id.right_text, R.id.client_sex, R.id.client_birthday, R.id.client_head, R.id.checkRepeat,
             R.id.call, R.id.client_hobby, R.id.client_area, R.id.client_position, R.id.client_type, R.id.client_ill})
     public void onViewClicked(View view) {
@@ -423,7 +421,7 @@ public class AddClient extends BaseView implements AddClientManage.View {
                 selectBrithday();
                 break;
             case R.id.client_head:
-                uploadHead();
+                selectHead();
                 break;
             case R.id.checkRepeat:
                 checkRepeat();
@@ -448,7 +446,6 @@ public class AddClient extends BaseView implements AddClientManage.View {
                 break;
         }
     }
-
     //选择出生日期
     private void selectBrithday() {
         SelectDateDialog dialog = new SelectDateDialog(this);
@@ -461,24 +458,20 @@ public class AddClient extends BaseView implements AddClientManage.View {
             }
         }).show();
     }
-
     //选择爱好
     private void selectHobby() {
         startActivityForResult(new Intent(this, Select.class).putParcelableArrayListExtra("list", hobbys)
                 .putExtra("type", 1).putExtra("select", clientHobby.getText().toString()), 1);
     }
-
     //选择地区
     private void selectArea() {
         startActivityForResult(new Intent(this, SelectArea.class), 0);
     }
-
     //选择疾病
     private void selectIll() {
         startActivityForResult(new Intent(this, Select.class).putParcelableArrayListExtra("list", ills)
                 .putExtra("type", 2).putExtra("select", clientIll.getText().toString()), 2);
     }
-
     //选择客户类型
     private void selectType() {
         ClientTypeAdapter adapter = new ClientTypeAdapter(customerTypes, this, clientType.getText().toString());
@@ -494,7 +487,6 @@ public class AddClient extends BaseView implements AddClientManage.View {
             }
         });
     }
-
     //选择职位
     private void selectPosition() {
         PositionAdapter adapter = new PositionAdapter(positions, this, clientPosition.getText().toString());
@@ -510,7 +502,6 @@ public class AddClient extends BaseView implements AddClientManage.View {
             }
         });
     }
-
     //选择性别
     private void selectSex() {
         List<SexBean> sexBeens = new ArrayList<>();
@@ -529,7 +520,6 @@ public class AddClient extends BaseView implements AddClientManage.View {
             }
         });
     }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == 100) {

@@ -85,11 +85,11 @@ public class HeadPopup implements View.OnTouchListener,View.OnClickListener{
         }
         return false;
     }
-
     @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.head_camera:
+
                 break;
             case R.id.head_album:
                 break;

@@ -56,7 +56,7 @@ public class Login extends AppCompatActivity implements LoginManage.View, View.O
             decorView.setSystemUiVisibility(option);
             getWindow().setStatusBarColor(Color.TRANSPARENT);
         }
-        loginName.setText(SharedPreferencesUtil.Obtain(this, "name","").toString());
+        loginName.setText(SharedPreferencesUtil.Obtain(this, "account","").toString());
         loginName.setSelection(loginName.getText().length());
         isRemeber= (boolean) SharedPreferencesUtil.Obtain(this,"isRemeber",true);
         if(isRemeber){
@@ -67,12 +67,15 @@ public class Login extends AppCompatActivity implements LoginManage.View, View.O
 
     @Override
     public void login(UserBean userBean) {
-        SharedPreferencesUtil.Save(this, "name",name);
+        SharedPreferencesUtil.Save(this, "account", name);
+        SharedPreferencesUtil.Save(this, "name",userBean.getName());
         SharedPreferencesUtil.Save(this, "password",password);
         SharedPreferencesUtil.Save(this, "truename", userBean.getTruename());
         SharedPreferencesUtil.Save(this, "id", userBean.getId());
         SharedPreferencesUtil.Save(this, "token", userBean.getToken());
         SharedPreferencesUtil.Save(this, "head", userBean.getHead());
+        SharedPreferencesUtil.Save(this, "phone", userBean.getPhone());
+        SharedPreferencesUtil.Save(this, "email", userBean.getEmail());
         SharedPreferencesUtil.Save(this, "isRemeber",check.isChecked());
         startActivity(new Intent(this, Theme.class));
         finish();

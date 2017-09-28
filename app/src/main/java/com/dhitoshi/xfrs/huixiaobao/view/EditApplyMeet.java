@@ -64,7 +64,8 @@ public class EditApplyMeet extends BaseView {
 
                 break;
             case 2:
-
+                toAttend.setClickable(false);
+                toAttend.setBackgroundColor(Color.parseColor("#efefef"));
                 break;
             case 3:
 

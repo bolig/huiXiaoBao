@@ -97,7 +97,9 @@
         <activity android:name=".view.AddMeetClient" />
         <activity android:name=".view.QueryResult" />
         <activity android:name=".view.EditApplyMeet" />
-        <activity android:name=".view.EnterClient"></activity>
+        <activity android:name=".view.EnterClient" />
+        <activity android:name=".view.UserInfo" />
+        <activity android:name=".view.UpdatePassword"></activity>
     </application>
 
 </manifest>

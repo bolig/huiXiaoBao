@@ -39,7 +39,7 @@ public class BaseRecyclerHolder extends RecyclerView.ViewHolder {
     }
     public void setImageResource(int viewId,String url) {
         ImageView circleImageView=getView(viewId);
-        Glide.with(context).load(url).placeholder(R.mipmap.head).error(R.mipmap.head).into(circleImageView);
+        Glide.with(context).load(url).placeholder(R.mipmap.head).error(R.mipmap.head).transform(new GlideCircleTransform(context)).into(circleImageView);
     }
     public void setImageResource(int viewId,String url,int resId) {
         ImageView circleImageView=getView(viewId);

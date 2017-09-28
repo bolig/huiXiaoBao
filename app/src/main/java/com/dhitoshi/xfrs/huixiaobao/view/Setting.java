@@ -15,16 +15,26 @@ public class Setting extends BaseView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.setting);
         ButterKnife.bind(this);
+        ActivityManager.addDestoryActivity(this,"Setting");
         initViews();
     }
     private void initViews() {
         initBaseViews();
         setTitle("设置");
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ActivityManager.destoryActivity("Setting");
+    }
+
     @OnClick({R.id.safe, R.id.base, R.id.copyright, R.id.exit})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.safe:
+                it=new Intent(this,UpdatePassword.class);
+                startActivity(it);
                 break;
             case R.id.base:
                 it=new Intent(this,BaseSetting.class);
