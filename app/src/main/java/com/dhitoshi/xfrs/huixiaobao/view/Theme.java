@@ -100,11 +100,11 @@ public class Theme extends AppCompatActivity {
 
         return themeFragments;
     }
-    @NeedsPermission({Manifest.permission.CALL_PHONE,Manifest.permission.WRITE_EXTERNAL_STORAGE})
+    @NeedsPermission({Manifest.permission.CALL_PHONE})
     void call(){
 
     }
-    @OnShowRationale({Manifest.permission.CALL_PHONE,Manifest.permission.WRITE_EXTERNAL_STORAGE})
+    @OnShowRationale({Manifest.permission.CALL_PHONE})
     void ShowRationaleFoCall(PermissionRequest request){
         request.proceed();
     }

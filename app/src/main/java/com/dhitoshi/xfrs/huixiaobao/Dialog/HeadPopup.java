@@ -1,9 +1,13 @@
 package com.dhitoshi.xfrs.huixiaobao.Dialog;
-
-import android.animation.Animator;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.support.v4.content.FileProvider;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -11,7 +15,14 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+
+import com.dhitoshi.xfrs.huixiaobao.Interface.HeadClickBack;
 import com.dhitoshi.xfrs.huixiaobao.R;
+
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * Created by dxs on 2017/7/24.
  */
@@ -23,6 +34,8 @@ public class HeadPopup implements View.OnTouchListener,View.OnClickListener{
     private TextView camera;//相机
     private TextView album;//相册
     private TextView cancel;//取消
+
+    private HeadClickBack clickBack;
     public HeadPopup(Context context,View view) {
         this.context = context;
         this.parent=view;
@@ -85,17 +98,24 @@ public class HeadPopup implements View.OnTouchListener,View.OnClickListener{
         }
         return false;
     }
+    public void addHeadClick(HeadClickBack clickBack){
+        this.clickBack=clickBack;
+    }
     @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.head_camera:
-
+                clickBack.click(0);
+                dismisss();
                 break;
             case R.id.head_album:
+                clickBack.click(1);
+                dismisss();
                 break;
             case R.id.head_cancel:
                 dismisss();
                 break;
         }
     }
+
 }
