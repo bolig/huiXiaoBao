@@ -1,4 +1,5 @@
 package com.dhitoshi.xfrs.huixiaobao.view;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -17,6 +18,8 @@ import com.dhitoshi.xfrs.huixiaobao.R;
 import com.dhitoshi.xfrs.huixiaobao.common.GlideCircleTransform;
 import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
 import com.dhitoshi.xfrs.huixiaobao.utils.SystemBarTintManager;
+
+import static java.security.AccessController.getContext;
 
 /**
  * Created by dxs on 2017/9/6.
@@ -62,6 +65,13 @@ public class BaseView extends AppCompatActivity implements View.OnTouchListener{
     //设置title
     public void  setTitle(String s){
         title.setText(s);
+    }
+    //设置title（带图标）
+    public void  setTitleIcon(String s){
+        title.setText(s);
+        Drawable down = getResources().getDrawable(R.drawable.ic_down);
+        down.setBounds(0, 0, down.getMinimumWidth(), down.getMinimumHeight());
+        title.setCompoundDrawables(null,null,down,null);
     }
     //设置右边文字
     public void setRightText(String right){

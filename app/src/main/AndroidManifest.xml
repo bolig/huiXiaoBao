@@ -99,16 +99,19 @@
         <activity android:name=".view.EnterClient" />
         <activity android:name=".view.UserInfo" />
         <activity android:name=".view.UpdatePassword" />
-        <activity android:name=".view.SalesInfo"></activity>
+        <activity android:name=".view.SalesInfo" />
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="com.dhitoshi.hxb.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
-        <meta-data
-            android:name="android.support.FILE_PROVIDER_PATHS"
-            android:resource="@xml/file_paths" />
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
         </provider>
+
+        <activity android:name=".view.AttendMeet"></activity>
     </application>
 
 </manifest>

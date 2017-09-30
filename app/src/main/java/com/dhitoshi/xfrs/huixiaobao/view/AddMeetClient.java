@@ -44,6 +44,7 @@ public class AddMeetClient extends BaseView implements AddMeetingClientManage.Vi
     private void initViews() {
         initBaseViews();
         setRightText("提交");
+        setTitle("添加人员");
         addMeetingClientPresenter=new AddMeetingClientPresenter(this,this);
         meetingid=getIntent().getStringExtra("id");
     }

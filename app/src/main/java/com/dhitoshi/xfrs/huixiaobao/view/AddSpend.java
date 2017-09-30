@@ -179,53 +179,13 @@ public class AddSpend extends BaseView implements AddSpendManage.View{
             Toast.makeText(this," 请选择购买日期",Toast.LENGTH_SHORT).show();
             return false;
         }
-        if(productId.isEmpty()){
-            Toast.makeText(this,"请选择购买产品",Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        if(addressId.isEmpty()){
-            Toast.makeText(this,"请选择购买地点",Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        if(saleManId.isEmpty()){
-            Toast.makeText(this,"请选择销售员",Toast.LENGTH_SHORT).show();
-            return false;
-        }
         price=spendPrice.getText().toString();
-        if(price.isEmpty()){
-            Toast.makeText(this,"请填写单价",Toast.LENGTH_SHORT).show();
-            return false;
-        }
         number=spendNumber.getText().toString();
-        if(number.isEmpty()){
-            Toast.makeText(this,"请填写数量",Toast.LENGTH_SHORT).show();
-            return false;
-        }
         discount=spendDiscount.getText().toString();
-        if(discount.isEmpty()){
-            Toast.makeText(this,"请填写折扣比例",Toast.LENGTH_SHORT).show();
-            return false;
-        }
         receive=spendMoney.getText().toString();
-        if(receive.isEmpty()){
-            Toast.makeText(this,"请填写实收金额",Toast.LENGTH_SHORT).show();
-            return false;
-        }
         debt=spendDebt.getText().toString();
-        if(debt.isEmpty()){
-            Toast.makeText(this,"请填写应收欠款",Toast.LENGTH_SHORT).show();
-            return false;
-        }
         acNumber=spendAcNum.getText().toString();
-        if(acNumber.isEmpty()){
-            Toast.makeText(this,"请填写实发数量",Toast.LENGTH_SHORT).show();
-            return false;
-        }
         waitNumber=spendWaitNum.getText().toString();
-        if(waitNumber.isEmpty()){
-            Toast.makeText(this,"请填写寄存数量",Toast.LENGTH_SHORT).show();
-            return false;
-        }
         return true;
     }
     //选择产品

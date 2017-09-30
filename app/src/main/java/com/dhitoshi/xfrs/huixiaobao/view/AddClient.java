@@ -318,74 +318,21 @@ public class AddClient extends BaseView implements AddClientManage.View {
             Toast.makeText(this, "请输入姓名", Toast.LENGTH_SHORT).show();
             return false;
         }
-        if (sex.isEmpty()) {
-            Toast.makeText(this, "请选择性别", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        if (birthday.isEmpty()) {
-            Toast.makeText(this, "请选择出生日期", Toast.LENGTH_SHORT).show();
-            return false;
-        }
         phone = clientPhone.getText().toString();
         if (phone.isEmpty()) {
             Toast.makeText(this, "请填写手机号码", Toast.LENGTH_SHORT).show();
             return false;
         }
-        if (hobby.isEmpty()) {
-            Toast.makeText(this, "请选择爱好", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        vip = clientVip.getText().toString();
-        if (vip.isEmpty()) {
-            Toast.makeText(this, "请填写会员卡号", Toast.LENGTH_SHORT).show();
-            return false;
-        }
         if (area.isEmpty()) {
-            Toast.makeText(this, "请选择部门", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "请选择所属部门", Toast.LENGTH_SHORT).show();
             return false;
         }
         telPhone = clientTelphone.getText().toString();
-        if (telPhone.isEmpty()) {
-            Toast.makeText(this, "请填写住宅电话", Toast.LENGTH_SHORT).show();
-            return false;
-        }
         email = clientEmail.getText().toString();
-        if (email.isEmpty()) {
-            Toast.makeText(this, "请填写电子邮箱", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        if (workPosition.isEmpty()) {
-            Toast.makeText(this, "请选择职位", Toast.LENGTH_SHORT).show();
-            return false;
-        }
         address = clientAddress.getText().toString();
-        if (address.isEmpty()) {
-            Toast.makeText(this, "请填写通讯地址", Toast.LENGTH_SHORT).show();
-            return false;
-        }
         company = clientCompany.getText().toString();
-        if (company.isEmpty()) {
-            Toast.makeText(this, "请填写工作单位", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        if (type.isEmpty()) {
-            Toast.makeText(this, "请选择客户类型", Toast.LENGTH_SHORT).show();
-            return false;
-        }
         companyPhone = clientCompanyPone.getText().toString();
-        if (companyPhone.isEmpty()) {
-            Toast.makeText(this, "请填写联系电话", Toast.LENGTH_SHORT).show();
-            return false;
-        }
         companyAddress = clientCompanyAddress.getText().toString();
-        if (companyAddress.isEmpty()) {
-            Toast.makeText(this, "请填写单位地址", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        if (ill.isEmpty()) {
-            Toast.makeText(this, "请选择既往病史", Toast.LENGTH_SHORT).show();
-            return false;
-        }
         return true;
     }
     //选择头像

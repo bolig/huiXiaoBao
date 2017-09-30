@@ -186,37 +186,13 @@ public class AddVisit extends BaseView implements AddVisitManage.View{
         }
     }
     private boolean juge() {
-        if(feedman.isEmpty()){
-            Toast.makeText(this,"请选择回访人",Toast.LENGTH_SHORT).show();
-            return false;
-        }
         if(createtime.isEmpty()){
             Toast.makeText(this,"请选择回访时间",Toast.LENGTH_SHORT).show();
             return false;
         }
-        if(nexttime.isEmpty()){
-            Toast.makeText(this,"请选择下次回访时间",Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        if(feedtype.isEmpty()){
-            Toast.makeText(this,"请选择回访类型",Toast.LENGTH_SHORT).show();
-            return false;
-        }
         feedbody=visitContent.getText().toString();
-        if(feedbody.isEmpty()){
-            Toast.makeText(this,"请填写回访内容",Toast.LENGTH_SHORT).show();
-            return false;
-        }
         notes=visitNotes.getText().toString();
-        if(notes.isEmpty()){
-            Toast.makeText(this,"请填写回访备注",Toast.LENGTH_SHORT).show();
-            return false;
-        }
         advice=visitSuggest.getText().toString();
-        if(advice.isEmpty()){
-            Toast.makeText(this,"请填写客户建议",Toast.LENGTH_SHORT).show();
-            return false;
-        }
         return true;
     }
     @Override

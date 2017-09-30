@@ -268,4 +268,7 @@ public interface HttpService {
     //修改个人基本资料
     @POST("user/editBase")
     Observable<HttpBean<UserBean>> editBase(@QueryMap Map<String,String> map);
+    //考勤
+    @POST("Meeting/attend")
+    Observable<HttpBean<Object>> attend(@QueryMap Map<String,String> map);
 }

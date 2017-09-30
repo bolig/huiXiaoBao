@@ -25,16 +25,12 @@ import com.dhitoshi.xfrs.huixiaobao.common.SelectDateDialog;
 import com.dhitoshi.xfrs.huixiaobao.common.SelectDialog;
 import com.dhitoshi.xfrs.huixiaobao.presenter.AddMeetingPresenter;
 import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
-
 import org.greenrobot.eventbus.EventBus;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
 public class AddMeeting extends BaseView implements AddMeetingManage.View {
     @BindView(R.id.meet_date)
     TextView meetDate;
@@ -153,27 +149,7 @@ public class AddMeeting extends BaseView implements AddMeetingManage.View {
         }
     }
     private boolean juge() {
-        if(createtime.isEmpty()){
-            Toast.makeText(this,"请选择会议日期",Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        if(type.isEmpty()){
-            Toast.makeText(this,"请选择会议类型",Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        if(salesman.isEmpty()){
-            Toast.makeText(this,"请选择邀请人",Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        if(usertype.isEmpty()){
-            Toast.makeText(this,"请选择顾客类型",Toast.LENGTH_SHORT).show();
-            return false;
-        }
         body=meetBody.getText().toString();
-        if(body.isEmpty()){
-            Toast.makeText(this,"请填写会议主题",Toast.LENGTH_SHORT).show();
-            return false;
-        }
         return true;
     }
     //选择会议类型

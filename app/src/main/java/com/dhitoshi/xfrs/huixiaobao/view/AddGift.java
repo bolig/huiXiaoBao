@@ -136,27 +136,7 @@ public class AddGift extends BaseView implements AddGiftManage.View{
         }
     }
     private boolean juge() {
-        if(createtime.isEmpty()){
-            Toast.makeText(this,"请选择赠送日期",Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        if(gift.isEmpty()){
-            Toast.makeText(this,"请选择赠送名称",Toast.LENGTH_SHORT).show();
-            return false;
-        }
         num=giftName.getText().toString();
-        if(num.isEmpty()){
-            Toast.makeText(this,"请填写数量",Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        if(saleaddress.isEmpty()){
-            Toast.makeText(this,"请选择赠品地点",Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        if(salesman.isEmpty()){
-            Toast.makeText(this,"请选择经手人",Toast.LENGTH_SHORT).show();
-            return false;
-        }
         return true;
     }
     //选择赠送日期

@@ -236,42 +236,14 @@ public class AddRelation extends BaseView implements AddRelationManage.View{
             Toast.makeText(this,"请填写姓名",Toast.LENGTH_SHORT).show();
             return false;
         }
-        if(sex.isEmpty()){
-            Toast.makeText(this,"请选择性别",Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        if(relation.isEmpty()){
-            Toast.makeText(this,"请选择关系",Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        if(birthday.isEmpty()){
-            Toast.makeText(this,"请选择出生日期",Toast.LENGTH_SHORT).show();
-            return false;
-        }
         phone=relationPhone.getText().toString();
         if(phone.isEmpty()){
             Toast.makeText(this,"请填写手机号码",Toast.LENGTH_SHORT).show();
             return false;
         }
         telephone=relationTelephone.getText().toString();
-        if(telephone.isEmpty()){
-            Toast.makeText(this,"请填写联系电话",Toast.LENGTH_SHORT).show();
-            return false;
-        }
         email=relationEmail.getText().toString();
-        if(email.isEmpty()){
-            Toast.makeText(this,"请填写电子邮箱",Toast.LENGTH_SHORT).show();
-            return false;
-        }
         company=relationCompany.getText().toString();
-        if(company.isEmpty()){
-            Toast.makeText(this,"请填写工作单位",Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        if(workPosition.isEmpty()){
-            Toast.makeText(this,"请选择职位",Toast.LENGTH_SHORT).show();
-            return false;
-        }
         return true;
     }
 

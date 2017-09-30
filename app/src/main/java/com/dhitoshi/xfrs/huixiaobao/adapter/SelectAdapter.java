@@ -33,6 +33,8 @@ public class SelectAdapter extends BaseAdapter<BaseBean> {
         });
         if(selected.equals(mList.get(position).getName())){
             checkBox.setChecked(true);
+        }else {
+            checkBox.setChecked(false);
         }
     }
     public void addCheckBoxClick( CheckBoxClick click){

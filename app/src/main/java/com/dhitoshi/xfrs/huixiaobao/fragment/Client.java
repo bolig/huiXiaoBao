@@ -101,9 +101,9 @@ public class Client extends BaseFragment implements ClientManage.View, View.OnTo
     private int screen_oldPosition = -1;
     private ClientPresenter clientPresenter;
     private int page = 1;
-    private String type = "2";
-    private String area = "2";
-    private String order = "6";
+    private String type = "";
+    private String area = "";
+    private String order = "";
     private List<ClientBean> clients;
     private ClientAdapter adapter;
 
@@ -135,6 +135,7 @@ public class Client extends BaseFragment implements ClientManage.View, View.OnTo
     }
 
     private void initViews() {
+        area=SharedPreferencesUtil.Obtain(getContext(),"areId","").toString();
         clients = new ArrayList<>();
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.addItemDecoration(new MyDecoration(getContext(), LinearLayoutManager.HORIZONTAL, R.drawable.divider_line));
