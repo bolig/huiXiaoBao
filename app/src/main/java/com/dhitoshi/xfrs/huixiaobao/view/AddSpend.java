@@ -33,11 +33,16 @@ import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static com.dhitoshi.xfrs.huixiaobao.R.mipmap.relation;
+
 public class AddSpend extends BaseView implements AddSpendManage.View{
     @BindView(R.id.spend_date)
     TextView spendDate;
@@ -75,12 +80,14 @@ public class AddSpend extends BaseView implements AddSpendManage.View{
     private String debt="";
     private String acNumber="";
     private String waitNumber="";
+    private String notes="";
     private AddSpendPresenter addSpendPresenter;
     private ArrayList<ProductBean> item;
     private List<BaseBean> saleaddress;
     private ArrayList<BaseBean> salesman;
     private int userId;
     private int type=0;
+    private Map<String,String> map;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -149,28 +156,55 @@ public class AddSpend extends BaseView implements AddSpendManage.View{
     }
     private void commit() {
        if(juge()){
-           AddSpendBean bean=new AddSpendBean();
-           bean.setCreatetime(createtime);
-           bean.setItemid(productId);
-           bean.setBuyaddress(addressId);
-           bean.setSalemanid(saleManId);
-           bean.setCost(price);
-           bean.setNumber(number);
-           bean.setDiscount(discount);
-           bean.setAc_receive(receive);
-           bean.setDebt(debt);
-           bean.setAc_num(acNumber);
-           bean.setWait_num(waitNumber);
-           bean.setNotes(spendNotes.getText().toString());
+           if(map==null){
+               map=new HashMap<>();
+           }
+           if(!createtime.isEmpty()){
+               map.put("createtime",createtime);
+           }
+           if(!productId.isEmpty()){
+               map.put("itemid",productId);
+           }
+           if(!addressId.isEmpty()){
+               map.put("buyaddress",addressId);
+           }
+           if(!saleManId.isEmpty()){
+               map.put("salemanid",saleManId);
+           }
+           if(!price.isEmpty()){
+               map.put("cost",price);
+           }
+           if(!number.isEmpty()){
+               map.put("number",number);
+           }
+           if(!discount.isEmpty()){
+               map.put("discount",discount);
+           }
+           if(!receive.isEmpty()){
+               map.put("ac_receive",receive);
+           }
+           if(!debt.isEmpty()){
+               map.put("debt",debt);
+           }
+           if(!acNumber.isEmpty()){
+               map.put("ac_num",acNumber);
+           }
+           if(!waitNumber.isEmpty()){
+               map.put("wait_num",waitNumber);
+           }
+           if(!notes.isEmpty()){
+               map.put("notes",notes);
+           }
            LoadingDialog dialog = LoadingDialog.build(this).setLoadingTitle("提交中");
            dialog.show();
            String token= SharedPreferencesUtil.Obtain(this,"token","").toString();
+           map.put("token",token);
            if(null==spendBean){
-               bean.setUserid(String.valueOf(userId));
-               addSpendPresenter.addSpend(token,bean,dialog);
+               map.put("userid",String.valueOf(userId));
+               addSpendPresenter.addSpend(map,dialog);
            }else{
-               bean.setId(String.valueOf(spendBean.getId()));
-               addSpendPresenter.editSpend(token,bean,dialog);
+               map.put("id",String.valueOf(spendBean.getId()));
+               addSpendPresenter.editSpend(map,dialog);
            }
        }
     }
@@ -186,6 +220,7 @@ public class AddSpend extends BaseView implements AddSpendManage.View{
         debt=spendDebt.getText().toString();
         acNumber=spendAcNum.getText().toString();
         waitNumber=spendWaitNum.getText().toString();
+        notes=spendNotes.getText().toString();
         return true;
     }
     //选择产品

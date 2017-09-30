@@ -31,9 +31,9 @@ public class AddClientModel implements AddClientManage.Model {
     }
 
     @Override
-    public void addClient(String token, final AddClientBean addClientBean, final LoadingDialog dialog, final Callback<HttpBean<ClientBean>> callback) {
+    public void addClient(final Map<String,String> map, final LoadingDialog dialog, final Callback<HttpBean<ClientBean>> callback) {
         MyHttp http=MyHttp.getInstance();
-        http.send(http.getHttpService().addClient(token,addClientBean),new CommonObserver(new HttpResult<HttpBean<ClientBean>>() {
+        http.send(http.getHttpService().addClient(map),new CommonObserver(new HttpResult<HttpBean<ClientBean>>() {
 
             @Override
             public void OnSuccess(HttpBean<ClientBean> httpBean) {
@@ -44,7 +44,8 @@ public class AddClientModel implements AddClientManage.Model {
                     LoginUtil.autoLogin(context, new LoginCall() {
                         @Override
                         public void autoLogin(String token) {
-                           addClient(token,addClientBean,dialog,callback);
+                            map.put("token",token);
+                           addClient(map,dialog,callback);
                         }
                     });
                 }
@@ -62,9 +63,9 @@ public class AddClientModel implements AddClientManage.Model {
     }
 
     @Override
-    public void editClient(String token, final AddClientBean addClientBean, final LoadingDialog dialog, final Callback<HttpBean<ClientBean>> callback) {
+    public void editClient(final Map<String,String> map, final LoadingDialog dialog, final Callback<HttpBean<ClientBean>> callback) {
         MyHttp http=MyHttp.getInstance();
-        http.send(http.getHttpService().editClient(token,addClientBean),new CommonObserver(new HttpResult<HttpBean<ClientBean>>() {
+        http.send(http.getHttpService().editClient(map),new CommonObserver(new HttpResult<HttpBean<ClientBean>>() {
 
             @Override
             public void OnSuccess(HttpBean<ClientBean> httpBean) {
@@ -75,7 +76,7 @@ public class AddClientModel implements AddClientManage.Model {
                     LoginUtil.autoLogin(context, new LoginCall() {
                         @Override
                         public void autoLogin(String token) {
-                            editClient(token,addClientBean,dialog,callback);
+                            editClient(map,dialog,callback);
                         }
                     });
                 }

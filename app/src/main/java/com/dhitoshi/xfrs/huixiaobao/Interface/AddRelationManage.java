@@ -6,6 +6,8 @@ import com.dhitoshi.xfrs.huixiaobao.Bean.InfoAddSpendBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.RelationBean;
 import com.dhitoshi.xfrs.huixiaobao.Dialog.LoadingDialog;
 
+import java.util.Map;
+
 import retrofit2.http.Body;
 
 /**
@@ -19,13 +21,13 @@ public interface AddRelationManage {
         void  getListForRelation(HttpBean<InfoAddRelationBean> httpBean);
     }
     interface Model{
-        void addRelation(String token,AddRelationBean addRelationBean, LoadingDialog dialog, Callback<HttpBean<RelationBean>> callback);
+        void addRelation(Map<String,String> map, LoadingDialog dialog, Callback<HttpBean<RelationBean>> callback);
         void getListForRelation(String token,Callback<HttpBean<InfoAddRelationBean>> callback);
-        void editRelation(String token,AddRelationBean addRelationBean, LoadingDialog dialog,Callback<HttpBean<RelationBean>> callback);
+        void editRelation(Map<String,String> map, LoadingDialog dialog,Callback<HttpBean<RelationBean>> callback);
     }
     interface Presenter{
-        void addRelation(String token,AddRelationBean addRelationBean, LoadingDialog dialog);
-        void editRelation(String token,AddRelationBean addRelationBean, LoadingDialog dialog);
+        void addRelation(Map<String,String> map, LoadingDialog dialog);
+        void editRelation(Map<String,String> map, LoadingDialog dialog);
         void getListForRelation(String token);
     }
 

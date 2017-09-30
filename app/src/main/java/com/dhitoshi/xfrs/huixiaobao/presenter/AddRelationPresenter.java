@@ -10,6 +10,8 @@ import com.dhitoshi.xfrs.huixiaobao.Interface.AddRelationManage;
 import com.dhitoshi.xfrs.huixiaobao.Interface.Callback;
 import com.dhitoshi.xfrs.huixiaobao.model.AddRelationModel;
 
+import java.util.Map;
+
 /**
  * Created by dxs on 2017/9/15.
  */
@@ -24,8 +26,8 @@ public class AddRelationPresenter implements AddRelationManage.Presenter{
     }
 
     @Override
-    public void addRelation(String token,AddRelationBean addRelationBean, LoadingDialog dialog) {
-        model.addRelation(token,addRelationBean,dialog, new Callback<HttpBean<RelationBean>>() {
+    public void addRelation(Map<String,String> map, LoadingDialog dialog) {
+        model.addRelation(map,dialog, new Callback<HttpBean<RelationBean>>() {
             @Override
             public void get(HttpBean<RelationBean> httpBean) {
                 view.addRelation(httpBean.getStatus().getMsg());
@@ -34,8 +36,8 @@ public class AddRelationPresenter implements AddRelationManage.Presenter{
     }
 
     @Override
-    public void editRelation(String token,AddRelationBean addRelationBean,LoadingDialog dialog) {
-        model.editRelation(token,addRelationBean,dialog, new Callback<HttpBean<RelationBean>>() {
+    public void editRelation(Map<String,String> map,LoadingDialog dialog) {
+        model.editRelation(map,dialog, new Callback<HttpBean<RelationBean>>() {
             @Override
             public void get(HttpBean<RelationBean> httpBean) {
                 view.editRelation(httpBean.getStatus().getMsg());

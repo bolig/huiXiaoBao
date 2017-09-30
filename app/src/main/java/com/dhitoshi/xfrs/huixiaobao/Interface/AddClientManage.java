@@ -23,14 +23,14 @@ public interface AddClientManage {
         void checkRepeat(String result);
     }
     interface Model{
-        void addClient(String token,AddClientBean addClientBean, LoadingDialog dialog, Callback<HttpBean<ClientBean>> callback);
-        void editClient(String token,AddClientBean addClientBean, LoadingDialog dialog,Callback<HttpBean<ClientBean>> callback);
+        void addClient(Map<String,String> map, LoadingDialog dialog, Callback<HttpBean<ClientBean>> callback);
+        void editClient(Map<String,String> map, LoadingDialog dialog,Callback<HttpBean<ClientBean>> callback);
         void getInfoForAdd(String token,Callback<HttpBean<InfoAddClientBean>> callback);
         void checkRepeat(String token,LoadingDialog dialog,String area,String phone,String id,Callback<HttpBean<Object>> callback);
     }
     interface Presenter{
-        void addClient(String token,AddClientBean addClientBean, LoadingDialog dialog);
-        void editClient(String token,AddClientBean addClientBean, LoadingDialog dialog);
+        void addClient(Map<String,String> map, LoadingDialog dialog);
+        void editClient(Map<String,String> map, LoadingDialog dialog);
         void getInfoForAdd(String token);
         void checkRepeat(String token,LoadingDialog dialog,String area,String phone,String id);
     }

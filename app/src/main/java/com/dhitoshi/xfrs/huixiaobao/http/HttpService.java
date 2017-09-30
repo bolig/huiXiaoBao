@@ -1,11 +1,4 @@
 package com.dhitoshi.xfrs.huixiaobao.http;
-import com.dhitoshi.xfrs.huixiaobao.Bean.AddClientBean;
-import com.dhitoshi.xfrs.huixiaobao.Bean.AddGiftBean;
-import com.dhitoshi.xfrs.huixiaobao.Bean.AddMeetBean;
-import com.dhitoshi.xfrs.huixiaobao.Bean.AddProductBean;
-import com.dhitoshi.xfrs.huixiaobao.Bean.AddRelationBean;
-import com.dhitoshi.xfrs.huixiaobao.Bean.AddSpendBean;
-import com.dhitoshi.xfrs.huixiaobao.Bean.AddVisitBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.ApplyMeetBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.AreaBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.BaseBean;
@@ -186,46 +179,46 @@ public interface HttpService {
     Observable<HttpBean<Object>> signUp(@QueryMap Map<String,String> map);
     //添加客户
     @POST("customer/add")
-    Observable<HttpBean<ClientBean>> addClient(@Query("token") String token,@Body AddClientBean addClientBean);
+    Observable<HttpBean<ClientBean>> addClient(@QueryMap Map<String,String> map);
     //编辑用户资料
     @POST("customer/edit")
-    Observable<HttpBean<ClientBean>> editClient(@Query("token") String token,@Body AddClientBean addClientBean);
+    Observable<HttpBean<ClientBean>> editClient(@QueryMap Map<String,String> map);
     //添加消费记录
     @POST("customer/spending/add")
-    Observable<HttpBean<SpendBean>> addSpend(@Query("token") String token,@Body AddSpendBean addSpendBean);
+    Observable<HttpBean<SpendBean>> addSpend(@QueryMap Map<String,String> map);
     //编辑消费记录
     @POST("customer/spending/edit")
-    Observable<HttpBean<SpendBean>> editSpend(@Query("token") String token,@Body AddSpendBean addSpendBean);
+    Observable<HttpBean<SpendBean>> editSpend(@QueryMap Map<String,String> map);
     //添加回访
     @POST("customer/feedback/add")
-    Observable<HttpBean<VisitBean>> addVisit(@Query("token") String token,@Body AddVisitBean addVisitBean);
+    Observable<HttpBean<VisitBean>> addVisit(@QueryMap Map<String,String> map);
     //编辑回访
     @POST("customer/feedback/edit")
-    Observable<HttpBean<VisitBean>> editVisit(@Query("token") String token,@Body AddVisitBean addVisitBean);
+    Observable<HttpBean<VisitBean>> editVisit(@QueryMap Map<String,String> map);
     //添加社会关系
     @POST("customer/relation/add")
-    Observable<HttpBean<RelationBean>> addRelation(@Query("token") String token,@Body AddRelationBean addRelationBean);
+    Observable<HttpBean<RelationBean>> addRelation(@QueryMap Map<String,String> map);
     //编辑社会关系
     @POST("customer/relation/edit")
-    Observable<HttpBean<RelationBean>> editRelation(@Query("token") String token,@Body AddRelationBean addRelationBean);
+    Observable<HttpBean<RelationBean>> editRelation(@QueryMap Map<String,String> mapn);
     //添加赠品
     @POST("customer/gift/add")
-    Observable<HttpBean<GiftBean>> addGift(@Query("token") String token,@Body AddGiftBean addGiftBean);
+    Observable<HttpBean<GiftBean>> addGift(@QueryMap Map<String,String> map);
     //编辑赠品
     @POST("customer/gift/edit")
-    Observable<HttpBean<GiftBean>> editGift(@Query("token") String token,@Body AddGiftBean addGiftBean);
+    Observable<HttpBean<GiftBean>> editGift(@QueryMap Map<String,String> mapn);
     //添加会议记录
     @POST("customer/meeting/add")
-    Observable<HttpBean<MeetBean>> addMeet(@Query("token") String token,@Body AddMeetBean addMeetBean);
+    Observable<HttpBean<MeetBean>> addMeet(@QueryMap Map<String,String> map);
     //编辑会议记录
     @POST("customer/meeting/edit")
-    Observable<HttpBean<MeetBean>> editMeet(@Query("token") String token,@Body AddMeetBean addMeetBean);
+    Observable<HttpBean<MeetBean>> editMeet(@QueryMap Map<String,String> map);
     //添加产品
     @POST("item/add")
-    Observable<HttpBean<Object>> addItem(@Query("token") String token,@Body AddProductBean addProductBean);
+    Observable<HttpBean<Object>> addItem(@QueryMap Map<String,String> map);
     //编辑产品
     @POST("item/edit")
-    Observable<HttpBean<Object>> editItem(@Query("token") String token,@Body AddProductBean addProductBean);
+    Observable<HttpBean<Object>> editItem(@QueryMap Map<String,String> map);
     //添加产品类型
     @POST("itemType/add")
     Observable<HttpBean<Object>> addItemType(@Query("token") String token,@Query("name") String name);

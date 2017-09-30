@@ -11,6 +11,8 @@ import com.dhitoshi.xfrs.huixiaobao.Interface.AddGiftManage;
 import com.dhitoshi.xfrs.huixiaobao.Interface.Callback;
 import com.dhitoshi.xfrs.huixiaobao.model.AddGiftModel;
 
+import java.util.Map;
+
 /**
  * Created by dxs on 2017/9/15.
  */
@@ -25,8 +27,8 @@ public class AddGiftPresenter implements AddGiftManage.Presenter{
     }
 
     @Override
-    public void addGift(String token,AddGiftBean addGiftBean, LoadingDialog dialog) {
-        model.addGift(token,addGiftBean,dialog, new Callback<HttpBean<GiftBean>>() {
+    public void addGift(Map<String,String> map, LoadingDialog dialog) {
+        model.addGift(map,dialog, new Callback<HttpBean<GiftBean>>() {
             @Override
             public void get(HttpBean<GiftBean> httpBean) {
                 view.addGift(httpBean.getStatus().getMsg());
@@ -35,8 +37,8 @@ public class AddGiftPresenter implements AddGiftManage.Presenter{
     }
 
     @Override
-    public void editGift(String token,AddGiftBean addGiftBean, LoadingDialog dialog) {
-        model.editGift(token,addGiftBean,dialog, new Callback<HttpBean<GiftBean>>() {
+    public void editGift(Map<String,String> map, LoadingDialog dialog) {
+        model.editGift(map,dialog, new Callback<HttpBean<GiftBean>>() {
             @Override
             public void get(HttpBean<GiftBean> httpBean) {
                 view.editGift(httpBean.getStatus().getMsg());

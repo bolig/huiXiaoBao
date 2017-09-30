@@ -12,6 +12,8 @@ import com.dhitoshi.xfrs.huixiaobao.http.HttpResult;
 import com.dhitoshi.xfrs.huixiaobao.http.MyHttp;
 import com.dhitoshi.xfrs.huixiaobao.utils.LoginUtil;
 
+import java.util.Map;
+
 /**
  * Created by dxs on 2017/9/18.
  */
@@ -22,9 +24,9 @@ public class AddProductModel implements AddProductManage.Model {
         this.context = context;
     }
     @Override
-    public void addItem(String token,final AddProductBean addProductBean, final LoadingDialog dialog, final Callback<HttpBean<Object>> callback) {
+    public void addItem(final Map<String,String> map, final LoadingDialog dialog, final Callback<HttpBean<Object>> callback) {
         MyHttp http=MyHttp.getInstance();
-        http.send(http.getHttpService().addItem(token,addProductBean),new CommonObserver(new HttpResult<HttpBean<Object>>() {
+        http.send(http.getHttpService().addItem(map),new CommonObserver(new HttpResult<HttpBean<Object>>() {
             @Override
             public void OnSuccess(HttpBean<Object> httpBean) {
                 dialog.dismiss();
@@ -34,8 +36,8 @@ public class AddProductModel implements AddProductManage.Model {
                     LoginUtil.autoLogin(context, new LoginCall() {
                         @Override
                         public void autoLogin(String token) {
-                           addProductBean.setToken(token);
-                            addItem(token,addProductBean,dialog,callback);
+                            map.put("token",token);
+                            addItem(map,dialog,callback);
                         }
                     });
                 }
@@ -51,9 +53,9 @@ public class AddProductModel implements AddProductManage.Model {
         }));
     }
     @Override
-    public void editItem(String token,final AddProductBean addProductBean, final LoadingDialog dialog, final Callback<HttpBean<Object>> callback) {
+    public void editItem(final Map<String,String> map, final LoadingDialog dialog, final Callback<HttpBean<Object>> callback) {
         MyHttp http=MyHttp.getInstance();
-        http.send(http.getHttpService().editItem(token,addProductBean),new CommonObserver(new HttpResult<HttpBean<Object>>() {
+        http.send(http.getHttpService().editItem(map),new CommonObserver(new HttpResult<HttpBean<Object>>() {
             @Override
             public void OnSuccess(HttpBean<Object> httpBean) {
                 dialog.dismiss();
@@ -63,8 +65,8 @@ public class AddProductModel implements AddProductManage.Model {
                     LoginUtil.autoLogin(context, new LoginCall() {
                         @Override
                         public void autoLogin(String token) {
-                            addProductBean.setToken(token);
-                            editItem(token,addProductBean,dialog,callback);
+                            map.put("token",token);
+                            editItem(map,dialog,callback);
                         }
                     });
                 }

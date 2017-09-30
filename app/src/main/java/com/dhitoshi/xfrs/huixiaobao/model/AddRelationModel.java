@@ -15,6 +15,8 @@ import com.dhitoshi.xfrs.huixiaobao.http.HttpResult;
 import com.dhitoshi.xfrs.huixiaobao.http.MyHttp;
 import com.dhitoshi.xfrs.huixiaobao.utils.LoginUtil;
 
+import java.util.Map;
+
 /**
  * Created by dxs on 2017/9/15.
  */
@@ -26,9 +28,9 @@ public class AddRelationModel implements AddRelationManage.Model{
     }
 
     @Override
-    public void addRelation(final String token, final AddRelationBean addRelationBean, final LoadingDialog dialog, final Callback<HttpBean<RelationBean>> callback) {
+    public void addRelation(final Map<String,String> map, final LoadingDialog dialog, final Callback<HttpBean<RelationBean>> callback) {
         MyHttp http=MyHttp.getInstance();
-        http.send(http.getHttpService().addRelation(token,addRelationBean),new CommonObserver(new HttpResult<HttpBean<RelationBean>>() {
+        http.send(http.getHttpService().addRelation(map),new CommonObserver(new HttpResult<HttpBean<RelationBean>>() {
             @Override
             public void OnSuccess(HttpBean<RelationBean> httpBean) {
                 dialog.dismiss();
@@ -38,7 +40,8 @@ public class AddRelationModel implements AddRelationManage.Model{
                     LoginUtil.autoLogin(context, new LoginCall() {
                         @Override
                         public void autoLogin(String token) {
-                            addRelation(token, addRelationBean, dialog, callback);
+                            map.put("token",token);
+                            addRelation(map, dialog, callback);
                         }
                     });
                 }
@@ -79,9 +82,9 @@ public class AddRelationModel implements AddRelationManage.Model{
         }));
     }
     @Override
-    public void editRelation(final String token, final AddRelationBean addRelationBean, final LoadingDialog dialog, final Callback<HttpBean<RelationBean>> callback) {
+    public void editRelation(final Map<String,String> map, final LoadingDialog dialog, final Callback<HttpBean<RelationBean>> callback) {
         MyHttp http=MyHttp.getInstance();
-        http.send(http.getHttpService().editRelation(token,addRelationBean),new CommonObserver(new HttpResult<HttpBean<RelationBean>>() {
+        http.send(http.getHttpService().editRelation(map),new CommonObserver(new HttpResult<HttpBean<RelationBean>>() {
             @Override
             public void OnSuccess(HttpBean<RelationBean> httpBean) {
                 dialog.dismiss();
@@ -91,7 +94,8 @@ public class AddRelationModel implements AddRelationManage.Model{
                     LoginUtil.autoLogin(context, new LoginCall() {
                         @Override
                         public void autoLogin(String token) {
-                           editRelation(token, addRelationBean, dialog, callback);
+                            map.put("token",token);
+                           editRelation(map, dialog, callback);
                         }
                     });
                 }

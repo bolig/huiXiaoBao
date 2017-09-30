@@ -31,10 +31,16 @@ import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static com.dhitoshi.xfrs.huixiaobao.R.id.attend;
+
 public class AddRelation extends BaseView implements AddRelationManage.View{
 
     @BindView(R.id.relation_name)
@@ -66,12 +72,14 @@ public class AddRelation extends BaseView implements AddRelationManage.View{
     private String email="";
     private String company="";
     private String workPosition="";
+    private String notes;
     private int userId;
     private List<BaseBean> relations;
     private List<BaseBean> positions;
     private RelationBean relationBean;
     private AddRelationPresenter addRelationPresenter;
     private int type=1;
+    private Map<String,String> map;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -206,26 +214,49 @@ public class AddRelation extends BaseView implements AddRelationManage.View{
     //提交
     private void commit() {
         if(juge()){
-            AddRelationBean bean=new AddRelationBean();
-            bean.setName(name);
-            bean.setSex(sex);
-            bean.setRelation(relation);
-            bean.setBirthday(birthday);
-            bean.setPhone(phone);
-            bean.setTelephone(telephone);
-            bean.setEmail(email);
-            bean.setCompany(company);
-            bean.setPosition(workPosition);
-            bean.setNotes(relationNotes.getText().toString());
+            if(map==null){
+                map=new HashMap<>();
+            }
+            if(!name.isEmpty()){
+                map.put("name",name);
+            }
+            if(!sex.isEmpty()){
+                map.put("sex",sex);
+            }
+            if(!birthday.isEmpty()){
+                map.put("birthday",birthday);
+            }
+            if(!relation.isEmpty()){
+                map.put("relation",relation);
+            }
+            if(!phone.isEmpty()){
+                map.put("phone",phone);
+            }
+            if(!telephone.isEmpty()){
+                map.put("telephone",telephone);
+            }
+            if(!email.isEmpty()){
+                map.put("email",email);
+            }
+            if(!company.isEmpty()){
+                map.put("company",company);
+            }
+            if(!workPosition.isEmpty()){
+                map.put("position",workPosition);
+            }
+            if(!notes.isEmpty()){
+                map.put("notes",notes);
+            }
             LoadingDialog dialog = LoadingDialog.build(this).setLoadingTitle("提交中");
             dialog.show();
             String token= SharedPreferencesUtil.Obtain(this,"token","").toString();
+            map.put("token",token);
             if(relationBean==null){
-                bean.setUserid(String.valueOf(userId));
-                addRelationPresenter.addRelation(token,bean,dialog);
+                map.put("userid",String.valueOf(userId));
+                addRelationPresenter.addRelation(map,dialog);
             }else{
-                bean.setId(String.valueOf(relationBean.getId()));
-                addRelationPresenter.editRelation(token,bean,dialog);
+                map.put("id",String.valueOf(relationBean.getId()));
+                addRelationPresenter.editRelation(map,dialog);
             }
         }
     }
@@ -244,6 +275,7 @@ public class AddRelation extends BaseView implements AddRelationManage.View{
         telephone=relationTelephone.getText().toString();
         email=relationEmail.getText().toString();
         company=relationCompany.getText().toString();
+        notes=relationNotes.getText().toString();
         return true;
     }
 

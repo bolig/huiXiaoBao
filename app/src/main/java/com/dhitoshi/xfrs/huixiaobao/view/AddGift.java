@@ -28,7 +28,10 @@ import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -50,12 +53,14 @@ public class AddGift extends BaseView implements AddGiftManage.View{
     private String num="";
     private String saleaddress="";
     private String salesman="";
+    private String notes;
     private int userId;
     private GiftBean giftBean;
     private ArrayList<GiftBean> item;
     private List<BaseBean> addresses;
     private ArrayList<BaseBean> salesmen;
     private AddGiftPresenter addGiftPresenter;
+    private Map<String,String> map;
     private int type=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,27 +121,47 @@ public class AddGift extends BaseView implements AddGiftManage.View{
     }
     private void commit() {
         if(juge()){
-            AddGiftBean bean=new AddGiftBean();
-            bean.setCreatetime(createtime);
-            bean.setSaleaddress(saleaddress);
-            bean.setGift(gift);
-            bean.setNum(num);
-            bean.setSalesman(salesman);
-            bean.setNotes(giftNotes.getText().toString());
+            if(map==null){
+                map=new HashMap<>();
+            }
+            if(!createtime.isEmpty()){
+                map.put("createtime",createtime);
+            }
+            if(!saleaddress.isEmpty()){
+                map.put("saleaddress",saleaddress);
+            }
+            if(!gift.isEmpty()){
+                map.put("gift",gift);
+            }
+            if(!num.isEmpty()){
+                map.put("num",num);
+            }
+            if(!salesman.isEmpty()){
+                map.put("salesman",salesman);
+            }
+            if(!notes.isEmpty()){
+                map.put("notes",notes);
+            }
             LoadingDialog dialog = LoadingDialog.build(this).setLoadingTitle("提交中");
             dialog.show();
             String token= SharedPreferencesUtil.Obtain(this,"token","").toString();
+            map.put("token",token);
             if(null==giftBean){
-                bean.setUserid(String.valueOf(userId));
-                addGiftPresenter.addGift(token,bean,dialog);
+                map.put("userid",String.valueOf(userId));
+                addGiftPresenter.addGift(map,dialog);
             }else{
-                bean.setId(String.valueOf(giftBean.getId()));
-                addGiftPresenter.editGift(token,bean,dialog);
+                map.put("id",String.valueOf(giftBean.getId()));
+                addGiftPresenter.editGift(map,dialog);
             }
         }
     }
     private boolean juge() {
+        if(createtime.isEmpty()){
+            Toast.makeText(this," 请选择赠送日期",Toast.LENGTH_SHORT).show();
+            return false;
+        }
         num=giftName.getText().toString();
+        notes=giftNotes.getText().toString();
         return true;
     }
     //选择赠送日期

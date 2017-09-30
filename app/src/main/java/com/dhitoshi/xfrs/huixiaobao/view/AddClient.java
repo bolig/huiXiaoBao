@@ -69,6 +69,7 @@ import permissions.dispatcher.RuntimePermissions;
 import top.zibin.luban.Luban;
 import top.zibin.luban.OnCompressListener;
 
+import static com.dhitoshi.xfrs.huixiaobao.R.id.attend;
 import static com.dhitoshi.xfrs.huixiaobao.R.mipmap.user;
 
 @RuntimePermissions
@@ -132,6 +133,7 @@ public class AddClient extends BaseView implements AddClientManage.View {
     private ClientBean clientBean;
     private String hobby = "";
     private String ill = "";
+    private String entryman="";
     private String hobbyName = "";
     private String illName = "";
     private ArrayList<HobbyBean> hobbys;
@@ -144,6 +146,7 @@ public class AddClient extends BaseView implements AddClientManage.View {
     private File mediaFile;
     private String cameraPath = null;
     private Uri uri;
+    private Map<String,String> map;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -280,34 +283,72 @@ public class AddClient extends BaseView implements AddClientManage.View {
     //提交
     private void commit() {
         if (juge()) {
-            notes = clientNotes.getText().toString();
-            AddClientBean addClientBean = new AddClientBean();
-            addClientBean.setName(name);
-            addClientBean.setSex(sex);
-            addClientBean.setBirthday(birthday);
-            addClientBean.setPhone(phone);
-            addClientBean.setHobby(hobby);
-            addClientBean.setVip_id(vip);
-            addClientBean.setArea(area);
-            addClientBean.setTelephone(telPhone);
-            addClientBean.setEmail(email);
-            addClientBean.setPosition(workPosition);
-            addClientBean.setAddress(address);
-            addClientBean.setCompany(company);
-            addClientBean.setType(type);
-            addClientBean.setCompany_phone(companyPhone);
-            addClientBean.setCompany_address(companyAddress);
-            addClientBean.setIll(ill);
-            addClientBean.setNotes(notes);
-            addClientBean.setEntryman(clientEntryMan.getText().toString());
+            if(map==null){
+                map=new HashMap<>();
+            }
+            if(!name.isEmpty()){
+                map.put("name",name);
+            }
+            if(!sex.isEmpty()){
+                map.put("sex",sex);
+            }
+            if(!birthday.isEmpty()){
+                map.put("birthday",birthday);
+            }
+            if(!phone.isEmpty()){
+                map.put("phone",phone);
+            }
+            if(!vip.isEmpty()){
+                map.put("vip_id",vip);
+            }
+            if(!area.isEmpty()){
+                map.put("area",area);
+            }
+            if(!telPhone.isEmpty()){
+                map.put("telephone",telPhone);
+            }
+            if(!email.isEmpty()){
+                map.put("email",email);
+            }
+            if(!workPosition.isEmpty()){
+                map.put("position",workPosition);
+            }
+            if(!address.isEmpty()){
+                map.put("address",address);
+            }
+            if(!company.isEmpty()){
+                map.put("company",company);
+            }
+            if(!companyPhone.isEmpty()){
+                map.put("company_phone",companyPhone);
+            }
+            if(!companyAddress.isEmpty()){
+                map.put("company_address",companyAddress);
+            }
+            if(!entryman.isEmpty()){
+                map.put("entryman",entryman);
+            }
+            if(!type.isEmpty()){
+                map.put("type",type);
+            }
+            if(!hobby.isEmpty()){
+                map.put("hobby",hobby);
+            }
+            if(!ill.isEmpty()){
+                map.put("ill",ill);
+            }
+            if(!notes.isEmpty()){
+                map.put("notes",notes);
+            }
             LoadingDialog dialog = LoadingDialog.build(this).setLoadingTitle("提交中");
             dialog.show();
             String token=SharedPreferencesUtil.Obtain(this,"token","").toString();
+            map.put("token",token);
             if (null == clientBean) {
-                addClientPresenter.addClient(token,addClientBean, dialog);
+                addClientPresenter.addClient(map, dialog);
             } else {
-                addClientBean.setId(String.valueOf(clientBean.getId()));
-                addClientPresenter.editClient(token,addClientBean, dialog);
+                map.put("id",String.valueOf(clientBean.getId()));
+                addClientPresenter.editClient(map, dialog);
             }
         }
     }
@@ -333,6 +374,8 @@ public class AddClient extends BaseView implements AddClientManage.View {
         company = clientCompany.getText().toString();
         companyPhone = clientCompanyPone.getText().toString();
         companyAddress = clientCompanyAddress.getText().toString();
+        entryman=clientEntryMan.getText().toString();
+        notes = clientNotes.getText().toString();
         return true;
     }
     //选择头像

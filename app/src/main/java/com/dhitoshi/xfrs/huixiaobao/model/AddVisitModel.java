@@ -15,6 +15,8 @@ import com.dhitoshi.xfrs.huixiaobao.http.HttpResult;
 import com.dhitoshi.xfrs.huixiaobao.http.MyHttp;
 import com.dhitoshi.xfrs.huixiaobao.utils.LoginUtil;
 
+import java.util.Map;
+
 /**
  * Created by dxs on 2017/9/15.
  */
@@ -27,9 +29,9 @@ public class AddVisitModel implements AddVisitManage.Model{
     }
 
     @Override
-    public void addVisit(final String token, final AddVisitBean addVisitBean, final LoadingDialog dialog, final Callback<HttpBean<VisitBean>> callback) {
+    public void addVisit(final Map<String,String> map, final LoadingDialog dialog, final Callback<HttpBean<VisitBean>> callback) {
         MyHttp http=MyHttp.getInstance();
-        http.send(http.getHttpService().addVisit(token,addVisitBean),new CommonObserver(new HttpResult<HttpBean<VisitBean>>() {
+        http.send(http.getHttpService().addVisit(map),new CommonObserver(new HttpResult<HttpBean<VisitBean>>() {
             @Override
             public void OnSuccess(HttpBean<VisitBean> httpBean) {
                 dialog.dismiss();
@@ -39,7 +41,8 @@ public class AddVisitModel implements AddVisitManage.Model{
                     LoginUtil.autoLogin(context, new LoginCall() {
                         @Override
                         public void autoLogin(String token) {
-                           addVisit(token, addVisitBean, dialog, callback);
+                            map.put("token",token);
+                           addVisit(map, dialog, callback);
                         }
                     });
                 }
@@ -82,9 +85,9 @@ public class AddVisitModel implements AddVisitManage.Model{
     }
 
     @Override
-    public void editVisit(final String token, final AddVisitBean addVisitBean, final LoadingDialog dialog, final Callback<HttpBean<VisitBean>> callback) {
+    public void editVisit(final Map<String,String> map, final LoadingDialog dialog, final Callback<HttpBean<VisitBean>> callback) {
         MyHttp http=MyHttp.getInstance();
-        http.send(http.getHttpService().editVisit(token,addVisitBean),new CommonObserver(new HttpResult<HttpBean<VisitBean>>() {
+        http.send(http.getHttpService().editVisit(map),new CommonObserver(new HttpResult<HttpBean<VisitBean>>() {
             @Override
             public void OnSuccess(HttpBean<VisitBean> httpBean) {
                 dialog.dismiss();
@@ -94,7 +97,8 @@ public class AddVisitModel implements AddVisitManage.Model{
                     LoginUtil.autoLogin(context, new LoginCall() {
                         @Override
                         public void autoLogin(String token) {
-                           editVisit(token, addVisitBean, dialog, callback);
+                            map.put("token",token);
+                           editVisit(map, dialog, callback);
                         }
                     });
                 }

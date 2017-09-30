@@ -25,10 +25,15 @@ import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static com.dhitoshi.xfrs.huixiaobao.R.mipmap.gift;
 
 public class AddVisit extends BaseView implements AddVisitManage.View{
 
@@ -60,6 +65,7 @@ public class AddVisit extends BaseView implements AddVisitManage.View{
     private List<BaseBean> feedtypes;
     private AddVisitPresenter addVisitPresenter;
     private int type=1;
+    private Map<String,String> map;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -164,24 +170,40 @@ public class AddVisit extends BaseView implements AddVisitManage.View{
     }
     private void commit() {
         if(juge()){
-            AddVisitBean bean=new AddVisitBean();
-            bean.setNotes(notes);
-            bean.setCreatetime(createtime);
-            bean.setAdvice(advice);
-            bean.setFeedbody(feedbody);
-            bean.setFeedman(feedman);
-            bean.setFeedtype(feedtype);
-            bean.setImg(img);
-            bean.setNexttime(nexttime);
+            if(map==null){
+                map=new HashMap<>();
+            }
+            if(!createtime.isEmpty()){
+                map.put("createtime",createtime);
+            }
+            if(!nexttime.isEmpty()){
+                map.put("nexttime",nexttime);
+            }
+            if(!feedman.isEmpty()){
+                map.put("feedman",feedman);
+            }
+            if(!feedtype.isEmpty()){
+                map.put("feedtype",feedtype);
+            }
+            if(!feedbody.isEmpty()){
+                map.put("feedbody",feedbody);
+            }
+            if(!advice.isEmpty()){
+                map.put("advice",advice);
+            }
+            if(!notes.isEmpty()){
+                map.put("notes",notes);
+            }
             LoadingDialog dialog = LoadingDialog.build(this).setLoadingTitle("提交中");
             dialog.show();
             String token= SharedPreferencesUtil.Obtain(this,"token","").toString();
+            map.put("token",token);
             if(visitBean==null){
-                bean.setUserid(String.valueOf(userId));
-                addVisitPresenter.addVisit(token,bean,dialog);
+                map.put("userid",String.valueOf(userId));
+                addVisitPresenter.addVisit(map,dialog);
             }else{
-                bean.setId(String.valueOf(visitBean.getId()));
-                addVisitPresenter.editVisit(token,bean,dialog);
+                map.put("id",String.valueOf(visitBean.getId()));
+                addVisitPresenter.editVisit(map,dialog);
             }
         }
     }

@@ -11,6 +11,8 @@ import com.dhitoshi.xfrs.huixiaobao.Interface.AddVisitManage;
 import com.dhitoshi.xfrs.huixiaobao.Interface.Callback;
 import com.dhitoshi.xfrs.huixiaobao.model.AddVisitModel;
 
+import java.util.Map;
+
 /**
  * Created by dxs on 2017/9/15.
  */
@@ -25,8 +27,8 @@ public class AddVisitPresenter implements AddVisitManage.Presenter{
     }
 
     @Override
-    public void addVisit(String token,AddVisitBean addVisitBean, LoadingDialog dialog) {
-        model.addVisit(token,addVisitBean,dialog, new Callback<HttpBean<VisitBean>>() {
+    public void addVisit(Map<String,String> map, LoadingDialog dialog) {
+        model.addVisit(map,dialog, new Callback<HttpBean<VisitBean>>() {
             @Override
             public void get(HttpBean<VisitBean> httpBean) {
                 view.addVisit(httpBean.getStatus().getMsg());
@@ -35,8 +37,8 @@ public class AddVisitPresenter implements AddVisitManage.Presenter{
     }
 
     @Override
-    public void editVisit(String token,AddVisitBean addVisitBean,LoadingDialog dialog) {
-        model.editVisit(token,addVisitBean,dialog, new Callback<HttpBean<VisitBean>>() {
+    public void editVisit(Map<String,String> map,LoadingDialog dialog) {
+        model.editVisit(map,dialog, new Callback<HttpBean<VisitBean>>() {
             @Override
             public void get(HttpBean<VisitBean> httpBean) {
                 view.editVisit(httpBean.getStatus().getMsg());

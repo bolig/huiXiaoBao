@@ -17,6 +17,8 @@ import com.dhitoshi.xfrs.huixiaobao.http.HttpResult;
 import com.dhitoshi.xfrs.huixiaobao.http.MyHttp;
 import com.dhitoshi.xfrs.huixiaobao.utils.LoginUtil;
 
+import java.util.Map;
+
 /**
  * Created by dxs on 2017/9/13.
  */
@@ -26,9 +28,9 @@ public class AddSpendModel implements AddSpendManage.Model{
         this.context = context;
     }
     @Override
-    public void addSpend(final String token, final AddSpendBean addSpendBean, final LoadingDialog dialog, final Callback<HttpBean<SpendBean>> callback) {
+    public void addSpend(final Map<String,String> map, final LoadingDialog dialog, final Callback<HttpBean<SpendBean>> callback) {
         MyHttp http=MyHttp.getInstance();
-        http.send(http.getHttpService().addSpend(token,addSpendBean),new CommonObserver(new HttpResult<HttpBean<SpendBean>>() {
+        http.send(http.getHttpService().addSpend(map),new CommonObserver(new HttpResult<HttpBean<SpendBean>>() {
             @Override
             public void OnSuccess(HttpBean<SpendBean> httpBean) {
                 dialog.dismiss();
@@ -38,7 +40,8 @@ public class AddSpendModel implements AddSpendManage.Model{
                     LoginUtil.autoLogin(context, new LoginCall() {
                         @Override
                         public void autoLogin(String token) {
-                           addSpend(token, addSpendBean, dialog, callback);
+                            map.put("token",token);
+                           addSpend(map, dialog, callback);
                         }
                     });
                 }
@@ -79,9 +82,9 @@ public class AddSpendModel implements AddSpendManage.Model{
     }
 
     @Override
-    public void editSpend(final String token, final AddSpendBean addSpendBean, final LoadingDialog dialog, final Callback<HttpBean<SpendBean>> callback) {
+    public void editSpend(final Map<String,String> map, final LoadingDialog dialog, final Callback<HttpBean<SpendBean>> callback) {
         MyHttp http=MyHttp.getInstance();
-        http.send(http.getHttpService().editSpend(token,addSpendBean),new CommonObserver(new HttpResult<HttpBean<SpendBean>>() {
+        http.send(http.getHttpService().editSpend(map),new CommonObserver(new HttpResult<HttpBean<SpendBean>>() {
             @Override
             public void OnSuccess(HttpBean<SpendBean> httpBean) {
                 dialog.dismiss();
@@ -91,7 +94,8 @@ public class AddSpendModel implements AddSpendManage.Model{
                     LoginUtil.autoLogin(context, new LoginCall() {
                         @Override
                         public void autoLogin(String token) {
-                            editSpend(token, addSpendBean, dialog, callback);
+                            map.put("token",token);
+                            editSpend(map, dialog, callback);
                         }
                     });
                 }

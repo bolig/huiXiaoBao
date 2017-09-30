@@ -8,7 +8,6 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.dhitoshi.xfrs.huixiaobao.Bean.AddMeetBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.BaseBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.InfoAddMeetBean;
@@ -27,10 +26,13 @@ import com.dhitoshi.xfrs.huixiaobao.presenter.AddMeetingPresenter;
 import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
 import org.greenrobot.eventbus.EventBus;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
 public class AddMeeting extends BaseView implements AddMeetingManage.View {
     @BindView(R.id.meet_date)
     TextView meetDate;
@@ -60,6 +62,7 @@ public class AddMeeting extends BaseView implements AddMeetingManage.View {
     private List<BaseBean> types;
     private ArrayList<BaseBean> salesmen;
     private int from=0;
+    private Map<String,String> map;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -128,28 +131,51 @@ public class AddMeeting extends BaseView implements AddMeetingManage.View {
     }
     private void commit() {
         if(juge()){
-            AddMeetBean bean=new AddMeetBean();
-            bean.setNotes(meetNotes.getText().toString());
-            bean.setSalesman(salesman);
-            bean.setAttend(meetAttend.isChecked()?"1":"0");
-            bean.setBody(body);
-            bean.setCreatetime(createtime);
-            bean.setType(type);
-            bean.setUsertype(usertype);
+            if(map==null){
+                map=new HashMap<>();
+            }
+            if(!createtime.isEmpty()){
+                map.put("createtime",createtime);
+            }
+            if(!salesman.isEmpty()){
+                map.put("salesman",salesman);
+            }
+            if(!body.isEmpty()){
+                map.put("body",body);
+            }
+            if(!type.isEmpty()){
+                map.put("type",type);
+            }
+            if(!usertype.isEmpty()){
+                map.put("usertype",usertype);
+            }
+            if(!attend.isEmpty()){
+                map.put("attend",attend);
+            }
+            if(!notes.isEmpty()){
+                map.put("notes",notes);
+            }
             LoadingDialog dialog = LoadingDialog.build(this).setLoadingTitle("提交中");
             dialog.show();
             String token= SharedPreferencesUtil.Obtain(this,"token","").toString();
+            map.put("token",token);
             if(meetBean==null){
-                bean.setUserid(String.valueOf(userId));
-                addMeetingPresenter.addMeeting(token,bean,dialog);
+                map.put("userid",String.valueOf(userId));
+                addMeetingPresenter.addMeeting(map,dialog);
             }else {
-                bean.setId(String.valueOf(meetBean.getId()));
-                addMeetingPresenter.editMeeting(token,bean,dialog);
+                map.put("id",String.valueOf(meetBean.getId()));
+                addMeetingPresenter.editMeeting(map,dialog);
             }
         }
     }
     private boolean juge() {
+        if(createtime.isEmpty()){
+            Toast.makeText(this," 请选择会议日期",Toast.LENGTH_SHORT).show();
+            return false;
+        }
         body=meetBody.getText().toString();
+        attend=meetAttend.isChecked()?"1":"0";
+        notes=meetNotes.getText().toString();
         return true;
     }
     //选择会议类型

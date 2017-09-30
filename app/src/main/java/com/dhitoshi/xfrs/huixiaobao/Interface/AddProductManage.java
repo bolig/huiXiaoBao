@@ -1,7 +1,7 @@
 package com.dhitoshi.xfrs.huixiaobao.Interface;
-import com.dhitoshi.xfrs.huixiaobao.Bean.AddProductBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
 import com.dhitoshi.xfrs.huixiaobao.Dialog.LoadingDialog;
+import java.util.Map;
 /**
  * Created by dxs on 2017/9/8.
  */
@@ -12,11 +12,11 @@ public interface AddProductManage {
         void editItem(String result);
     }
     interface Model{
-        void addItem(String token,AddProductBean addProductBean, LoadingDialog dialog,Callback<HttpBean<Object>> callback);
-        void editItem(String token,AddProductBean addProductBean,LoadingDialog dialog,Callback<HttpBean<Object>> callback);
+        void addItem(Map<String,String> map, LoadingDialog dialog, Callback<HttpBean<Object>> callback);
+        void editItem(Map<String,String> map,LoadingDialog dialog,Callback<HttpBean<Object>> callback);
     }
     interface Presenter{
-        void addItem(String token,AddProductBean addProductBean,LoadingDialog dialog);
-        void editItem(String token,AddProductBean addProductBean,LoadingDialog dialog);
+        void addItem(Map<String,String> map,LoadingDialog dialog);
+        void editItem(Map<String,String> map,LoadingDialog dialog);
     }
 }

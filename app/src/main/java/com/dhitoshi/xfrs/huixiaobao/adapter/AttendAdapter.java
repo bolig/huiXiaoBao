@@ -3,7 +3,10 @@ package com.dhitoshi.xfrs.huixiaobao.adapter;
 import android.content.Context;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.ImageView;
+
 import com.dhitoshi.xfrs.huixiaobao.Bean.MeetClientBean;
+import com.dhitoshi.xfrs.huixiaobao.Interface.AttendClick;
 import com.dhitoshi.xfrs.huixiaobao.Interface.CheckBoxClick;
 import com.dhitoshi.xfrs.huixiaobao.R;
 import com.dhitoshi.xfrs.huixiaobao.common.BaseAdapter;
@@ -14,30 +17,36 @@ import java.util.List;
  */
 public class AttendAdapter extends BaseAdapter<MeetClientBean> {
     private Context context;
-    private CheckBoxClick click;
-    public AttendAdapter(List<MeetClientBean> mList, Context context) {
+    private AttendClick click;
+    private int current=-1;
+    public AttendAdapter(List<MeetClientBean> mList, Context context,int current) {
         super(mList, context, R.layout.attend_item, 4);
         this.context=context;
+        this.current=current;
     }
+    public void setCurrent(int current) {
+        this.current = current;
+    }
+
     @Override
     public void covert(BaseRecyclerHolder holder, final List<MeetClientBean> mList, final int position) {
         final MeetClientBean item=mList.get(position);
         holder.setText(R.id.attend_name,item.getName());
         holder.setText(R.id.attend_phone,item.getPhone());
-        CheckBox checkBox=holder.getView(R.id.attend);
-        checkBox.setOnClickListener(new View.OnClickListener() {
+        ImageView iv=holder.getView(R.id.attend);
+        iv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                click.check(true,mList.get(position).getName(),mList.get(position).getId());
+                click.check(v,mList.get(position),position);
             }
         });
-//        if(selected.equals(mList.get(position).getName())){
-//            checkBox.setChecked(true);
-//        }else {
-//            checkBox.setChecked(false);
-//        }
+        if(mList.get(position).getAttend().get(current).equals("1")){
+            iv.setImageResource(R.mipmap.select);
+        }else {
+            iv.setImageResource(R.mipmap.unselect);
+        }
     }
-    public void addCheckBoxClick( CheckBoxClick click){
+    public void addAtendClick( AttendClick click){
         this.click=click;
     }
 }

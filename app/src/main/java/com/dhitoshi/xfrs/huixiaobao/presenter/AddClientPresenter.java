@@ -26,8 +26,8 @@ public class AddClientPresenter implements AddClientManage.Presenter{
         addClientModel=new AddClientModel(context);
     }
     @Override
-    public void addClient(String token,AddClientBean addClientBean, LoadingDialog dialog) {
-        addClientModel.addClient(token,addClientBean,dialog, new Callback<HttpBean<ClientBean>>() {
+    public void addClient(Map<String,String> map, LoadingDialog dialog) {
+        addClientModel.addClient(map,dialog, new Callback<HttpBean<ClientBean>>() {
             @Override
             public void get(HttpBean<ClientBean> httpBean) {
                 view.addClient(httpBean);
@@ -36,8 +36,8 @@ public class AddClientPresenter implements AddClientManage.Presenter{
     }
 
     @Override
-    public void editClient(String token,AddClientBean addClientBean,LoadingDialog dialog) {
-        addClientModel.editClient(token,addClientBean,dialog, new Callback<HttpBean<ClientBean>>() {
+    public void editClient(Map<String,String> map,LoadingDialog dialog) {
+        addClientModel.editClient(map,dialog, new Callback<HttpBean<ClientBean>>() {
             @Override
             public void get(HttpBean<ClientBean> httpBean) {
                 view.editClient(httpBean);

@@ -82,7 +82,7 @@ public class EditApplyMeet extends BaseView {
                 startActivity(new Intent(this,EnterClient.class).putExtra("id", String.valueOf(ownMeetBean.getId())));
                 break;
             case R.id.to_attend:
-                startActivity(new Intent(this,AttendMeet.class).putExtra("start",ownMeetBean.getStarttime()).putExtra("days'",ownMeetBean.getDays()).putExtra("id", String.valueOf(ownMeetBean.getId())));
+                startActivity(new Intent(this,AttendMeet.class).putExtra("start",ownMeetBean.getStarttime()).putExtra("days",ownMeetBean.getDays()).putExtra("id", String.valueOf(ownMeetBean.getId())));
                 break;
         }
     }

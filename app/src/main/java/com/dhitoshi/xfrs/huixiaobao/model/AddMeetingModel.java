@@ -15,6 +15,8 @@ import com.dhitoshi.xfrs.huixiaobao.http.HttpResult;
 import com.dhitoshi.xfrs.huixiaobao.http.MyHttp;
 import com.dhitoshi.xfrs.huixiaobao.utils.LoginUtil;
 
+import java.util.Map;
+
 /**
  * Created by dxs on 2017/9/15.
  */
@@ -25,9 +27,9 @@ public class AddMeetingModel implements AddMeetingManage.Model{
         this.context = context;
     }
     @Override
-    public void addMeeting(final String token, final AddMeetBean addMeetBean, final LoadingDialog dialog, final Callback<HttpBean<MeetBean>> callback) {
+    public void addMeeting(final Map<String,String> map, final LoadingDialog dialog, final Callback<HttpBean<MeetBean>> callback) {
         MyHttp http=MyHttp.getInstance();
-        http.send(http.getHttpService().addMeet(token,addMeetBean),new CommonObserver(new HttpResult<HttpBean<MeetBean>>() {
+        http.send(http.getHttpService().addMeet(map),new CommonObserver(new HttpResult<HttpBean<MeetBean>>() {
             @Override
             public void OnSuccess(HttpBean<MeetBean> httpBean) {
                 dialog.dismiss();
@@ -37,7 +39,8 @@ public class AddMeetingModel implements AddMeetingManage.Model{
                     LoginUtil.autoLogin(context, new LoginCall() {
                         @Override
                         public void autoLogin(String token) {
-                            addMeeting(token, addMeetBean, dialog, callback);
+                            map.put("token",token);
+                            addMeeting(map, dialog, callback);
                         }
                     });
                 }
@@ -78,9 +81,9 @@ public class AddMeetingModel implements AddMeetingManage.Model{
         }));
     }
     @Override
-    public void editMeeting(final String token, final AddMeetBean addMeetBean, final LoadingDialog dialog, final Callback<HttpBean<MeetBean>> callback) {
+    public void editMeeting(final Map<String,String> map, final LoadingDialog dialog, final Callback<HttpBean<MeetBean>> callback) {
         MyHttp http=MyHttp.getInstance();
-        http.send(http.getHttpService().editMeet(token,addMeetBean),new CommonObserver(new HttpResult<HttpBean<MeetBean>>() {
+        http.send(http.getHttpService().editMeet(map),new CommonObserver(new HttpResult<HttpBean<MeetBean>>() {
             @Override
             public void OnSuccess(HttpBean<MeetBean> httpBean) {
                 dialog.dismiss();
@@ -90,7 +93,8 @@ public class AddMeetingModel implements AddMeetingManage.Model{
                     LoginUtil.autoLogin(context, new LoginCall() {
                         @Override
                         public void autoLogin(String token) {
-                           editMeeting(token, addMeetBean, dialog, callback);
+                            map.put("token",token);
+                           editMeeting(map, dialog, callback);
                         }
                     });
                 }

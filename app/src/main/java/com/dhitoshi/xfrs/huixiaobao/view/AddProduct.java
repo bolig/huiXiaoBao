@@ -17,9 +17,15 @@ import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static com.dhitoshi.xfrs.huixiaobao.R.id.attend;
+
 public class AddProduct extends BaseView implements AddProductManage.View{
     @BindView(R.id.product_area)
     TextView productArea;
@@ -37,6 +43,7 @@ public class AddProduct extends BaseView implements AddProductManage.View{
     private String area="";
     private String cost="";
     private String notes="";
+    private Map<String,String> map;
     private AddProductPresenter addProductPresenter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,21 +92,33 @@ public class AddProduct extends BaseView implements AddProductManage.View{
     }
     private void commit() {
         if(juge()){
-            AddProductBean bean=new AddProductBean();
-            bean.setArea(area);
-            bean.setCost(cost);
-            bean.setName(name);
-            bean.setNotes(notes);
-            bean.setType_id(type_id);
-            bean.setToken(SharedPreferencesUtil.Obtain(this,"token","").toString());
+            if(map==null){
+                map=new HashMap<>();
+            }
+            if(!area.isEmpty()){
+                map.put("area",area);
+            }
+            if(!cost.isEmpty()){
+                map.put("cost",cost);
+            }
+            if(!name.isEmpty()){
+                map.put("name",name);
+            }
+            if(!type_id.isEmpty()){
+                map.put("type_id",type_id);
+            }
+            if(!notes.isEmpty()){
+                map.put("notes",notes);
+            }
             LoadingDialog dialog = LoadingDialog.build(this).setLoadingTitle("提交中");
             dialog.show();
             String token= SharedPreferencesUtil.Obtain(this,"token","").toString();
+            map.put("token",token);
             if(productBean==null) {
-                addProductPresenter.addItem(token,bean,dialog);
+                addProductPresenter.addItem(map,dialog);
             }else{
-                bean.setId(String.valueOf(productBean.getId()));
-                addProductPresenter.editItem(token,bean,dialog);
+                map.put("id",String.valueOf(productBean.getId()));
+                addProductPresenter.editItem(map,dialog);
             }
         }
     }

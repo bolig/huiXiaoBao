@@ -146,9 +146,13 @@ public class Client extends BaseFragment implements ClientManage.View, View.OnTo
                 clients.removeAll(clients);
                 page = 1;
                 Map<String, String> map = new HashMap<>();
-                map.put("type", type);
                 map.put("area", area);
-                map.put("order", order);
+                if(!type.isEmpty()){
+                    map.put("type", type);
+                }
+                if(!order.isEmpty()){
+                    map.put("order", order);
+                }
                 map.put("page", String.valueOf(page));
                 String token=SharedPreferencesUtil.Obtain(getContext(),"token","").toString();
                 map.put("token",token);
@@ -160,9 +164,13 @@ public class Client extends BaseFragment implements ClientManage.View, View.OnTo
             public void onLoadmore(RefreshLayout refreshlayout) {
                 ++page;
                 Map<String, String> map = new HashMap<>();
-                map.put("type", type);
                 map.put("area", area);
-                map.put("order", order);
+                if(!type.isEmpty()){
+                    map.put("type", type);
+                }
+                if(!order.isEmpty()){
+                    map.put("order", order);
+                }
                 map.put("page", String.valueOf(page));
                 String token=SharedPreferencesUtil.Obtain(getContext(),"token","").toString();
                 map.put("token",token);

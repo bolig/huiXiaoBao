@@ -10,6 +10,8 @@ import com.dhitoshi.xfrs.huixiaobao.Interface.AddSpendManage;
 import com.dhitoshi.xfrs.huixiaobao.Interface.Callback;
 import com.dhitoshi.xfrs.huixiaobao.model.AddSpendModel;
 
+import java.util.Map;
+
 /**
  * Created by dxs on 2017/9/14.
  */
@@ -22,8 +24,8 @@ public class AddSpendPresenter implements AddSpendManage.Presenter {
         model=new AddSpendModel(context);
     }
     @Override
-    public void addSpend(String token,AddSpendBean addSpendBean, LoadingDialog dialog) {
-        model.addSpend(token,addSpendBean,dialog, new Callback<HttpBean<SpendBean>>() {
+    public void addSpend(Map<String,String> map, LoadingDialog dialog) {
+        model.addSpend(map,dialog, new Callback<HttpBean<SpendBean>>() {
             @Override
             public void get(HttpBean<SpendBean> httpBean) {
                 view.addSpend(httpBean.getStatus().getMsg());
@@ -31,8 +33,8 @@ public class AddSpendPresenter implements AddSpendManage.Presenter {
         });
     }
     @Override
-    public void editSpend(String token,AddSpendBean addSpendBean,LoadingDialog dialog) {
-        model.editSpend(token,addSpendBean,dialog, new Callback<HttpBean<SpendBean>>() {
+    public void editSpend(Map<String,String> map,LoadingDialog dialog) {
+        model.editSpend(map,dialog, new Callback<HttpBean<SpendBean>>() {
             @Override
             public void get(HttpBean<SpendBean> httpBean) {
                 view.editSpend(httpBean.getStatus().getMsg());
