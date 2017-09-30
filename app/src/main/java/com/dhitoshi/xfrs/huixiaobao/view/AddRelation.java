@@ -272,6 +272,10 @@ public class AddRelation extends BaseView implements AddRelationManage.View{
             Toast.makeText(this,"请填写手机号码",Toast.LENGTH_SHORT).show();
             return false;
         }
+        if(birthday.isEmpty()){
+            Toast.makeText(this,"请选择出生日期",Toast.LENGTH_SHORT).show();
+            return false;
+        }
         telephone=relationTelephone.getText().toString();
         email=relationEmail.getText().toString();
         company=relationCompany.getText().toString();

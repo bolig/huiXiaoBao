@@ -212,6 +212,10 @@ public class AddVisit extends BaseView implements AddVisitManage.View{
             Toast.makeText(this,"请选择回访时间",Toast.LENGTH_SHORT).show();
             return false;
         }
+        if(nexttime.isEmpty()){
+            Toast.makeText(this,"请选择再次回访时间",Toast.LENGTH_SHORT).show();
+            return false;
+        }
         feedbody=visitContent.getText().toString();
         notes=visitNotes.getText().toString();
         advice=visitSuggest.getText().toString();
