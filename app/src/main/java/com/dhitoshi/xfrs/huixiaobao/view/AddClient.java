@@ -39,6 +39,7 @@ import com.dhitoshi.xfrs.huixiaobao.adapter.SexAdapter;
 import com.dhitoshi.xfrs.huixiaobao.common.CommonObserver;
 import com.dhitoshi.xfrs.huixiaobao.common.SelectDateDialog;
 import com.dhitoshi.xfrs.huixiaobao.common.SelectDialog;
+import com.dhitoshi.xfrs.huixiaobao.fragment.Client;
 import com.dhitoshi.xfrs.huixiaobao.http.HttpResult;
 import com.dhitoshi.xfrs.huixiaobao.http.MyHttp;
 import com.dhitoshi.xfrs.huixiaobao.presenter.AddClientPresenter;
@@ -46,6 +47,9 @@ import com.dhitoshi.xfrs.huixiaobao.utils.PictureUtils;
 import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
 import org.greenrobot.eventbus.EventBus;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -62,6 +66,8 @@ import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.OnShowRationale;
 import permissions.dispatcher.PermissionRequest;
 import permissions.dispatcher.RuntimePermissions;
+import top.zibin.luban.Luban;
+import top.zibin.luban.OnCompressListener;
 
 import static com.dhitoshi.xfrs.huixiaobao.R.mipmap.user;
 
@@ -128,7 +134,6 @@ public class AddClient extends BaseView implements AddClientManage.View {
     private String ill = "";
     private String hobbyName = "";
     private String illName = "";
-    private int areaId = 0;
     private ArrayList<HobbyBean> hobbys;
     private ArrayList<IllBean> ills;
     private List<PositionBean> positions;
@@ -210,8 +215,9 @@ public class AddClient extends BaseView implements AddClientManage.View {
     }
     //添加客户
     @Override
-    public void addClient(String result) {
-        Toast.makeText(this, result, Toast.LENGTH_SHORT).show();
+    public void addClient(HttpBean<ClientBean> httpBean) {
+        uploadHead(mediaFile,String.valueOf(clientBean.getId()),SharedPreferencesUtil.Obtain(this,"token","").toString(),0);
+        Toast.makeText(this, httpBean.getStatus().getMsg(), Toast.LENGTH_SHORT).show();
         EventBus.getDefault().post(new ClientEvent(1));
         finish();
     }
@@ -442,21 +448,38 @@ public class AddClient extends BaseView implements AddClientManage.View {
         return FileProvider.getUriForFile(this, "com.dhitoshi.hxb.fileprovider", mediaFile);
     }
     //上传头像
-    private void uploadHead(File file,String id,String token) {
-        MyHttp http=MyHttp.getInstance();
-        RequestBody requestBody = new MultipartBody.Builder().setType(MultipartBody.FORM)
-                .addFormDataPart("id", id).addFormDataPart("token", token)
-                .addFormDataPart("img", file.getName(), RequestBody.create(MediaType.parse("image/*"), file)).build();
-        http.send(http.getHttpService().eidtHead(requestBody),new CommonObserver(new HttpResult<HttpBean<Object>>() {
-            @Override
-            public void OnSuccess(HttpBean<Object> httpBean) {
+    private void uploadHead(File file, final String id, final String token, final int type) {
+        Luban.with(this)
+                .load(file)//传人要压缩的图片
+                .setCompressListener(new OnCompressListener() { //设置回调
+                    @Override
+                    public void onStart() {
+                    }
+                    @Override
+                    public void onSuccess(File file) {
+                        MyHttp http=MyHttp.getInstance();
+                        RequestBody requestBody = new MultipartBody.Builder().setType(MultipartBody.FORM)
+                                .addFormDataPart("id", id).addFormDataPart("token", token)
+                                .addFormDataPart("img", file.getName(), RequestBody.create(MediaType.parse("image/png"), file)).build();
+                        http.send(http.getHttpService().eidtHead(requestBody),new CommonObserver(new HttpResult<HttpBean<Object>>() {
+                            @Override
+                            public void OnSuccess(HttpBean<Object> httpBean) {
+                                if(type==0){
 
-            }
-            @Override
-            public void OnFail(String msg) {
+                                }
+                            }
+                            @Override
+                            public void OnFail(String msg) {
+                                Toast.makeText(AddClient.this,msg,Toast.LENGTH_SHORT).show();
+                            }
+                        }));
+                    }
+                    @Override
+                    public void onError(Throwable e) {
+                        //TODO 当压缩过去出现问题时调用
+                    }
+                }).launch();    //启动压缩
 
-            }
-        }));
     }
     //查重
     private void checkRepeat() {
@@ -465,11 +488,15 @@ public class AddClient extends BaseView implements AddClientManage.View {
             Toast.makeText(this, "请填写手机号码", Toast.LENGTH_SHORT).show();
             return;
         }
+        if (clientBean==null&&area.isEmpty()) {
+            Toast.makeText(this, "请选择所属部门", Toast.LENGTH_SHORT).show();
+            return;
+        }
         LoadingDialog dialog = LoadingDialog.build(this).setLoadingTitle("查重中");
         dialog.show();
         String token=SharedPreferencesUtil.Obtain(this,"token","").toString();
         if (null == clientBean) {
-            addClientPresenter.checkRepeat(token,dialog, String.valueOf(areaId), phone, "");
+            addClientPresenter.checkRepeat(token,dialog, area, phone, "");
         } else {
             addClientPresenter.checkRepeat(token,dialog, "", phone, String.valueOf(clientBean.getId()));
         }
@@ -639,13 +666,32 @@ public class AddClient extends BaseView implements AddClientManage.View {
                     } else {
                         path = PictureUtils.getFilePath_below19(this, uri);
                     }
+                    mediaFile=new File(path);
                     loadHead(path,clientHead);
                     break;
             }
+            if(getFileSizes(mediaFile) >16777216 ){
+                Toast.makeText(this,"图片大小超过16M上传限制，请重新上传", Toast.LENGTH_SHORT).show();
+                return;
+            }
             if(clientBean!=null){
-                uploadHead(mediaFile,String.valueOf(clientBean.getId()),SharedPreferencesUtil.Obtain(this,"token","").toString());
+                uploadHead(mediaFile,String.valueOf(clientBean.getId()),SharedPreferencesUtil.Obtain(this,"token","").toString(),1);
             }
         }
+    }
+    //获取文件大小
+    public long getFileSizes(File f) {
+        long s = 0;
+        FileInputStream fis = null;
+        try {
+            fis = new FileInputStream(f);
+            s = fis.available();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return s;
     }
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {

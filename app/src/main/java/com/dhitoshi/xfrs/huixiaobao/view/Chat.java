@@ -1,4 +1,5 @@
 package com.dhitoshi.xfrs.huixiaobao.view;
+
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -7,13 +8,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatImageView;
 import android.view.WindowManager;
 import android.widget.TextView;
+
 import com.alibaba.mobileim.YWAPI;
 import com.alibaba.mobileim.YWIMKit;
 import com.dhitoshi.xfrs.huixiaobao.R;
+import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
 import com.dhitoshi.xfrs.huixiaobao.utils.SystemBarTintManager;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 public class Chat extends AppCompatActivity {
     @BindView(R.id.back)
     AppCompatImageView back;
@@ -22,6 +27,8 @@ public class Chat extends AppCompatActivity {
     @BindView(R.id.right_icon)
     AppCompatImageView rightIcon;
     private YWIMKit mIMKit;
+    private String target = "";
+    private String name = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,12 +36,13 @@ public class Chat extends AppCompatActivity {
         setContentView(R.layout.activity_chat);
         ButterKnife.bind(this);
         InitView();
-        String userid = "visitor1";
-        mIMKit = YWAPI.getIMKitInstance(userid, "23015524");
+        target = getIntent().getStringExtra("target");
+        name = getIntent().getStringExtra("name");
+        String userId = SharedPreferencesUtil.Obtain(this, "account", "").toString().split("@")[0];
+        mIMKit = YWAPI.getIMKitInstance(userId, "24607089");
         FragmentManager fm = getSupportFragmentManager();
-        String target = "visitor2";// 消息接收者ID
-        title.setText(target);
-        Fragment fragment = mIMKit.getChattingFragment(target, "23015524");
+        title.setText(name);
+        Fragment fragment = mIMKit.getChattingFragment(target, "24607089");
         fm.beginTransaction().add(R.id.chat, fragment).commit();
     }
 
@@ -43,7 +51,7 @@ public class Chat extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }
-        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.N){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }
@@ -56,4 +64,8 @@ public class Chat extends AppCompatActivity {
         tintManager.setTintResource(R.color.colorPrimary);
     }
 
+    @OnClick(R.id.back)
+    public void onViewClicked() {
+        finish();
+    }
 }

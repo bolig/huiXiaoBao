@@ -157,6 +157,7 @@
                     android:text="电子邮箱："
                     android:textColor="#666666"
                     android:textSize="14dp" />
+
                 <EditText
                     android:id="@+id/user_email"
                     android:layout_width="0dp"

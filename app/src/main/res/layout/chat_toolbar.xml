@@ -11,7 +11,8 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="right"
-        android:padding="10dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
         android:src="@drawable/back_click"
         android:clickable="true"
         />
@@ -21,7 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:textColor="@android:color/white"
-        android:textSize="15dp"
+        android:textSize="17dp"
         />
     <android.support.v7.widget.AppCompatImageView
         android:id="@+id/right_icon"

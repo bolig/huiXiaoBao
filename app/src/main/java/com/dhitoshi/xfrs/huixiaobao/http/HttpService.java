@@ -9,6 +9,7 @@ import com.dhitoshi.xfrs.huixiaobao.Bean.AddVisitBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.ApplyMeetBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.AreaBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.BaseBean;
+import com.dhitoshi.xfrs.huixiaobao.Bean.ChatContact;
 import com.dhitoshi.xfrs.huixiaobao.Bean.ClientBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.GiftBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
@@ -38,14 +39,10 @@ import com.dhitoshi.xfrs.huixiaobao.Bean.VisitBean;
 import java.util.List;
 import java.util.Map;
 import io.reactivex.Observable;
-import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
-import retrofit2.http.Multipart;
 import retrofit2.http.POST;
-import retrofit2.http.Part;
-import retrofit2.http.PartMap;
 import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
 
@@ -173,6 +170,9 @@ public interface HttpService {
     //高级查询所需列表
     @GET("customer/listForSearch")
     Observable<HttpBean<InfoQuery>> getListForSearch(@Query("token") String token);
+    //即时消息用户联系人
+    @GET("user/GetUsers")
+    Observable<HttpBean<List<ChatContact>>> GetUsers(@Query("token") String token);
 
 
     //更改密码
@@ -258,11 +258,14 @@ public interface HttpService {
     Observable<HttpBean<Object>> applyMeeting(@QueryMap Map<String,String> map);
     //上传头像
     @POST("customer/eidtHead")
-    Observable<HttpBean<Object>> eidtHead(@Body RequestBody Body);
-
+    Observable<HttpBean<String>> eidtHead(@Body RequestBody Body);
+    //修改个人头像
     @POST("user/eidtHead")
-    Observable<HttpBean<Object>> uploadHead(@Body RequestBody Body);
+    Observable<HttpBean<String>> uploadHead(@Body RequestBody Body);
     //添加参会客户
     @POST("Meeting/addCustomer")
     Observable<HttpBean<Object>> addCustomer(@QueryMap Map<String,String> map);
+    //修改个人基本资料
+    @POST("user/editBase")
+    Observable<HttpBean<UserBean>> editBase(@QueryMap Map<String,String> map);
 }

@@ -17,7 +17,7 @@ import retrofit2.http.Query;
 
 public interface AddClientManage {
     interface View{
-        void addClient(String result);
+        void addClient(HttpBean<ClientBean> httpBean);
         void editClient(HttpBean<ClientBean> httpBean);
         void getInfoForAdd(HttpBean<InfoAddClientBean> httpBean);
         void checkRepeat(String result);

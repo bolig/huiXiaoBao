@@ -5,16 +5,29 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     >
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:gravity="center"
         android:background="@color/colorPrimary"
+        android:orientation="horizontal"
         >
+        <TextView
+            android:id="@+id/group_search"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="搜索"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:textColor="@android:color/white"
+            android:textSize="16dp"
+            android:visibility="gone"
+            />
         <com.dhitoshi.xfrs.huixiaobao.common.SegmentTabLayout
             android:id="@+id/segement"
-            android:layout_width="220dp"
+            android:layout_width="210dp"
             android:layout_height="32dp"
+           android:layout_centerInParent="true"
             tl:tl_indicator_anim_enable="true"
             tl:tl_indicator_bounce_enable="false"
             tl:tl_indicator_color="@android:color/white"
@@ -22,7 +35,17 @@
             tl:tl_textUnselectColor="@android:color/white"
             tl:tl_tab_padding="15dp"
             />
-    </LinearLayout>
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/group_add"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_gravity="right"
+            android:padding="15dp"
+            android:src="@mipmap/add"
+            android:visibility="gone"
+            />
+    </RelativeLayout>
     <com.dhitoshi.xfrs.huixiaobao.common.NoSlidingViewPager
         android:id="@+id/news_viewpager"
         android:layout_width="match_parent"

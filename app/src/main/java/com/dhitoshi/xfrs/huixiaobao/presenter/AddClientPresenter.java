@@ -30,7 +30,7 @@ public class AddClientPresenter implements AddClientManage.Presenter{
         addClientModel.addClient(token,addClientBean,dialog, new Callback<HttpBean<ClientBean>>() {
             @Override
             public void get(HttpBean<ClientBean> httpBean) {
-                view.addClient(httpBean.getStatus().getMsg());
+                view.addClient(httpBean);
             }
         });
     }

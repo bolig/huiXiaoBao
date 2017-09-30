@@ -12,19 +12,30 @@ import android.support.v4.content.FileProvider;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
+import com.dhitoshi.xfrs.huixiaobao.Bean.UserBean;
 import com.dhitoshi.xfrs.huixiaobao.Dialog.HeadPopup;
+import com.dhitoshi.xfrs.huixiaobao.Dialog.LoadingDialog;
 import com.dhitoshi.xfrs.huixiaobao.Interface.HeadClickBack;
+import com.dhitoshi.xfrs.huixiaobao.Interface.LoginCall;
 import com.dhitoshi.xfrs.huixiaobao.R;
 import com.dhitoshi.xfrs.huixiaobao.common.CommonObserver;
 import com.dhitoshi.xfrs.huixiaobao.http.HttpResult;
 import com.dhitoshi.xfrs.huixiaobao.http.MyHttp;
+import com.dhitoshi.xfrs.huixiaobao.utils.LoginUtil;
 import com.dhitoshi.xfrs.huixiaobao.utils.PictureUtils;
 import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -35,6 +46,8 @@ import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.OnShowRationale;
 import permissions.dispatcher.PermissionRequest;
 import permissions.dispatcher.RuntimePermissions;
+import top.zibin.luban.Luban;
+import top.zibin.luban.OnCompressListener;
 
 @RuntimePermissions
 public class UserInfo extends BaseView {
@@ -54,6 +67,10 @@ public class UserInfo extends BaseView {
     private File mediaFile;
     private String cameraPath = null;
     private Uri uri;
+    private String truename;
+    private String phone;
+    private String email;
+    private Map<String,String> map;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,11 +92,60 @@ public class UserInfo extends BaseView {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.right_text:
+                commit();
                 break;
             case R.id.update_head:
                 selectHead();
                 break;
         }
+    }
+    //提交个人资料
+    private void commit() {
+        truename=userName.getText().toString();
+        phone=userPhone.getText().toString();
+        email=userEmail.getText().toString();
+        if(map==null){
+            map=new HashMap<>();
+        }
+        map.put("id",String.valueOf(SharedPreferencesUtil.Obtain(this,"id",0)));
+        map.put("token",SharedPreferencesUtil.Obtain(this,"token","").toString());
+        map.put("truename",truename);
+        map.put("phone",phone);
+        map.put("email",email);
+        final LoadingDialog dialog = LoadingDialog.build(this).setLoadingTitle("提交中");
+        dialog.show();
+        editBase(map,dialog);
+    }
+    private void editBase(final Map<String, String> map, final LoadingDialog dialog ) {
+        MyHttp http=MyHttp.getInstance();
+        http.send(http.getHttpService().editBase(map),new CommonObserver(new HttpResult<HttpBean<UserBean>>() {
+            @Override
+            public void OnSuccess(HttpBean<UserBean> httpBean) {
+                dialog.dismiss();
+                if(httpBean.getStatus().getCode()==200){
+                    Toast.makeText(UserInfo.this,httpBean.getStatus().getMsg(),Toast.LENGTH_SHORT).show();
+                    SharedPreferencesUtil.Save(UserInfo.this, "phone", phone);
+                    SharedPreferencesUtil.Save(UserInfo.this, "email", email);
+                    SharedPreferencesUtil.Save(UserInfo.this, "truename", truename);
+                    finish();
+                }else if(httpBean.getStatus().getCode()==600){
+                    LoginUtil.autoLogin(UserInfo.this, new LoginCall() {
+                        @Override
+                        public void autoLogin(String token) {
+                            map.put("token",token);
+                            editBase(map, dialog);
+                        }
+                    });
+                }else{
+                    Toast.makeText(UserInfo.this,httpBean.getStatus().getMsg(),Toast.LENGTH_SHORT).show();
+                }
+            }
+            @Override
+            public void OnFail(String msg) {
+                dialog.dismiss();
+                Toast.makeText(UserInfo.this,msg,Toast.LENGTH_SHORT).show();
+            }
+        }));
     }
     private void selectHead() {
         if (null == headPopup) {
@@ -127,21 +193,36 @@ public class UserInfo extends BaseView {
         request.proceed();
     }
     //上传头像
-    private void uploadHead(File file,String id,String token) {
-        MyHttp http=MyHttp.getInstance();
-        RequestBody requestBody = new MultipartBody.Builder().setType(MultipartBody.FORM)
-                .addFormDataPart("id", id).addFormDataPart("token", token)
-                .addFormDataPart("img", file.getName(), RequestBody.create(MediaType.parse("image/*"), file)).build();
-        http.send(http.getHttpService().uploadHead(requestBody),new CommonObserver(new HttpResult<HttpBean<Object>>() {
-            @Override
-            public void OnSuccess(HttpBean<Object> httpBean) {
-
-            }
-            @Override
-            public void OnFail(String msg) {
-
-            }
-        }));
+    private void uploadHead(File file, final String id, final String token) {
+        Luban.with(this)
+                .load(file)//传人要压缩的图片
+                .setCompressListener(new OnCompressListener() { //设置回调
+                    @Override
+                    public void onStart() {
+                    }
+                    @Override
+                    public void onSuccess(File file) {
+                        //TODO 压缩成功后调用，返回压缩后的图片文件
+                        MyHttp http=MyHttp.getInstance();
+                        RequestBody requestBody = new MultipartBody.Builder().setType(MultipartBody.FORM)
+                                .addFormDataPart("id", id).addFormDataPart("token", token)
+                                .addFormDataPart("img", file.getName(), RequestBody.create(MediaType.parse("image/png"), file)).build();
+                        http.send(http.getHttpService().uploadHead(requestBody),new CommonObserver(new HttpResult<HttpBean<String>>() {
+                            @Override
+                            public void OnSuccess(HttpBean<String> httpBean) {
+                                Toast.makeText(UserInfo.this,httpBean.getStatus().getMsg(),Toast.LENGTH_SHORT).show();
+                            }
+                            @Override
+                            public void OnFail(String msg) {
+                                Toast.makeText(UserInfo.this,msg,Toast.LENGTH_SHORT).show();
+                            }
+                        }));
+                    }
+                    @Override
+                    public void onError(Throwable e) {
+                        //TODO 当压缩过去出现问题时调用
+                    }
+                }).launch();    //启动压缩
     }
     //用于拍照时获取输出的Uri
     protected Uri getOutputMediaFileUri() {
@@ -179,10 +260,27 @@ public class UserInfo extends BaseView {
                     loadHead(path,userHead);
                     break;
             }
-
+            if(getFileSizes(mediaFile) >16777216 ){
+                Toast.makeText(this,"图片大小超过16M上传限制，请重新上传", Toast.LENGTH_SHORT).show();
+                return;
+            }
             uploadHead(mediaFile,String.valueOf(SharedPreferencesUtil.Obtain(this,"id",0))
                     ,SharedPreferencesUtil.Obtain(this,"token","").toString());
         }
+    }
+    //获取文件大小
+    public long getFileSizes(File f) {
+        long s = 0;
+        FileInputStream fis = null;
+        try {
+            fis = new FileInputStream(f);
+            s = fis.available();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return s;
     }
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
