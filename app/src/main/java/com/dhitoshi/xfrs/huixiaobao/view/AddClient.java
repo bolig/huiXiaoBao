@@ -9,13 +9,12 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.content.FileProvider;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.dhitoshi.xfrs.huixiaobao.Bean.AddClientBean;
+
 import com.dhitoshi.xfrs.huixiaobao.Bean.ClientBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.CustomerTypeBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HobbyBean;
@@ -39,7 +38,6 @@ import com.dhitoshi.xfrs.huixiaobao.adapter.SexAdapter;
 import com.dhitoshi.xfrs.huixiaobao.common.CommonObserver;
 import com.dhitoshi.xfrs.huixiaobao.common.SelectDateDialog;
 import com.dhitoshi.xfrs.huixiaobao.common.SelectDialog;
-import com.dhitoshi.xfrs.huixiaobao.fragment.Client;
 import com.dhitoshi.xfrs.huixiaobao.http.HttpResult;
 import com.dhitoshi.xfrs.huixiaobao.http.MyHttp;
 import com.dhitoshi.xfrs.huixiaobao.presenter.AddClientPresenter;
@@ -68,9 +66,6 @@ import permissions.dispatcher.PermissionRequest;
 import permissions.dispatcher.RuntimePermissions;
 import top.zibin.luban.Luban;
 import top.zibin.luban.OnCompressListener;
-
-import static com.dhitoshi.xfrs.huixiaobao.R.id.attend;
-import static com.dhitoshi.xfrs.huixiaobao.R.mipmap.user;
 
 @RuntimePermissions
 public class AddClient extends BaseView implements AddClientManage.View {
@@ -114,21 +109,21 @@ public class AddClient extends BaseView implements AddClientManage.View {
     TextView clientEntryMan;
     @BindView(R.id.client_head)
     ImageView clientHead;
-    private String name;
+    private String name="";
     private String sex = "";
     private String birthday = "";
-    private String phone;
-    private String vip;
+    private String phone="";
+    private String vip="";
     private String area = "";
-    private String telPhone;
-    private String email;
+    private String telPhone="";
+    private String email="";
     private String workPosition = "";
-    private String address;
-    private String company;
+    private String address="";
+    private String company="";
     private String type = "";
-    private String companyPhone;
-    private String companyAddress;
-    private String notes;
+    private String companyPhone="";
+    private String companyAddress="";
+    private String notes="";
     private AddClientPresenter addClientPresenter;
     private ClientBean clientBean;
     private String hobby = "";
@@ -147,6 +142,7 @@ public class AddClient extends BaseView implements AddClientManage.View {
     private String cameraPath = null;
     private Uri uri;
     private Map<String,String> map;
+    private LoadingDialog dialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -219,10 +215,14 @@ public class AddClient extends BaseView implements AddClientManage.View {
     //添加客户
     @Override
     public void addClient(HttpBean<ClientBean> httpBean) {
-        uploadHead(mediaFile,String.valueOf(clientBean.getId()),SharedPreferencesUtil.Obtain(this,"token","").toString(),0);
-        Toast.makeText(this, httpBean.getStatus().getMsg(), Toast.LENGTH_SHORT).show();
-        EventBus.getDefault().post(new ClientEvent(1));
-        finish();
+        if(mediaFile!=null){
+            uploadHead(mediaFile,String.valueOf(httpBean.getData().getId()),SharedPreferencesUtil.Obtain(this,"token","").toString(),0);
+        }else{
+            Toast.makeText(this, httpBean.getStatus().getMsg(), Toast.LENGTH_SHORT).show();
+            EventBus.getDefault().post(new ClientEvent(1));
+            finish();
+        }
+
     }
     //编辑客户
     @Override
@@ -340,7 +340,7 @@ public class AddClient extends BaseView implements AddClientManage.View {
             if(!notes.isEmpty()){
                 map.put("notes",notes);
             }
-            LoadingDialog dialog = LoadingDialog.build(this).setLoadingTitle("提交中");
+            dialog = LoadingDialog.build(this).setLoadingTitle("提交中");
             dialog.show();
             String token=SharedPreferencesUtil.Obtain(this,"token","").toString();
             map.put("token",token);
@@ -455,7 +455,17 @@ public class AddClient extends BaseView implements AddClientManage.View {
                             @Override
                             public void OnSuccess(HttpBean<Object> httpBean) {
                                 if(type==0){
-
+                                    if(dialog!=null){
+                                        dialog.dismiss();
+                                    }
+                                    if(httpBean.getStatus().getCode()==200){
+                                        EventBus.getDefault().post(new ClientEvent(1));
+                                        finish();
+                                    }else{
+                                        Toast.makeText(AddClient.this,httpBean.getStatus().getMsg(),Toast.LENGTH_SHORT).show();
+                                    }
+                                }else {
+                                    Toast.makeText(AddClient.this,httpBean.getStatus().getMsg(),Toast.LENGTH_SHORT).show();
                                 }
                             }
                             @Override

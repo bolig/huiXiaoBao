@@ -1,7 +1,6 @@
 package com.dhitoshi.xfrs.huixiaobao.presenter;
 import android.content.Context;
 
-import com.dhitoshi.xfrs.huixiaobao.Bean.AddMeetBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.InfoAddMeetBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.MeetBean;

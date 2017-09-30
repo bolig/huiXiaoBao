@@ -2,8 +2,6 @@ package com.dhitoshi.xfrs.huixiaobao.model;
 import android.content.Context;
 import android.widget.Toast;
 
-import com.dhitoshi.xfrs.huixiaobao.Bean.AddClientBean;
-import com.dhitoshi.xfrs.huixiaobao.Bean.AreaBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.ClientBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.InfoAddClientBean;
@@ -16,7 +14,6 @@ import com.dhitoshi.xfrs.huixiaobao.http.HttpResult;
 import com.dhitoshi.xfrs.huixiaobao.http.MyHttp;
 import com.dhitoshi.xfrs.huixiaobao.utils.LoginUtil;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -37,7 +34,6 @@ public class AddClientModel implements AddClientManage.Model {
 
             @Override
             public void OnSuccess(HttpBean<ClientBean> httpBean) {
-                dialog.dismiss();
                 if(httpBean.getStatus().getCode()==200){
                     callback.get(httpBean);
                 }else if(httpBean.getStatus().getCode()==600){
@@ -50,6 +46,7 @@ public class AddClientModel implements AddClientManage.Model {
                     });
                 }
                 else{
+                    dialog.dismiss();
                     Toast.makeText(context,httpBean.getStatus().getMsg(),Toast.LENGTH_SHORT).show();
                 }
             }

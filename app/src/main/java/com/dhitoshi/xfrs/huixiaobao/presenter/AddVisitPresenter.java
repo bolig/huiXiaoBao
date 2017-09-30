@@ -2,7 +2,6 @@ package com.dhitoshi.xfrs.huixiaobao.presenter;
 
 import android.content.Context;
 
-import com.dhitoshi.xfrs.huixiaobao.Bean.AddVisitBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.InfoAddVisitBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.VisitBean;

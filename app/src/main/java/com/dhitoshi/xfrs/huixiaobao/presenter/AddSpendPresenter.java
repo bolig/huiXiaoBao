@@ -1,7 +1,6 @@
 package com.dhitoshi.xfrs.huixiaobao.presenter;
 import android.content.Context;
 
-import com.dhitoshi.xfrs.huixiaobao.Bean.AddSpendBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.InfoAddSpendBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.SpendBean;

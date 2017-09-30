@@ -1,8 +1,6 @@
 package com.dhitoshi.xfrs.huixiaobao.presenter;
 import android.content.Context;
 
-import com.dhitoshi.xfrs.huixiaobao.Bean.AddClientBean;
-import com.dhitoshi.xfrs.huixiaobao.Bean.AreaBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.ClientBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.InfoAddClientBean;
@@ -11,7 +9,6 @@ import com.dhitoshi.xfrs.huixiaobao.Interface.AddClientManage;
 import com.dhitoshi.xfrs.huixiaobao.Interface.Callback;
 import com.dhitoshi.xfrs.huixiaobao.model.AddClientModel;
 
-import java.util.List;
 import java.util.Map;
 
 

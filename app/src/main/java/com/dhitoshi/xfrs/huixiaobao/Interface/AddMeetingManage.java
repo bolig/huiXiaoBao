@@ -1,9 +1,7 @@
 package com.dhitoshi.xfrs.huixiaobao.Interface;
 
-import com.dhitoshi.xfrs.huixiaobao.Bean.AddMeetBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.InfoAddMeetBean;
-import com.dhitoshi.xfrs.huixiaobao.Bean.InfoAddSpendBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.MeetBean;
 import com.dhitoshi.xfrs.huixiaobao.Dialog.LoadingDialog;
 

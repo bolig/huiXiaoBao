@@ -1,14 +1,10 @@
 package com.dhitoshi.xfrs.huixiaobao.Interface;
-import com.dhitoshi.xfrs.huixiaobao.Bean.AddRelationBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.InfoAddRelationBean;
-import com.dhitoshi.xfrs.huixiaobao.Bean.InfoAddSpendBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.RelationBean;
 import com.dhitoshi.xfrs.huixiaobao.Dialog.LoadingDialog;
 
 import java.util.Map;
-
-import retrofit2.http.Body;
 
 /**
  * Created by dxs on 2017/9/8.

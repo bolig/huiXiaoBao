@@ -18,6 +18,7 @@ import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.UserBean;
 import com.dhitoshi.xfrs.huixiaobao.Dialog.HeadPopup;
 import com.dhitoshi.xfrs.huixiaobao.Dialog.LoadingDialog;
+import com.dhitoshi.xfrs.huixiaobao.Event.PersonalEvent;
 import com.dhitoshi.xfrs.huixiaobao.Interface.HeadClickBack;
 import com.dhitoshi.xfrs.huixiaobao.Interface.LoginCall;
 import com.dhitoshi.xfrs.huixiaobao.R;
@@ -27,6 +28,9 @@ import com.dhitoshi.xfrs.huixiaobao.http.MyHttp;
 import com.dhitoshi.xfrs.huixiaobao.utils.LoginUtil;
 import com.dhitoshi.xfrs.huixiaobao.utils.PictureUtils;
 import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
+
+import org.greenrobot.eventbus.EventBus;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -125,6 +129,7 @@ public class UserInfo extends BaseView {
                 if(httpBean.getStatus().getCode()==200){
                     Toast.makeText(UserInfo.this,httpBean.getStatus().getMsg(),Toast.LENGTH_SHORT).show();
                     SharedPreferencesUtil.Save(UserInfo.this, "phone", phone);
+                    EventBus.getDefault().post(new PersonalEvent(2,truename));
                     SharedPreferencesUtil.Save(UserInfo.this, "email", email);
                     SharedPreferencesUtil.Save(UserInfo.this, "truename", truename);
                     finish();
@@ -211,6 +216,8 @@ public class UserInfo extends BaseView {
                             @Override
                             public void OnSuccess(HttpBean<String> httpBean) {
                                 Toast.makeText(UserInfo.this,httpBean.getStatus().getMsg(),Toast.LENGTH_SHORT).show();
+                                SharedPreferencesUtil.Obtain(UserInfo.this,"head",httpBean.getData());
+                                EventBus.getDefault().post(new PersonalEvent(1,httpBean.getData()));
                             }
                             @Override
                             public void OnFail(String msg) {

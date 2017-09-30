@@ -5,23 +5,19 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.dhitoshi.xfrs.huixiaobao.Bean.AddRelationBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.BaseBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.InfoAddRelationBean;
-import com.dhitoshi.xfrs.huixiaobao.Bean.PositionBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.RelationBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.SexBean;
 import com.dhitoshi.xfrs.huixiaobao.Dialog.LoadingDialog;
 import com.dhitoshi.xfrs.huixiaobao.Event.QueryResultEvent;
 import com.dhitoshi.xfrs.huixiaobao.Event.RelationEvent;
-import com.dhitoshi.xfrs.huixiaobao.Event.SpendEvent;
 import com.dhitoshi.xfrs.huixiaobao.Interface.AddRelationManage;
 import com.dhitoshi.xfrs.huixiaobao.Interface.DateCallBack;
 import com.dhitoshi.xfrs.huixiaobao.Interface.ItemClick;
 import com.dhitoshi.xfrs.huixiaobao.R;
 import com.dhitoshi.xfrs.huixiaobao.adapter.CommonAdapter;
-import com.dhitoshi.xfrs.huixiaobao.adapter.PositionAdapter;
 import com.dhitoshi.xfrs.huixiaobao.adapter.SexAdapter;
 import com.dhitoshi.xfrs.huixiaobao.common.SelectDateDialog;
 import com.dhitoshi.xfrs.huixiaobao.common.SelectDialog;
@@ -38,8 +34,6 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
-import static com.dhitoshi.xfrs.huixiaobao.R.id.attend;
 
 public class AddRelation extends BaseView implements AddRelationManage.View{
 
@@ -72,7 +66,7 @@ public class AddRelation extends BaseView implements AddRelationManage.View{
     private String email="";
     private String company="";
     private String workPosition="";
-    private String notes;
+    private String notes="";
     private int userId;
     private List<BaseBean> relations;
     private List<BaseBean> positions;

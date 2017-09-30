@@ -71,6 +71,7 @@ public class AttendMeet extends BaseView implements MeetClientManage.View {
     private Map<String,String> map;
     private String attend="";
     private String currentAttend="";
+    private int updatePosition=-1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -172,10 +173,11 @@ public class AttendMeet extends BaseView implements MeetClientManage.View {
             adapter.addAtendClick(new AttendClick() {
                 @Override
                 public void check(View view, MeetClientBean meetClientBean, int position) {
+                    updatePosition=position;
                     Map<String,String>  map=new HashMap<>();
                     map.put("id",String.valueOf(meetClientBean.getId()));
                     map.put("token",SharedPreferencesUtil.Obtain(AttendMeet.this,"token","").toString());
-                    if(meetClientBean.getAttend().get(position).equals("1")){
+                    if(meetClientBean.getAttend().get(current).equals("1")){
                         currentAttend="0";
                     }else{
                         currentAttend="1";
@@ -183,22 +185,22 @@ public class AttendMeet extends BaseView implements MeetClientManage.View {
                     int size=meetClientBean.getAttend().size();
                     for (int i = 0; i < size; i++) {
                         if(attend.isEmpty()){
-                            if(position==i){
+                            if(current==i){
                                 attend+=currentAttend;
                             }else{
                                 attend+=meetClientBean.getAttend().get(i);
                             }
                         }else{
-                            if(position==i){
+                            if(current==i){
                                 attend+=","+currentAttend;
                             }else{
                                 attend+=","+meetClientBean.getAttend().get(i);
                             }
                         }
                     }
-                    Log.e("TAG","attend------>>>>"+attend);
                     map.put("attend",attend);
-                    //attend(map,view);
+                    Log.e("TAG","attend---->>>"+attend);
+                    attend(map,view);
                 }
             });
         } else {
@@ -220,19 +222,31 @@ public class AttendMeet extends BaseView implements MeetClientManage.View {
                     });
                 }else if(httpBean.getStatus().getCode()==200){
                     Toast.makeText(AttendMeet.this,httpBean.getStatus().getMsg(),Toast.LENGTH_SHORT).show();
+                    String attends[]=attend.split(",");
+                    int length=attends.length;
+                    List<String> newAttend=new ArrayList<>(length);
+                    for (int i = 0; i < length; i++) {
+                        newAttend.add(attends[i]);
+                    }
+                    meetClientBeens.get(updatePosition).setAttend(newAttend);
+                    adapter.notifyDataSetChanged();
+                    attend="";
                     ((ImageView)view).setImageResource(currentAttend.equals("1")?R.mipmap.select:R.mipmap.unselect);
                 }else{
+                    attend="";
                     Toast.makeText(AttendMeet.this,httpBean.getStatus().getMsg(),Toast.LENGTH_SHORT).show();
                 }
             }
             @Override
             public void OnFail(String msg) {
+                attend="";
                 Toast.makeText(AttendMeet.this,msg,Toast.LENGTH_SHORT).show();
             }
         }));
     }
     @OnClick(R.id.title)
     public void onViewClicked() {
+        attend="";
         commonAdapter = new CommonAdapter(dates, this, title.getText().toString());
         final SelectDialog dialog = new SelectDialog(this);
         dialog.setTitle("选择日期").setAdapter(commonAdapter).show();

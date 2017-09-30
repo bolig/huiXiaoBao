@@ -10,12 +10,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.dhitoshi.xfrs.huixiaobao.Event.ClientEvent;
+import com.dhitoshi.xfrs.huixiaobao.Event.PersonalEvent;
 import com.dhitoshi.xfrs.huixiaobao.R;
 import com.dhitoshi.xfrs.huixiaobao.common.GlideCircleTransform;
 import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
 import com.dhitoshi.xfrs.huixiaobao.view.ApplyMeeting;
 import com.dhitoshi.xfrs.huixiaobao.view.Setting;
 import com.dhitoshi.xfrs.huixiaobao.view.UserInfo;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -50,6 +56,7 @@ public class Personal extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_personal, container, false);
         unbinder = ButterKnife.bind(this, view);
+        EventBus.getDefault().register(this);
         initViews();
         return view;
     }
@@ -65,6 +72,7 @@ public class Personal extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+        EventBus.getDefault().unregister(this);
     }
 
     @OnClick({R.id.personal_setting, R.id.personal_share, R.id.personal_meeting, R.id.personal_help,R.id.personal_info})
@@ -85,6 +93,18 @@ public class Personal extends Fragment {
                 startActivity(it);
                 break;
             case R.id.personal_help:
+                break;
+        }
+    }
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventMainThread(PersonalEvent event) {
+        switch (event.getState()) {
+            case 1:
+                Glide.with(this).load(event.getResource())
+                        .placeholder(R.mipmap.head).error(R.mipmap.head).transform(new GlideCircleTransform(getContext())).into(personalHead);
+                break;
+            case 2:
+                personalName.setText(event.getResource());
                 break;
         }
     }

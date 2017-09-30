@@ -587,7 +587,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
-                    android:textColor="#BFBFBF" />
+                    android:textColor="@color/colorPrimary" />
             </LinearLayout>
 
             <View
