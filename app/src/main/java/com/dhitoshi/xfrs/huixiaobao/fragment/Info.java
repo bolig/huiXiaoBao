@@ -15,7 +15,6 @@ import com.dhitoshi.xfrs.huixiaobao.Bean.ClientBean;
 import com.dhitoshi.xfrs.huixiaobao.Event.InfoEvent;
 import com.dhitoshi.xfrs.huixiaobao.R;
 import com.dhitoshi.xfrs.huixiaobao.common.GlideCircleTransform;
-import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -66,9 +65,12 @@ public class Info extends Fragment {
     private static final String ARG_Client = "client";
     @BindView(R.id.info_sex)
     TextView infoSex;
+    @BindView(R.id.info_idcard)
+    TextView infoIdcard;
     private ClientBean clientBean;
-    private String hobby="";
-    private String ill="";
+    private String hobby = "";
+    private String ill = "";
+
     public Info() {
     }
 
@@ -104,9 +106,10 @@ public class Info extends Fragment {
         infoSex.setText(clientBean.getSex());
         infoBirthday.setText(clientBean.getBirthday());
         infoPhone.setText(clientBean.getPhone());
-        int hobbySize=clientBean.getHobby().size();
+        infoIdcard.setText(clientBean.getIdcard());
+        int hobbySize = clientBean.getHobby().size();
         for (int i = 0; i < hobbySize; i++) {
-            hobby+=clientBean.getHobby().get(i).getHobbyname()+" ";
+            hobby += clientBean.getHobby().get(i).getHobbyname() + " ";
         }
         infoHobby.setText(hobby);
         infoVip.setText(clientBean.getVip_id());
@@ -119,9 +122,9 @@ public class Info extends Fragment {
         infoCompanyAddress.setText(clientBean.getCompany_address());
         infoCompanyPhone.setText(clientBean.getCompany_phone());
         infoEntryMan.setText(clientBean.getEntryman());
-        int illSize=clientBean.getIll().size();
+        int illSize = clientBean.getIll().size();
         for (int i = 0; i < illSize; i++) {
-            ill+=clientBean.getIll().get(i).getIllname()+" ";
+            ill += clientBean.getIll().get(i).getIllname() + " ";
         }
         infoIll.setText(ill);
         infoNotes.setText(clientBean.getNotes());
@@ -145,11 +148,12 @@ public class Info extends Fragment {
                 break;
         }
     }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(InfoEvent event) {
-        switch (event.getState()){
+        switch (event.getState()) {
             case 1:
-                clientBean=event.getClientBean();
+                clientBean = event.getClientBean();
                 initViews();
                 break;
         }

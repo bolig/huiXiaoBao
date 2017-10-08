@@ -43,7 +43,9 @@ import com.dhitoshi.xfrs.huixiaobao.http.MyHttp;
 import com.dhitoshi.xfrs.huixiaobao.presenter.AddClientPresenter;
 import com.dhitoshi.xfrs.huixiaobao.utils.PictureUtils;
 import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
+
 import org.greenrobot.eventbus.EventBus;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -54,6 +56,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -109,26 +112,28 @@ public class AddClient extends BaseView implements AddClientManage.View {
     TextView clientEntryMan;
     @BindView(R.id.client_head)
     ImageView clientHead;
-    private String name="";
+    @BindView(R.id.client_idcard)
+    EditText clientIdcard;
+    private String name = "";
     private String sex = "";
     private String birthday = "";
-    private String phone="";
-    private String vip="";
+    private String phone = "";
+    private String vip = "";
     private String area = "";
-    private String telPhone="";
-    private String email="";
+    private String telPhone = "";
+    private String email = "";
     private String workPosition = "";
-    private String address="";
-    private String company="";
+    private String address = "";
+    private String company = "";
     private String type = "";
-    private String companyPhone="";
-    private String companyAddress="";
-    private String notes="";
+    private String companyPhone = "";
+    private String companyAddress = "";
+    private String notes = "";
     private AddClientPresenter addClientPresenter;
     private ClientBean clientBean;
     private String hobby = "";
     private String ill = "";
-    private String entryman="";
+    private String entryman = "";
     private String hobbyName = "";
     private String illName = "";
     private ArrayList<HobbyBean> hobbys;
@@ -140,9 +145,11 @@ public class AddClient extends BaseView implements AddClientManage.View {
     private static final int IMAGE_REQUEST_CODE = 521;
     private File mediaFile;
     private String cameraPath = null;
+    private String idcard = "";
     private Uri uri;
-    private Map<String,String> map;
+    private Map<String, String> map;
     private LoadingDialog dialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -150,6 +157,7 @@ public class AddClient extends BaseView implements AddClientManage.View {
         ButterKnife.bind(this);
         initViews();
     }
+
     private void initViews() {
         initBaseViews();
         clientBean = getIntent().getParcelableExtra("info");
@@ -161,8 +169,9 @@ public class AddClient extends BaseView implements AddClientManage.View {
         }
         setRightText("提交");
         addClientPresenter = new AddClientPresenter(this, this);
-        addClientPresenter.getInfoForAdd(SharedPreferencesUtil.Obtain(this,"token","").toString());
+        addClientPresenter.getInfoForAdd(SharedPreferencesUtil.Obtain(this, "token", "").toString());
     }
+
     private void initClientInfo() {
         name = clientBean.getName();
         clientName.setText(clientBean.getName());
@@ -174,6 +183,8 @@ public class AddClient extends BaseView implements AddClientManage.View {
         clientBirthday.setTextColor(getResources().getColor(R.color.colorPrimary));
         phone = clientBean.getPhone();
         clientPhone.setText(clientBean.getPhone());
+        idcard=clientBean.getIdcard();
+        clientIdcard.setText(clientBean.getIdcard());
         int hobbySize = clientBean.getHobby().size();
         for (int i = 0; i < hobbySize; i++) {
             hobbyName += clientBean.getHobby().get(i).getHobbyname() + " ";
@@ -210,20 +221,22 @@ public class AddClient extends BaseView implements AddClientManage.View {
         clientIll.setText(illName);
         clientIll.setTextColor(getResources().getColor(R.color.colorPrimary));
         clientNotes.setText(clientBean.getNotes());
-        loadHead(clientBean.getHead(),clientHead);
+        loadHead(clientBean.getHead(), clientHead);
     }
+
     //添加客户
     @Override
     public void addClient(HttpBean<ClientBean> httpBean) {
-        if(mediaFile!=null){
-            uploadHead(mediaFile,String.valueOf(httpBean.getData().getId()),SharedPreferencesUtil.Obtain(this,"token","").toString(),0);
-        }else{
+        if (mediaFile != null) {
+            uploadHead(mediaFile, String.valueOf(httpBean.getData().getId()), SharedPreferencesUtil.Obtain(this, "token", "").toString(), 0);
+        } else {
             Toast.makeText(this, httpBean.getStatus().getMsg(), Toast.LENGTH_SHORT).show();
             EventBus.getDefault().post(new ClientEvent(1));
             finish();
         }
 
     }
+
     //编辑客户
     @Override
     public void editClient(HttpBean<ClientBean> httpBean) {
@@ -231,6 +244,7 @@ public class AddClient extends BaseView implements AddClientManage.View {
         EventBus.getDefault().post(new InfoEvent(1, httpBean.getData()));
         finish();
     }
+
     //获取添加客户所需列表
     @Override
     public void getInfoForAdd(HttpBean<InfoAddClientBean> httpBean) {
@@ -239,7 +253,7 @@ public class AddClient extends BaseView implements AddClientManage.View {
         positions = httpBean.getData().getPosition();
         customerTypes = httpBean.getData().getCustomerType();
         if (clientBean != null) {
-            if(clientBean.getHobby()!=null){
+            if (clientBean.getHobby() != null) {
                 for (int i = 0; i < clientBean.getHobby().size(); i++) {
                     for (int j = 0; j < hobbys.size(); j++) {
                         if (clientBean.getHobby().get(i).getHobbyname().equals(hobbys.get(j).getName())) {
@@ -251,18 +265,18 @@ public class AddClient extends BaseView implements AddClientManage.View {
                     }
                 }
             }
-           if(clientBean.getIll()!=null){
-               for (int i = 0; i < clientBean.getIll().size(); i++) {
-                   for (int j = 0; j < ills.size(); j++) {
-                       if (clientBean.getIll().get(i).getIllname().equals(ills.get(j).getName())) {
-                           if (ill.isEmpty()) {
-                               ill += String.valueOf(ills.get(j).getId());
-                           }
-                           ill += "," + String.valueOf(ills.get(j).getId());
-                       }
-                   }
-               }
-           }
+            if (clientBean.getIll() != null) {
+                for (int i = 0; i < clientBean.getIll().size(); i++) {
+                    for (int j = 0; j < ills.size(); j++) {
+                        if (clientBean.getIll().get(i).getIllname().equals(ills.get(j).getName())) {
+                            if (ill.isEmpty()) {
+                                ill += String.valueOf(ills.get(j).getId());
+                            }
+                            ill += "," + String.valueOf(ills.get(j).getId());
+                        }
+                    }
+                }
+            }
             for (int m = 0; m < positions.size(); m++) {
                 if (positions.get(m).getName().equals(clientBean.getPosition())) {
                     workPosition = String.valueOf(positions.get(m).getId());
@@ -275,83 +289,89 @@ public class AddClient extends BaseView implements AddClientManage.View {
             }
         }
     }
+
     //查重
     @Override
     public void checkRepeat(String result) {
         Toast.makeText(this, result, Toast.LENGTH_SHORT).show();
     }
+
     //提交
     private void commit() {
         if (juge()) {
-            if(map==null){
-                map=new HashMap<>();
+            if (map == null) {
+                map = new HashMap<>();
             }
-            if(!name.isEmpty()){
-                map.put("name",name);
+            if (!name.isEmpty()) {
+                map.put("name", name);
             }
-            if(!sex.isEmpty()){
-                map.put("sex",sex);
+            if (!sex.isEmpty()) {
+                map.put("sex", sex);
             }
-            if(!birthday.isEmpty()){
-                map.put("birthday",birthday);
+            if (!birthday.isEmpty()) {
+                map.put("birthday", birthday);
             }
-            if(!phone.isEmpty()){
-                map.put("phone",phone);
+            if (!phone.isEmpty()) {
+                map.put("phone", phone);
             }
-            if(!vip.isEmpty()){
-                map.put("vip_id",vip);
+            if (!idcard.isEmpty()) {
+                map.put("idcard", idcard);
             }
-            if(!area.isEmpty()){
-                map.put("area",area);
+            if (!vip.isEmpty()) {
+                map.put("vip_id", vip);
             }
-            if(!telPhone.isEmpty()){
-                map.put("telephone",telPhone);
+            if (!area.isEmpty()) {
+                map.put("area", area);
             }
-            if(!email.isEmpty()){
-                map.put("email",email);
+            if (!telPhone.isEmpty()) {
+                map.put("telephone", telPhone);
             }
-            if(!workPosition.isEmpty()){
-                map.put("position",workPosition);
+            if (!email.isEmpty()) {
+                map.put("email", email);
             }
-            if(!address.isEmpty()){
-                map.put("address",address);
+            if (!workPosition.isEmpty()) {
+                map.put("position", workPosition);
             }
-            if(!company.isEmpty()){
-                map.put("company",company);
+            if (!address.isEmpty()) {
+                map.put("address", address);
             }
-            if(!companyPhone.isEmpty()){
-                map.put("company_phone",companyPhone);
+            if (!company.isEmpty()) {
+                map.put("company", company);
             }
-            if(!companyAddress.isEmpty()){
-                map.put("company_address",companyAddress);
+            if (!companyPhone.isEmpty()) {
+                map.put("company_phone", companyPhone);
             }
-            if(!entryman.isEmpty()){
-                map.put("entryman",entryman);
+            if (!companyAddress.isEmpty()) {
+                map.put("company_address", companyAddress);
             }
-            if(!type.isEmpty()){
-                map.put("type",type);
+            if (!entryman.isEmpty()) {
+                map.put("entryman", entryman);
             }
-            if(!hobby.isEmpty()){
-                map.put("hobby",hobby);
+            if (!type.isEmpty()) {
+                map.put("type", type);
             }
-            if(!ill.isEmpty()){
-                map.put("ill",ill);
+            if (!hobby.isEmpty()) {
+                map.put("hobby", hobby);
             }
-            if(!notes.isEmpty()){
-                map.put("notes",notes);
+            if (!ill.isEmpty()) {
+                map.put("ill", ill);
+            }
+            if (!notes.isEmpty()) {
+                map.put("notes", notes);
             }
             dialog = LoadingDialog.build(this).setLoadingTitle("提交中");
             dialog.show();
-            String token=SharedPreferencesUtil.Obtain(this,"token","").toString();
-            map.put("token",token);
+            String token = SharedPreferencesUtil.Obtain(this, "token", "").toString();
+            map.put("token", token);
             if (null == clientBean) {
                 addClientPresenter.addClient(map, dialog);
             } else {
-                map.put("id",String.valueOf(clientBean.getId()));
+                map.put("id", String.valueOf(clientBean.getId()));
                 addClientPresenter.editClient(map, dialog);
             }
         }
     }
+
     //提交检查
     private boolean juge() {
         name = clientName.getText().toString();
@@ -364,32 +384,38 @@ public class AddClient extends BaseView implements AddClientManage.View {
             Toast.makeText(this, "请填写手机号码", Toast.LENGTH_SHORT).show();
             return false;
         }
+        idcard=clientIdcard.getText().toString();
+        if (idcard.isEmpty()) {
+            Toast.makeText(this, "请填写身份证号", Toast.LENGTH_SHORT).show();
+            return false;
+        }
         if (area.isEmpty()) {
             Toast.makeText(this, "请选择所属部门", Toast.LENGTH_SHORT).show();
             return false;
         }
-        vip=clientVip.getText().toString();
+        vip = clientVip.getText().toString();
         telPhone = clientTelphone.getText().toString();
         email = clientEmail.getText().toString();
         address = clientAddress.getText().toString();
         company = clientCompany.getText().toString();
         companyPhone = clientCompanyPone.getText().toString();
         companyAddress = clientCompanyAddress.getText().toString();
-        entryman=clientEntryMan.getText().toString();
+        entryman = clientEntryMan.getText().toString();
         notes = clientNotes.getText().toString();
         return true;
     }
+
     //选择头像
-    private void selectHead(){
+    private void selectHead() {
         if (null == headPopup) {
-            headPopup = HeadPopup.Build(this,clientHead).init();
+            headPopup = HeadPopup.Build(this, clientHead).init();
             headPopup.show();
             headPopup.addHeadClick(new HeadClickBack() {
                 @Override
                 public void click(int position) {
-                    switch (position){
+                    switch (position) {
                         case 0:
-                           AddClientPermissionsDispatcher.ToCamareWithCheck(AddClient.this);
+                            AddClientPermissionsDispatcher.ToCamareWithCheck(AddClient.this);
                             break;
                         case 1:
                             AddClientPermissionsDispatcher.ToAblumWithCheck(AddClient.this);
@@ -405,6 +431,7 @@ public class AddClient extends BaseView implements AddClientManage.View {
             }
         }
     }
+
     @NeedsPermission(Manifest.permission.CAMERA)
     void ToCamare() {
         Intent openCameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -412,19 +439,23 @@ public class AddClient extends BaseView implements AddClientManage.View {
         openCameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
         startActivityForResult(openCameraIntent, TAKE_PICTURE);
     }
+
     @OnShowRationale(Manifest.permission.CAMERA)
-    void ShowRationaleForTakePhoto(PermissionRequest request){
+    void ShowRationaleForTakePhoto(PermissionRequest request) {
         request.proceed();
     }
-    @NeedsPermission({Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE})
+
+    @NeedsPermission({Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE})
     void ToAblum() {
-        Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(intent, IMAGE_REQUEST_CODE);
     }
-    @OnShowRationale({Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE})
-    void ShowRationaleForAblum(PermissionRequest request){
+
+    @OnShowRationale({Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE})
+    void ShowRationaleForAblum(PermissionRequest request) {
         request.proceed();
     }
+
     //用于拍照时获取输出的Uri
     protected Uri getOutputMediaFileUri() {
         File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), "Camera");
@@ -438,6 +469,7 @@ public class AddClient extends BaseView implements AddClientManage.View {
         cameraPath = mediaFile.getAbsolutePath();
         return FileProvider.getUriForFile(this, "com.dhitoshi.hxb.fileprovider", mediaFile);
     }
+
     //上传头像
     private void uploadHead(File file, final String id, final String token, final int type) {
         Luban.with(this)
@@ -446,35 +478,38 @@ public class AddClient extends BaseView implements AddClientManage.View {
                     @Override
                     public void onStart() {
                     }
+
                     @Override
                     public void onSuccess(File file) {
-                        MyHttp http=MyHttp.getInstance();
+                        MyHttp http = MyHttp.getInstance();
                         RequestBody requestBody = new MultipartBody.Builder().setType(MultipartBody.FORM)
                                 .addFormDataPart("id", id).addFormDataPart("token", token)
                                 .addFormDataPart("img", file.getName(), RequestBody.create(MediaType.parse("image/png"), file)).build();
-                        http.send(http.getHttpService().eidtHead(requestBody),new CommonObserver(new HttpResult<HttpBean<Object>>() {
+                        http.send(http.getHttpService().eidtHead(requestBody), new CommonObserver(new HttpResult<HttpBean<Object>>() {
                             @Override
                             public void OnSuccess(HttpBean<Object> httpBean) {
-                                if(type==0){
-                                    if(dialog!=null){
+                                if (type == 0) {
+                                    if (dialog != null) {
                                         dialog.dismiss();
                                     }
-                                    if(httpBean.getStatus().getCode()==200){
+                                    if (httpBean.getStatus().getCode() == 200) {
                                         EventBus.getDefault().post(new ClientEvent(1));
                                         finish();
-                                    }else{
-                                        Toast.makeText(AddClient.this,httpBean.getStatus().getMsg(),Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        Toast.makeText(AddClient.this, httpBean.getStatus().getMsg(), Toast.LENGTH_SHORT).show();
                                     }
-                                }else {
-                                    Toast.makeText(AddClient.this,httpBean.getStatus().getMsg(),Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(AddClient.this, httpBean.getStatus().getMsg(), Toast.LENGTH_SHORT).show();
                                 }
                             }
+
                             @Override
                             public void OnFail(String msg) {
-                                Toast.makeText(AddClient.this,msg,Toast.LENGTH_SHORT).show();
+                                Toast.makeText(AddClient.this, msg, Toast.LENGTH_SHORT).show();
                             }
                         }));
                     }
+
                     @Override
                     public void onError(Throwable e) {
                         //TODO 当压缩过去出现问题时调用
@@ -482,6 +517,7 @@ public class AddClient extends BaseView implements AddClientManage.View {
                 }).launch();    //启动压缩
 
     }
+
     //查重
     private void checkRepeat() {
         phone = clientPhone.getText().toString();
@@ -489,20 +525,21 @@ public class AddClient extends BaseView implements AddClientManage.View {
             Toast.makeText(this, "请填写手机号码", Toast.LENGTH_SHORT).show();
             return;
         }
-        if (clientBean==null&&area.isEmpty()) {
+        if (clientBean == null && area.isEmpty()) {
             Toast.makeText(this, "请选择所属部门", Toast.LENGTH_SHORT).show();
             return;
         }
         LoadingDialog dialog = LoadingDialog.build(this).setLoadingTitle("查重中");
         dialog.show();
-        String token=SharedPreferencesUtil.Obtain(this,"token","").toString();
+        String token = SharedPreferencesUtil.Obtain(this, "token", "").toString();
         if (null == clientBean) {
-            addClientPresenter.checkRepeat(token,dialog, area, phone, "");
+            addClientPresenter.checkRepeat(token, dialog, area, phone, "");
         } else {
-            addClientPresenter.checkRepeat(token,dialog, "", phone, String.valueOf(clientBean.getId()));
+            addClientPresenter.checkRepeat(token, dialog, "", phone, String.valueOf(clientBean.getId()));
         }
 
     }
+
     //拨打电话
     private void call() {
         phone = clientPhone.getText().toString();
@@ -513,6 +550,7 @@ public class AddClient extends BaseView implements AddClientManage.View {
         Intent phoneIntent = new Intent("android.intent.action.CALL", Uri.parse("tel:" + phone));
         startActivity(phoneIntent);
     }
+
     @OnClick({R.id.right_text, R.id.client_sex, R.id.client_birthday, R.id.client_head, R.id.checkRepeat,
             R.id.call, R.id.client_hobby, R.id.client_area, R.id.client_position, R.id.client_type, R.id.client_ill})
     public void onViewClicked(View view) {
@@ -552,6 +590,7 @@ public class AddClient extends BaseView implements AddClientManage.View {
                 break;
         }
     }
+
     //选择出生日期
     private void selectBrithday() {
         SelectDateDialog dialog = new SelectDateDialog(this);
@@ -564,20 +603,24 @@ public class AddClient extends BaseView implements AddClientManage.View {
             }
         }).show();
     }
+
     //选择爱好
     private void selectHobby() {
         startActivityForResult(new Intent(this, Select.class).putParcelableArrayListExtra("list", hobbys)
                 .putExtra("type", 1).putExtra("select", clientHobby.getText().toString()), 1);
     }
+
     //选择地区
     private void selectArea() {
         startActivityForResult(new Intent(this, SelectArea.class), 0);
     }
+
     //选择疾病
     private void selectIll() {
         startActivityForResult(new Intent(this, Select.class).putParcelableArrayListExtra("list", ills)
                 .putExtra("type", 2).putExtra("select", clientIll.getText().toString()), 2);
     }
+
     //选择客户类型
     private void selectType() {
         ClientTypeAdapter adapter = new ClientTypeAdapter(customerTypes, this, clientType.getText().toString());
@@ -593,6 +636,7 @@ public class AddClient extends BaseView implements AddClientManage.View {
             }
         });
     }
+
     //选择职位
     private void selectPosition() {
         PositionAdapter adapter = new PositionAdapter(positions, this, clientPosition.getText().toString());
@@ -608,6 +652,7 @@ public class AddClient extends BaseView implements AddClientManage.View {
             }
         });
     }
+
     //选择性别
     private void selectSex() {
         List<SexBean> sexBeens = new ArrayList<>();
@@ -626,6 +671,7 @@ public class AddClient extends BaseView implements AddClientManage.View {
             }
         });
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == 100) {
@@ -649,37 +695,37 @@ public class AddClient extends BaseView implements AddClientManage.View {
                     clientArea.setTextColor(getResources().getColor(R.color.colorPrimary));
                     break;
             }
-        }
-        else if (resultCode == RESULT_OK) {
-            switch (requestCode){
+        } else if (resultCode == RESULT_OK) {
+            switch (requestCode) {
                 case TAKE_PICTURE:
-                    if(cameraPath != null){
-                        loadHead(cameraPath,clientHead);
+                    if (cameraPath != null) {
+                        loadHead(cameraPath, clientHead);
                     }
                     break;
                 case IMAGE_REQUEST_CODE:
                     if (data == null) return;
                     uri = data.getData();
                     int sdkVersion = Integer.valueOf(Build.VERSION.SDK);
-                    String path="";
+                    String path = "";
                     if (sdkVersion >= 19) {
-                        path = PictureUtils.getPath_above19(this,uri);
+                        path = PictureUtils.getPath_above19(this, uri);
                     } else {
                         path = PictureUtils.getFilePath_below19(this, uri);
                     }
-                    mediaFile=new File(path);
-                    loadHead(path,clientHead);
+                    mediaFile = new File(path);
+                    loadHead(path, clientHead);
                     break;
             }
-            if(getFileSizes(mediaFile) >16777216 ){
-                Toast.makeText(this,"图片大小超过16M上传限制，请重新上传", Toast.LENGTH_SHORT).show();
+            if (getFileSizes(mediaFile) > 16777216) {
+                Toast.makeText(this, "图片大小超过16M上传限制，请重新上传", Toast.LENGTH_SHORT).show();
                 return;
             }
-            if(clientBean!=null){
-                uploadHead(mediaFile,String.valueOf(clientBean.getId()),SharedPreferencesUtil.Obtain(this,"token","").toString(),1);
+            if (clientBean != null) {
+                uploadHead(mediaFile, String.valueOf(clientBean.getId()), SharedPreferencesUtil.Obtain(this, "token", "").toString(), 1);
             }
         }
     }
+
     //获取文件大小
     public long getFileSizes(File f) {
         long s = 0;
@@ -694,9 +740,10 @@ public class AddClient extends BaseView implements AddClientManage.View {
         }
         return s;
     }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        AddClientPermissionsDispatcher.onRequestPermissionsResult(this,requestCode,grantResults);
+        AddClientPermissionsDispatcher.onRequestPermissionsResult(this, requestCode, grantResults);
     }
 }

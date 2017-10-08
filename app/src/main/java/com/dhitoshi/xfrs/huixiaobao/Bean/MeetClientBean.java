@@ -1,10 +1,13 @@
 package com.dhitoshi.xfrs.huixiaobao.Bean;
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.List;
 /**
  * Created by dxs on 2017/9/27.
  */
 
-public class MeetClientBean {
+public class MeetClientBean implements Parcelable {
 
     /**
      * id : 1
@@ -59,4 +62,41 @@ public class MeetClientBean {
     public void setAttend(List<String> attend) {
         this.attend = attend;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.id);
+        dest.writeString(this.name);
+        dest.writeString(this.idcard);
+        dest.writeString(this.phone);
+        dest.writeStringList(this.attend);
+    }
+
+    public MeetClientBean() {
+    }
+
+    protected MeetClientBean(Parcel in) {
+        this.id = in.readInt();
+        this.name = in.readString();
+        this.idcard = in.readString();
+        this.phone = in.readString();
+        this.attend = in.createStringArrayList();
+    }
+
+    public static final Parcelable.Creator<MeetClientBean> CREATOR = new Parcelable.Creator<MeetClientBean>() {
+        @Override
+        public MeetClientBean createFromParcel(Parcel source) {
+            return new MeetClientBean(source);
+        }
+
+        @Override
+        public MeetClientBean[] newArray(int size) {
+            return new MeetClientBean[size];
+        }
+    };
 }

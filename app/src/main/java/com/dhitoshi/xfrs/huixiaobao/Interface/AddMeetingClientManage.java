@@ -9,12 +9,15 @@ import java.util.Map;
 public interface AddMeetingClientManage {
     interface View{
         void addCustomer(String result);
+        void editCustomer(String result);
     }
     interface Model{
         void addCustomer(Map<String,String> map, LoadingDialog dialog, Callback<HttpBean<Object>> callback);
+        void editCustomer(Map<String,String> map, LoadingDialog dialog, Callback<HttpBean<Object>> callback);
     }
     interface Presenter{
         void addCustomer(Map<String,String> map, LoadingDialog dialog);
+        void editCustomer(Map<String,String> map, LoadingDialog dialog);
     }
 
 }

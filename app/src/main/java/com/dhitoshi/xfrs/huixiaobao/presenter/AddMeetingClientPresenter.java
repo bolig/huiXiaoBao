@@ -28,4 +28,14 @@ public class AddMeetingClientPresenter implements AddMeetingClientManage.Present
             }
         });
     }
+
+    @Override
+    public void editCustomer(Map<String, String> map, LoadingDialog dialog) {
+        model.editCustomer(map, dialog, new Callback<HttpBean<Object>>() {
+            @Override
+            public void get(HttpBean<Object> httpBean) {
+                view.editCustomer(httpBean.getStatus().getMsg());
+            }
+        });
+    }
 }

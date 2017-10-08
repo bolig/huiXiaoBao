@@ -1,51 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.dhitoshi.xfrs.huixiaobao.common.SwipeItemLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:paddingLeft="15dp"
-    android:paddingRight="15dp"
-    android:paddingTop="10dp"
-    android:paddingBottom="10dp"
-    android:background="@drawable/item_click"
+    android:layout_height="match_parent"
     >
-    <ImageView
-        android:id="@+id/client_head"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:src="@mipmap/head"
-        android:layout_centerVertical="true"
-        />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:background="@drawable/item_click"
+        >
+        <ImageView
+            android:id="@+id/enter_head"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@mipmap/head"
+            android:layout_centerVertical="true"
+            />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/enter_head"
+            android:layout_marginLeft="10dp"
+            >
+            <TextView
+                android:id="@+id/enter_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14dp"
+                android:textColor="#333333"
+                />
+            <TextView
+                android:id="@+id/enter_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12dp"
+                android:textColor="#999999"
+                android:layout_marginTop="10dp"
+                />
+        </LinearLayout>
+        <ImageView
+            android:id="@+id/enter_call"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/call"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:paddingRight="10dp"
+            />
+    </RelativeLayout>
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="70dp"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_centerVertical="true"
-        android:layout_toRightOf="@+id/client_head"
-        android:layout_marginLeft="10dp"
+        android:gravity="center_vertical"
         >
         <TextView
-            android:id="@+id/client_item_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="14dp"
-            android:textColor="#333333"
-            />
-        <TextView
-            android:id="@+id/client_item_phone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="12dp"
-            android:textColor="#999999"
-            android:layout_marginTop="10dp"
-            />
+            android:id="@+id/enter_update"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#ddd"
+            android:gravity="center"
+            android:text="修改"
+            android:textColor="@android:color/white"
+            android:textSize="15dp" />
     </LinearLayout>
-    <ImageView
-        android:id="@+id/client_item_call"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@mipmap/call"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:paddingRight="10dp"
-        />
-</RelativeLayout>
+</com.dhitoshi.xfrs.huixiaobao.common.SwipeItemLayout>
+

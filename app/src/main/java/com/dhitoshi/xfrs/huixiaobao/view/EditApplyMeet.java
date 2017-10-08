@@ -85,7 +85,7 @@ public class EditApplyMeet extends BaseView {
                 break;
             case R.id.to_attend:
                 if(type==3){
-                    Toast.makeText(EditApplyMeet.this,"考勤数据开发中...",Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(this,AttendInfo.class));
                 }else {
                     startActivity(new Intent(this,AttendMeet.class).putExtra("start",ownMeetBean.getStarttime()).putExtra("days",ownMeetBean.getDays()).putExtra("id", String.valueOf(ownMeetBean.getId())));
                 }

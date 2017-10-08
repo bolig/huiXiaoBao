@@ -58,6 +58,16 @@ public class ClientBean implements Parcelable {
     private List<HobbyNameBean> hobby;
     private List<IllNameBean> ill;
     private String area_id;
+    private String idcard;
+
+    public String getIdcard() {
+        return idcard;
+    }
+
+    public void setIdcard(String idcard) {
+        this.idcard = idcard;
+    }
+
     public String getHead() {
         return head;
     }
@@ -239,6 +249,7 @@ public class ClientBean implements Parcelable {
         dest.writeString(this.backtime);
         dest.writeString(this.area_id);
         dest.writeString(this.head);
+        dest.writeString(this.idcard);
         dest.writeList(this.hobby);
         dest.writeList(this.ill);
     }
@@ -270,6 +281,7 @@ public class ClientBean implements Parcelable {
         this.backtime = in.readString();
         this.area_id=in.readString();
         this.head=in.readString();
+        this.idcard=in.readString();
         this.hobby = new ArrayList<>();
         in.readList(this.hobby, HobbyBean.class.getClassLoader());
         this.ill = new ArrayList<>();

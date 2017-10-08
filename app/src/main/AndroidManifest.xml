@@ -111,7 +111,9 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-        <activity android:name=".view.AttendMeet"></activity>
+        <activity android:name=".view.AttendMeet" />
+        <activity android:name=".view.AttendInfo" />
+        <activity android:name=".view.BulkImport"></activity>
     </application>
 
 </manifest>

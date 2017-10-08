@@ -1,6 +1,7 @@
 package com.dhitoshi.xfrs.huixiaobao.http;
 import com.dhitoshi.xfrs.huixiaobao.Bean.ApplyMeetBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.AreaBean;
+import com.dhitoshi.xfrs.huixiaobao.Bean.AttendBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.BaseBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.ChatContact;
 import com.dhitoshi.xfrs.huixiaobao.Bean.ClientBean;
@@ -38,7 +39,6 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
-
 /**
  * Created by dxs on 2017/5/27.
  */
@@ -166,7 +166,9 @@ public interface HttpService {
     //即时消息用户联系人
     @GET("user/GetUsers")
     Observable<HttpBean<List<ChatContact>>> GetUsers(@Query("token") String token);
-
+    //参会记录数据
+    @GET("Meeting/attendList")
+    Observable<AttendBean<Integer>> GetaAttendList(@Query("token") String token,@Query("meetingid") String meetingid);
 
     //更改密码
     @POST("resetPassword")
@@ -258,10 +260,16 @@ public interface HttpService {
     //添加参会客户
     @POST("Meeting/addCustomer")
     Observable<HttpBean<Object>> addCustomer(@QueryMap Map<String,String> map);
+    //批量添加参会客户
+    @POST("Meeting/addCustomerAll")
+    Observable<HttpBean<Object>> addCustomerAll(@QueryMap Map<String,String> map);
     //修改个人基本资料
     @POST("user/editBase")
     Observable<HttpBean<UserBean>> editBase(@QueryMap Map<String,String> map);
     //考勤
     @POST("Meeting/attend")
     Observable<HttpBean<Object>> attend(@QueryMap Map<String,String> map);
+    //修改参会客户信息
+    @POST("Meeting/customerEdit")
+    Observable<HttpBean<Object>> editCustomer(@QueryMap Map<String,String> map);
 }
