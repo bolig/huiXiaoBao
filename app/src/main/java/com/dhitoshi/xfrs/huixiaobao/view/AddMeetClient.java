@@ -2,21 +2,15 @@ package com.dhitoshi.xfrs.huixiaobao.view;
 import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import com.dhitoshi.xfrs.huixiaobao.Dialog.LoadingDialog;
-import com.dhitoshi.xfrs.huixiaobao.Event.GiftEvent;
 import com.dhitoshi.xfrs.huixiaobao.Event.MeetClientEvent;
 import com.dhitoshi.xfrs.huixiaobao.Interface.AddMeetingClientManage;
 import com.dhitoshi.xfrs.huixiaobao.R;
-import com.dhitoshi.xfrs.huixiaobao.model.AddMeetingClientModel;
 import com.dhitoshi.xfrs.huixiaobao.presenter.AddMeetingClientPresenter;
 import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
-
 import org.greenrobot.eventbus.EventBus;
-
 import java.util.HashMap;
 import java.util.Map;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -61,10 +55,6 @@ public class AddMeetClient extends BaseView implements AddMeetingClientManage.Vi
             return;
         }
         phone=meetClientPhone.getText().toString();
-        if(phone.isEmpty()){
-            Toast.makeText(this,"请填写客户手机号码",Toast.LENGTH_SHORT).show();
-            return;
-        }
         if(map==null){
             map=new HashMap<>();
         }

@@ -25,7 +25,7 @@ public class BaseSetting extends BaseView {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.base_area:
-                startActivity(new Intent(this,AddAreaOne.class));
+                startActivity(new Intent(this,Company.class));
                 break;
             case R.id.base_permission:
                 startActivity(new Intent(this,Permission.class));

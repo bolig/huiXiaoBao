@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.bumptech.glide.Glide;
 import com.dhitoshi.xfrs.huixiaobao.Bean.OwnMeetBean;
 import com.dhitoshi.xfrs.huixiaobao.R;
@@ -68,7 +70,7 @@ public class EditApplyMeet extends BaseView {
                 toAttend.setBackgroundColor(Color.parseColor("#efefef"));
                 break;
             case 3:
-
+                toAttend.setText("考勤数据");
                 break;
         }
     }
@@ -79,10 +81,14 @@ public class EditApplyMeet extends BaseView {
                 startActivity(new Intent(this, MoreMeetInfo.class).putExtra("id", ownMeetBean.getId()).putExtra("body", ownMeetBean.getType().getBody()));
                 break;
             case R.id.to_enter:
-                startActivity(new Intent(this,EnterClient.class).putExtra("id", String.valueOf(ownMeetBean.getId())));
+                startActivity(new Intent(this,EnterClient.class).putExtra("id", String.valueOf(ownMeetBean.getId())).putExtra("type",type));
                 break;
             case R.id.to_attend:
-                startActivity(new Intent(this,AttendMeet.class).putExtra("start",ownMeetBean.getStarttime()).putExtra("days",ownMeetBean.getDays()).putExtra("id", String.valueOf(ownMeetBean.getId())));
+                if(type==3){
+                    Toast.makeText(EditApplyMeet.this,"考勤数据开发中...",Toast.LENGTH_SHORT).show();
+                }else {
+                    startActivity(new Intent(this,AttendMeet.class).putExtra("start",ownMeetBean.getStarttime()).putExtra("days",ownMeetBean.getDays()).putExtra("id", String.valueOf(ownMeetBean.getId())));
+                }
                 break;
         }
     }

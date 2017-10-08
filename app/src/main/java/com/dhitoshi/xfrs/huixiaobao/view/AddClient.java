@@ -368,6 +368,7 @@ public class AddClient extends BaseView implements AddClientManage.View {
             Toast.makeText(this, "请选择所属部门", Toast.LENGTH_SHORT).show();
             return false;
         }
+        vip=clientVip.getText().toString();
         telPhone = clientTelphone.getText().toString();
         email = clientEmail.getText().toString();
         address = clientAddress.getText().toString();

@@ -1,30 +1,24 @@
 package com.dhitoshi.xfrs.huixiaobao.view;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.KidBean;
 import com.dhitoshi.xfrs.huixiaobao.Dialog.LoadingDialog;
-import com.dhitoshi.xfrs.huixiaobao.Event.AddAreaOneEvent;
 import com.dhitoshi.xfrs.huixiaobao.Event.AddAreaThreeEvent;
-import com.dhitoshi.xfrs.huixiaobao.Event.AddAreaTwoEvent;
 import com.dhitoshi.xfrs.huixiaobao.Interface.AddAreaManage;
 import com.dhitoshi.xfrs.huixiaobao.R;
 import com.dhitoshi.xfrs.huixiaobao.presenter.AddAreaPresenter;
 import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
-
 import org.greenrobot.eventbus.EventBus;
-
 import java.util.HashMap;
 import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-public class AddArea extends BaseView implements AddAreaManage.View{
+public class AddDepartment extends BaseView implements AddAreaManage.View{
     @BindView(R.id.area_name)
     EditText areaName;
     @BindView(R.id.area_admin)
@@ -61,12 +55,12 @@ public class AddArea extends BaseView implements AddAreaManage.View{
     }
     private void initViews() {
         initBaseViews();
+        it=getIntent();
+        type=it.getIntExtra("type",-4);
         setTitle(type<0?"编辑部门":"添加部门");
         setRightText("确定");
-        it=getIntent();
         map=new HashMap<>();
         addAreaPresenter=new AddAreaPresenter(this,this);
-        type=it.getIntExtra("type",-4);
         if(type<0){
             initAreainfo();
         }else{
@@ -134,29 +128,13 @@ public class AddArea extends BaseView implements AddAreaManage.View{
     public void addArea(HttpBean<KidBean> httpBean) {
         Toast.makeText(this,httpBean.getStatus().getMsg(),Toast.LENGTH_SHORT).show();
         map.put("id",String.valueOf(httpBean.getData().getId()));
-        if(type==0){
-            EventBus.getDefault().post(new AddAreaOneEvent(1,map));
-        }
-        else  if(type==1){
-            EventBus.getDefault().post(new AddAreaTwoEvent(1,map));
-        }
-        else  if(type==2){
-            EventBus.getDefault().post(new AddAreaThreeEvent(1,map));
-        }
+        EventBus.getDefault().post(new AddAreaThreeEvent(1,map));
         finish();
     }
     @Override
     public void editArea(String result) {
         Toast.makeText(this,result,Toast.LENGTH_SHORT).show();
-        if(type==-1){
-            EventBus.getDefault().post(new AddAreaOneEvent(2,map));
-        }
-        else  if(type==-2){
-            EventBus.getDefault().post(new AddAreaTwoEvent(2,map));
-        }
-        else  if(type==-3){
-            EventBus.getDefault().post(new AddAreaThreeEvent(2,map));
-        }
+        EventBus.getDefault().post(new AddAreaThreeEvent(2,map));
         finish();
     }
 }

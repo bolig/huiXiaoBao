@@ -45,7 +45,6 @@ public class Setting extends BaseView {
             case R.id.exit:
                 startActivity(new Intent(this,Login.class));
                 SharedPreferencesUtil.Obtain(this,"token","");
-                SharedPreferencesUtil.Save(this, "isRemeber",false);
                 ActivityManager.destoryActivity("Theme");
                 finish();
                 break;

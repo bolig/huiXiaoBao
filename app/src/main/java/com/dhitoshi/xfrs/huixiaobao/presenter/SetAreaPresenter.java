@@ -1,15 +1,11 @@
 package com.dhitoshi.xfrs.huixiaobao.presenter;
-
 import android.content.Context;
-
 import com.dhitoshi.refreshlayout.SmartRefreshLayout;
 import com.dhitoshi.xfrs.huixiaobao.Bean.AreaBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
 import com.dhitoshi.xfrs.huixiaobao.Dialog.LoadingDialog;
-import com.dhitoshi.xfrs.huixiaobao.Interface.AreaManage;
 import com.dhitoshi.xfrs.huixiaobao.Interface.Callback;
 import com.dhitoshi.xfrs.huixiaobao.Interface.SetAreaManage;
-import com.dhitoshi.xfrs.huixiaobao.model.AreaModel;
 import com.dhitoshi.xfrs.huixiaobao.model.SetAreaModel;
 
 import java.util.List;

@@ -10,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.dhitoshi.xfrs.huixiaobao.Event.ClientEvent;
 import com.dhitoshi.xfrs.huixiaobao.Event.PersonalEvent;
 import com.dhitoshi.xfrs.huixiaobao.R;
 import com.dhitoshi.xfrs.huixiaobao.common.GlideCircleTransform;
@@ -37,6 +36,8 @@ public class Personal extends Fragment {
     TextView personalName;
     @BindView(R.id.personal_head)
     ImageView personalHead;
+    @BindView(R.id.personal_account)
+    TextView personalAccount;
     private Intent it;
 
     public Personal() {
@@ -64,7 +65,8 @@ public class Personal extends Fragment {
     private void initViews() {
         title.setText("我的");
         personalName.setText(SharedPreferencesUtil.Obtain(getContext(), "truename", "").toString());
-        Glide.with(this).load(SharedPreferencesUtil.Obtain(getContext(),"head","").toString())
+        personalAccount.setText(SharedPreferencesUtil.Obtain(getContext(),"account","").toString().split("@")[0]);
+        Glide.with(this).load(SharedPreferencesUtil.Obtain(getContext(), "head", "").toString())
                 .placeholder(R.mipmap.head).error(R.mipmap.head).transform(new GlideCircleTransform(getContext())).into(personalHead);
     }
 
@@ -75,7 +77,7 @@ public class Personal extends Fragment {
         EventBus.getDefault().unregister(this);
     }
 
-    @OnClick({R.id.personal_setting, R.id.personal_share, R.id.personal_meeting, R.id.personal_help,R.id.personal_info})
+    @OnClick({R.id.personal_setting, R.id.personal_share, R.id.personal_meeting, R.id.personal_help, R.id.personal_info})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.personal_info:
@@ -96,6 +98,7 @@ public class Personal extends Fragment {
                 break;
         }
     }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(PersonalEvent event) {
         switch (event.getState()) {

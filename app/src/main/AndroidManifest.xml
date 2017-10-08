@@ -77,9 +77,9 @@
         <activity android:name=".view.UserList" />
         <activity android:name=".view.SearchClient" />
         <activity android:name=".view.SelectArea" />
-        <activity android:name=".view.AddArea" />
-        <activity android:name=".view.AddAreaOne" />
-        <activity android:name=".view.AddAreaTwo" />
+        <activity android:name=".view.AddDepartment" />
+        <activity android:name=".view.Company" />
+        <activity android:name=".view.Department" />
         <activity android:name=".view.AddProductType" />
         <activity android:name=".view.AddUser" />
         <activity android:name=".view.AddPermission" />

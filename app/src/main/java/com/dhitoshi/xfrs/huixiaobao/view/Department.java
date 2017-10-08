@@ -15,7 +15,7 @@ import com.dhitoshi.xfrs.huixiaobao.Event.AddAreaThreeEvent;
 import com.dhitoshi.xfrs.huixiaobao.Interface.DeleteCallback;
 import com.dhitoshi.xfrs.huixiaobao.Interface.SetAreaManage;
 import com.dhitoshi.xfrs.huixiaobao.R;
-import com.dhitoshi.xfrs.huixiaobao.adapter.AddAreaThreeAdapter;
+import com.dhitoshi.xfrs.huixiaobao.adapter.DepartmentAdapter;
 import com.dhitoshi.xfrs.huixiaobao.common.MyDecoration;
 import com.dhitoshi.xfrs.huixiaobao.common.SwipeItemLayout;
 import com.dhitoshi.xfrs.huixiaobao.presenter.SetAreaPresenter;
@@ -33,7 +33,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class AddAreaTwo extends BaseView implements SetAreaManage.View{
+public class Department extends BaseView implements SetAreaManage.View{
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
     @BindView(R.id.smartRefreshLayout)
@@ -41,7 +41,7 @@ public class AddAreaTwo extends BaseView implements SetAreaManage.View{
     private String title;
     private ArrayList<KidBean> kidBeans;
     private SwipeItemLayout.OnSwipeItemTouchListener listener;
-    private AddAreaThreeAdapter adapter;
+    private DepartmentAdapter adapter;
     private int deletePosition = -1;
     private SetAreaPresenter setAreaPresenter;
     private int parent_id;
@@ -66,14 +66,14 @@ public class AddAreaTwo extends BaseView implements SetAreaManage.View{
         recyclerView.addItemDecoration(new MyDecoration(this, LinearLayoutManager.HORIZONTAL, R.drawable.divider_line));
         listener = new SwipeItemLayout.OnSwipeItemTouchListener(this);
         recyclerView.addOnItemTouchListener(listener);
-        adapter = new AddAreaThreeAdapter(kidBeans, this);
+        adapter = new DepartmentAdapter(kidBeans, this);
         recyclerView.setAdapter(adapter);
         adapter.addDeleteCallback(new DeleteCallback() {
             @Override
             public void delete(int id, int position) {
                 deletePosition = position;
-                String token = SharedPreferencesUtil.Obtain(AddAreaTwo.this, "token", "").toString();
-                LoadingDialog dialog = LoadingDialog.build(AddAreaTwo.this).setLoadingTitle("删除中");
+                String token = SharedPreferencesUtil.Obtain(Department.this, "token", "").toString();
+                LoadingDialog dialog = LoadingDialog.build(Department.this).setLoadingTitle("删除中");
                 dialog.show();
                 setAreaPresenter.deleteArea(String.valueOf(id), token, dialog);
             }
@@ -81,7 +81,7 @@ public class AddAreaTwo extends BaseView implements SetAreaManage.View{
     }
     @OnClick(R.id.right_icon)
     public void onViewClicked() {
-        startActivity(new Intent(this, AddArea.class).putExtra("type",2).putExtra("parent_id",String.valueOf(parent_id)));
+        startActivity(new Intent(this, AddDepartment.class).putExtra("type",2).putExtra("parent_id",String.valueOf(parent_id)));
     }
 
     @Override
