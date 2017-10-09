@@ -387,7 +387,7 @@ public class Client extends BaseFragment implements ClientManage.View, View.OnTo
         drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
         menu = new Menu("我的资源", drawable);
         menus.add(menu);
-        drawable = getContext().getResources().getDrawable(R.mipmap.resource);
+        drawable = getContext().getResources().getDrawable(R.mipmap.address_book);
         drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
         menu = new Menu("导入通讯录", drawable);
         menus.add(menu);

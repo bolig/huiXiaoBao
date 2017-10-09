@@ -1,5 +1,4 @@
 package com.dhitoshi.xfrs.huixiaobao.view;
-
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -7,20 +6,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.WindowManager;
-
+import com.dhitoshi.xfrs.huixiaobao.Bean.EnterResultBean;
 import com.dhitoshi.xfrs.huixiaobao.R;
 import com.dhitoshi.xfrs.huixiaobao.adapter.ViewPagerAdapter;
 import com.dhitoshi.xfrs.huixiaobao.common.NoSlidingViewPager;
 import com.dhitoshi.xfrs.huixiaobao.common.OnTabSelectListener;
 import com.dhitoshi.xfrs.huixiaobao.common.SegmentTabLayout;
-import com.dhitoshi.xfrs.huixiaobao.fragment.Expired;
-import com.dhitoshi.xfrs.huixiaobao.fragment.OnGoing;
+import com.dhitoshi.xfrs.huixiaobao.fragment.HasImport;
+import com.dhitoshi.xfrs.huixiaobao.fragment.NoImport;
 import com.dhitoshi.xfrs.huixiaobao.utils.SystemBarTintManager;
 import java.util.ArrayList;
 import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
 public class BulkImportResult extends AppCompatActivity {
     @BindView(R.id.bulk_segement)
     SegmentTabLayout bulkSegement;
@@ -31,6 +29,8 @@ public class BulkImportResult extends AppCompatActivity {
     private ViewPagerAdapter adapter;
     private String[] mTitles = {"未录入", "已录入"};
     private List<Fragment> themeFragments;
+    private ArrayList<EnterResultBean> fail;
+    private ArrayList<EnterResultBean> success;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,7 +38,6 @@ public class BulkImportResult extends AppCompatActivity {
         ButterKnife.bind(this);
         initViews();
     }
-
     private void initViews() {
         bulkSegement.setTabData(mTitles);
         bulkSegement.setOnTabSelectListener(new OnTabSelectListener() {
@@ -52,6 +51,8 @@ public class BulkImportResult extends AppCompatActivity {
 
             }
         });
+        fail=getIntent().getParcelableArrayListExtra("fail");
+        success=getIntent().getParcelableArrayListExtra("success");
         // 透明状态栏
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -72,8 +73,8 @@ public class BulkImportResult extends AppCompatActivity {
 
     private List<Fragment> getThemeFragments() {
         themeFragments = new ArrayList<>();
-        themeFragments.add(OnGoing.newInstance());
-        themeFragments.add(Expired.newInstance());
+        themeFragments.add(NoImport.newInstance(fail));
+        themeFragments.add(HasImport.newInstance(success));
         return themeFragments;
     }
 

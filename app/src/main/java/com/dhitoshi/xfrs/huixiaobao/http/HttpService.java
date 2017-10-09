@@ -3,6 +3,7 @@ import com.dhitoshi.xfrs.huixiaobao.Bean.ApplyMeetBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.AreaBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.AttendBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.BaseBean;
+import com.dhitoshi.xfrs.huixiaobao.Bean.BulkImportBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.ChatContact;
 import com.dhitoshi.xfrs.huixiaobao.Bean.ClientBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.GiftBean;
@@ -29,6 +30,7 @@ import com.dhitoshi.xfrs.huixiaobao.Bean.ScreenBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.SpendBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.UserBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.UserRole;
+import com.dhitoshi.xfrs.huixiaobao.Bean.VersionBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.VisitBean;
 import java.util.List;
 import java.util.Map;
@@ -169,7 +171,9 @@ public interface HttpService {
     //参会记录数据
     @GET("Meeting/attendList")
     Observable<AttendBean<Integer>> GetaAttendList(@Query("token") String token,@Query("meetingid") String meetingid);
-
+    //获取版本情况
+    @GET("getVersion")
+    Observable<HttpBean<VersionBean>> getVersion();
     //更改密码
     @POST("resetPassword")
     Observable<HttpBean<Object>> resetPassword(@QueryMap Map<String,String> map);
@@ -262,7 +266,7 @@ public interface HttpService {
     Observable<HttpBean<Object>> addCustomer(@QueryMap Map<String,String> map);
     //批量添加参会客户
     @POST("Meeting/addCustomerAll")
-    Observable<HttpBean<Object>> addCustomerAll(@QueryMap Map<String,String> map);
+    Observable<HttpBean<BulkImportBean>> addCustomerAll(@QueryMap Map<String,String> map);
     //修改个人基本资料
     @POST("user/editBase")
     Observable<HttpBean<UserBean>> editBase(@QueryMap Map<String,String> map);

@@ -190,6 +190,9 @@ public class EnterClient extends BaseView implements MeetClientManage.View {
             case 1:
                 smartRefreshLayout.autoRefresh();
                 break;
+            case 2:
+                smartRefreshLayout.autoRefresh();
+                break;
         }
     }
 }

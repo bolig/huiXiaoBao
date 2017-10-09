@@ -1,9 +1,11 @@
 package com.dhitoshi.xfrs.huixiaobao.presenter;
 import android.content.Context;
 import com.dhitoshi.refreshlayout.SmartRefreshLayout;
+import com.dhitoshi.xfrs.huixiaobao.Bean.BulkImportBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.ClientBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.PageBean;
+import com.dhitoshi.xfrs.huixiaobao.Dialog.LoadingDialog;
 import com.dhitoshi.xfrs.huixiaobao.Interface.BulkImportManage;
 import com.dhitoshi.xfrs.huixiaobao.Interface.Callback;
 import com.dhitoshi.xfrs.huixiaobao.model.BulkImportModel;
@@ -25,6 +27,16 @@ public class BulkImportPresenter implements BulkImportManage.Presenter{
             @Override
             public void get(HttpBean<PageBean<ClientBean>> httpBean) {
                 view.getClientList(httpBean.getData());
+            }
+        });
+    }
+
+    @Override
+    public void addCustomerAll(Map<String, String> map, LoadingDialog dialog) {
+        model.addCustomerAll(map, dialog, new Callback<HttpBean<BulkImportBean>>() {
+            @Override
+            public void get(HttpBean<BulkImportBean> httpBean) {
+                view.addCustomerAll(httpBean);
             }
         });
     }

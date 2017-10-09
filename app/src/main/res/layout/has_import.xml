@@ -1,0 +1,13 @@
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/import_recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+    <include layout="@layout/empty"></include>
+</LinearLayout>

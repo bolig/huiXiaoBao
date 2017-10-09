@@ -194,7 +194,6 @@ public class Select extends BaseView {
         adapter.addItemClickListener(new ItemClick<BaseBean>() {
             @Override
             public void onItemClick(View view, BaseBean baseBean, int position) {
-                Log.e("TAG","id--->>>>"+baseBean.getId());
                 Intent it=new Intent();
                 it.putExtra("id",String.valueOf(baseBean.getId()));
                 it.putExtra("name",baseBean.getName());
@@ -205,7 +204,6 @@ public class Select extends BaseView {
         adapter.addCheckBoxClick(new CheckBoxClick() {
             @Override
             public void check(boolean isChecked, String name, int id) {
-                Log.e("TAG","id-------"+id);
             Intent it=new Intent();
             it.putExtra("id",String.valueOf(id));
             it.putExtra("name",name);

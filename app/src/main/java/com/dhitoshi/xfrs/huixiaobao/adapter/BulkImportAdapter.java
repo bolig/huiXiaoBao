@@ -1,10 +1,9 @@
 package com.dhitoshi.xfrs.huixiaobao.adapter;
 import android.content.Context;
-import android.view.View;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import com.dhitoshi.xfrs.huixiaobao.Bean.ClientBean;
 import com.dhitoshi.xfrs.huixiaobao.Interface.CheckBoxBulkClick;
-import com.dhitoshi.xfrs.huixiaobao.Interface.CheckBoxClick;
 import com.dhitoshi.xfrs.huixiaobao.R;
 import com.dhitoshi.xfrs.huixiaobao.common.BaseAdapter;
 import com.dhitoshi.xfrs.huixiaobao.common.BaseRecyclerHolder;
@@ -26,10 +25,10 @@ public class BulkImportAdapter extends BaseAdapter<ClientBean> {
         holder.setText(R.id.bulkimport_name,item.getName());
         holder.setText(R.id.bulkimport_idcard,item.getIdcard());
         CheckBox checkBox=holder.getView(R.id.bulkimport_select);
-        checkBox.setOnClickListener(new View.OnClickListener() {
+        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onClick(View v) {
-                click.check(true,mList.get(position).getName(),mList.get(position).getIdcard());
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                click.check(isChecked,mList.get(position).getName(),mList.get(position).getIdcard());
             }
         });
     }

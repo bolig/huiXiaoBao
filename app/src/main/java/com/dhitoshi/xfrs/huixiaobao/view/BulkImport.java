@@ -1,27 +1,31 @@
 package com.dhitoshi.xfrs.huixiaobao.view;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 import com.dhitoshi.refreshlayout.SmartRefreshLayout;
 import com.dhitoshi.refreshlayout.api.RefreshLayout;
 import com.dhitoshi.refreshlayout.listener.OnLoadmoreListener;
 import com.dhitoshi.refreshlayout.listener.OnRefreshListener;
+import com.dhitoshi.xfrs.huixiaobao.Bean.BulkImportBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.ClientBean;
-import com.dhitoshi.xfrs.huixiaobao.Bean.HobbyBean;
+import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.PageBean;
+import com.dhitoshi.xfrs.huixiaobao.Dialog.LoadingDialog;
+import com.dhitoshi.xfrs.huixiaobao.Event.MeetClientEvent;
 import com.dhitoshi.xfrs.huixiaobao.Interface.BulkImportManage;
 import com.dhitoshi.xfrs.huixiaobao.Interface.CheckBoxBulkClick;
-import com.dhitoshi.xfrs.huixiaobao.Interface.CheckBoxClick;
 import com.dhitoshi.xfrs.huixiaobao.Interface.ItemClick;
 import com.dhitoshi.xfrs.huixiaobao.R;
 import com.dhitoshi.xfrs.huixiaobao.adapter.BulkImportAdapter;
-import com.dhitoshi.xfrs.huixiaobao.adapter.ClientAdapter;
 import com.dhitoshi.xfrs.huixiaobao.common.MyDecoration;
 import com.dhitoshi.xfrs.huixiaobao.presenter.BulkImportPresenter;
 import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
+import org.greenrobot.eventbus.EventBus;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -29,7 +33,6 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
 
 public class BulkImport extends BaseView implements BulkImportManage.View{
     @BindView(R.id.recyclerView)
@@ -41,14 +44,13 @@ public class BulkImport extends BaseView implements BulkImportManage.View{
     @BindView(R.id.error)
     RelativeLayout error;
     private String meetingid = "";
-    private String name="";
-    private String idcard="";
     private String names="";
     private String idcards="";
     private int page=1;
     private List<ClientBean> clients;
     private BulkImportPresenter bulkImportPresenter;
     private BulkImportAdapter adapter;
+    private Map<String,String> map;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,10 +94,22 @@ public class BulkImport extends BaseView implements BulkImportManage.View{
             }
         });
     }
-
-    @OnClick(R.id.right_icon)
+    @OnClick(R.id.right_text)
     public void onViewClicked() {
-
+         if(names.isEmpty()){
+             Toast.makeText(this,"请选择要添加的人员",Toast.LENGTH_SHORT).show();
+             return;
+         }
+        if(map==null){
+            map=new HashMap<>();
+        }
+        map.put("name",names.substring(0,names.length()-1));
+        map.put("idcard",idcards.substring(0,idcards.length()-1));
+        map.put("meetingid",meetingid);
+        map.put("token",SharedPreferencesUtil.Obtain(this,"token","").toString());
+        LoadingDialog dialog = LoadingDialog.build(this).setLoadingTitle("提交中");
+        dialog.show();
+        bulkImportPresenter.addCustomerAll(map,dialog);
     }
     @Override
     public void getClientList(PageBean<ClientBean> pageBean) {
@@ -121,17 +135,23 @@ public class BulkImport extends BaseView implements BulkImportManage.View{
                 @Override
                 public void check(boolean isChecked, String name, String idcard) {
                     if(isChecked){
-                        names+=name+" ";
+                        names+=name+",";
                         idcards+=idcard+",";
                     }else{
                         idcards=idcards.replace(idcard+",","");
-                        names= names.replace(name+" ","");
-
+                        names= names.replace(name+",","");
                     }
                 }
             });
         } else {
             adapter.notifyDataSetChanged();
         }
+    }
+    @Override
+    public void addCustomerAll(HttpBean<BulkImportBean> httpBean) {
+        EventBus.getDefault().post(new MeetClientEvent(2));
+        startActivity(new Intent(this,BulkImportResult.class).putParcelableArrayListExtra("success",(ArrayList)httpBean.getData().getSuccess())
+                .putParcelableArrayListExtra("fail",(ArrayList)httpBean.getData().getFail()));
+        finish();
     }
 }
