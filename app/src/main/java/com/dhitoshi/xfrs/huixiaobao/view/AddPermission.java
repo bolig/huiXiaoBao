@@ -12,6 +12,7 @@ import com.dhitoshi.xfrs.huixiaobao.Event.PermissionEvent;
 import com.dhitoshi.xfrs.huixiaobao.Interface.AddPermissionManage;
 import com.dhitoshi.xfrs.huixiaobao.R;
 import com.dhitoshi.xfrs.huixiaobao.presenter.AddPermissionPresenter;
+import com.dhitoshi.xfrs.huixiaobao.utils.ActivityManagerUtil;
 import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
 import org.greenrobot.eventbus.EventBus;
 import java.util.HashMap;
@@ -42,7 +43,15 @@ public class AddPermission extends BaseView implements AddPermissionManage.View 
         setContentView(R.layout.add_permission);
         ButterKnife.bind(this);
         initViews();
+        ActivityManagerUtil.addDestoryActivity(this,"AddPermission");
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ActivityManagerUtil.destoryActivity("AddPermission");
+    }
+
     private void initViews() {
         initBaseViews();
         setTitle("权限组");

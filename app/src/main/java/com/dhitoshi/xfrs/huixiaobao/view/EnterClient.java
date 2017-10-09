@@ -25,6 +25,7 @@ import com.dhitoshi.xfrs.huixiaobao.common.MyDecoration;
 import com.dhitoshi.xfrs.huixiaobao.common.PopupMenu;
 import com.dhitoshi.xfrs.huixiaobao.common.SwipeItemLayout;
 import com.dhitoshi.xfrs.huixiaobao.presenter.MeetClientPresenter;
+import com.dhitoshi.xfrs.huixiaobao.utils.ActivityManagerUtil;
 import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
 
 import org.greenrobot.eventbus.EventBus;
@@ -70,12 +71,14 @@ public class EnterClient extends BaseView implements MeetClientManage.View {
         ButterKnife.bind(this);
         EventBus.getDefault().register(this);
         initViews();
+        ActivityManagerUtil.addDestoryActivity(this,"EnterClient");
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
+        ActivityManagerUtil.destoryActivity("EnterClient");
     }
 
     private void initViews() {

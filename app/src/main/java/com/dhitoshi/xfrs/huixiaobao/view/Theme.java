@@ -17,7 +17,7 @@ import com.dhitoshi.xfrs.huixiaobao.fragment.News;
 import com.dhitoshi.xfrs.huixiaobao.fragment.Personal;
 import com.dhitoshi.xfrs.huixiaobao.fragment.StateMent;
 import com.dhitoshi.xfrs.huixiaobao.fragment.Work;
-import com.dhitoshi.xfrs.huixiaobao.utils.ActivityManager;
+import com.dhitoshi.xfrs.huixiaobao.utils.ActivityManagerUtil;
 import com.dhitoshi.xfrs.huixiaobao.utils.SystemBarTintManager;
 
 import java.util.ArrayList;
@@ -44,14 +44,14 @@ public class Theme extends AppCompatActivity {
         initViews();
         initDatas();
         initEvents();
-        ActivityManager.addDestoryActivity(this,"Theme");
+        ActivityManagerUtil.addDestoryActivity(this,"Theme");
         ThemePermissionsDispatcher.callWithCheck(this);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        ActivityManager.destoryActivity("Theme");
+        ActivityManagerUtil.destoryActivity("Theme");
     }
 
     //初始化页面控件

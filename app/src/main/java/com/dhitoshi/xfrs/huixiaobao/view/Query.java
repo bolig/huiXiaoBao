@@ -33,6 +33,7 @@ import com.dhitoshi.xfrs.huixiaobao.common.SelectDateDialog;
 import com.dhitoshi.xfrs.huixiaobao.common.SelectDialog;
 import com.dhitoshi.xfrs.huixiaobao.common.SerializableMap;
 import com.dhitoshi.xfrs.huixiaobao.presenter.QueryPresenter;
+import com.dhitoshi.xfrs.huixiaobao.utils.ActivityManagerUtil;
 import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
 
 import java.util.ArrayList;
@@ -122,7 +123,15 @@ public class Query extends BaseView implements QueryManage.View{
         setContentView(R.layout.query);
         ButterKnife.bind(this);
         initViews();
+        ActivityManagerUtil.addDestoryActivity(this,"Query");
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ActivityManagerUtil.destoryActivity("Query");
+    }
+
     private void initViews() {
         initBaseViews();
         setTitle("高级查询");

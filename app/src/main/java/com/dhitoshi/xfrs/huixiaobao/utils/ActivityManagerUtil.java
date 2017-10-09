@@ -7,9 +7,9 @@ import java.util.Set;
  * Created by Administrator on 2016/12/6.
  */
 
-public class ActivityManager {
+public class ActivityManagerUtil {
     private static Map<String, Activity> destoryMap = new HashMap();
-    private ActivityManager() {
+    private ActivityManagerUtil() {
     }
     //添加到销毁队列
     public static void addDestoryActivity(Activity activity, String activityName) {
@@ -31,6 +31,10 @@ public class ActivityManager {
             destoryMap.get(key).finish();
             destoryMap.remove(key);
         }
+    }
+    //获得指定名称的activity
+    public static Activity getCurrentActivity(String activityName){
+        return destoryMap.get(activityName);
     }
     //销毁其他所有Activity
     public static void destoryOtherActivity(String activityName) {

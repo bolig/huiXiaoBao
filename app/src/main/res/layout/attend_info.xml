@@ -1,11 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#efefef"
     android:fitsSystemWindows="true"
+
     >
     <include layout="@layout/toolbar"></include>
+    <com.dhitoshi.refreshlayout.SmartRefreshLayout
+        android:id="@+id/attend_smartRefreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:srlPrimaryColor="@color/colorPrimary"
+        app:srlAccentColor="@android:color/white"
+        app:srlEnableHeaderTranslationContent="true"
+        app:srlEnableLoadmore="true"
+        app:srlEnableAutoLoadmore="false"
+        app:srlHeaderHeight="50dp"
+        >
+        <com.dhitoshi.refreshlayout.header.CircleHeader
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+        <WebView
+            android:id="@+id/attend_webview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+        </WebView>
+    </com.dhitoshi.refreshlayout.SmartRefreshLayout>
 </LinearLayout>

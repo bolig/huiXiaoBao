@@ -9,6 +9,7 @@ import com.dhitoshi.xfrs.huixiaobao.Bean.MoreMeetInfoBean;
 import com.dhitoshi.xfrs.huixiaobao.Interface.MoreMeetInfoManage;
 import com.dhitoshi.xfrs.huixiaobao.R;
 import com.dhitoshi.xfrs.huixiaobao.presenter.MoreMeetInfoPresenter;
+import com.dhitoshi.xfrs.huixiaobao.utils.ActivityManagerUtil;
 import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
 
 import butterknife.BindView;
@@ -27,7 +28,15 @@ public class MoreMeetInfo extends BaseView implements MoreMeetInfoManage.View {
         setContentView(R.layout.more_meet_info);
         ButterKnife.bind(this);
         initViews();
+        ActivityManagerUtil.addDestoryActivity(this,"MoreMeetInfo");
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ActivityManagerUtil.destoryActivity("MoreMeetInfo");
+    }
+
     private void initViews() {
         initBaseViews();
         aid=getIntent().getStringExtra("body");

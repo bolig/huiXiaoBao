@@ -14,6 +14,7 @@ import com.dhitoshi.xfrs.huixiaobao.common.OnTabSelectListener;
 import com.dhitoshi.xfrs.huixiaobao.common.SegmentTabLayout;
 import com.dhitoshi.xfrs.huixiaobao.fragment.HasImport;
 import com.dhitoshi.xfrs.huixiaobao.fragment.NoImport;
+import com.dhitoshi.xfrs.huixiaobao.utils.ActivityManagerUtil;
 import com.dhitoshi.xfrs.huixiaobao.utils.SystemBarTintManager;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +38,15 @@ public class BulkImportResult extends AppCompatActivity {
         setContentView(R.layout.bulk_import_result);
         ButterKnife.bind(this);
         initViews();
+        ActivityManagerUtil.addDestoryActivity(this,"BulkImportResult");
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ActivityManagerUtil.destoryActivity("BulkImportResult");
+    }
+
     private void initViews() {
         bulkSegement.setTabData(mTitles);
         bulkSegement.setOnTabSelectListener(new OnTabSelectListener() {

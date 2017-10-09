@@ -21,6 +21,7 @@ import com.dhitoshi.xfrs.huixiaobao.adapter.LocationAdapter;
 import com.dhitoshi.xfrs.huixiaobao.common.SelectDateDialog;
 import com.dhitoshi.xfrs.huixiaobao.common.SelectDialog;
 import com.dhitoshi.xfrs.huixiaobao.presenter.AddSpendPresenter;
+import com.dhitoshi.xfrs.huixiaobao.utils.ActivityManagerUtil;
 import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
 import org.greenrobot.eventbus.EventBus;
 import java.util.ArrayList;
@@ -83,7 +84,15 @@ public class AddSpend extends BaseView implements AddSpendManage.View{
         setContentView(R.layout.add_spend);
         ButterKnife.bind(this);
         initViews();
+        ActivityManagerUtil.addDestoryActivity(this,"AddSpend");
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ActivityManagerUtil.destoryActivity("AddSpend");
+    }
+
     private void initViews() {
         initBaseViews();
         userId=getIntent().getIntExtra("id",0);

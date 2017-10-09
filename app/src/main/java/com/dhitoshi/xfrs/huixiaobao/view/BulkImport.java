@@ -24,6 +24,7 @@ import com.dhitoshi.xfrs.huixiaobao.R;
 import com.dhitoshi.xfrs.huixiaobao.adapter.BulkImportAdapter;
 import com.dhitoshi.xfrs.huixiaobao.common.MyDecoration;
 import com.dhitoshi.xfrs.huixiaobao.presenter.BulkImportPresenter;
+import com.dhitoshi.xfrs.huixiaobao.utils.ActivityManagerUtil;
 import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
 import org.greenrobot.eventbus.EventBus;
 import java.util.ArrayList;
@@ -57,7 +58,15 @@ public class BulkImport extends BaseView implements BulkImportManage.View{
         setContentView(R.layout.bulk_import);
         ButterKnife.bind(this);
         initViews();
+        ActivityManagerUtil.addDestoryActivity(this,"BulkImport");
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ActivityManagerUtil.destoryActivity("BulkImport");
+    }
+
     private void initViews() {
         initBaseViews();
         setTitle("批量添加人员");

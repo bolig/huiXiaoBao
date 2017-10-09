@@ -3,7 +3,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import com.dhitoshi.xfrs.huixiaobao.R;
-import com.dhitoshi.xfrs.huixiaobao.utils.ActivityManager;
+import com.dhitoshi.xfrs.huixiaobao.utils.ActivityManagerUtil;
 import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
 
 import butterknife.ButterKnife;
@@ -15,7 +15,7 @@ public class Setting extends BaseView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.setting);
         ButterKnife.bind(this);
-        ActivityManager.addDestoryActivity(this,"Setting");
+        ActivityManagerUtil.addDestoryActivity(this,"Setting");
         initViews();
     }
     private void initViews() {
@@ -26,7 +26,7 @@ public class Setting extends BaseView {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        ActivityManager.destoryActivity("Setting");
+        ActivityManagerUtil.destoryActivity("Setting");
     }
 
     @OnClick({R.id.safe, R.id.base, R.id.copyright, R.id.exit})
@@ -45,7 +45,7 @@ public class Setting extends BaseView {
             case R.id.exit:
                 startActivity(new Intent(this,Login.class));
                 SharedPreferencesUtil.Obtain(this,"token","");
-                ActivityManager.destoryActivity("Theme");
+                ActivityManagerUtil.destoryActivity("Theme");
                 finish();
                 break;
         }

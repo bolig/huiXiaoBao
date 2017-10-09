@@ -10,6 +10,7 @@ import com.dhitoshi.xfrs.huixiaobao.Event.ProductTypeEvent;
 import com.dhitoshi.xfrs.huixiaobao.Interface.AddProductTypeManage;
 import com.dhitoshi.xfrs.huixiaobao.R;
 import com.dhitoshi.xfrs.huixiaobao.presenter.AddProductTypePresenter;
+import com.dhitoshi.xfrs.huixiaobao.utils.ActivityManagerUtil;
 import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
 
 import org.greenrobot.eventbus.EventBus;
@@ -30,7 +31,15 @@ public class AddProductType extends BaseView implements AddProductTypeManage.Vie
         setContentView(R.layout.add_product_type);
         ButterKnife.bind(this);
         initViews();
+        ActivityManagerUtil.addDestoryActivity(this,"AddProductType");
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ActivityManagerUtil.destoryActivity("AddProductType");
+    }
+
     private void initViews() {
         initBaseViews();
         setRightText("提交");

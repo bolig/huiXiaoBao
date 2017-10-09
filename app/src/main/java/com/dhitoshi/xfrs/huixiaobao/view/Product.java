@@ -24,6 +24,7 @@ import com.dhitoshi.xfrs.huixiaobao.R;
 import com.dhitoshi.xfrs.huixiaobao.adapter.SetProductAdapter;
 import com.dhitoshi.xfrs.huixiaobao.common.SwipeItemLayout;
 import com.dhitoshi.xfrs.huixiaobao.presenter.ProductPresenter;
+import com.dhitoshi.xfrs.huixiaobao.utils.ActivityManagerUtil;
 import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
 
 import org.greenrobot.eventbus.EventBus;
@@ -62,12 +63,14 @@ public class Product extends BaseView implements ProductManage.View {
         ButterKnife.bind(this);
         EventBus.getDefault().register(this);
         initViews();
+        ActivityManagerUtil.addDestoryActivity(this,"Product");
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
+        ActivityManagerUtil.destoryActivity("Product");
     }
 
     private void initViews() {

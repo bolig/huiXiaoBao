@@ -30,6 +30,7 @@ import com.dhitoshi.xfrs.huixiaobao.common.SelectDialog;
 import com.dhitoshi.xfrs.huixiaobao.http.HttpResult;
 import com.dhitoshi.xfrs.huixiaobao.http.MyHttp;
 import com.dhitoshi.xfrs.huixiaobao.presenter.MeetClientPresenter;
+import com.dhitoshi.xfrs.huixiaobao.utils.ActivityManagerUtil;
 import com.dhitoshi.xfrs.huixiaobao.utils.LoginUtil;
 import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
 import java.text.ParseException;
@@ -45,8 +46,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 
-public class
-AttendMeet extends BaseView implements MeetClientManage.View {
+public class AttendMeet extends BaseView implements MeetClientManage.View {
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
     @BindView(R.id.empty)
@@ -77,6 +77,13 @@ AttendMeet extends BaseView implements MeetClientManage.View {
         setContentView(R.layout.attend_meet);
         ButterKnife.bind(this);
         initViews();
+        ActivityManagerUtil.addDestoryActivity(this,"AttendMeet");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ActivityManagerUtil.destoryActivity("AttendMeet");
     }
 
     private void initViews() {

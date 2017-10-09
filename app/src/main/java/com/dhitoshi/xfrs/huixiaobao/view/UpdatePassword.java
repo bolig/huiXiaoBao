@@ -8,7 +8,7 @@ import com.dhitoshi.xfrs.huixiaobao.Dialog.LoadingDialog;
 import com.dhitoshi.xfrs.huixiaobao.Interface.UpdateManage;
 import com.dhitoshi.xfrs.huixiaobao.R;
 import com.dhitoshi.xfrs.huixiaobao.presenter.UpdatePresenter;
-import com.dhitoshi.xfrs.huixiaobao.utils.ActivityManager;
+import com.dhitoshi.xfrs.huixiaobao.utils.ActivityManagerUtil;
 import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
 import java.util.HashMap;
 import java.util.Map;
@@ -35,7 +35,15 @@ public class UpdatePassword extends BaseView implements UpdateManage.View {
         setContentView(R.layout.update_password);
         ButterKnife.bind(this);
         initViews();
+        ActivityManagerUtil.addDestoryActivity(this,"UpdatePassword");
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ActivityManagerUtil.destoryActivity("UpdatePassword");
+    }
+
     private void initViews() {
         initBaseViews();
         setTitle("修改密码");
@@ -47,7 +55,7 @@ public class UpdatePassword extends BaseView implements UpdateManage.View {
         startActivity(new Intent(this,Login.class));
         SharedPreferencesUtil.Obtain(this,"token","");
         SharedPreferencesUtil.Save(this, "isRemeber",false);
-        ActivityManager.destoryActivity("Theme");
+        ActivityManagerUtil.destoryActivity("Theme");
         finish();
     }
     @OnClick(R.id.update)

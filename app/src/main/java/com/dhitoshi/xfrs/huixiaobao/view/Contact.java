@@ -21,6 +21,7 @@ import com.dhitoshi.xfrs.huixiaobao.Interface.ContactManage;
 import com.dhitoshi.xfrs.huixiaobao.R;
 import com.dhitoshi.xfrs.huixiaobao.adapter.ContactAdapter;
 import com.dhitoshi.xfrs.huixiaobao.presenter.ContactPresenter;
+import com.dhitoshi.xfrs.huixiaobao.utils.ActivityManagerUtil;
 import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
 
 import org.greenrobot.eventbus.EventBus;
@@ -67,6 +68,13 @@ public class Contact extends BaseView implements ContactManage.View{
         ButterKnife.bind(this);
         initViews();
         ContactPermissionsDispatcher.readContactsWithCheck(this);
+        ActivityManagerUtil.addDestoryActivity(this,"Contact");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ActivityManagerUtil.destoryActivity("Contact");
     }
 
     private void initViews() {

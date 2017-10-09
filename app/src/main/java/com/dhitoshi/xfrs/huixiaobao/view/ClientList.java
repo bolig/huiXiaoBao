@@ -10,6 +10,7 @@ import com.dhitoshi.xfrs.huixiaobao.Interface.ItemClick;
 import com.dhitoshi.xfrs.huixiaobao.R;
 import com.dhitoshi.xfrs.huixiaobao.adapter.ClientAdapter;
 import com.dhitoshi.xfrs.huixiaobao.common.MyDecoration;
+import com.dhitoshi.xfrs.huixiaobao.utils.ActivityManagerUtil;
 
 import java.util.ArrayList;
 import butterknife.BindView;
@@ -27,7 +28,15 @@ public class ClientList extends BaseView {
         setContentView(R.layout.client_list);
         ButterKnife.bind(this);
         initViews();
+        ActivityManagerUtil.addDestoryActivity(this,"ClientList");
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ActivityManagerUtil.destoryActivity("ClientList");
+    }
+
     private void initViews() {
         initBaseViews();
         title = getIntent().getStringExtra("title");

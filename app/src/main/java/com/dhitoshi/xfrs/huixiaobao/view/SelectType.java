@@ -24,6 +24,7 @@ import com.dhitoshi.xfrs.huixiaobao.common.CommonObserver;
 import com.dhitoshi.xfrs.huixiaobao.common.MyDecoration;
 import com.dhitoshi.xfrs.huixiaobao.http.HttpResult;
 import com.dhitoshi.xfrs.huixiaobao.http.MyHttp;
+import com.dhitoshi.xfrs.huixiaobao.utils.ActivityManagerUtil;
 import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
 
 import java.util.ArrayList;
@@ -53,6 +54,13 @@ public class SelectType extends BaseView {
         ButterKnife.bind(this);
         selected = getIntent().getStringExtra("selected");
         initViews();
+        ActivityManagerUtil.addDestoryActivity(this,"SelectType");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ActivityManagerUtil.destoryActivity("SelectType");
     }
 
     private void initViews() {

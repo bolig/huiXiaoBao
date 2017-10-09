@@ -8,6 +8,7 @@ import com.dhitoshi.xfrs.huixiaobao.Event.MeetClientEvent;
 import com.dhitoshi.xfrs.huixiaobao.Interface.AddMeetingClientManage;
 import com.dhitoshi.xfrs.huixiaobao.R;
 import com.dhitoshi.xfrs.huixiaobao.presenter.AddMeetingClientPresenter;
+import com.dhitoshi.xfrs.huixiaobao.utils.ActivityManagerUtil;
 import com.dhitoshi.xfrs.huixiaobao.utils.IdCardUtil;
 import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
 import org.greenrobot.eventbus.EventBus;
@@ -36,7 +37,15 @@ public class AddMeetClient extends BaseView implements AddMeetingClientManage.Vi
         setContentView(R.layout.add_meet_client);
         ButterKnife.bind(this);
         initViews();
+        ActivityManagerUtil.addDestoryActivity(this,"AddMeetClient");
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ActivityManagerUtil.destoryActivity("AddMeetClient");
+    }
+
     private void initViews() {
         initBaseViews();
         setRightText("提交");

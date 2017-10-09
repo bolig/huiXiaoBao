@@ -14,6 +14,7 @@ import com.dhitoshi.xfrs.huixiaobao.common.SegmentTabLayout;
 import com.dhitoshi.xfrs.huixiaobao.fragment.HasHeld;
 import com.dhitoshi.xfrs.huixiaobao.fragment.Staging;
 import com.dhitoshi.xfrs.huixiaobao.fragment.ToHeld;
+import com.dhitoshi.xfrs.huixiaobao.utils.ActivityManagerUtil;
 import com.dhitoshi.xfrs.huixiaobao.utils.SystemBarTintManager;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +37,15 @@ public class OwnMeeting extends AppCompatActivity {
         setContentView(R.layout.own_meet);
         ButterKnife.bind(this);
         initViews();
+        ActivityManagerUtil.addDestoryActivity(this,"OwnMeeting");
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ActivityManagerUtil.destoryActivity("OwnMeeting");
+    }
+
     private void initViews() {
         segement.setTabData(mTitles);
         segement.setOnTabSelectListener(new OnTabSelectListener() {

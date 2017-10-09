@@ -23,6 +23,7 @@ import com.dhitoshi.xfrs.huixiaobao.adapter.CommonAdapter;
 import com.dhitoshi.xfrs.huixiaobao.common.SelectDateDialog;
 import com.dhitoshi.xfrs.huixiaobao.common.SelectDialog;
 import com.dhitoshi.xfrs.huixiaobao.presenter.AddMeetingPresenter;
+import com.dhitoshi.xfrs.huixiaobao.utils.ActivityManagerUtil;
 import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
 import org.greenrobot.eventbus.EventBus;
 import java.util.ArrayList;
@@ -69,7 +70,15 @@ public class AddMeeting extends BaseView implements AddMeetingManage.View {
         setContentView(R.layout.add_meeting);
         ButterKnife.bind(this);
         initViews();
+        ActivityManagerUtil.addDestoryActivity(this,"AddMeeting");
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ActivityManagerUtil.destoryActivity("AddMeeting");
+    }
+
     private void initViews() {
         initBaseViews();
         userId = getIntent().getIntExtra("id", 0);

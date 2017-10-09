@@ -41,6 +41,7 @@ import com.dhitoshi.xfrs.huixiaobao.common.SelectDialog;
 import com.dhitoshi.xfrs.huixiaobao.http.HttpResult;
 import com.dhitoshi.xfrs.huixiaobao.http.MyHttp;
 import com.dhitoshi.xfrs.huixiaobao.presenter.AddClientPresenter;
+import com.dhitoshi.xfrs.huixiaobao.utils.ActivityManagerUtil;
 import com.dhitoshi.xfrs.huixiaobao.utils.IdCardUtil;
 import com.dhitoshi.xfrs.huixiaobao.utils.PictureUtils;
 import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
@@ -157,6 +158,13 @@ public class AddClient extends BaseView implements AddClientManage.View {
         setContentView(R.layout.add_client);
         ButterKnife.bind(this);
         initViews();
+        ActivityManagerUtil.addDestoryActivity(this,"AddClient");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ActivityManagerUtil.destoryActivity("AddClient");
     }
 
     private void initViews() {

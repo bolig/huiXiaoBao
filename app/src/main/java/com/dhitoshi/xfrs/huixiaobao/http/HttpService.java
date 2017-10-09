@@ -170,7 +170,7 @@ public interface HttpService {
     Observable<HttpBean<List<ChatContact>>> GetUsers(@Query("token") String token);
     //参会记录数据
     @GET("Meeting/attendList")
-    Observable<AttendBean<Integer>> GetaAttendList(@Query("token") String token,@Query("meetingid") String meetingid);
+    Observable<HttpBean<AttendBean<Integer>>> GetaAttendList(@Query("token") String token,@Query("meetingid") String meetingid);
     //获取版本情况
     @GET("getVersion")
     Observable<HttpBean<VersionBean>> getVersion();

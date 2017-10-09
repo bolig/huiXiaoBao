@@ -15,6 +15,7 @@ import com.dhitoshi.xfrs.huixiaobao.adapter.AreaAdapter;
 import com.dhitoshi.xfrs.huixiaobao.adapter.KidAdapter;
 import com.dhitoshi.xfrs.huixiaobao.common.MyDecoration;
 import com.dhitoshi.xfrs.huixiaobao.presenter.AreaPresenter;
+import com.dhitoshi.xfrs.huixiaobao.utils.ActivityManagerUtil;
 import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
 
 import java.util.ArrayList;
@@ -37,7 +38,15 @@ public class SelectArea extends BaseView implements AreaManage.View {
         setContentView(R.layout.select_area);
         ButterKnife.bind(this);
         initViews();
+        ActivityManagerUtil.addDestoryActivity(this,"SelectArea");
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ActivityManagerUtil.destoryActivity("SelectArea");
+    }
+
     private void initViews() {
         initBaseViews();
         setTitle("部门");

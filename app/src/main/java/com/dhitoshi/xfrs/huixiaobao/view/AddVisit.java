@@ -20,6 +20,7 @@ import com.dhitoshi.xfrs.huixiaobao.adapter.CommonAdapter;
 import com.dhitoshi.xfrs.huixiaobao.common.SelectDateDialog;
 import com.dhitoshi.xfrs.huixiaobao.common.SelectDialog;
 import com.dhitoshi.xfrs.huixiaobao.presenter.AddVisitPresenter;
+import com.dhitoshi.xfrs.huixiaobao.utils.ActivityManagerUtil;
 import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
 import org.greenrobot.eventbus.EventBus;
 import java.util.ArrayList;
@@ -67,7 +68,15 @@ public class AddVisit extends BaseView implements AddVisitManage.View{
         setContentView(R.layout.add_visit);
         ButterKnife.bind(this);
         initViews();
+        ActivityManagerUtil.addDestoryActivity(this,"AddVisit");
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ActivityManagerUtil.destoryActivity("AddVisit");
+    }
+
     private void initViews() {
         initBaseViews();
         userId=getIntent().getIntExtra("id",0);

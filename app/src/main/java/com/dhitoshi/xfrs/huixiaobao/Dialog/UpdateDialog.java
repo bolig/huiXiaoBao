@@ -7,9 +7,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import cn.com.lawchat.android.forpublic.Custom.NewVersion;
-import cn.com.lawchat.android.forpublic.R;
+import com.dhitoshi.xfrs.huixiaobao.R;
+import com.dhitoshi.xfrs.huixiaobao.common.NewVersion;
 
 /**
  * Created by dxs on 2017/6/12.

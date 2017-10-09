@@ -21,6 +21,7 @@ import com.dhitoshi.xfrs.huixiaobao.adapter.DialogAdapter;
 import com.dhitoshi.xfrs.huixiaobao.common.SelectDateDialog;
 import com.dhitoshi.xfrs.huixiaobao.common.SelectDialog;
 import com.dhitoshi.xfrs.huixiaobao.presenter.AddGiftPresenter;
+import com.dhitoshi.xfrs.huixiaobao.utils.ActivityManagerUtil;
 import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
 
 import org.greenrobot.eventbus.EventBus;
@@ -66,7 +67,15 @@ public class AddGift extends BaseView implements AddGiftManage.View{
         setContentView(R.layout.add_gift);
         ButterKnife.bind(this);
         initViews();
+        ActivityManagerUtil.addDestoryActivity(this,"AddGift");
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ActivityManagerUtil.destoryActivity("AddGift");
+    }
+
     private void initViews() {
         initBaseViews();
         userId=getIntent().getIntExtra("id",0);

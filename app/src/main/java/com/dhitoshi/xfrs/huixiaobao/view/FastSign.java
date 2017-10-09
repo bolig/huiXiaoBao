@@ -15,6 +15,7 @@ import com.dhitoshi.xfrs.huixiaobao.Event.UserEvent;
 import com.dhitoshi.xfrs.huixiaobao.Interface.FastSignManage;
 import com.dhitoshi.xfrs.huixiaobao.R;
 import com.dhitoshi.xfrs.huixiaobao.presenter.FastSignPresenter;
+import com.dhitoshi.xfrs.huixiaobao.utils.ActivityManagerUtil;
 import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
 
 import org.greenrobot.eventbus.EventBus;
@@ -57,6 +58,13 @@ public class FastSign extends BaseView implements FastSignManage.View{
         setContentView(R.layout.fast_sign);
         ButterKnife.bind(this);
         initViews();
+        ActivityManagerUtil.addDestoryActivity(this,"FastSign");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ActivityManagerUtil.destoryActivity("FastSign");
     }
 
     private void initViews() {

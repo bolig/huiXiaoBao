@@ -26,6 +26,7 @@ import com.dhitoshi.xfrs.huixiaobao.adapter.UserAdapter;
 import com.dhitoshi.xfrs.huixiaobao.common.MyDecoration;
 import com.dhitoshi.xfrs.huixiaobao.common.PopupMenu;
 import com.dhitoshi.xfrs.huixiaobao.presenter.UserPresenter;
+import com.dhitoshi.xfrs.huixiaobao.utils.ActivityManagerUtil;
 import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
 
 import org.greenrobot.eventbus.EventBus;
@@ -64,11 +65,13 @@ public class UserList extends BaseView implements UserManage.View {
         ButterKnife.bind(this);
         EventBus.getDefault().register(this);
         initViews();
+        ActivityManagerUtil.addDestoryActivity(this,"UserList");
     }
     @Override
     protected void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
+        ActivityManagerUtil.destoryActivity("UserList");
     }
 
     private void initViews() {

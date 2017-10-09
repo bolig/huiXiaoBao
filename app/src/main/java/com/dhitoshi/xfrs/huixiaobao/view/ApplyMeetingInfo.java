@@ -10,7 +10,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.dhitoshi.xfrs.huixiaobao.Bean.ApplyMeetBean;
 import com.dhitoshi.xfrs.huixiaobao.R;
-import com.dhitoshi.xfrs.huixiaobao.utils.ActivityManager;
+import com.dhitoshi.xfrs.huixiaobao.utils.ActivityManagerUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -37,14 +37,14 @@ public class ApplyMeetingInfo extends BaseView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.apply_meeting_info);
         ButterKnife.bind(this);
-        ActivityManager.addDestoryActivity(this, "ApplyMeetingInfo");
+        ActivityManagerUtil.addDestoryActivity(this, "ApplyMeetingInfo");
         initViews();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        ActivityManager.destoryActivity("ApplyMeetingInfo");
+        ActivityManagerUtil.destoryActivity("ApplyMeetingInfo");
     }
 
     private void initViews() {

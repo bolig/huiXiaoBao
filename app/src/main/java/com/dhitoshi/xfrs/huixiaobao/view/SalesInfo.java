@@ -6,6 +6,8 @@ import com.dhitoshi.xfrs.huixiaobao.Bean.SpendBean;
 import com.dhitoshi.xfrs.huixiaobao.R;
 import com.dhitoshi.xfrs.huixiaobao.adapter.SalesAdapter;
 import com.dhitoshi.xfrs.huixiaobao.common.MyDecoration;
+import com.dhitoshi.xfrs.huixiaobao.utils.ActivityManagerUtil;
+
 import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -22,7 +24,15 @@ public class SalesInfo extends BaseView {
         setContentView(R.layout.sales_info);
         ButterKnife.bind(this);
         initViews();
+        ActivityManagerUtil.addDestoryActivity(this,"SalesInfo");
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ActivityManagerUtil.destoryActivity("SalesInfo");
+    }
+
     private void initViews() {
         initBaseViews();
         title = getIntent().getStringExtra("title");

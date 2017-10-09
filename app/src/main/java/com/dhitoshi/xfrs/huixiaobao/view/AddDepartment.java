@@ -11,6 +11,7 @@ import com.dhitoshi.xfrs.huixiaobao.Event.AddAreaThreeEvent;
 import com.dhitoshi.xfrs.huixiaobao.Interface.AddAreaManage;
 import com.dhitoshi.xfrs.huixiaobao.R;
 import com.dhitoshi.xfrs.huixiaobao.presenter.AddAreaPresenter;
+import com.dhitoshi.xfrs.huixiaobao.utils.ActivityManagerUtil;
 import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
 import org.greenrobot.eventbus.EventBus;
 import java.util.HashMap;
@@ -52,7 +53,15 @@ public class AddDepartment extends BaseView implements AddAreaManage.View{
         setContentView(R.layout.add_area);
         ButterKnife.bind(this);
         initViews();
+        ActivityManagerUtil.addDestoryActivity(this,"AddDepartment");
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ActivityManagerUtil.destoryActivity("AddDepartment");
+    }
+
     private void initViews() {
         initBaseViews();
         it=getIntent();

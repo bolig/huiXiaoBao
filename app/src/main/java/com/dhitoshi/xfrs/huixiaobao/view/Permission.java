@@ -20,6 +20,7 @@ import com.dhitoshi.xfrs.huixiaobao.Interface.PermissionManage;
 import com.dhitoshi.xfrs.huixiaobao.R;
 import com.dhitoshi.xfrs.huixiaobao.adapter.PermissionAdapter;
 import com.dhitoshi.xfrs.huixiaobao.presenter.PermissionPresenter;
+import com.dhitoshi.xfrs.huixiaobao.utils.ActivityManagerUtil;
 import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
 
 import org.greenrobot.eventbus.EventBus;
@@ -52,12 +53,14 @@ public class Permission extends BaseView implements PermissionManage.View {
         ButterKnife.bind(this);
         initViews();
         EventBus.getDefault().register(this);
+        ActivityManagerUtil.addDestoryActivity(this,"Permission");
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
+        ActivityManagerUtil.destoryActivity("Permission");
     }
 
     private void initViews() {

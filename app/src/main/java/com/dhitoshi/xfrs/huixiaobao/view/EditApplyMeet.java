@@ -9,6 +9,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.dhitoshi.xfrs.huixiaobao.Bean.OwnMeetBean;
 import com.dhitoshi.xfrs.huixiaobao.R;
+import com.dhitoshi.xfrs.huixiaobao.utils.ActivityManagerUtil;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -43,6 +45,13 @@ public class EditApplyMeet extends BaseView {
         setContentView(R.layout.edit_apply_meet);
         ButterKnife.bind(this);
         initViews();
+        ActivityManagerUtil.addDestoryActivity(this,"EditApplyMeet");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ActivityManagerUtil.destoryActivity("EditApplyMeet");
     }
 
     private void initViews() {
@@ -83,7 +92,7 @@ public class EditApplyMeet extends BaseView {
                 break;
             case R.id.to_attend:
                 if(type==3){
-                    startActivity(new Intent(this,AttendInfo.class));
+                    startActivity(new Intent(this,AttendInfo.class).putExtra("start",ownMeetBean.getStarttime()).putExtra("id", String.valueOf(ownMeetBean.getId())));
                 }else {
                     startActivity(new Intent(this,AttendMeet.class).putExtra("start",ownMeetBean.getStarttime()).putExtra("days",ownMeetBean.getDays()).putExtra("id", String.valueOf(ownMeetBean.getId())));
                 }

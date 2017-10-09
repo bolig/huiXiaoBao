@@ -13,6 +13,7 @@ import com.dhitoshi.xfrs.huixiaobao.Event.ProductEvent;
 import com.dhitoshi.xfrs.huixiaobao.Interface.AddProductManage;
 import com.dhitoshi.xfrs.huixiaobao.R;
 import com.dhitoshi.xfrs.huixiaobao.presenter.AddProductPresenter;
+import com.dhitoshi.xfrs.huixiaobao.utils.ActivityManagerUtil;
 import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
 
 import org.greenrobot.eventbus.EventBus;
@@ -51,7 +52,15 @@ public class AddProduct extends BaseView implements AddProductManage.View{
         setContentView(R.layout.add_product);
         ButterKnife.bind(this);
         initViews();
+        ActivityManagerUtil.addDestoryActivity(this,"AddProduct");
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ActivityManagerUtil.destoryActivity("AddProduct");
+    }
+
     private void initViews() {
         initBaseViews();
         productBean=getIntent().getParcelableExtra("product");

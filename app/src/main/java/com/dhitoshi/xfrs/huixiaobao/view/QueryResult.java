@@ -33,6 +33,7 @@ import com.dhitoshi.xfrs.huixiaobao.adapter.VisitAdapter;
 import com.dhitoshi.xfrs.huixiaobao.common.MyDecoration;
 import com.dhitoshi.xfrs.huixiaobao.common.SerializableMap;
 import com.dhitoshi.xfrs.huixiaobao.presenter.QueryResultPresenter;
+import com.dhitoshi.xfrs.huixiaobao.utils.ActivityManagerUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -98,12 +99,14 @@ public class QueryResult extends BaseView implements QueryResultManage.View {
                 meets=new ArrayList<>();
                 break;
         }
+        ActivityManagerUtil.addDestoryActivity(this,"QueryResult");
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
+        ActivityManagerUtil.destoryActivity("QueryResult");
     }
 
     private void initViews() {

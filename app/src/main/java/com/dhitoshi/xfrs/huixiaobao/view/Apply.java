@@ -12,7 +12,7 @@ import com.dhitoshi.xfrs.huixiaobao.Interface.DateCallBack;
 import com.dhitoshi.xfrs.huixiaobao.R;
 import com.dhitoshi.xfrs.huixiaobao.common.SelectDateDialog;
 import com.dhitoshi.xfrs.huixiaobao.presenter.ApplyMeetingPresenter;
-import com.dhitoshi.xfrs.huixiaobao.utils.ActivityManager;
+import com.dhitoshi.xfrs.huixiaobao.utils.ActivityManagerUtil;
 import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
 
 import java.util.HashMap;
@@ -44,7 +44,15 @@ public class Apply extends BaseView implements ApplyMeetingManage.View{
         setContentView(R.layout.apply);
         ButterKnife.bind(this);
         initViews();
+        ActivityManagerUtil.addDestoryActivity(this,"Apply");
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ActivityManagerUtil.destoryActivity("Apply");
+    }
+
     private void initViews() {
         initBaseViews();
         setTitle("申请举办");
@@ -125,8 +133,8 @@ public class Apply extends BaseView implements ApplyMeetingManage.View{
     @Override
     public void applyMeeting(String result) {
         Toast.makeText(this,result,Toast.LENGTH_SHORT).show();
-        ActivityManager.destoryActivity("ApplyMeeting");
-        ActivityManager.destoryActivity("ApplyMeetingInfo");
+        ActivityManagerUtil.destoryActivity("ApplyMeeting");
+        ActivityManagerUtil.destoryActivity("ApplyMeetingInfo");
         finish();
 
     }

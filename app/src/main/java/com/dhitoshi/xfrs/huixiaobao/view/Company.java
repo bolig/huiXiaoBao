@@ -18,6 +18,7 @@ import com.dhitoshi.xfrs.huixiaobao.adapter.CompanyAdapter;
 import com.dhitoshi.xfrs.huixiaobao.common.MyDecoration;
 import com.dhitoshi.xfrs.huixiaobao.common.SwipeItemLayout;
 import com.dhitoshi.xfrs.huixiaobao.presenter.SetAreaPresenter;
+import com.dhitoshi.xfrs.huixiaobao.utils.ActivityManagerUtil;
 import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
 
 import java.util.ArrayList;
@@ -42,6 +43,7 @@ public class Company extends BaseView implements SetAreaManage.View {
         setContentView(R.layout.add_areaother);
         ButterKnife.bind(this);
         initViews();
+        ActivityManagerUtil.addDestoryActivity(this,"Company");
     }
     private void initViews() {
         initBaseViews();
@@ -93,6 +95,7 @@ public class Company extends BaseView implements SetAreaManage.View {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        ActivityManagerUtil.destoryActivity("Company");
     }
 
 }

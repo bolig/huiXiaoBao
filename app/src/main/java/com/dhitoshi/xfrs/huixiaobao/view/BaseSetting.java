@@ -3,6 +3,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import com.dhitoshi.xfrs.huixiaobao.R;
+import com.dhitoshi.xfrs.huixiaobao.utils.ActivityManagerUtil;
+
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -14,6 +16,13 @@ public class BaseSetting extends BaseView {
         setContentView(R.layout.base_setting);
         ButterKnife.bind(this);
         initViews();
+        ActivityManagerUtil.addDestoryActivity(this,"BaseSetting");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ActivityManagerUtil.destoryActivity("BaseSetting");
     }
 
     private void initViews() {

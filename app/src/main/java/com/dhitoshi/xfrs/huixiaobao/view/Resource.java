@@ -15,6 +15,7 @@ import com.dhitoshi.xfrs.huixiaobao.Bean.SpendBean;
 import com.dhitoshi.xfrs.huixiaobao.Interface.ResourceManage;
 import com.dhitoshi.xfrs.huixiaobao.R;
 import com.dhitoshi.xfrs.huixiaobao.presenter.ResourcePresenter;
+import com.dhitoshi.xfrs.huixiaobao.utils.ActivityManagerUtil;
 import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
 import java.util.ArrayList;
 import butterknife.BindView;
@@ -55,7 +56,15 @@ public class Resource extends BaseView implements ResourceManage.View {
         setContentView(R.layout.resource);
         ButterKnife.bind(this);
         initViews();
+        ActivityManagerUtil.addDestoryActivity(this,"Resource");
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ActivityManagerUtil.destoryActivity("Resource");
+    }
+
     private void initViews() {
         initBaseViews();
         setTitle("我的资源");

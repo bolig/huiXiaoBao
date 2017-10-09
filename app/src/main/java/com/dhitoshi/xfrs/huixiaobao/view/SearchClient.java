@@ -29,6 +29,7 @@ import com.dhitoshi.xfrs.huixiaobao.adapter.ClientAdapter;
 import com.dhitoshi.xfrs.huixiaobao.common.ClearEditText;
 import com.dhitoshi.xfrs.huixiaobao.common.MyDecoration;
 import com.dhitoshi.xfrs.huixiaobao.presenter.SearchClientPresenter;
+import com.dhitoshi.xfrs.huixiaobao.utils.ActivityManagerUtil;
 import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
 import com.dhitoshi.xfrs.huixiaobao.utils.SystemBarTintManager;
 
@@ -76,6 +77,13 @@ public class SearchClient extends AppCompatActivity implements SearchClientManag
         // 激活导航栏设置
         tintManager.setNavigationBarTintEnabled(true);
         tintManager.setTintResource(R.color.colorPrimary);
+        ActivityManagerUtil.addDestoryActivity(this,"SearchClient");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ActivityManagerUtil.destoryActivity("SearchClient");
     }
 
     private void initViews() {

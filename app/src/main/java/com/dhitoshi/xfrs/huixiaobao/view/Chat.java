@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.alibaba.mobileim.YWAPI;
 import com.alibaba.mobileim.YWIMKit;
 import com.dhitoshi.xfrs.huixiaobao.R;
+import com.dhitoshi.xfrs.huixiaobao.utils.ActivityManagerUtil;
 import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
 import com.dhitoshi.xfrs.huixiaobao.utils.SystemBarTintManager;
 
@@ -44,6 +45,13 @@ public class Chat extends AppCompatActivity {
         title.setText(name);
         Fragment fragment = mIMKit.getChattingFragment(target, "24607089");
         fm.beginTransaction().add(R.id.chat, fragment).commit();
+        ActivityManagerUtil.addDestoryActivity(this,"Chat");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ActivityManagerUtil.destoryActivity("Chat");
     }
 
     private void InitView() {

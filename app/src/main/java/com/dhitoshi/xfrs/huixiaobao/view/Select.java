@@ -24,6 +24,8 @@ import com.dhitoshi.xfrs.huixiaobao.adapter.SelectAdapter;
 import com.dhitoshi.xfrs.huixiaobao.adapter.SelectGiftAdapter;
 import com.dhitoshi.xfrs.huixiaobao.adapter.SelectUserRoleAdapter;
 import com.dhitoshi.xfrs.huixiaobao.common.MyDecoration;
+import com.dhitoshi.xfrs.huixiaobao.utils.ActivityManagerUtil;
+
 import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -42,7 +44,15 @@ public class Select extends BaseView {
         setContentView(R.layout.select);
         ButterKnife.bind(this);
         initViews();
+        ActivityManagerUtil.addDestoryActivity(this,"Select");
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ActivityManagerUtil.destoryActivity("Select");
+    }
+
     private void initViews() {
         initBaseViews();
         type = getIntent().getIntExtra("type", 0);

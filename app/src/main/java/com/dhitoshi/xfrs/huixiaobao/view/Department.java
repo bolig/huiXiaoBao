@@ -19,6 +19,7 @@ import com.dhitoshi.xfrs.huixiaobao.adapter.DepartmentAdapter;
 import com.dhitoshi.xfrs.huixiaobao.common.MyDecoration;
 import com.dhitoshi.xfrs.huixiaobao.common.SwipeItemLayout;
 import com.dhitoshi.xfrs.huixiaobao.presenter.SetAreaPresenter;
+import com.dhitoshi.xfrs.huixiaobao.utils.ActivityManagerUtil;
 import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
 
 import org.greenrobot.eventbus.EventBus;
@@ -52,8 +53,8 @@ public class Department extends BaseView implements SetAreaManage.View{
         ButterKnife.bind(this);
         EventBus.getDefault().register(this);
         initViews();
+        ActivityManagerUtil.addDestoryActivity(this,"Department");
     }
-
     private void initViews() {
         initBaseViews();
         title = getIntent().getStringExtra("title");
@@ -100,6 +101,7 @@ public class Department extends BaseView implements SetAreaManage.View{
     protected void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
+        ActivityManagerUtil.destoryActivity("Department");
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

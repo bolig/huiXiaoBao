@@ -23,6 +23,7 @@ import com.dhitoshi.xfrs.huixiaobao.fragment.Meeting;
 import com.dhitoshi.xfrs.huixiaobao.fragment.Relation;
 import com.dhitoshi.xfrs.huixiaobao.fragment.Spending;
 import com.dhitoshi.xfrs.huixiaobao.fragment.Visit;
+import com.dhitoshi.xfrs.huixiaobao.utils.ActivityManagerUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,6 +58,13 @@ public class ClientInfo extends BaseView {
         ButterKnife.bind(this);
         InitViews();
         initEvents();
+        ActivityManagerUtil.addDestoryActivity(this,"ClientInfo");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ActivityManagerUtil.destoryActivity("ClientInfo");
     }
 
     private void InitViews() {

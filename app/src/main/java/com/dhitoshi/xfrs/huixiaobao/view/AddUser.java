@@ -19,6 +19,7 @@ import com.dhitoshi.xfrs.huixiaobao.Event.UserEvent;
 import com.dhitoshi.xfrs.huixiaobao.Interface.AddUserManage;
 import com.dhitoshi.xfrs.huixiaobao.R;
 import com.dhitoshi.xfrs.huixiaobao.presenter.AddUserPresenter;
+import com.dhitoshi.xfrs.huixiaobao.utils.ActivityManagerUtil;
 import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
 
 import org.greenrobot.eventbus.EventBus;
@@ -81,6 +82,13 @@ public class AddUser extends BaseView implements AddUserManage.View {
         setContentView(R.layout.add_user);
         ButterKnife.bind(this);
         initView();
+        ActivityManagerUtil.addDestoryActivity(this,"AddUser");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ActivityManagerUtil.destoryActivity("AddUser");
     }
 
     private void initView() {

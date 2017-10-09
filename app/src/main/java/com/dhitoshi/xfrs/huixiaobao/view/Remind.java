@@ -14,6 +14,7 @@ import com.dhitoshi.xfrs.huixiaobao.Bean.RemindBean;
 import com.dhitoshi.xfrs.huixiaobao.Interface.RemindManage;
 import com.dhitoshi.xfrs.huixiaobao.R;
 import com.dhitoshi.xfrs.huixiaobao.presenter.RemindPresenter;
+import com.dhitoshi.xfrs.huixiaobao.utils.ActivityManagerUtil;
 import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
 
 import java.util.ArrayList;
@@ -54,7 +55,15 @@ public class Remind extends BaseView implements RemindManage.View {
         setContentView(R.layout.remind);
         ButterKnife.bind(this);
         initViews();
+        ActivityManagerUtil.addDestoryActivity(this,"Remind");
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ActivityManagerUtil.destoryActivity("Remind");
+    }
+
     private void initViews() {
         initBaseViews();
         setTitle("客户提醒");

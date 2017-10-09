@@ -22,6 +22,7 @@ import com.dhitoshi.xfrs.huixiaobao.adapter.SexAdapter;
 import com.dhitoshi.xfrs.huixiaobao.common.SelectDateDialog;
 import com.dhitoshi.xfrs.huixiaobao.common.SelectDialog;
 import com.dhitoshi.xfrs.huixiaobao.presenter.AddRelationPresenter;
+import com.dhitoshi.xfrs.huixiaobao.utils.ActivityManagerUtil;
 import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
 
 import org.greenrobot.eventbus.EventBus;
@@ -80,7 +81,15 @@ public class AddRelation extends BaseView implements AddRelationManage.View{
         setContentView(R.layout.add_relation);
         ButterKnife.bind(this);
         initViews();
+        ActivityManagerUtil.addDestoryActivity(this,"AddRelation");
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ActivityManagerUtil.destoryActivity("AddRelation");
+    }
+
     private void initViews() {
         initBaseViews();
         userId=getIntent().getIntExtra("id",0);
