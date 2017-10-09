@@ -13,6 +13,7 @@ import com.dhitoshi.xfrs.huixiaobao.Bean.ClientBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HobbyBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.PageBean;
 import com.dhitoshi.xfrs.huixiaobao.Interface.BulkImportManage;
+import com.dhitoshi.xfrs.huixiaobao.Interface.CheckBoxBulkClick;
 import com.dhitoshi.xfrs.huixiaobao.Interface.CheckBoxClick;
 import com.dhitoshi.xfrs.huixiaobao.Interface.ItemClick;
 import com.dhitoshi.xfrs.huixiaobao.R;
@@ -40,6 +41,10 @@ public class BulkImport extends BaseView implements BulkImportManage.View{
     @BindView(R.id.error)
     RelativeLayout error;
     private String meetingid = "";
+    private String name="";
+    private String idcard="";
+    private String names="";
+    private String idcards="";
     private int page=1;
     private List<ClientBean> clients;
     private BulkImportPresenter bulkImportPresenter;
@@ -112,17 +117,17 @@ public class BulkImport extends BaseView implements BulkImportManage.View{
                     checkBox.setChecked(!checkBox.isChecked());
                 }
             });
-            adapter.addCheckBoxClick(new CheckBoxClick() {
+            adapter.addCheckBoxClick(new CheckBoxBulkClick() {
                 @Override
-                public void check(boolean isChecked, String name, int id) {
-//                    if(isChecked){
-//                        names+=name+" ";
-//                        ids+=id+",";
-//                    }else{
-//                        ids=ids.replace(id+",","");
-//                        names= names.replace(name+" ","");
-//
-//                    }
+                public void check(boolean isChecked, String name, String idcard) {
+                    if(isChecked){
+                        names+=name+" ";
+                        idcards+=idcard+",";
+                    }else{
+                        idcards=idcards.replace(idcard+",","");
+                        names= names.replace(name+" ","");
+
+                    }
                 }
             });
         } else {

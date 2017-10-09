@@ -3,6 +3,7 @@ import android.content.Context;
 import android.view.View;
 import android.widget.CheckBox;
 import com.dhitoshi.xfrs.huixiaobao.Bean.ClientBean;
+import com.dhitoshi.xfrs.huixiaobao.Interface.CheckBoxBulkClick;
 import com.dhitoshi.xfrs.huixiaobao.Interface.CheckBoxClick;
 import com.dhitoshi.xfrs.huixiaobao.R;
 import com.dhitoshi.xfrs.huixiaobao.common.BaseAdapter;
@@ -13,7 +14,7 @@ import java.util.List;
  */
 public class BulkImportAdapter extends BaseAdapter<ClientBean> {
     private Context context;
-    private CheckBoxClick click;
+    private CheckBoxBulkClick click;
     public BulkImportAdapter(List<ClientBean> mList, Context context) {
         super(mList, context, R.layout.bulkimport_item, 4);
         this.context=context;
@@ -28,11 +29,11 @@ public class BulkImportAdapter extends BaseAdapter<ClientBean> {
         checkBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                click.check(true,mList.get(position).getName(),mList.get(position).getId());
+                click.check(true,mList.get(position).getName(),mList.get(position).getIdcard());
             }
         });
     }
-    public void addCheckBoxClick( CheckBoxClick click){
+    public void addCheckBoxClick(CheckBoxBulkClick click){
         this.click=click;
     }
 }
