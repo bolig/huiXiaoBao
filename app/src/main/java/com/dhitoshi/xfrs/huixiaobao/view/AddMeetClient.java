@@ -8,6 +8,7 @@ import com.dhitoshi.xfrs.huixiaobao.Event.MeetClientEvent;
 import com.dhitoshi.xfrs.huixiaobao.Interface.AddMeetingClientManage;
 import com.dhitoshi.xfrs.huixiaobao.R;
 import com.dhitoshi.xfrs.huixiaobao.presenter.AddMeetingClientPresenter;
+import com.dhitoshi.xfrs.huixiaobao.utils.IdCardUtil;
 import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
 import org.greenrobot.eventbus.EventBus;
 import java.util.HashMap;
@@ -64,8 +65,8 @@ public class AddMeetClient extends BaseView implements AddMeetingClientManage.Vi
             return;
         }
         idcard=meetClientIdCard.getText().toString();
-        if(idcard.isEmpty()){
-            Toast.makeText(this,"请填写客户身份证号",Toast.LENGTH_SHORT).show();
+        if (!IdCardUtil.isIDCard(idcard)) {
+            Toast.makeText(this, "请填写正确的客户身份证号", Toast.LENGTH_SHORT).show();
             return;
         }
         phone=meetClientPhone.getText().toString();

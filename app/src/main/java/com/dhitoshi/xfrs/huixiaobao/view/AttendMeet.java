@@ -9,7 +9,6 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.dhitoshi.refreshlayout.SmartRefreshLayout;
 import com.dhitoshi.refreshlayout.api.RefreshLayout;
 import com.dhitoshi.refreshlayout.listener.OnLoadmoreListener;
@@ -19,7 +18,6 @@ import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.MeetClientBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.PageBean;
 import com.dhitoshi.xfrs.huixiaobao.Interface.AttendClick;
-import com.dhitoshi.xfrs.huixiaobao.Interface.CheckBoxClick;
 import com.dhitoshi.xfrs.huixiaobao.Interface.ItemClick;
 import com.dhitoshi.xfrs.huixiaobao.Interface.LoginCall;
 import com.dhitoshi.xfrs.huixiaobao.Interface.MeetClientManage;
@@ -47,7 +45,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 
-public class AttendMeet extends BaseView implements MeetClientManage.View {
+public class
+AttendMeet extends BaseView implements MeetClientManage.View {
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
     @BindView(R.id.empty)
@@ -177,24 +176,37 @@ public class AttendMeet extends BaseView implements MeetClientManage.View {
                     Map<String,String>  map=new HashMap<>();
                     map.put("id",String.valueOf(meetClientBean.getId()));
                     map.put("token",SharedPreferencesUtil.Obtain(AttendMeet.this,"token","").toString());
-                    if(meetClientBean.getAttend().get(current).equals("1")){
-                        currentAttend="0";
+                    if(meetClientBean.getAttend().size()>1){
+                        if(meetClientBean.getAttend().get(current).equals("1")){
+                            currentAttend="0";
+                        }else{
+                            currentAttend="1";
+                        }
                     }else{
                         currentAttend="1";
                     }
-                    int size=meetClientBean.getAttend().size();
+                    int size=days*2;
                     for (int i = 0; i < size; i++) {
                         if(attend.isEmpty()){
                             if(current==i){
                                 attend+=currentAttend;
                             }else{
-                                attend+=meetClientBean.getAttend().get(i);
+                                if(meetClientBean.getAttend().size()>1){
+                                    attend+=meetClientBean.getAttend().get(i);
+                                }else {
+                                    attend+="0";
+                                }
+
                             }
                         }else{
                             if(current==i){
                                 attend+=","+currentAttend;
                             }else{
-                                attend+=","+meetClientBean.getAttend().get(i);
+                                if(meetClientBean.getAttend().size()>1){
+                                    attend+=","+meetClientBean.getAttend().get(i);
+                                }else {
+                                    attend+=",0";
+                                }
                             }
                         }
                     }

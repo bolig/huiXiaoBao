@@ -25,7 +25,7 @@ public class MyApplication extends Application {
             YWAPI.init(this, APP_KEY);
         }
         AdviceBinder.bindAdvice(PointCutEnum.CHATTING_FRAGMENT_UI_POINTCUT,ChattingCustomAdviceSample.class);
-        CrashHandler.getInstance().init(this);
+      //  CrashHandler.getInstance().init(this);
     }
     @Override
     protected void attachBaseContext(Context base) {

@@ -41,6 +41,7 @@ import com.dhitoshi.xfrs.huixiaobao.common.SelectDialog;
 import com.dhitoshi.xfrs.huixiaobao.http.HttpResult;
 import com.dhitoshi.xfrs.huixiaobao.http.MyHttp;
 import com.dhitoshi.xfrs.huixiaobao.presenter.AddClientPresenter;
+import com.dhitoshi.xfrs.huixiaobao.utils.IdCardUtil;
 import com.dhitoshi.xfrs.huixiaobao.utils.PictureUtils;
 import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
 
@@ -223,7 +224,6 @@ public class AddClient extends BaseView implements AddClientManage.View {
         clientNotes.setText(clientBean.getNotes());
         loadHead(clientBean.getHead(), clientHead);
     }
-
     //添加客户
     @Override
     public void addClient(HttpBean<ClientBean> httpBean) {
@@ -236,7 +236,6 @@ public class AddClient extends BaseView implements AddClientManage.View {
         }
 
     }
-
     //编辑客户
     @Override
     public void editClient(HttpBean<ClientBean> httpBean) {
@@ -244,7 +243,6 @@ public class AddClient extends BaseView implements AddClientManage.View {
         EventBus.getDefault().post(new InfoEvent(1, httpBean.getData()));
         finish();
     }
-
     //获取添加客户所需列表
     @Override
     public void getInfoForAdd(HttpBean<InfoAddClientBean> httpBean) {
@@ -289,13 +287,11 @@ public class AddClient extends BaseView implements AddClientManage.View {
             }
         }
     }
-
     //查重
     @Override
     public void checkRepeat(String result) {
         Toast.makeText(this, result, Toast.LENGTH_SHORT).show();
     }
-
     //提交
     private void commit() {
         if (juge()) {
@@ -371,7 +367,6 @@ public class AddClient extends BaseView implements AddClientManage.View {
             }
         }
     }
-
     //提交检查
     private boolean juge() {
         name = clientName.getText().toString();
@@ -385,8 +380,8 @@ public class AddClient extends BaseView implements AddClientManage.View {
             return false;
         }
         idcard=clientIdcard.getText().toString();
-        if (idcard.isEmpty()) {
-            Toast.makeText(this, "请填写身份证号", Toast.LENGTH_SHORT).show();
+        if (!IdCardUtil.isIDCard(idcard)) {
+            Toast.makeText(this, "请填写正确的身份证号", Toast.LENGTH_SHORT).show();
             return false;
         }
         if (area.isEmpty()) {
@@ -404,7 +399,6 @@ public class AddClient extends BaseView implements AddClientManage.View {
         notes = clientNotes.getText().toString();
         return true;
     }
-
     //选择头像
     private void selectHead() {
         if (null == headPopup) {
@@ -431,7 +425,6 @@ public class AddClient extends BaseView implements AddClientManage.View {
             }
         }
     }
-
     @NeedsPermission(Manifest.permission.CAMERA)
     void ToCamare() {
         Intent openCameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -469,7 +462,6 @@ public class AddClient extends BaseView implements AddClientManage.View {
         cameraPath = mediaFile.getAbsolutePath();
         return FileProvider.getUriForFile(this, "com.dhitoshi.hxb.fileprovider", mediaFile);
     }
-
     //上传头像
     private void uploadHead(File file, final String id, final String token, final int type) {
         Luban.with(this)
@@ -517,7 +509,6 @@ public class AddClient extends BaseView implements AddClientManage.View {
                 }).launch();    //启动压缩
 
     }
-
     //查重
     private void checkRepeat() {
         phone = clientPhone.getText().toString();

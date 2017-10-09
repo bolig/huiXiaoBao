@@ -6,8 +6,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.bumptech.glide.Glide;
 import com.dhitoshi.xfrs.huixiaobao.Bean.OwnMeetBean;
 import com.dhitoshi.xfrs.huixiaobao.R;
@@ -67,7 +65,7 @@ public class EditApplyMeet extends BaseView {
                 break;
             case 2:
                 toAttend.setClickable(false);
-                toAttend.setBackgroundColor(Color.parseColor("#efefef"));
+                toAttend.setBackgroundResource(R.drawable.border_gray_full22);
                 break;
             case 3:
                 toAttend.setText("考勤数据");

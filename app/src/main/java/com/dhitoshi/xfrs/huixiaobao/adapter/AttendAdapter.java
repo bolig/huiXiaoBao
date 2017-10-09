@@ -1,13 +1,9 @@
 package com.dhitoshi.xfrs.huixiaobao.adapter;
-
 import android.content.Context;
 import android.view.View;
-import android.widget.CheckBox;
 import android.widget.ImageView;
-
 import com.dhitoshi.xfrs.huixiaobao.Bean.MeetClientBean;
 import com.dhitoshi.xfrs.huixiaobao.Interface.AttendClick;
-import com.dhitoshi.xfrs.huixiaobao.Interface.CheckBoxClick;
 import com.dhitoshi.xfrs.huixiaobao.R;
 import com.dhitoshi.xfrs.huixiaobao.common.BaseAdapter;
 import com.dhitoshi.xfrs.huixiaobao.common.BaseRecyclerHolder;
@@ -40,10 +36,12 @@ public class AttendAdapter extends BaseAdapter<MeetClientBean> {
                 click.check(v,mList.get(position),position);
             }
         });
-        if(mList.get(position).getAttend().get(current).equals("1")){
-            iv.setImageResource(R.mipmap.select);
-        }else {
-            iv.setImageResource(R.mipmap.unselect);
+        if(mList.get(position).getAttend().size()>1){
+            if(mList.get(position).getAttend().get(current).equals("1")){
+                iv.setImageResource(R.mipmap.select);
+            }else {
+                iv.setImageResource(R.mipmap.unselect);
+            }
         }
     }
     public void addAtendClick( AttendClick click){

@@ -29,6 +29,7 @@ public class ActivityManager {
         Set<String> keySet = destoryMap.keySet();
         for (String key : keySet) {
             destoryMap.get(key).finish();
+            destoryMap.remove(key);
         }
     }
     //销毁其他所有Activity

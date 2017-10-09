@@ -113,7 +113,8 @@
 
         <activity android:name=".view.AttendMeet" />
         <activity android:name=".view.AttendInfo" />
-        <activity android:name=".view.BulkImport"></activity>
+        <activity android:name=".view.BulkImport" />
+        <activity android:name=".view.BulkImportResult"></activity>
     </application>
 
 </manifest>
