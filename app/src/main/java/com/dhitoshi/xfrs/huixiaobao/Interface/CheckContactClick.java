@@ -5,5 +5,5 @@ package com.dhitoshi.xfrs.huixiaobao.Interface;
  */
 
 public interface CheckContactClick {
-    void check(boolean isChecked, String name, String phone);
+    void check(boolean isChecked, String name, String phone,int position);
 }

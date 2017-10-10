@@ -52,12 +52,11 @@
                 android:layout_marginTop="5dp"
                 />
         </LinearLayout>
-        <CheckBox
+        <ImageView
             android:id="@+id/contact_check"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:button="@null"
-            android:background="@drawable/check"
+            android:src="@mipmap/unselect"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
             android:layout_marginRight="10dp"

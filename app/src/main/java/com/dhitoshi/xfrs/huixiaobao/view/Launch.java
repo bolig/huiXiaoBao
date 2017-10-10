@@ -36,7 +36,7 @@ public class Launch extends AppCompatActivity {
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);//去掉信息栏
         isFirst= (boolean) SharedPreferencesUtil.Obtain(this,"isFirst",true);
-        isRemeber= (boolean) SharedPreferencesUtil.Obtain(this,"isRemeber",true);
+        isRemeber= (boolean) SharedPreferencesUtil.Obtain(this,"isRemeber",false);
         if(isFirst){
             ToNext(Welcome.class,1000);
         } else{

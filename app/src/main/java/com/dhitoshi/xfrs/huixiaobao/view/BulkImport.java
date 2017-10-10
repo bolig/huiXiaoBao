@@ -3,6 +3,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.RelativeLayout;
@@ -136,20 +137,29 @@ public class BulkImport extends BaseView implements BulkImportManage.View{
             adapter.addItemClickListener(new ItemClick<ClientBean>() {
                 @Override
                 public void onItemClick(View view, ClientBean clientBean, int position) {
-                    CheckBox checkBox= (CheckBox) view.findViewById(R.id.bulkimport_select);
-                    checkBox.setChecked(!checkBox.isChecked());
+                    if(clientBean.isSelected()){
+                        idcards=idcards.replace(clientBean.getIdcard()+",","");
+                        names= names.replace(clientBean.getName()+",","");
+                    }else{
+                        names+=clientBean.getName()+",";
+                        idcards+=clientBean.getIdcard()+",";
+                    }
+                    clients.get(position).setSelected(!clientBean.isSelected());
+                    adapter.notifyDataSetChanged();
                 }
             });
             adapter.addCheckBoxClick(new CheckBoxBulkClick() {
                 @Override
-                public void check(boolean isChecked, String name, String idcard) {
+                public void check(boolean isChecked, String name, String idcard,int position) {
                     if(isChecked){
-                        names+=name+",";
-                        idcards+=idcard+",";
-                    }else{
                         idcards=idcards.replace(idcard+",","");
                         names= names.replace(name+",","");
+                    }else{
+                        names+=name+",";
+                        idcards+=idcard+",";
                     }
+                    clients.get(position).setSelected(!isChecked);
+                    adapter.notifyDataSetChanged();
                 }
             });
         } else {

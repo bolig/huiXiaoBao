@@ -9,6 +9,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.dhitoshi.xfrs.huixiaobao.Bean.UserBean;
@@ -63,6 +64,12 @@ public class Login extends AppCompatActivity implements LoginManage.View, View.O
             loginPswd.setText(SharedPreferencesUtil.Obtain(this, "password","").toString());
             check.setChecked(isRemeber);
         }
+        check.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                SharedPreferencesUtil.Save(Login.this,"isRemeber",isChecked);
+        }
+        });
     }
 
     @Override
@@ -77,7 +84,6 @@ public class Login extends AppCompatActivity implements LoginManage.View, View.O
         SharedPreferencesUtil.Save(this, "head", userBean.getHead());
         SharedPreferencesUtil.Save(this, "phone", userBean.getPhone());
         SharedPreferencesUtil.Save(this, "email", userBean.getEmail());
-        SharedPreferencesUtil.Save(this, "isRemeber",check.isChecked());
         startActivity(new Intent(this, Theme.class));
         finish();
     }

@@ -7,6 +7,13 @@ package com.dhitoshi.xfrs.huixiaobao.Bean;
 public class PhoneInfo {
     private String name;
     private String number;
+    private boolean isSelect;
+    public boolean isSelect() {
+        return isSelect;
+    }
+    public void setSelect(boolean select) {
+        isSelect = select;
+    }
     public String getName() {
         return name;
     }

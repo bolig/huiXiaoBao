@@ -59,6 +59,15 @@ public class ClientBean implements Parcelable {
     private List<IllNameBean> ill;
     private String area_id;
     private String idcard;
+    private boolean isSelected=false;
+
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
+    }
 
     public String getIdcard() {
         return idcard;
@@ -219,6 +228,9 @@ public class ClientBean implements Parcelable {
         this.ill = ill;
     }
 
+    public ClientBean() {
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -231,6 +243,7 @@ public class ClientBean implements Parcelable {
         dest.writeString(this.sex);
         dest.writeString(this.birthday);
         dest.writeString(this.phone);
+        dest.writeString(this.head);
         dest.writeString(this.vip_id);
         dest.writeString(this.area);
         dest.writeString(this.telephone);
@@ -247,14 +260,11 @@ public class ClientBean implements Parcelable {
         dest.writeString(this.totalnum);
         dest.writeString(this.buytime);
         dest.writeString(this.backtime);
+        dest.writeTypedList(this.hobby);
+        dest.writeTypedList(this.ill);
         dest.writeString(this.area_id);
-        dest.writeString(this.head);
         dest.writeString(this.idcard);
-        dest.writeList(this.hobby);
-        dest.writeList(this.ill);
-    }
-
-    public ClientBean() {
+        dest.writeByte(this.isSelected ? (byte) 1 : (byte) 0);
     }
 
     protected ClientBean(Parcel in) {
@@ -263,6 +273,7 @@ public class ClientBean implements Parcelable {
         this.sex = in.readString();
         this.birthday = in.readString();
         this.phone = in.readString();
+        this.head = in.readString();
         this.vip_id = in.readString();
         this.area = in.readString();
         this.telephone = in.readString();
@@ -279,16 +290,14 @@ public class ClientBean implements Parcelable {
         this.totalnum = in.readString();
         this.buytime = in.readString();
         this.backtime = in.readString();
-        this.area_id=in.readString();
-        this.head=in.readString();
-        this.idcard=in.readString();
-        this.hobby = new ArrayList<>();
-        in.readList(this.hobby, HobbyBean.class.getClassLoader());
-        this.ill = new ArrayList<>();
-        in.readList(this.ill, IllBean.class.getClassLoader());
+        this.hobby = in.createTypedArrayList(HobbyNameBean.CREATOR);
+        this.ill = in.createTypedArrayList(IllNameBean.CREATOR);
+        this.area_id = in.readString();
+        this.idcard = in.readString();
+        this.isSelected = in.readByte() != 0;
     }
 
-    public static final Parcelable.Creator<ClientBean> CREATOR = new Parcelable.Creator<ClientBean>() {
+    public static final Creator<ClientBean> CREATOR = new Creator<ClientBean>() {
         @Override
         public ClientBean createFromParcel(Parcel source) {
             return new ClientBean(source);

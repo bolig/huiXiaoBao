@@ -5,5 +5,5 @@ package com.dhitoshi.xfrs.huixiaobao.Interface;
  */
 
 public interface CheckBoxBulkClick {
-    void check(boolean isChecked, String name, String idcard);
+    void check(boolean isChecked, String name, String idcard,int position);
 }
