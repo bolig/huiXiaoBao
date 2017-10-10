@@ -40,6 +40,7 @@ public class NewVersion {
 		if(!fileInstall.exists()) {
 			manager = (NotificationManager) context.getSystemService((context.NOTIFICATION_SERVICE));
 			notify = new Notification();
+
 			notify.icon = R.mipmap.download;
 			// 通知栏显示所用到的布局文件
 			notify.contentView = new RemoteViews(context.getPackageName(), R.layout.view_notify_item);

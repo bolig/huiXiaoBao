@@ -28,6 +28,9 @@ import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.OnShowRationale;
 import permissions.dispatcher.PermissionRequest;
 import permissions.dispatcher.RuntimePermissions;
+
+import static android.os.Build.VERSION_CODES.M;
+
 @RuntimePermissions
 public class Theme extends AppCompatActivity {
     @BindView(R.id.theme_viewpager)
@@ -100,11 +103,11 @@ public class Theme extends AppCompatActivity {
 
         return themeFragments;
     }
-    @NeedsPermission({Manifest.permission.CALL_PHONE})
+   @NeedsPermission({Manifest.permission.CALL_PHONE,Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE})
     void call(){
 
     }
-    @OnShowRationale({Manifest.permission.CALL_PHONE})
+    @OnShowRationale({Manifest.permission.CALL_PHONE,Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE})
     void ShowRationaleFoCall(PermissionRequest request){
         request.proceed();
     }
