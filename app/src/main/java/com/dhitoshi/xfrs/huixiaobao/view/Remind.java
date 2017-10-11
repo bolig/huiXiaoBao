@@ -87,7 +87,6 @@ public class Remind extends BaseView implements RemindManage.View {
         feedtime_month= (ArrayList<ClientBean>) httpBean.getData().getFeedtime_month();
         buy_un= (ArrayList<ClientBean>) httpBean.getData().getBuy_un();
         buy_d_month= (ArrayList<ClientBean>) httpBean.getData().getBuy_d_month();
-
         todayCount.setText(httpBean.getData().getBirthday_today_count() + "");
         mouthCount.setText(httpBean.getData().getBirthday_month_count() + "");
         visitUncount.setText(httpBean.getData().getFeedtime_un_count() + "");

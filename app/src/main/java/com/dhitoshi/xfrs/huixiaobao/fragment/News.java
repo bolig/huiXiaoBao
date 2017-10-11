@@ -15,7 +15,6 @@ import com.dhitoshi.xfrs.huixiaobao.common.NoSlidingViewPager;
 import com.dhitoshi.xfrs.huixiaobao.common.OnTabSelectListener;
 import com.dhitoshi.xfrs.huixiaobao.common.SegmentTabLayout;
 import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
-import com.dhitoshi.xfrs.huixiaobao.view.Chat;
 import java.util.ArrayList;
 import java.util.List;
 import butterknife.BindView;
@@ -80,7 +79,7 @@ public class News extends Fragment {
         fragments = new ArrayList<>();
         fragments.add(mIMKit.getConversationFragment());
         fragments.add(ContactInfo.newInstance());
-        fragments.add(GroupsInfo.newInstance());
+        fragments.add(TribeFragment.newInstance());
     }
 
     @Override
@@ -94,8 +93,11 @@ public class News extends Fragment {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.group_search:
+                Intent intent = new Intent(getActivity(), SearchTribeActivity.class);
+                startActivity(intent);
                 break;
             case R.id.group_add:
+                showPopupMenu(view);
                 break;
         }
     }
