@@ -1,5 +1,4 @@
 package com.dhitoshi.xfrs.huixiaobao.fragment;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import com.alibaba.mobileim.YWAPI;
 import com.alibaba.mobileim.YWIMKit;
 import com.dhitoshi.xfrs.huixiaobao.R;
@@ -16,11 +14,10 @@ import com.dhitoshi.xfrs.huixiaobao.adapter.ViewPagerAdapter;
 import com.dhitoshi.xfrs.huixiaobao.common.NoSlidingViewPager;
 import com.dhitoshi.xfrs.huixiaobao.common.OnTabSelectListener;
 import com.dhitoshi.xfrs.huixiaobao.common.SegmentTabLayout;
+import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
 import com.dhitoshi.xfrs.huixiaobao.view.Chat;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -56,11 +53,12 @@ public class News extends Fragment {
         View view = inflater.inflate(R.layout.fragment_news, container, false);
         unbinder = ButterKnife.bind(this, view);
         initViews();
-        init();
         return view;
     }
     private void initViews() {
         segement.setTabData(mTitles);
+        String userId = SharedPreferencesUtil.Obtain(getContext(), "account", "").toString().split("@")[0];
+        mIMKit = YWAPI.getIMKitInstance(userId, "24607089");
         getFragments();
         adapter = new ViewPagerAdapter<>(getChildFragmentManager(), fragments);
         newsViewpager.setAdapter(adapter);
@@ -80,15 +78,9 @@ public class News extends Fragment {
 
     public void getFragments() {
         fragments = new ArrayList<>();
-        fragments.add(NewsInfo.newInstance());
+        fragments.add(mIMKit.getConversationFragment());
         fragments.add(ContactInfo.newInstance());
         fragments.add(GroupsInfo.newInstance());
-    }
-
-    private void init() {
-        String userid = "visitor1";
-        mIMKit = YWAPI.getIMKitInstance(userid, "23015524");
-
     }
 
     @Override
@@ -97,12 +89,6 @@ public class News extends Fragment {
         unbinder.unbind();
     }
 
-    private void jump() {
-//        final String target = "visitor2"; //消息接收者ID
-//        final String appkey = "23015524"; //消息接收者appKey
-        Intent intent = new Intent(getContext(), Chat.class);
-        startActivity(intent);
-    }
 
     @OnClick({R.id.group_search, R.id.group_add})
     public void onViewClicked(View view) {

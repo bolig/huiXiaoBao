@@ -24,16 +24,6 @@
         android:textColor="@android:color/white"
         android:textSize="17dp"
         />
-    <android.support.v7.widget.AppCompatImageView
-        android:id="@+id/right_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_alignParentRight="true"
-        android:layout_gravity="right"
-        android:padding="10dp"
-        android:src="@drawable/personal_click"
-        android:clickable="true"
-        />
 </RelativeLayout>
 
 

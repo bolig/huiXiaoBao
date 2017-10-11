@@ -25,8 +25,6 @@ public class Chat extends AppCompatActivity {
     AppCompatImageView back;
     @BindView(R.id.title)
     TextView title;
-    @BindView(R.id.right_icon)
-    AppCompatImageView rightIcon;
     private YWIMKit mIMKit;
     private String target = "";
     private String name = "";
@@ -53,7 +51,6 @@ public class Chat extends AppCompatActivity {
         super.onDestroy();
         ActivityManagerUtil.destoryActivity("Chat");
     }
-
     private void InitView() {
         // 透明状态栏
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
@@ -71,7 +68,6 @@ public class Chat extends AppCompatActivity {
         tintManager.setNavigationBarTintEnabled(true);
         tintManager.setTintResource(R.color.colorPrimary);
     }
-
     @OnClick(R.id.back)
     public void onViewClicked() {
         finish();

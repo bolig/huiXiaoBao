@@ -24,6 +24,7 @@ import com.dhitoshi.xfrs.huixiaobao.Interface.UpdateClick;
 import com.dhitoshi.xfrs.huixiaobao.R;
 import com.dhitoshi.xfrs.huixiaobao.adapter.ViewPagerAdapter;
 import com.dhitoshi.xfrs.huixiaobao.common.CommonObserver;
+import com.dhitoshi.xfrs.huixiaobao.common.NewVersion;
 import com.dhitoshi.xfrs.huixiaobao.common.NoSlidingViewPager;
 import com.dhitoshi.xfrs.huixiaobao.fragment.Client;
 import com.dhitoshi.xfrs.huixiaobao.fragment.News;
@@ -87,7 +88,7 @@ public class Theme extends AppCompatActivity {
                                 dialog.addUpdateClick(new UpdateClick() {
                                     @Override
                                     public void update(String apkUri, String versionName) {
-
+                                        ThemePermissionsDispatcher.updateWithCheck(Theme.this,apkUri,versionName);
                                     }
                                 });
                             }
@@ -187,7 +188,7 @@ public class Theme extends AppCompatActivity {
     }
     @NeedsPermission({Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE})
     void update(String apkUri, String versionName){
-
+        new NewVersion(this).downLoadNewApk(apkUri,versionName);
     }
     @OnShowRationale({Manifest.permission.CALL_PHONE})
     void ShowRationaleFoCall(PermissionRequest request){
