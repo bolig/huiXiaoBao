@@ -1,7 +1,10 @@
 package com.dhitoshi.xfrs.huixiaobao.adapter;
 import android.content.Context;
+import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
+
 import com.dhitoshi.xfrs.huixiaobao.Bean.ClientBean;
 import com.dhitoshi.xfrs.huixiaobao.Interface.CheckBoxBulkClick;
 import com.dhitoshi.xfrs.huixiaobao.R;
@@ -20,15 +23,20 @@ public class BulkImportAdapter extends BaseAdapter<ClientBean> {
     }
 
     @Override
-    public void covert(BaseRecyclerHolder holder, final List<ClientBean> mList, final int position) {
+    public void covert(BaseRecyclerHolder holder, List<ClientBean> mList, final int position) {
         final ClientBean item=mList.get(position);
         holder.setText(R.id.bulkimport_name,item.getName());
         holder.setText(R.id.bulkimport_idcard,item.getIdcard());
-        CheckBox checkBox=holder.getView(R.id.bulkimport_select);
-        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        ImageView iv=holder.getView(R.id.bulkimport_select);
+        if(item.isSelected()){
+            iv.setImageResource(R.mipmap.select);
+        }else{
+            iv.setImageResource(R.mipmap.unselect);
+        }
+        iv.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                click.check(isChecked,mList.get(position).getName(),mList.get(position).getIdcard());
+            public void onClick(View v) {
+                click.check(item.isSelected(),item.getName(),item.getIdcard(),position);
             }
         });
     }

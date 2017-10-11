@@ -126,14 +126,16 @@ public class Contact extends BaseView implements ContactManage.View{
         contactList.setAdapter(adapter);
         adapter.addCheckBoxClick(new CheckContactClick() {
             @Override
-            public void check(boolean isChecked, String name, String id) {
+            public void check(boolean isChecked, String name, String id,int position) {
                 if(isChecked){
-                    contactName+=name+",";
-                    phone+=id+",";
-                 }else {
                     contactName=contactName.replace(name+",","") ;
                     phone=phone.replace(id+",","") ;
+                 }else {
+                    contactName+=name+",";
+                    phone+=id+",";
                 }
+                phoneInfos.get(position).setSelect(!isChecked);
+                adapter.notifyDataSetChanged();
             }
         });
         Binder binder = new Binder(contactList, indexView) {
@@ -168,14 +170,18 @@ public class Contact extends BaseView implements ContactManage.View{
             phone="";
             int size=phoneInfos.size();
             for (int i = 0; i < size; i++) {
+                phoneInfos.get(i).setSelect(true);
                 contactName+=phoneInfos.get(i).getName()+",";
                 phone+=phoneInfos.get(i).getNumber()+",";
             }
         }else {
             contactName="";
             phone="";
+            int size=phoneInfos.size();
+            for (int i = 0; i < size; i++) {
+                phoneInfos.get(i).setSelect(false);
+            }
         }
-        adapter.setAllSelect(isAllSelect);
         adapter.notifyDataSetChanged();
     }
 

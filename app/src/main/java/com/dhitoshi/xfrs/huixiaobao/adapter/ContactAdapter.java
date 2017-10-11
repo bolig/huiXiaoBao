@@ -5,11 +5,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import com.dhitoshi.xfrs.huixiaobao.Bean.PhoneInfo;
-import com.dhitoshi.xfrs.huixiaobao.Interface.CheckBoxClick;
 import com.dhitoshi.xfrs.huixiaobao.Interface.CheckContactClick;
 import com.dhitoshi.xfrs.huixiaobao.R;
 import com.github.stuxuhai.jpinyin.PinyinFormat;
@@ -20,12 +18,7 @@ public class ContactAdapter extends BaseAdapter {
 
     private Context context;
     private List<PhoneInfo> list;
-    private boolean isAllSelect=false;
     private CheckContactClick click;
-    public void setAllSelect(boolean allSelect) {
-        isAllSelect = allSelect;
-    }
-
     public ContactAdapter(Context context, List<PhoneInfo> list) {
         this.context = context;
         this.list = list;
@@ -46,25 +39,29 @@ public class ContactAdapter extends BaseAdapter {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder viewHolder = null;
-        PhoneInfo phoneInfo= list.get(position);
+        final PhoneInfo phoneInfo= list.get(position);
         if (convertView == null) {
             viewHolder = new ViewHolder();
             convertView = LayoutInflater.from(context).inflate(R.layout.contact_item, null);
             viewHolder.index = (TextView) convertView.findViewById(R.id.index);
             viewHolder.contactName = (TextView) convertView.findViewById(R.id.contact_name);
             viewHolder.contactPhone = (TextView) convertView.findViewById(R.id.contact_phone);
-            viewHolder.contactCheck=(CheckBox) convertView.findViewById(R.id.contact_check);
+            viewHolder.contactCheck=(ImageView) convertView.findViewById(R.id.contact_check);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
         viewHolder.contactName.setText(phoneInfo.getName());
         viewHolder.contactPhone.setText(phoneInfo.getNumber());
-        viewHolder.contactCheck.setChecked(isAllSelect);
-        viewHolder.contactCheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        if(phoneInfo.isSelect()){
+            viewHolder.contactCheck.setImageResource(R.mipmap.select);
+        }else{
+            viewHolder.contactCheck.setImageResource(R.mipmap.unselect);
+        }
+        viewHolder.contactCheck.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                click.check(isChecked,list.get(position).getName(),list.get(position).getNumber());
+            public void onClick(View v) {
+                click.check(phoneInfo.isSelect(),phoneInfo.getName(),phoneInfo.getNumber(),position);
             }
         });
         char index =getIndex(phoneInfo.getName());
@@ -81,7 +78,7 @@ public class ContactAdapter extends BaseAdapter {
         TextView index;
         TextView contactName;
         TextView contactPhone;
-        CheckBox contactCheck;
+        ImageView contactCheck;
     }
     public void addCheckBoxClick(CheckContactClick click){
         this.click=click;

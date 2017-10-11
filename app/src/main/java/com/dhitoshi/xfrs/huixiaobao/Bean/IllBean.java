@@ -10,6 +10,16 @@ import android.os.Parcelable;
 public class IllBean implements Parcelable {
     private int id;
     private String name;
+    private boolean isSelect;
+
+    public boolean isSelect() {
+        return isSelect;
+    }
+
+    public void setSelect(boolean select) {
+        isSelect = select;
+    }
+
     public int getId() {
         return id;
     }
@@ -23,6 +33,9 @@ public class IllBean implements Parcelable {
         this.name = name;
     }
 
+    public IllBean() {
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -32,17 +45,16 @@ public class IllBean implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(this.id);
         dest.writeString(this.name);
-    }
-
-    public IllBean() {
+        dest.writeByte(this.isSelect ? (byte) 1 : (byte) 0);
     }
 
     protected IllBean(Parcel in) {
         this.id = in.readInt();
         this.name = in.readString();
+        this.isSelect = in.readByte() != 0;
     }
 
-    public static final Parcelable.Creator<IllBean> CREATOR = new Parcelable.Creator<IllBean>() {
+    public static final Creator<IllBean> CREATOR = new Creator<IllBean>() {
         @Override
         public IllBean createFromParcel(Parcel source) {
             return new IllBean(source);
