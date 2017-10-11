@@ -1,14 +1,16 @@
 package com.dhitoshi.xfrs.huixiaobao.Dialog;
-
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.dhitoshi.xfrs.huixiaobao.Interface.UpdateClick;
 import com.dhitoshi.xfrs.huixiaobao.R;
 import com.dhitoshi.xfrs.huixiaobao.common.NewVersion;
+
+import permissions.dispatcher.PermissionUtils;
 
 /**
  * Created by dxs on 2017/6/12.
@@ -17,7 +19,6 @@ public class UpdateDialog extends Dialog implements View.OnClickListener{
     private TextView updateContent;
     private TextView updateRefuse;
     private TextView updateAgree;
-    private LinearLayout updateDeal;
     private ImageView updateClose;
     private TextView updateTitle;
     private Context context;
@@ -25,6 +26,7 @@ public class UpdateDialog extends Dialog implements View.OnClickListener{
     private String url;
     private String content;
     private String versionName;
+    private UpdateClick updateClick;
     public UpdateDialog(Context context, int themeResId) {
         super(context, themeResId);
     }
@@ -55,7 +57,6 @@ public class UpdateDialog extends Dialog implements View.OnClickListener{
         updateAgree=(TextView)findViewById(R.id.update_agree);
         updateRefuse=(TextView)findViewById(R.id.update_refuse);
         updateClose=(ImageView)findViewById(R.id.update_close);
-        updateDeal=(LinearLayout)findViewById(R.id.update_deal);
         updateClose.setOnClickListener(this);
         updateAgree.setOnClickListener(this);
         updateRefuse.setOnClickListener(this);
@@ -69,7 +70,8 @@ public class UpdateDialog extends Dialog implements View.OnClickListener{
                 dismiss();
                 break;
             case R.id.update_agree:
-                downloadApk();
+                updateClick.update(url,versionName);
+                dismiss();
                 break;
             case R.id.update_close:
                 dismiss();
@@ -78,8 +80,7 @@ public class UpdateDialog extends Dialog implements View.OnClickListener{
                 break;
         }
     }
-    private void downloadApk() {
-        new NewVersion(context).downLoadNewApk(url,versionName);
-        dismiss();
+    public void addUpdateClick(UpdateClick updateClick){
+        this.updateClick=updateClick;
     }
 }

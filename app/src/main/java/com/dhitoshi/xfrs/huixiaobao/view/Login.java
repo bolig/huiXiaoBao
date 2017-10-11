@@ -1,5 +1,6 @@
 package com.dhitoshi.xfrs.huixiaobao.view;
 
+import android.app.ActivityManager;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
@@ -18,6 +19,7 @@ import com.dhitoshi.xfrs.huixiaobao.Interface.LoginManage;
 import com.dhitoshi.xfrs.huixiaobao.R;
 import com.dhitoshi.xfrs.huixiaobao.common.ClearEditText;
 import com.dhitoshi.xfrs.huixiaobao.presenter.LoginPresenter;
+import com.dhitoshi.xfrs.huixiaobao.utils.ActivityManagerUtil;
 import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
 import java.util.HashMap;
 import java.util.Map;
@@ -44,6 +46,12 @@ public class Login extends AppCompatActivity implements LoginManage.View, View.O
         ButterKnife.bind(this);
         initView();
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
     private void initView() {
         login.setOnTouchListener(this);
         // 透明状态栏
