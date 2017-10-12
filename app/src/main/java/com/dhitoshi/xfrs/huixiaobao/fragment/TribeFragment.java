@@ -5,15 +5,14 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.PopupWindow;
-import android.widget.TextView;
+
+import com.alibaba.mobileim.YWAPI;
 import com.alibaba.mobileim.YWIMKit;
 import com.alibaba.mobileim.channel.event.IWxCallback;
 import com.alibaba.mobileim.channel.util.YWLog;
@@ -27,6 +26,7 @@ import com.dhitoshi.xfrs.huixiaobao.adapter.TribeAdapter;
 import com.dhitoshi.xfrs.huixiaobao.common.TribeAndRoomList;
 import com.dhitoshi.xfrs.huixiaobao.common.TribeConstants;
 import com.dhitoshi.xfrs.huixiaobao.common.TribeSampleHelper;
+import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,13 +39,12 @@ public class TribeFragment extends Fragment implements AdapterView.OnItemClickLi
     protected static final long POST_DELAYED_TIME = 300;
     private static final String TAG = "TribeFragment";
     private final Handler handler = new Handler();
-
     public IYWTribeService getTribeService() {
-        mIMKit = LoginSampleHelper.getInstance().getIMKit();
+        String userId = SharedPreferencesUtil.Obtain(getContext(), "account", "").toString().split("@")[0];
+        mIMKit = YWAPI.getIMKitInstance(userId, "24607089");
         mTribeService = mIMKit.getTribeService();
         return mTribeService;
     }
-
     private IYWTribeService mTribeService;
     private ListView mMessageListView; // 消息列表视图
     private TribeAdapter adapter;
@@ -54,10 +53,6 @@ public class TribeFragment extends Fragment implements AdapterView.OnItemClickLi
     private List<YWTribe> mList;
     private List<YWTribe> mTribeList;
     private List<YWTribe> mRoomsList;
-
-    private PopupWindow mPopupBackground;
-    private PopupWindow mPopupWindow;
-
     private View mView;
     private YWIMKit mIMKit;
     private Activity mContext;
@@ -73,9 +68,8 @@ public class TribeFragment extends Fragment implements AdapterView.OnItemClickLi
             }
         }
     };
-
     public TribeFragment() {
-        // Required empty public constructor
+
     }
     public static TribeFragment newInstance() {
         TribeFragment fragment = new TribeFragment();
@@ -85,12 +79,8 @@ public class TribeFragment extends Fragment implements AdapterView.OnItemClickLi
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-
-        // Inflate the layout for this fragment
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         if (mView != null) {
             ViewGroup parent = (ViewGroup) mView.getParent();
             if (parent != null) {
@@ -101,7 +91,8 @@ public class TribeFragment extends Fragment implements AdapterView.OnItemClickLi
         mContext = getActivity();
         mView = inflater.inflate(R.layout.demo_fragment_tribe, container, false);
         mProgress = mView.findViewById(R.id.progress);
-        mIMKit = LoginSampleHelper.getInstance().getIMKit();
+        String userId = SharedPreferencesUtil.Obtain(getContext(), "account", "").toString().split("@")[0];
+        mIMKit = YWAPI.getIMKitInstance(userId, "24607089");
         mUserId = mIMKit.getIMCore().getLoginUserId();
         if (TextUtils.isEmpty(mUserId)) {
             YWLog.i(TAG, "user not login");
@@ -110,7 +101,6 @@ public class TribeFragment extends Fragment implements AdapterView.OnItemClickLi
         init();
         return mView;
     }
-
     @Override
     public void onResume() {
         super.onResume();
@@ -123,7 +113,6 @@ public class TribeFragment extends Fragment implements AdapterView.OnItemClickLi
             }
         }
     }
-
     protected void init() {
         mContext.getWindow().setWindowAnimations(0);
         mList = new ArrayList<>();
@@ -131,16 +120,13 @@ public class TribeFragment extends Fragment implements AdapterView.OnItemClickLi
         mRoomsList = new ArrayList<>();
         mTribeAndRoomList = new TribeAndRoomList(mTribeList, mRoomsList);
         adapter = new TribeAdapter(mContext, mTribeAndRoomList);
-        mPullToRefreshListView = (YWPullToRefreshListView) mView
-                .findViewById(
-                        R.id.message_list);
+        mPullToRefreshListView = (YWPullToRefreshListView) mView.findViewById(R.id.message_list);
         mMessageListView = mPullToRefreshListView.getRefreshableView();
         mPullToRefreshListView.setMode(YWPullToRefreshBase.Mode.PULL_DOWN_TO_REFRESH);
         mPullToRefreshListView.setShowIndicator(false);
         mPullToRefreshListView.setDisableScrollingWhileRefreshing(false);
         mPullToRefreshListView.setRefreshingLabel("同步群组");
         mPullToRefreshListView.setReleaseLabel("松开同步群组");
-//        mPullToRefreshListView.resetHeadLayout();
         mPullToRefreshListView.setDisableRefresh(false);
         mPullToRefreshListView.setOnRefreshListener(new YWPullToRefreshBase.OnRefreshListener() {
             @Override
@@ -149,7 +135,7 @@ public class TribeFragment extends Fragment implements AdapterView.OnItemClickLi
                     @Override
                     public void run() {
                         handler.removeCallbacks(cancelRefresh);
-                        IYWTribeService tribeService = TribeSampleHelper.getTribeService();
+                        IYWTribeService tribeService = TribeSampleHelper.getTribeService(getContext());
                         if (tribeService != null) {
                             tribeService.getAllTribesFromServer(new IWxCallback() {
                                 @Override
@@ -172,13 +158,11 @@ public class TribeFragment extends Fragment implements AdapterView.OnItemClickLi
                                             R.string.aliwx_sync_success);
                                     refreshAdapter();
                                 }
-
                                 @Override
                                 public void onError(int code, String info) {
                                     mPullToRefreshListView.onRefreshComplete(false, false,
                                             R.string.aliwx_sync_failed);
                                 }
-
                                 @Override
                                 public void onProgress(int progress) {
 
@@ -189,79 +173,6 @@ public class TribeFragment extends Fragment implements AdapterView.OnItemClickLi
                 }, POST_DELAYED_TIME);
             }
         });
-    }
-
-
-
-    /**
-     * 弹出要创建的群类型选项
-     *
-     * @param v
-     */
-    private void showPopupMenu(View v) {
-        final View bgView = View.inflate(DemoApplication.getContext(), R.layout.demo_popup_window_bg, null);
-        bgView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                hidePopupWindow();
-            }
-        });
-        if (mPopupBackground == null) {
-            mPopupBackground = new PopupWindow(bgView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        }
-        mPopupBackground.showAtLocation(v, Gravity.BOTTOM, 0, 0);
-
-        View view = View.inflate(DemoApplication.getContext(), R.layout.demo_popup_menu, null);
-        //创建群组
-        TextView tribe = (TextView) view.findViewById(R.id.create_tribe);
-        tribe.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                hidePopupWindow();
-                Intent intent = new Intent(getActivity(), EditTribeInfoActivity.class);
-                intent.putExtra(TribeConstants.TRIBE_OP, TribeConstants.TRIBE_CREATE);
-                intent.putExtra(TribeConstants.TRIBE_TYPE, YWTribeType.CHATTING_TRIBE.toString());
-                startActivityForResult(intent, 0);
-            }
-        });
-
-        //创建讨论组
-        TextView room = (TextView) view.findViewById(R.id.create_room);
-        room.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                hidePopupWindow();
-                Intent intent = new Intent(getActivity(), EditTribeInfoActivity.class);
-                intent.putExtra(TribeConstants.TRIBE_OP, TribeConstants.TRIBE_CREATE);
-                intent.putExtra(TribeConstants.TRIBE_TYPE, YWTribeType.CHATTING_GROUP.toString());
-                startActivityForResult(intent, 0);
-            }
-        });
-
-        TextView cancel = (TextView) view.findViewById(R.id.cancel_button);
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                hidePopupWindow();
-            }
-        });
-
-
-        if (mPopupWindow == null) {
-            mPopupWindow = new PopupWindow(view, ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT);
-        }
-
-        mPopupWindow.showAtLocation(v, Gravity.BOTTOM, 0, 0);
-    }
-
-    private void hidePopupWindow() {
-        if (mPopupBackground != null) {
-            mPopupBackground.dismiss();
-        }
-        if (mPopupWindow != null) {
-            mPopupWindow.dismiss();
-        }
     }
 
     /**
@@ -322,9 +233,8 @@ public class TribeFragment extends Fragment implements AdapterView.OnItemClickLi
         if (position >= 0 && position < mTribeAndRoomList.size()) {
 
             YWTribe tribe = (YWTribe) mTribeAndRoomList.getItem(position);
-            YWIMKit imKit = LoginSampleHelper.getInstance().getIMKit();
             //参数为群ID号
-            Intent intent = imKit.getTribeChattingActivityIntent(tribe.getTribeId());
+            Intent intent = mIMKit.getTribeChattingActivityIntent(tribe.getTribeId());
             startActivity(intent);
         }
     }

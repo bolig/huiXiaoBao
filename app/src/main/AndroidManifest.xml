@@ -100,7 +100,9 @@
         <activity android:name=".view.UserInfo" />
         <activity android:name=".view.UpdatePassword" />
         <activity android:name=".view.SalesInfo" />
-
+        <activity android:name=".view.SearchTribe" />
+        <activity android:name=".view.TribeInfo" />
+        <activity android:name=".view.EditTribeInfo" />
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="com.dhitoshi.hxb.fileprovider"

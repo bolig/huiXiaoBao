@@ -6,4 +6,7 @@
     <color name="gray_d">#e6e6e6</color>
     <color name="gray_e">#eeeeee</color>
     <color name="gray_slow_d">#DDDDDD</color>
+    <color name="more_line_color">#cccccc</color>
+    <color name="more_bg_nor">#ffffff</color>
+    <color name="more_bg_p">#f5f5f5</color>
 </resources>

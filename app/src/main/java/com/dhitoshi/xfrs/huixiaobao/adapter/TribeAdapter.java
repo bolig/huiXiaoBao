@@ -6,12 +6,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import com.alibaba.mobileim.YWAPI;
+import com.alibaba.mobileim.YWIMKit;
 import com.alibaba.mobileim.gingko.model.tribe.YWTribe;
 import com.alibaba.mobileim.gingko.model.tribe.YWTribeType;
 import com.alibaba.mobileim.kit.common.YWAsyncBaseAdapter;
 import com.alibaba.mobileim.kit.contact.YWContactHeadLoadHelper;
 import com.dhitoshi.xfrs.huixiaobao.R;
 import com.dhitoshi.xfrs.huixiaobao.common.TribeAndRoomList;
+import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
 
 
 public class TribeAdapter extends YWAsyncBaseAdapter {
@@ -25,8 +28,9 @@ public class TribeAdapter extends YWAsyncBaseAdapter {
     public TribeAdapter(Activity context, TribeAndRoomList list) {
         this.context = context;
         this.mList = list;
-        mContactHeadLoadHelper = new YWContactHeadLoadHelper(context, this,
-                LoginSampleHelper.getInstance().getIMKit().getUserContext());
+        String userId = SharedPreferencesUtil.Obtain(context, "account", "").toString().split("@")[0];
+        YWIMKit mIMKit = YWAPI.getIMKitInstance(userId, "24607089");
+        mContactHeadLoadHelper = new YWContactHeadLoadHelper(context, this, mIMKit.getUserContext());
         inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 

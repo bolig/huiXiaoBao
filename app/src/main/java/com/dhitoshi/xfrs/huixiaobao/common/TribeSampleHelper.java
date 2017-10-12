@@ -1,5 +1,8 @@
 package com.dhitoshi.xfrs.huixiaobao.common;
 
+import android.content.Context;
+
+import com.alibaba.mobileim.YWAPI;
 import com.alibaba.mobileim.YWIMCore;
 import com.alibaba.mobileim.YWIMKit;
 import com.alibaba.mobileim.channel.event.IWxCallback;
@@ -9,6 +12,7 @@ import com.alibaba.mobileim.gingko.model.tribe.YWTribeMember;
 import com.alibaba.mobileim.gingko.model.tribe.YWTribeType;
 import com.alibaba.mobileim.tribe.IYWTribeService;
 import com.alibaba.mobileim.tribe.YWTribeCreationParam;
+import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,8 +44,9 @@ public class TribeSampleHelper {
         }
 	}
 
-	public static IYWTribeService getTribeService() {
-		final YWIMKit imKit = LoginSampleHelper.getInstance().getIMKit();
+	public static IYWTribeService getTribeService(Context context) {
+		String userId = SharedPreferencesUtil.Obtain(context, "account", "").toString().split("@")[0];
+		final YWIMKit imKit = YWAPI.getIMKitInstance(userId, "24607089");
 		if (imKit != null) {
 			return imKit.getTribeService();
 		}
@@ -53,8 +58,8 @@ public class TribeSampleHelper {
 	 * @param tribeType，具体见YWTribeType
 	 *
 	 */
-	public static void createTribe_Sample(YWTribeType tribeType){
-		final IYWTribeService tribeService = getTribeService();
+	public static void createTribe_Sample(YWTribeType tribeType,Context context){
+		final IYWTribeService tribeService = getTribeService(context);
 		if (tribeService == null) {
 			return;
 		}
@@ -67,8 +72,9 @@ public class TribeSampleHelper {
 		if (tribeType == YWTribeType.CHATTING_GROUP){
 			//讨论组需要指定用户
 			final List<String> userList = new ArrayList<String>();
-			final YWIMCore core = LoginSampleHelper.getInstance().getIMKit()
-					.getIMCore();
+			String userId = SharedPreferencesUtil.Obtain(context, "account", "").toString().split("@")[0];
+			final YWIMKit imKit = YWAPI.getIMKitInstance(userId, "24607089");
+			final YWIMCore core = imKit.getIMCore();
 
 			userList.add(core.getLoginUserId());// 当前登录的用户ID，这个必须要传
 			userList.add("user2");
@@ -88,8 +94,8 @@ public class TribeSampleHelper {
 	/**
 	 * 从服务器获取当前用户所在的所有群
 	 */
-	public static void getAllTribeFromServer_Sample() {
-		final IYWTribeService tribeService = getTribeService();
+	public static void getAllTribeFromServer_Sample(Context context) {
+		final IYWTribeService tribeService = getTribeService(context);
 		if (tribeService == null) {
 			return;
 		}
@@ -111,8 +117,8 @@ public class TribeSampleHelper {
 	 * @param tid
 	 *            群ID
 	 */
-	public static void getTribeFromServer_Sample(long tid) {
-		final IYWTribeService tribeService = getTribeService();
+	public static void getTribeFromServer_Sample(long tid,Context context) {
+		final IYWTribeService tribeService = getTribeService(context);
 		if (tribeService == null) {
 			return;
 		}
@@ -133,8 +139,8 @@ public class TribeSampleHelper {
 	 * @param tid
 	 *            群id
 	 */
-	public static void getMembersFromServer_Sample(long tid) {
-		final IYWTribeService tribeService = getTribeService();
+	public static void getMembersFromServer_Sample(long tid,Context context) {
+		final IYWTribeService tribeService = getTribeService(context);
 		if (tribeService == null) {
 			return;
 		}
@@ -154,8 +160,8 @@ public class TribeSampleHelper {
 	 * 
 	 * @param tid
 	 */
-	public static void exitFromTribe_Sample(long tid) {
-		final IYWTribeService tribeService = getTribeService();
+	public static void exitFromTribe_Sample(long tid,Context context) {
+		final IYWTribeService tribeService = getTribeService(context);
 		if (tribeService == null) {
 			return;
 		}
