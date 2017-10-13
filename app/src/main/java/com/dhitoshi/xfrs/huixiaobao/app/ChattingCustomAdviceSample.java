@@ -3,6 +3,7 @@ import android.support.v4.app.Fragment;
 import com.alibaba.mobileim.aop.Pointcut;
 import com.alibaba.mobileim.aop.custom.IMChattingPageUI;
 import com.alibaba.mobileim.conversation.YWConversation;
+import com.dhitoshi.xfrs.huixiaobao.R;
 
 /**
  * Created by dxs on 2017/9/1.
@@ -15,5 +16,10 @@ public class ChattingCustomAdviceSample extends IMChattingPageUI {
     @Override
     public boolean needHideTitleView(Fragment fragment, YWConversation conversation) {
         return true;
+    }
+
+    @Override
+    public int getDefaultHeadImageResId() {
+        return R.mipmap.head;
     }
 }

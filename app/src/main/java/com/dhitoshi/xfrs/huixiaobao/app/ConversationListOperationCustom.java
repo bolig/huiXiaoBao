@@ -1,14 +1,18 @@
 package com.dhitoshi.xfrs.huixiaobao.app;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.util.Log;
-
+import com.alibaba.mobileim.YWAPI;
+import com.alibaba.mobileim.YWIMKit;
 import com.alibaba.mobileim.aop.Pointcut;
 import com.alibaba.mobileim.aop.custom.IMConversationListOperation;
 import com.alibaba.mobileim.contact.IYWContact;
 import com.alibaba.mobileim.conversation.YWConversation;
 import com.alibaba.mobileim.conversation.YWConversationType;
 import com.alibaba.mobileim.conversation.YWP2PConversationBody;
+import com.dhitoshi.xfrs.huixiaobao.R;
+import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
 import com.dhitoshi.xfrs.huixiaobao.view.Chat;
 /**
  * Created by dxs on 2017/10/11.
@@ -24,16 +28,22 @@ class ConversationListOperationCustom extends IMConversationListOperation {
             //TODO 单聊会话点击事件
             Intent intent = new Intent(fragment.getContext(), Chat.class);
             IYWContact listener = ((YWP2PConversationBody)conversation.getConversationBody()).getContact();
-            Log.e("'TAG","target---->>>"+listener.getUserId());
-            Log.e("'TAG","name---->>>"+listener.getShowName()+"*****"+listener.getAvatarPath());
+            if(TextUtils.isEmpty(listener.getShowName())){
+                String userId = SharedPreferencesUtil.Obtain(fragment.getContext(), "account", "").toString().split("@")[0];
+                YWIMKit mIMKit = YWAPI.getIMKitInstance(userId, "24607089");
+                IYWContact contact = mIMKit.getContactService().getContactProfileInfo(listener.getUserId(), listener.getAppKey());
+                intent.putExtra("name",contact.getShowName());
+            }else{
+                intent.putExtra("name",listener.getUserId());
+            }
             intent.putExtra("target",listener.getUserId());
-            intent.putExtra("name",listener.getShowName());
             fragment.getContext().startActivity(intent);
             return true;
         } else if (type == YWConversationType.Tribe){
             //TODO 群会话点击事件
-            return true;
+            return false;
         }
         return false;
     }
+
 }

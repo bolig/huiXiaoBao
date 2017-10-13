@@ -6,6 +6,9 @@ import android.view.View;
 import android.widget.TextView;
 import com.alibaba.mobileim.aop.Pointcut;
 import com.alibaba.mobileim.aop.custom.IMConversationListUI;
+import com.alibaba.mobileim.conversation.YWConversation;
+import com.dhitoshi.xfrs.huixiaobao.R;
+
 /**
  * Created by dxs on 2017/10/11.
  */
@@ -28,4 +31,8 @@ class ConversationListUICustom extends IMConversationListUI {
         return textView;
     }
 
+    @Override
+    public int getTribeConversationHead(Fragment fragment, YWConversation conversation) {
+        return R.mipmap.head;
+    }
 }

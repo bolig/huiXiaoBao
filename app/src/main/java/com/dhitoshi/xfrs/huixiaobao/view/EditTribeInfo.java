@@ -59,9 +59,6 @@ public class EditTribeInfo extends BaseView {
         } else if (mTribeOp.equals(TribeConstants.TRIBE_EDIT)) { //编辑群信息
             mTribeId = getIntent().getLongExtra(TribeConstants.TRIBE_ID, 0);
         }
-
-        WXNetworkImageView headView = (WXNetworkImageView) findViewById(R.id.head);
-
         mTribeName = (EditText) findViewById(R.id.tribe_name);
         mTribeNotice = (EditText) findViewById(R.id.tribe_description);
         YWTribe tribe = mTribeService.getTribe(mTribeId);
@@ -108,7 +105,7 @@ public class EditTribeInfo extends BaseView {
     }
 
     private void createTribe(final YWTribeType type) {
-        List<String> users = new ArrayList<String>();
+        List<String> users = new ArrayList<>();
         users.add(mIMKit.getIMCore().getLoginUserId());
         YWTribeCreationParam param = new YWTribeCreationParam();
         param.setTribeType(type);

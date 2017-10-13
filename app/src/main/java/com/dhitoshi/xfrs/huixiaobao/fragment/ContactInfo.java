@@ -3,6 +3,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -80,10 +81,14 @@ public class ContactInfo extends BaseFragment {
                     adapter.addItemClickListener(new ItemClick<ChatContact>() {
                         @Override
                         public void onItemClick(View view, ChatContact chatContact, int position) {
-                            Intent intent = new Intent(getContext(), Chat.class);
-                            intent.putExtra("target",chatContact.getUserid());
+                        Intent intent = new Intent(getContext(), Chat.class);
+                        intent.putExtra("target",chatContact.getUserid());
+                        if(TextUtils.isEmpty(chatContact.getNick())){
+                            intent.putExtra("name",chatContact.getUserid());
+                        }else{
                             intent.putExtra("name",chatContact.getNick());
-                            startActivity(intent);
+                        }
+                        startActivity(intent);
                         }
                     });
                 }else if(httpBean.getStatus().getCode()==600){
