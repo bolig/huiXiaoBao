@@ -8,16 +8,13 @@ import com.alibaba.mobileim.aop.Pointcut;
 import com.alibaba.mobileim.aop.custom.IMConversationListUI;
 import com.alibaba.mobileim.conversation.YWConversation;
 import com.dhitoshi.xfrs.huixiaobao.R;
-
 /**
  * Created by dxs on 2017/10/11.
  */
-
 class ConversationListUICustom extends IMConversationListUI {
     public ConversationListUICustom(Pointcut pointcut) {
         super(pointcut);
     }
-
     @Override
     public boolean needHideTitleView(Fragment fragment) {
         return true;
@@ -30,7 +27,6 @@ class ConversationListUICustom extends IMConversationListUI {
         textView.setTextSize(18);
         return textView;
     }
-
     @Override
     public int getTribeConversationHead(Fragment fragment, YWConversation conversation) {
         return R.mipmap.head;
