@@ -15,6 +15,8 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.WindowManager;
 import android.widget.Toast;
+import com.alibaba.mobileim.YWAPI;
+import com.alibaba.mobileim.YWIMKit;
 import com.dhitoshi.bottombar.BottomBar;
 import com.dhitoshi.bottombar.OnTabSelectListener;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
@@ -34,7 +36,9 @@ import com.dhitoshi.xfrs.huixiaobao.fragment.Work;
 import com.dhitoshi.xfrs.huixiaobao.http.HttpResult;
 import com.dhitoshi.xfrs.huixiaobao.http.MyHttp;
 import com.dhitoshi.xfrs.huixiaobao.utils.ActivityManagerUtil;
+import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
 import com.dhitoshi.xfrs.huixiaobao.utils.SystemBarTintManager;
+
 import java.util.ArrayList;
 import java.util.List;
 import butterknife.BindView;
@@ -54,6 +58,7 @@ public class Theme extends AppCompatActivity {
     private ViewPagerAdapter adapter;
     private static Handler handler=new Handler();
     private Runnable runnable;
+    private YWIMKit mIMKit;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -170,7 +175,9 @@ public class Theme extends AppCompatActivity {
                 themeViewpager.setCurrentItem(position,false);
             }
         });
-
+        String userId = SharedPreferencesUtil.Obtain(this, "account", "").toString().split("@")[0];
+        mIMKit = YWAPI.getIMKitInstance(userId, "24607089");
+        themeBottomBar.getTabWithId(R.id.tab_news).setBadgeCount(mIMKit.getConversationService().getAllUnreadCount());
     }
     private List<Fragment> getThemeFragments() {
         themeFragments = new ArrayList<>();
@@ -179,7 +186,6 @@ public class Theme extends AppCompatActivity {
         themeFragments.add(Work.newInstance());
         themeFragments.add(StateMent.newInstance());
         themeFragments.add(Personal.newInstance());
-
         return themeFragments;
     }
    @NeedsPermission({Manifest.permission.CALL_PHONE})

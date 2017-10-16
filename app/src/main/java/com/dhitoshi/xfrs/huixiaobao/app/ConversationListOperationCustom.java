@@ -14,6 +14,8 @@ import com.alibaba.mobileim.conversation.YWP2PConversationBody;
 import com.dhitoshi.xfrs.huixiaobao.R;
 import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
 import com.dhitoshi.xfrs.huixiaobao.view.Chat;
+import com.dhitoshi.xfrs.huixiaobao.view.TribeChat;
+
 /**
  * Created by dxs on 2017/10/11.
  */
@@ -41,6 +43,9 @@ class ConversationListOperationCustom extends IMConversationListOperation {
             return true;
         } else if (type == YWConversationType.Tribe){
             //TODO 群会话点击事件
+            Intent intent = new Intent(fragment.getContext(), TribeChat.class);
+//            intent.putExtra("target",listener.getUserId());
+            fragment.getContext().startActivity(intent);
             return false;
         }
         return false;

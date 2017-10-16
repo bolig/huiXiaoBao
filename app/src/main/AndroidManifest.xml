@@ -103,6 +103,11 @@
         <activity android:name=".view.SearchTribe" />
         <activity android:name=".view.TribeInfo" />
         <activity android:name=".view.EditTribeInfo" />
+        <activity android:name=".view.TribeMembers" />
+        <activity android:name=".view.EditMyTribeProfile" />
+        <activity android:name=".view.SetTribeCheckMode" />
+        <activity android:name=".view.TribeMsgRecTypeSet" />
+        <activity android:name=".view.TribeChat" />
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="com.dhitoshi.hxb.fileprovider"

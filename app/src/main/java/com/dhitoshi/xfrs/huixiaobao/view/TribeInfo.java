@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -28,9 +29,14 @@ import com.alibaba.mobileim.gingko.model.tribe.YWTribeRole;
 import com.alibaba.mobileim.gingko.presenter.tribe.IYWTribeChangeListener;
 import com.alibaba.mobileim.tribe.IYWTribeService;
 import com.alibaba.mobileim.utility.IMNotificationUtils;
+import com.dhitoshi.xfrs.huixiaobao.Event.NewsEvent;
 import com.dhitoshi.xfrs.huixiaobao.R;
 import com.dhitoshi.xfrs.huixiaobao.common.TribeConstants;
+import com.dhitoshi.xfrs.huixiaobao.utils.ActivityManagerUtil;
 import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
+
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,7 +66,6 @@ public class TribeInfo extends BaseView {
     private RelativeLayout mMangeTribeMembersLayout;
     private RelativeLayout mEditTribeInfoLayout;
     private RelativeLayout mEditMyTribeProfileLayout;
-    private RelativeLayout mEditPersonalSettings;
     private RelativeLayout mTribeMsgRecTypeLayout;
     private TextView mTribeMsgRecType;
     private ImageView mAtMsgRecSwitch;
@@ -112,20 +117,19 @@ public class TribeInfo extends BaseView {
         mMangeTribeMembersLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent(TribeInfo.this, TribeMembersActivity.class);
-//                intent.putExtra(TribeConstants.TRIBE_ID, mTribeId);
-//                startActivity(intent);
+                Intent intent = new Intent(TribeInfo.this, TribeMembers.class);
+                intent.putExtra(TribeConstants.TRIBE_ID, mTribeId);
+                startActivity(intent);
             }
         });
-
         mEditTribeInfoLayout = (RelativeLayout) findViewById(R.id.edit_tribe_info_layout);
         mEditTribeInfoLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent(TribeInfo.this, EditTribeInfoActivity.class);
-//                intent.putExtra(TribeConstants.TRIBE_ID, mTribeId);
-//                intent.putExtra(TribeConstants.TRIBE_OP, TribeConstants.TRIBE_EDIT);
-//                startActivity(intent);
+                Intent intent = new Intent(TribeInfo.this, EditTribeInfo.class);
+                intent.putExtra(TribeConstants.TRIBE_ID, mTribeId);
+                intent.putExtra(TribeConstants.TRIBE_OP, TribeConstants.TRIBE_EDIT);
+                startActivity(intent);
             }
         });
 
@@ -135,23 +139,12 @@ public class TribeInfo extends BaseView {
         mEditMyTribeProfileLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent(TribeInfo.this, EditMyTribeProfileActivity.class);
-//                intent.putExtra(TribeConstants.TRIBE_ID, mTribeId);
-//                intent.putExtra(TribeConstants.TRIBE_NICK, mMyTribeNick.getText());
-//                startActivityForResult(intent, EDIT_MY_TRIBE_NICK_REQUEST_CODE);
+                Intent intent = new Intent(TribeInfo.this, EditMyTribeProfile.class);
+                intent.putExtra(TribeConstants.TRIBE_ID, mTribeId);
+                intent.putExtra(TribeConstants.TRIBE_NICK, mMyTribeNick.getText());
+                startActivityForResult(intent, EDIT_MY_TRIBE_NICK_REQUEST_CODE);
             }
         });
-
-        mEditPersonalSettings = (RelativeLayout) findViewById(R.id.personal_tribe_setting_layout);
-        mEditPersonalSettings.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                Intent intent = new Intent(TribeInfo.this, TribePersonalSettingActivity.class);
-//                intent.putExtra("tribeId", mTribeId);
-//                startActivity(intent);
-            }
-        });
-
         mTribeMsgRecTypeLayout = (RelativeLayout) findViewById(R.id.tribe_msg_rec_type_layout);
         mTribeMsgRecType = (TextView) findViewById(R.id.tribe_msg_rec_type);
         mAtMsgRecSwitch = (ImageView) findViewById(R.id.receive_tribe_at_msg);
@@ -159,8 +152,8 @@ public class TribeInfo extends BaseView {
         mTribeMsgRecTypeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent = TribeMsgRecTypeSetActivity.getTribeMsgRecTypeSetActivityIntent(TribeInfo.this, mMsgRecFlag);
-//                startActivityForResult(intent, SET_MSG_REC_TYPE_REQUEST_CODE);
+                Intent intent = TribeMsgRecTypeSet.getTribeMsgRecTypeSetActivityIntent(TribeInfo.this, mMsgRecFlag);
+                startActivityForResult(intent, SET_MSG_REC_TYPE_REQUEST_CODE);
             }
         });
 
@@ -179,19 +172,17 @@ public class TribeInfo extends BaseView {
                 }
             }
         });
-
         mTribeCheckModeLayout = (RelativeLayout) findViewById(R.id.tribe_verify_layout);
         mTribeCheckMode = (TextView) findViewById(R.id.tribe_verify);
         mTribeCheckModeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent(TribeInfo.this, SetTribeCheckModeActivity.class);
-//                intent.putExtra(TribeConstants.TRIBE_CHECK_MODE, mTribe.getTribeCheckMode());
-//                intent.putExtra(TribeConstants.TRIBE_ID, mTribe.getTribeId());
-//                startActivityForResult(intent, SET_TRIBE_CHECK_MODE_REQUEST_CODE);
+                Intent intent = new Intent(TribeInfo.this, SetTribeCheckMode.class);
+                intent.putExtra(TribeConstants.TRIBE_CHECK_MODE, mTribe.getTribeCheckMode().type);
+                intent.putExtra(TribeConstants.TRIBE_ID, mTribe.getTribeId());
+                startActivityForResult(intent, SET_TRIBE_CHECK_MODE_REQUEST_CODE);
             }
         });
-
         mCLearTribeMsgs = (TextView) findViewById(R.id.clear_tribe_msg);
         mCLearTribeMsgs.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -199,9 +190,7 @@ public class TribeInfo extends BaseView {
                 clearMsgRecord();
             }
         });
-
         mQuiteTribe = (TextView) findViewById(R.id.quite_tribe);
-
         enableAtAllLayout = (RelativeLayout) findViewById(R.id.config_at_all_for_normal_members_layout);
         enableAtAllSwitch = (ImageView) findViewById(R.id.config_at_all_switch);
         enableAtAllSwitch.setOnClickListener(new View.OnClickListener() {
@@ -250,7 +239,6 @@ public class TribeInfo extends BaseView {
                 break;
         }
     }
-
     private void setMsgRecType(int msgRecType) {
         switch (msgRecType) {
             case YWProfileSettingsConstants.TRIBE_MSG_REC:
@@ -410,10 +398,9 @@ public class TribeInfo extends BaseView {
     }
 
     private void openTribeListFragment() {
-//        Intent intent = new Intent(this, FragmentTabs.class);
-//        intent.putExtra(TribeConstants.TRIBE_OP, TribeConstants.TRIBE_OP);
-//        startActivity(intent);
-//        finish();
+        EventBus.getDefault().post(new NewsEvent(1));
+        ActivityManagerUtil.destoryActivity("SearchTribe");
+        finish();
     }
 
     private void initTribeInfo() {

@@ -20,7 +20,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class Chat extends AppCompatActivity {
+public class TribeChat extends AppCompatActivity {
     @BindView(R.id.title)
     TextView title;
     private YWIMKit mIMKit;
@@ -30,7 +30,7 @@ public class Chat extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_chat);
+        setContentView(R.layout.activity_tribe_chat);
         ButterKnife.bind(this);
         InitView();
         target = getIntent().getStringExtra("target");

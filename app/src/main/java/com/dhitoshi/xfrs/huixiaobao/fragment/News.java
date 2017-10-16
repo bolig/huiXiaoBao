@@ -12,6 +12,8 @@ import android.widget.TextView;
 import com.alibaba.mobileim.YWAPI;
 import com.alibaba.mobileim.YWIMKit;
 import com.alibaba.mobileim.gingko.model.tribe.YWTribeType;
+import com.dhitoshi.xfrs.huixiaobao.Event.ClientEvent;
+import com.dhitoshi.xfrs.huixiaobao.Event.NewsEvent;
 import com.dhitoshi.xfrs.huixiaobao.R;
 import com.dhitoshi.xfrs.huixiaobao.adapter.ViewPagerAdapter;
 import com.dhitoshi.xfrs.huixiaobao.app.MyApplication;
@@ -23,12 +25,18 @@ import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
 import com.dhitoshi.xfrs.huixiaobao.view.EditTribeInfo;
 import com.dhitoshi.xfrs.huixiaobao.view.SearchTribe;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.ArrayList;
 import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+
+import static com.dhitoshi.xfrs.huixiaobao.R.id.smartRefreshLayout;
 
 //消息页面
 public class News extends Fragment {
@@ -62,6 +70,7 @@ public class News extends Fragment {
         View view = inflater.inflate(R.layout.fragment_news, container, false);
         unbinder = ButterKnife.bind(this, view);
         initViews();
+        EventBus.getDefault().register(this);
         return view;
     }
     private void initViews() {
@@ -96,6 +105,7 @@ public class News extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+        EventBus.getDefault().unregister(this);
     }
 
 
@@ -163,8 +173,6 @@ public class News extends Fragment {
                 hidePopupWindow();
             }
         });
-
-
         if (mPopupWindow == null) {
             mPopupWindow = new PopupWindow(view, ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -178,6 +186,14 @@ public class News extends Fragment {
         }
         if (mPopupWindow != null) {
             mPopupWindow.dismiss();
+        }
+    }
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventMainThread(NewsEvent event) {
+        switch (event.getState()) {
+            case 1:
+                newsViewpager.setCurrentItem(2);
+                break;
         }
     }
 }

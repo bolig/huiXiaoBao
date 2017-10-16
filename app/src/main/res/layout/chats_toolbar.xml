@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:id="@+id/toolbar"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="45dp"
+    android:background="#34B1FF"
+    >
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/back"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="right"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:src="@drawable/back_click"
+        android:clickable="true"
+        />
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:textColor="@android:color/white"
+        android:textSize="17dp"
+        />
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/at"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="right"
+        android:paddingLeft="15dp"
+        android:src="@drawable/aliwx_tribe_at_icon"
+        android:layout_toLeftOf="@+id/tribeInfo"
+        android:clickable="true"
+        />
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/tribeInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="right"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:src="@drawable/aliwx_tribe_info_icon"
+        android:clickable="true"
+        android:layout_alignParentRight="true"
+        />
+</RelativeLayout>
+
+
+

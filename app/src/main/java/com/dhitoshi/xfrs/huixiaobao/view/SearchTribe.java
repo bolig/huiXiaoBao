@@ -16,6 +16,7 @@ import com.alibaba.mobileim.tribe.IYWTribeService;
 import com.alibaba.mobileim.utility.IMNotificationUtils;
 import com.dhitoshi.xfrs.huixiaobao.R;
 import com.dhitoshi.xfrs.huixiaobao.common.TribeConstants;
+import com.dhitoshi.xfrs.huixiaobao.utils.ActivityManagerUtil;
 import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
 public class SearchTribe extends BaseView {
     private YWIMKit mIMKit;
@@ -28,6 +29,7 @@ public class SearchTribe extends BaseView {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.demo_activity_search_tribe);
+        ActivityManagerUtil.addDestoryActivity(this,"SearchTribe");
         init();
     }
     private void init() {
@@ -87,6 +89,13 @@ public class SearchTribe extends BaseView {
             }
         });
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ActivityManagerUtil.destoryActivity("SearchTribe");
+    }
+
     private void startTribeInfoActivity(String tribeOp) {
         Intent intent = new Intent(this, TribeInfo.class);
         intent.putExtra(TribeConstants.TRIBE_ID, mTribeId);
