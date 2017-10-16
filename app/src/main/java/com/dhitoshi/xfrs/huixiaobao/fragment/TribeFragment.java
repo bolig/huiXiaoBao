@@ -27,9 +27,12 @@ import com.dhitoshi.xfrs.huixiaobao.common.TribeAndRoomList;
 import com.dhitoshi.xfrs.huixiaobao.common.TribeConstants;
 import com.dhitoshi.xfrs.huixiaobao.common.TribeSampleHelper;
 import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
+import com.dhitoshi.xfrs.huixiaobao.view.TribeChat;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.R.attr.fragment;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -231,10 +234,10 @@ public class TribeFragment extends Fragment implements AdapterView.OnItemClickLi
                             long id) {
         final int position = position1 - mMessageListView.getHeaderViewsCount();
         if (position >= 0 && position < mTribeAndRoomList.size()) {
-
             YWTribe tribe = (YWTribe) mTribeAndRoomList.getItem(position);
-            //参数为群ID号
-            Intent intent = mIMKit.getTribeChattingActivityIntent(tribe.getTribeId());
+            Intent intent = new Intent(getContext(), TribeChat.class);
+            intent.putExtra("target",tribe.getTribeId());
+            intent.putExtra("name",tribe.getTribeName());
             startActivity(intent);
         }
     }

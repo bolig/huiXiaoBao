@@ -11,6 +11,8 @@ import com.alibaba.mobileim.contact.IYWContact;
 import com.alibaba.mobileim.conversation.YWConversation;
 import com.alibaba.mobileim.conversation.YWConversationType;
 import com.alibaba.mobileim.conversation.YWP2PConversationBody;
+import com.alibaba.mobileim.conversation.YWTribeConversationBody;
+import com.alibaba.mobileim.gingko.model.tribe.YWTribe;
 import com.dhitoshi.xfrs.huixiaobao.R;
 import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
 import com.dhitoshi.xfrs.huixiaobao.view.Chat;
@@ -43,10 +45,14 @@ class ConversationListOperationCustom extends IMConversationListOperation {
             return true;
         } else if (type == YWConversationType.Tribe){
             //TODO 群会话点击事件
-            Intent intent = new Intent(fragment.getContext(), TribeChat.class);
-//            intent.putExtra("target",listener.getUserId());
-            fragment.getContext().startActivity(intent);
-            return false;
+            if (conversation.getConversationBody() instanceof YWTribeConversationBody) {
+                YWTribe tribe = ((YWTribeConversationBody) conversation.getConversationBody()).getTribe();
+                Intent intent = new Intent(fragment.getContext(), TribeChat.class);
+                intent.putExtra("target",tribe.getTribeId());
+                intent.putExtra("name",tribe.getTribeName());
+                fragment.getContext().startActivity(intent);
+            }
+            return true;
         }
         return false;
     }

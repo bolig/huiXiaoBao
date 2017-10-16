@@ -24,7 +24,7 @@ public class TribeChat extends AppCompatActivity {
     @BindView(R.id.title)
     TextView title;
     private YWIMKit mIMKit;
-    private String target = "";
+    private long target ;
     private String name = "";
 
     @Override
@@ -33,21 +33,21 @@ public class TribeChat extends AppCompatActivity {
         setContentView(R.layout.activity_tribe_chat);
         ButterKnife.bind(this);
         InitView();
-        target = getIntent().getStringExtra("target");
+        target = getIntent().getLongExtra("target",0);
         name = getIntent().getStringExtra("name");
         String userId = SharedPreferencesUtil.Obtain(this, "account", "").toString().split("@")[0];
         mIMKit = YWAPI.getIMKitInstance(userId, "24607089");
         FragmentManager fm = getSupportFragmentManager();
         title.setText(name);
-        Fragment fragment = mIMKit.getChattingFragment(target, "24607089");
-        fm.beginTransaction().add(R.id.chat, fragment).commit();
-        ActivityManagerUtil.addDestoryActivity(this,"Chat");
+        Fragment fragment = mIMKit.getTribeChattingFragment(target);
+        fm.beginTransaction().add(R.id.chat_tribe, fragment).commit();
+        ActivityManagerUtil.addDestoryActivity(this,"TribeChat");
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        ActivityManagerUtil.destoryActivity("Chat");
+        ActivityManagerUtil.destoryActivity("TribeChat");
     }
     private void InitView() {
         // 透明状态栏
