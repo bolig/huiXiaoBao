@@ -59,7 +59,6 @@ public class TribeMembers extends BaseView implements AdapterView.OnItemLongClic
     private YWTribeMember myself;
     private TribeMembersAdapter mAdapter;
     private TextView mAddTribeMembers;
-    private TextView mInviteToJoinTribe;
     private EditText mUserId;
     private EditText mAppKey;
     private Handler mHandler = new Handler(Looper.getMainLooper());
@@ -112,21 +111,12 @@ public class TribeMembers extends BaseView implements AdapterView.OnItemLongClic
         mAddTribeMembers.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent(TribeMembers.this, InviteTribeMemberActivity.class);
-//                intent.putExtra(TribeConstants.TRIBE_ID, mTribeId);
-//                startActivity(intent);
+                Intent intent = new Intent(TribeMembers.this, InviteTribeMember.class);
+                intent.putExtra(TribeConstants.TRIBE_ID, mTribeId);
+                startActivity(intent);
             }
         });
         mAddTribeMembers.setVisibility(View.GONE);
-
-        mInviteToJoinTribe = (TextView) findViewById(R.id.invite_tribe_members);
-        mInviteToJoinTribe.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ShowInviteToJoinTribeDialog();
-            }
-        });
-
         initTribeChangedListener();
         initContactProfileUpdateListener();
         addListeners();
@@ -432,40 +422,6 @@ public class TribeMembers extends BaseView implements AdapterView.OnItemLongClic
         ActivityManagerUtil.destoryActivity("SearchTribe");
         finish();
     }
-
-    private void ShowInviteToJoinTribeDialog() {
-        View view = View.inflate(this, R.layout.demo_dialog_invite_tribe_member, null);
-        mUserId = (EditText) view.findViewById(R.id.userid);
-        mAppKey = (EditText) view.findViewById(R.id.appkey);
-        AlertDialog dialog = new YWAlertDialog.Builder(this)
-                .setView(view)
-                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        String userId = mUserId.getText().toString();
-                        String appKey = mAppKey.getText().toString();
-                        if (TextUtils.isEmpty(userId) || TextUtils.isEmpty(appKey)) {
-                            IMNotificationUtils.getInstance().showToast(TribeMembers.this, "userId 和 appKey 均不能为空！");
-                            return;
-                        }
-                        IYWContact contact = YWContactFactory.createAPPContact(userId, appKey);
-                        List<IYWContact> list = new ArrayList<IYWContact>();
-                        list.add(contact);
-                        inviteTribeMembers(list);
-                    }
-                })
-                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                })
-                .create();
-        if (!dialog.isShowing()) {
-            dialog.show();
-        }
-    }
-
     private void inviteTribeMembers(List<IYWContact> contacts) {
         mTribeService.inviteMembers(mTribeId, contacts, new IWxCallback() {
             @Override

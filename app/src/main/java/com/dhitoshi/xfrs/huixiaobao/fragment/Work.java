@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dhitoshi.xfrs.huixiaobao.R;
+import com.dhitoshi.xfrs.huixiaobao.view.LoadWeb;
 import com.dhitoshi.xfrs.huixiaobao.view.OwnMeeting;
 
 import butterknife.BindView;
@@ -25,7 +26,7 @@ public class Work extends Fragment {
     @BindView(R.id.title)
     TextView title;
     Unbinder unbinder;
-
+    private Intent it;
     public Work() {
 
     }
@@ -104,7 +105,8 @@ public class Work extends Fragment {
                 Toast.makeText(getContext(),"开发中，敬请期待",Toast.LENGTH_SHORT).show();
                 break;
             case R.id.work_knowledge:
-                Toast.makeText(getContext(),"开发中，敬请期待",Toast.LENGTH_SHORT).show();
+                it=new Intent(getContext(), LoadWeb.class).putExtra("url","http://119.29.144.125:4000/admin/index").putExtra("title","知识库");
+                startActivity(it);
                 break;
             case R.id.work_news:
                 Toast.makeText(getContext(),"开发中，敬请期待",Toast.LENGTH_SHORT).show();

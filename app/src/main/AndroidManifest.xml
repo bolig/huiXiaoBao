@@ -9,6 +9,7 @@
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <application
         android:name=".app.MyApplication"
         android:allowBackup="true"
@@ -69,45 +70,127 @@
         <activity
             android:name=".view.Select"
             android:screenOrientation="portrait" />
-        <activity android:name=".view.BaseSetting" />
-        <activity android:name=".view.Permission" />
-        <activity android:name=".view.Product" />
-        <activity android:name=".view.ProductType" />
-        <activity android:name=".view.AddProduct" />
-        <activity android:name=".view.UserList" />
-        <activity android:name=".view.SearchClient" />
-        <activity android:name=".view.SelectArea" />
-        <activity android:name=".view.AddDepartment" />
-        <activity android:name=".view.Company" />
-        <activity android:name=".view.Department" />
-        <activity android:name=".view.AddProductType" />
-        <activity android:name=".view.AddUser" />
-        <activity android:name=".view.AddPermission" />
-        <activity android:name=".view.Login" />
-        <activity android:name=".view.Welcome" />
-        <activity android:name=".view.SelectType" />
-        <activity android:name=".view.FastSign" />
-        <activity android:name=".view.ClientList" />
-        <activity android:name=".view.OwnMeeting" />
-        <activity android:name=".view.ApplyMeeting" />
-        <activity android:name=".view.ApplyMeetingInfo" />
-        <activity android:name=".view.Apply" />
-        <activity android:name=".view.MoreMeetInfo" />
-        <activity android:name=".view.AddMeetClient" />
-        <activity android:name=".view.QueryResult" />
-        <activity android:name=".view.EditApplyMeet" />
-        <activity android:name=".view.EnterClient" />
-        <activity android:name=".view.UserInfo" />
-        <activity android:name=".view.UpdatePassword" />
-        <activity android:name=".view.SalesInfo" />
-        <activity android:name=".view.SearchTribe" />
-        <activity android:name=".view.TribeInfo" />
-        <activity android:name=".view.EditTribeInfo" />
-        <activity android:name=".view.TribeMembers" />
-        <activity android:name=".view.EditMyTribeProfile" />
-        <activity android:name=".view.SetTribeCheckMode" />
-        <activity android:name=".view.TribeMsgRecTypeSet" />
-        <activity android:name=".view.TribeChat" />
+        <activity
+            android:name=".view.BaseSetting"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.Permission"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.InviteTribeMember"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.Product"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.ProductType"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.AddProduct"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.UserList"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.SearchClient"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.SelectArea"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.AddDepartment"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.Company"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.Department"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.AddProductType"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.AddUser"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.AddPermission"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.Login"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.Welcome"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.SelectType"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.FastSign"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.ClientList"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.OwnMeeting"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.ApplyMeeting"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.ApplyMeetingInfo"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.Apply"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.MoreMeetInfo"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.AddMeetClient"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.QueryResult"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.EditApplyMeet"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.EnterClient"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.UserInfo"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.UpdatePassword"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.SalesInfo"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.SearchTribe"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.TribeInfo"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.EditTribeInfo"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.TribeMembers"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.EditMyTribeProfile"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.SetTribeCheckMode"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.TribeMsgRecTypeSet"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.TribeChat"
+            android:screenOrientation="portrait" />
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="com.dhitoshi.hxb.fileprovider"
@@ -118,10 +201,19 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-        <activity android:name=".view.AttendMeet" />
-        <activity android:name=".view.AttendInfo" />
-        <activity android:name=".view.BulkImport" />
-        <activity android:name=".view.BulkImportResult"></activity>
+        <activity
+            android:name=".view.AttendMeet"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.AttendInfo"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.BulkImport"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.BulkImportResult"
+            android:screenOrientation="portrait" />
+        <activity android:name=".view.LoadWeb"></activity>
     </application>
 
 </manifest>

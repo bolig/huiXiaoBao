@@ -5,21 +5,17 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.AppCompatImageView;
 import android.view.WindowManager;
 import android.widget.TextView;
-
 import com.alibaba.mobileim.YWAPI;
 import com.alibaba.mobileim.YWIMKit;
 import com.dhitoshi.xfrs.huixiaobao.R;
 import com.dhitoshi.xfrs.huixiaobao.utils.ActivityManagerUtil;
 import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
 import com.dhitoshi.xfrs.huixiaobao.utils.SystemBarTintManager;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
 public class Chat extends AppCompatActivity {
     @BindView(R.id.title)
     TextView title;

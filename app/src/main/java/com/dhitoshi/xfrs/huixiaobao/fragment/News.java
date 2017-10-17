@@ -7,6 +7,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import com.alibaba.mobileim.YWAPI;
@@ -37,7 +38,6 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 
 import static com.dhitoshi.xfrs.huixiaobao.R.id.smartRefreshLayout;
-
 //消息页面
 public class News extends Fragment {
     @BindView(R.id.segement)
@@ -53,7 +53,6 @@ public class News extends Fragment {
     Unbinder unbinder;
     private String[] mTitles = {"消息", "联系人", "群组"};
     private List<Fragment> fragments;
-    private PopupWindow mPopupBackground;
     private PopupWindow mPopupWindow;
     public News() {
     }
@@ -93,22 +92,18 @@ public class News extends Fragment {
             }
         });
     }
-
     public void getFragments() {
         fragments = new ArrayList<>();
         fragments.add(mIMKit.getConversationFragment());
         fragments.add(ContactInfo.newInstance());
         fragments.add(TribeFragment.newInstance());
     }
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
         EventBus.getDefault().unregister(this);
     }
-
-
     @OnClick({R.id.group_search, R.id.group_add})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -121,24 +116,8 @@ public class News extends Fragment {
                 break;
         }
     }
-    /**
-     * 弹出要创建的群类型选项
-     *
-     * @param v
-     */
+    //弹出要创建的群类型选项
     private void showPopupMenu(View v) {
-        final View bgView = View.inflate(getContext(), R.layout.demo_popup_window_bg, null);
-        bgView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                hidePopupWindow();
-            }
-        });
-        if (mPopupBackground == null) {
-            mPopupBackground = new PopupWindow(bgView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        }
-        mPopupBackground.showAtLocation(v, Gravity.BOTTOM, 0, 0);
-
         View view = View.inflate(getContext(), R.layout.demo_popup_menu, null);
         //创建群组
         TextView tribe = (TextView) view.findViewById(R.id.create_tribe);
@@ -152,7 +131,6 @@ public class News extends Fragment {
                 startActivityForResult(intent, 0);
             }
         });
-
         //创建讨论组
         TextView room = (TextView) view.findViewById(R.id.create_room);
         room.setOnClickListener(new View.OnClickListener() {
@@ -165,7 +143,6 @@ public class News extends Fragment {
                 startActivityForResult(intent, 0);
             }
         });
-
         TextView cancel = (TextView) view.findViewById(R.id.cancel_button);
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -173,19 +150,20 @@ public class News extends Fragment {
                 hidePopupWindow();
             }
         });
+        WindowManager.LayoutParams params=getActivity().getWindow().getAttributes();
+        params.alpha=0.7f;
+        getActivity().getWindow().setAttributes(params);
         if (mPopupWindow == null) {
-            mPopupWindow = new PopupWindow(view, ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT);
+            mPopupWindow = new PopupWindow(view, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         }
-
         mPopupWindow.showAtLocation(v, Gravity.BOTTOM, 0, 0);
     }
     private void hidePopupWindow() {
-        if (mPopupBackground != null) {
-            mPopupBackground.dismiss();
-        }
         if (mPopupWindow != null) {
             mPopupWindow.dismiss();
+            WindowManager.LayoutParams params=getActivity().getWindow().getAttributes();
+            params.alpha=1f;
+            getActivity().getWindow().setAttributes(params);
         }
     }
     @Subscribe(threadMode = ThreadMode.MAIN)

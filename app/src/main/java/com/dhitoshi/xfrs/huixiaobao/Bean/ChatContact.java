@@ -15,6 +15,15 @@ public class ChatContact {
     private String userid;
     private String nick;
     private String icon_url;
+    private boolean isSelected=false;
+
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
+    }
 
     public String getUserid() {
         return userid;

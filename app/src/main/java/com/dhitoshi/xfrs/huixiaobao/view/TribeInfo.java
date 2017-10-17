@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -34,12 +33,9 @@ import com.dhitoshi.xfrs.huixiaobao.R;
 import com.dhitoshi.xfrs.huixiaobao.common.TribeConstants;
 import com.dhitoshi.xfrs.huixiaobao.utils.ActivityManagerUtil;
 import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
-
 import org.greenrobot.eventbus.EventBus;
-
 import java.util.ArrayList;
 import java.util.List;
-
 /**
  * 该类演示了如何获取群消息接收状态以及对群消息接收状态的设置
  */
@@ -80,7 +76,6 @@ public class TribeInfo extends BaseView {
     private YWTribeMember mLoginUser;
     private RelativeLayout enableAtAllLayout;
     private ImageView enableAtAllSwitch;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,7 +93,6 @@ public class TribeInfo extends BaseView {
         initView();
         getTribeMsgRecSettings();
     }
-
     private void initTitle() {
         initBaseViews();
         setTitle("群资料");

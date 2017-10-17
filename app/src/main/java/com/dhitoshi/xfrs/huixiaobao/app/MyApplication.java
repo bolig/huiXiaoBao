@@ -12,6 +12,7 @@ import com.dhitoshi.xfrs.huixiaobao.utils.CrashHandler;
  * Created by dxs on 2017/8/31.
  */
 public class MyApplication extends Application {
+    private static Context context;
     //提交
     @Override
     public void onCreate() {
@@ -27,11 +28,16 @@ public class MyApplication extends Application {
         AdviceBinder.bindAdvice(PointCutEnum.CHATTING_FRAGMENT_UI_POINTCUT,ChattingCustomAdviceSample.class);
         AdviceBinder.bindAdvice(PointCutEnum.CONVERSATION_FRAGMENT_UI_POINTCUT, ConversationListUICustom.class);
         AdviceBinder.bindAdvice(PointCutEnum.CONVERSATION_FRAGMENT_OPERATION_POINTCUT, ConversationListOperationCustom.class);
-      //  CrashHandler.getInstance().init(this);
+        AdviceBinder.bindAdvice(PointCutEnum.NOTIFICATION_POINTCUT, HXBNotification.class);
     }
     @Override
     protected void attachBaseContext(Context base) {
+        context=base;
         super.attachBaseContext(base);
         MultiDex.install(this);
+    }
+
+    public static Context getContext() {
+        return context;
     }
 }
