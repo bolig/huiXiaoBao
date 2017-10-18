@@ -90,12 +90,21 @@ public class AddClientModel implements AddClientManage.Model {
     }
 
     @Override
-    public void getInfoForAdd(String token,final Callback<HttpBean<InfoAddClientBean>> callback) {
+    public void getInfoForAdd(final String token, final Callback<HttpBean<InfoAddClientBean>> callback) {
         MyHttp http=MyHttp.getInstance();
         http.send(http.getHttpService().getInfoForAdd(token),new CommonObserver(new HttpResult<HttpBean<InfoAddClientBean>>() {
             @Override
             public void OnSuccess(HttpBean<InfoAddClientBean> httpBean) {
-                callback.get(httpBean);
+                if(httpBean.getStatus().getCode()==200){
+                    callback.get(httpBean);
+                }else if(httpBean.getStatus().getCode()==600){
+                    LoginUtil.autoLogin(context, new LoginCall() {
+                        @Override
+                        public void autoLogin(String token) {
+                           getInfoForAdd(token, callback);
+                        }
+                    });
+                }
             }
             @Override
             public void OnFail(String msg) {

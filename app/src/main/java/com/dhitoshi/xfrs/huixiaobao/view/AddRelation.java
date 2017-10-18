@@ -1,5 +1,6 @@
 package com.dhitoshi.xfrs.huixiaobao.view;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -16,13 +17,18 @@ import com.dhitoshi.xfrs.huixiaobao.Event.RelationEvent;
 import com.dhitoshi.xfrs.huixiaobao.Interface.AddRelationManage;
 import com.dhitoshi.xfrs.huixiaobao.Interface.DateCallBack;
 import com.dhitoshi.xfrs.huixiaobao.Interface.ItemClick;
+import com.dhitoshi.xfrs.huixiaobao.Interface.LoginCall;
 import com.dhitoshi.xfrs.huixiaobao.R;
 import com.dhitoshi.xfrs.huixiaobao.adapter.CommonAdapter;
 import com.dhitoshi.xfrs.huixiaobao.adapter.SexAdapter;
+import com.dhitoshi.xfrs.huixiaobao.common.CommonObserver;
 import com.dhitoshi.xfrs.huixiaobao.common.SelectDateDialog;
 import com.dhitoshi.xfrs.huixiaobao.common.SelectDialog;
+import com.dhitoshi.xfrs.huixiaobao.http.HttpResult;
+import com.dhitoshi.xfrs.huixiaobao.http.MyHttp;
 import com.dhitoshi.xfrs.huixiaobao.presenter.AddRelationPresenter;
 import com.dhitoshi.xfrs.huixiaobao.utils.ActivityManagerUtil;
+import com.dhitoshi.xfrs.huixiaobao.utils.LoginUtil;
 import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
 
 import org.greenrobot.eventbus.EventBus;
@@ -75,6 +81,7 @@ public class AddRelation extends BaseView implements AddRelationManage.View{
     private AddRelationPresenter addRelationPresenter;
     private int type=1;
     private Map<String,String> map;
+    private LoadingDialog dialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -144,13 +151,22 @@ public class AddRelation extends BaseView implements AddRelationManage.View{
                 SelectSex();
                 break;
             case R.id.relation_relation:
-                SelectRelation();
+                if(null==relations){
+                    reListForRelation(0);
+                }else{
+                    SelectRelation();
+                }
                 break;
             case R.id.relation_birthday:
                 SelectBirthday();
                 break;
             case R.id.relation_position:
-                SelectPosition();
+                if(null==relations){
+                    reListForRelation(1);
+                }else{
+                    SelectPosition();
+                }
+
                 break;
         }
     }
@@ -229,9 +245,7 @@ public class AddRelation extends BaseView implements AddRelationManage.View{
             if(!birthday.isEmpty()){
                 map.put("birthday",birthday);
             }
-            if(!relation.isEmpty()){
-                map.put("relation",relation);
-            }
+
             if(!phone.isEmpty()){
                 map.put("phone",phone);
             }
@@ -244,22 +258,35 @@ public class AddRelation extends BaseView implements AddRelationManage.View{
             if(!company.isEmpty()){
                 map.put("company",company);
             }
-            if(!workPosition.isEmpty()){
-                map.put("position",workPosition);
-            }
+
             if(!notes.isEmpty()){
                 map.put("notes",notes);
             }
-            LoadingDialog dialog = LoadingDialog.build(this).setLoadingTitle("提交中");
+            dialog = LoadingDialog.build(this).setLoadingTitle("提交中");
             dialog.show();
             String token= SharedPreferencesUtil.Obtain(this,"token","").toString();
             map.put("token",token);
             if(relationBean==null){
                 map.put("userid",String.valueOf(userId));
+                if(!relation.isEmpty()){
+                    map.put("relation",relation);
+                }
+                if(!workPosition.isEmpty()){
+                    map.put("position",workPosition);
+                }
                 addRelationPresenter.addRelation(map,dialog);
             }else{
                 map.put("id",String.valueOf(relationBean.getId()));
-                addRelationPresenter.editRelation(map,dialog);
+                if(!TextUtils.isEmpty(relationBean.getRelation())&&TextUtils.isEmpty(relation)){
+                    reListForRelation(2);
+                }else if(!TextUtils.isEmpty(relationBean.getPosition())&&TextUtils.isEmpty(workPosition)){
+                    reListForRelation(2);
+                }else{
+                    map.put("relation",relation);
+                    map.put("position",workPosition);
+                    addRelationPresenter.editRelation(map,dialog);
+                }
+
             }
         }
     }
@@ -300,8 +327,61 @@ public class AddRelation extends BaseView implements AddRelationManage.View{
         }else{
             EventBus.getDefault().post(new RelationEvent(1));
         }
-
         finish();
+    }
+    private void reListForRelation(final int type){
+        MyHttp http=MyHttp.getInstance();
+        String token=SharedPreferencesUtil.Obtain(this,"token","").toString();
+        http.send(http.getHttpService().getListForRelation(token),new CommonObserver(new HttpResult<HttpBean<InfoAddRelationBean>>() {
+            @Override
+            public void OnSuccess(HttpBean<InfoAddRelationBean> httpBean) {
+                if(httpBean.getStatus().getCode()==200){
+                    relations=httpBean.getData().getRelation();
+                    positions=httpBean.getData().getPosition();
+                    if(relationBean!=null){
+                        for (int i = 0; i < relations.size(); i++) {
+                            if(relations.get(i).getName().equals(relationBean.getRelation())){
+                                relation=String.valueOf(relations.get(i).getId());
+                            }
+                        }
+                        for (int j = 0; j < positions.size(); j++) {
+                            if(positions.get(j).getName().equals(relationBean.getPosition())){
+                                workPosition=String.valueOf(positions.get(j).getId());
+                            }
+                        }
+                    }
+                    if(type==0){
+                        SelectRelation();
+                    }else if(type==1){
+                        SelectPosition();
+                    }else{
+                        map.put("relation",relation);
+                        map.put("position",workPosition);
+                        addRelationPresenter.editRelation(map,dialog);
+                    }
+                }else if(httpBean.getStatus().getCode()==600){
+                    LoginUtil.autoLogin(AddRelation.this, new LoginCall() {
+                        @Override
+                        public void autoLogin(String token) {
+                           reListForRelation(type);
+                        }
+                    });
+                }else {
+                    Toast.makeText(AddRelation.this,httpBean.getStatus().getMsg(),Toast.LENGTH_SHORT).show();
+                    if(type==2&&dialog!=null){
+                        dialog.dismiss();
+                    }
+                }
+            }
+
+            @Override
+            public void OnFail(String msg) {
+                Toast.makeText(AddRelation.this,msg,Toast.LENGTH_SHORT).show();
+                if(type==2&&dialog!=null){
+                    dialog.dismiss();
+                }
+            }
+        }));
     }
     @Override
     public void getListForRelation(HttpBean<InfoAddRelationBean> httpBean) {

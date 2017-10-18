@@ -9,6 +9,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.content.FileProvider;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -31,6 +32,7 @@ import com.dhitoshi.xfrs.huixiaobao.Interface.AddClientManage;
 import com.dhitoshi.xfrs.huixiaobao.Interface.DateCallBack;
 import com.dhitoshi.xfrs.huixiaobao.Interface.HeadClickBack;
 import com.dhitoshi.xfrs.huixiaobao.Interface.ItemClick;
+import com.dhitoshi.xfrs.huixiaobao.Interface.LoginCall;
 import com.dhitoshi.xfrs.huixiaobao.R;
 import com.dhitoshi.xfrs.huixiaobao.adapter.ClientTypeAdapter;
 import com.dhitoshi.xfrs.huixiaobao.adapter.PositionAdapter;
@@ -43,6 +45,7 @@ import com.dhitoshi.xfrs.huixiaobao.http.MyHttp;
 import com.dhitoshi.xfrs.huixiaobao.presenter.AddClientPresenter;
 import com.dhitoshi.xfrs.huixiaobao.utils.ActivityManagerUtil;
 import com.dhitoshi.xfrs.huixiaobao.utils.IdCardUtil;
+import com.dhitoshi.xfrs.huixiaobao.utils.LoginUtil;
 import com.dhitoshi.xfrs.huixiaobao.utils.PictureUtils;
 import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
 
@@ -354,12 +357,7 @@ public class AddClient extends BaseView implements AddClientManage.View {
             if (!type.isEmpty()) {
                 map.put("type", type);
             }
-            if (!hobby.isEmpty()) {
-                map.put("hobby", hobby);
-            }
-            if (!ill.isEmpty()) {
-                map.put("ill", ill);
-            }
+
             if (!notes.isEmpty()) {
                 map.put("notes", notes);
             }
@@ -368,10 +366,38 @@ public class AddClient extends BaseView implements AddClientManage.View {
             String token = SharedPreferencesUtil.Obtain(this, "token", "").toString();
             map.put("token", token);
             if (null == clientBean) {
+                if (!hobby.isEmpty()) {
+                    map.put("hobby", hobby);
+                }
+                if (!ill.isEmpty()) {
+                    map.put("ill", ill);
+                }
+                if (!workPosition.isEmpty()) {
+                    map.put("position", workPosition);
+                }
+                if (!type.isEmpty()) {
+                    map.put("type", type);
+                }
                 addClientPresenter.addClient(map, dialog);
             } else {
                 map.put("id", String.valueOf(clientBean.getId()));
-                addClientPresenter.editClient(map, dialog);
+                if(!TextUtils.isEmpty(hobbyName)&&TextUtils.isEmpty(hobby)){
+                    reInfoForAdd(4);
+                }else if(!TextUtils.isEmpty(clientBean.getType())&&TextUtils.isEmpty(hobby)){
+                    reInfoForAdd(4);
+                }else if(!TextUtils.isEmpty(clientBean.getPosition())&&TextUtils.isEmpty(hobby)){
+                    reInfoForAdd(4);
+                }else if(!TextUtils.isEmpty(illName)&&TextUtils.isEmpty(hobby)){
+                    reInfoForAdd(4);
+                }
+                else {
+                    map.put("hobby", hobby);
+                    map.put("ill", ill);
+                    map.put("position", workPosition);
+                    map.put("type", type);
+                    addClientPresenter.editClient(map, dialog);
+                }
+
             }
         }
     }
@@ -478,7 +504,6 @@ public class AddClient extends BaseView implements AddClientManage.View {
                     @Override
                     public void onStart() {
                     }
-
                     @Override
                     public void onSuccess(File file) {
                         MyHttp http = MyHttp.getInstance();
@@ -573,23 +598,38 @@ public class AddClient extends BaseView implements AddClientManage.View {
                 call();
                 break;
             case R.id.client_hobby:
-                selectHobby();
+                if(hobbys==null){
+                    reInfoForAdd(0);
+                }else {
+                    selectHobby();
+                }
                 break;
             case R.id.client_area:
                 selectArea();
                 break;
             case R.id.client_position:
-                selectPosition();
+                if(positions==null){
+                    reInfoForAdd(1);
+                }else {
+                    selectPosition();
+                }
                 break;
             case R.id.client_type:
-                selectType();
+                if(customerTypes==null){
+                    reInfoForAdd(2);
+                }else {
+                    selectType();
+                }
                 break;
             case R.id.client_ill:
-                selectIll();
+                if(ills==null){
+                    reInfoForAdd(3);
+                }else {
+                    selectIll();
+                }
                 break;
         }
     }
-
     //选择出生日期
     private void selectBrithday() {
         SelectDateDialog dialog = new SelectDateDialog(this);
@@ -602,24 +642,20 @@ public class AddClient extends BaseView implements AddClientManage.View {
             }
         }).show();
     }
-
     //选择爱好
     private void selectHobby() {
         startActivityForResult(new Intent(this, Select.class).putParcelableArrayListExtra("list", hobbys)
                 .putExtra("type", 1).putExtra("select", clientHobby.getText().toString()), 1);
     }
-
     //选择地区
     private void selectArea() {
         startActivityForResult(new Intent(this, SelectArea.class), 0);
     }
-
     //选择疾病
     private void selectIll() {
         startActivityForResult(new Intent(this, Select.class).putParcelableArrayListExtra("list", ills)
                 .putExtra("type", 2).putExtra("select", clientIll.getText().toString()), 2);
     }
-
     //选择客户类型
     private void selectType() {
         ClientTypeAdapter adapter = new ClientTypeAdapter(customerTypes, this, clientType.getText().toString());
@@ -635,7 +671,6 @@ public class AddClient extends BaseView implements AddClientManage.View {
             }
         });
     }
-
     //选择职位
     private void selectPosition() {
         PositionAdapter adapter = new PositionAdapter(positions, this, clientPosition.getText().toString());
@@ -651,7 +686,6 @@ public class AddClient extends BaseView implements AddClientManage.View {
             }
         });
     }
-
     //选择性别
     private void selectSex() {
         List<SexBean> sexBeens = new ArrayList<>();
@@ -670,7 +704,6 @@ public class AddClient extends BaseView implements AddClientManage.View {
             }
         });
     }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == 100) {
@@ -724,7 +757,6 @@ public class AddClient extends BaseView implements AddClientManage.View {
             }
         }
     }
-
     //获取文件大小
     public long getFileSizes(File f) {
         long s = 0;
@@ -739,10 +771,100 @@ public class AddClient extends BaseView implements AddClientManage.View {
         }
         return s;
     }
-
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         AddClientPermissionsDispatcher.onRequestPermissionsResult(this, requestCode, grantResults);
+    }
+    private void reInfoForAdd(final int location){
+        MyHttp http=MyHttp.getInstance();
+        String token=SharedPreferencesUtil.Obtain(this,"token","").toString();
+        http.send(http.getHttpService().getInfoForAdd(token),new CommonObserver(new HttpResult<HttpBean<InfoAddClientBean>>() {
+            @Override
+            public void OnSuccess(HttpBean<InfoAddClientBean> httpBean) {
+                if(httpBean.getStatus().getCode()==200){
+                    hobbys = (ArrayList<HobbyBean>) httpBean.getData().getHobby();
+                    ills = (ArrayList<IllBean>) httpBean.getData().getIll();
+                    positions = httpBean.getData().getPosition();
+                    customerTypes = httpBean.getData().getCustomerType();
+                    if (clientBean != null) {
+                        if (clientBean.getHobby() != null) {
+                            for (int i = 0; i < clientBean.getHobby().size(); i++) {
+                                for (int j = 0; j < hobbys.size(); j++) {
+                                    if (clientBean.getHobby().get(i).getHobbyname().equals(hobbys.get(j).getName())) {
+                                        if (hobby.isEmpty()) {
+                                            hobby += String.valueOf(hobbys.get(j).getId());
+                                        }
+                                        hobby += "," + String.valueOf(hobbys.get(j).getId());
+                                    }
+                                }
+                            }
+                        }
+                        if (clientBean.getIll() != null) {
+                            for (int i = 0; i < clientBean.getIll().size(); i++) {
+                                for (int j = 0; j < ills.size(); j++) {
+                                    if (clientBean.getIll().get(i).getIllname().equals(ills.get(j).getName())) {
+                                        if (ill.isEmpty()) {
+                                            ill += String.valueOf(ills.get(j).getId());
+                                        }
+                                        ill += "," + String.valueOf(ills.get(j).getId());
+                                    }
+                                }
+                            }
+                        }
+                        for (int m = 0; m < positions.size(); m++) {
+                            if (positions.get(m).getName().equals(clientBean.getPosition())) {
+                                workPosition = String.valueOf(positions.get(m).getId());
+                            }
+                        }
+                        for (int k = 0; k < customerTypes.size(); k++) {
+                            if (customerTypes.get(k).getName().equals(clientBean.getType())) {
+                                type = String.valueOf(customerTypes.get(k).getId());
+                            }
+                        }
+                    }
+                    switch (location){
+                        case 0:
+                            selectHobby();
+                            break;
+                        case 1:
+                            selectPosition();
+                            break;
+                        case 2:
+                            selectType();
+                            break;
+                        case 3:
+                            selectIll();
+                            break;
+                        case 4:
+                            map.put("hobby", hobby);
+                            map.put("ill", ill);
+                            map.put("position", workPosition);
+                            map.put("type", type);
+                            addClientPresenter.editClient(map, dialog);
+                            break;
+                    }
+                }else if(httpBean.getStatus().getCode()==600){
+                    LoginUtil.autoLogin(AddClient.this, new LoginCall() {
+                        @Override
+                        public void autoLogin(String token) {
+                            reInfoForAdd(location);
+                        }
+                    });
+                }else {
+                    Toast.makeText(AddClient.this,httpBean.getStatus().getMsg(),Toast.LENGTH_SHORT).show();
+                    if(location==4&&dialog!=null){
+                        dialog.dismiss();
+                    }
+                }
+            }
+            @Override
+            public void OnFail(String msg) {
+                Toast.makeText(AddClient.this,msg,Toast.LENGTH_SHORT).show();
+                if(location==4&&dialog!=null){
+                    dialog.dismiss();
+                }
+            }
+        }));
     }
 }

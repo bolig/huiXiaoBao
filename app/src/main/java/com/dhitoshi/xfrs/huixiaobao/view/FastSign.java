@@ -13,9 +13,14 @@ import com.dhitoshi.xfrs.huixiaobao.Bean.UserRole;
 import com.dhitoshi.xfrs.huixiaobao.Dialog.LoadingDialog;
 import com.dhitoshi.xfrs.huixiaobao.Event.UserEvent;
 import com.dhitoshi.xfrs.huixiaobao.Interface.FastSignManage;
+import com.dhitoshi.xfrs.huixiaobao.Interface.LoginCall;
 import com.dhitoshi.xfrs.huixiaobao.R;
+import com.dhitoshi.xfrs.huixiaobao.common.CommonObserver;
+import com.dhitoshi.xfrs.huixiaobao.http.HttpResult;
+import com.dhitoshi.xfrs.huixiaobao.http.MyHttp;
 import com.dhitoshi.xfrs.huixiaobao.presenter.FastSignPresenter;
 import com.dhitoshi.xfrs.huixiaobao.utils.ActivityManagerUtil;
+import com.dhitoshi.xfrs.huixiaobao.utils.LoginUtil;
 import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
 
 import org.greenrobot.eventbus.EventBus;
@@ -86,7 +91,11 @@ public class FastSign extends BaseView implements FastSignManage.View{
                 selectArea();
                 break;
             case R.id.fast_permission:
-                selectPermission();
+                if(null==userRoles){
+                    reGroupLists();
+                }else {
+                    selectPermission();
+                }
                 break;
         }
     }
@@ -138,6 +147,33 @@ public class FastSign extends BaseView implements FastSignManage.View{
             return false;
         }
         return true;
+    }
+    private void reGroupLists(){
+        MyHttp http=MyHttp.getInstance();
+        String token=SharedPreferencesUtil.Obtain(this,"token","").toString();
+        http.send(http.getHttpService().getGroupLists(token),new CommonObserver(new HttpResult<HttpBean<List<UserRole>>>() {
+            @Override
+            public void OnSuccess(HttpBean<List<UserRole>> httpBean) {
+                if(httpBean.getStatus().getCode()==200){
+                    userRoles = (ArrayList<UserRole>) httpBean.getData();
+                    selectPermission();
+                }else if(httpBean.getStatus().getCode()==600){
+                    LoginUtil.autoLogin(FastSign.this, new LoginCall() {
+                        @Override
+                        public void autoLogin(String token) {
+                            reGroupLists();
+                        }
+                    });
+                }
+                else{
+                    Toast.makeText(FastSign.this,httpBean.getStatus().getMsg(),Toast.LENGTH_SHORT).show();
+                }
+            }
+            @Override
+            public void OnFail(String msg) {
+                Toast.makeText(FastSign.this,msg,Toast.LENGTH_SHORT).show();
+            }
+        }));
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

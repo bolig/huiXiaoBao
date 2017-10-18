@@ -2,6 +2,7 @@ package com.dhitoshi.xfrs.huixiaobao.view;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
@@ -17,9 +18,14 @@ import com.dhitoshi.xfrs.huixiaobao.Dialog.LoadingDialog;
 import com.dhitoshi.xfrs.huixiaobao.Event.GiftEvent;
 import com.dhitoshi.xfrs.huixiaobao.Event.UserEvent;
 import com.dhitoshi.xfrs.huixiaobao.Interface.AddUserManage;
+import com.dhitoshi.xfrs.huixiaobao.Interface.LoginCall;
 import com.dhitoshi.xfrs.huixiaobao.R;
+import com.dhitoshi.xfrs.huixiaobao.common.CommonObserver;
+import com.dhitoshi.xfrs.huixiaobao.http.HttpResult;
+import com.dhitoshi.xfrs.huixiaobao.http.MyHttp;
 import com.dhitoshi.xfrs.huixiaobao.presenter.AddUserPresenter;
 import com.dhitoshi.xfrs.huixiaobao.utils.ActivityManagerUtil;
+import com.dhitoshi.xfrs.huixiaobao.utils.LoginUtil;
 import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
 
 import org.greenrobot.eventbus.EventBus;
@@ -75,7 +81,7 @@ public class AddUser extends BaseView implements AddUserManage.View {
     private UserBean userBean;
     private AddUserPresenter addUserPresenter;
     private ArrayList<UserRole> userRoles;
-
+    private LoadingDialog dialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -136,7 +142,11 @@ public class AddUser extends BaseView implements AddUserManage.View {
                 selectArea();
                 break;
             case R.id.user_permission:
-                selectPermission();
+                if(null==userRoles){
+                    reGroupLists(1);
+                }else {
+                    selectPermission();
+                }
                 break;
         }
     }
@@ -148,22 +158,28 @@ public class AddUser extends BaseView implements AddUserManage.View {
             }
             map.put("truename", truename);
             map.put("area", area);
-            map.put("group", group);
             map.put("phone", phone);
             map.put("email", email);
             map.put("CRM", CRM);
             map.put("APP", APP);
             String token = SharedPreferencesUtil.Obtain(this, "token", "").toString();
             map.put("token", token);
-            LoadingDialog dialog = LoadingDialog.build(this).setLoadingTitle("提交中");
+            dialog = LoadingDialog.build(this).setLoadingTitle("提交中");
             dialog.show();
             if (userBean == null) {
                 map.put("password", password);
                 map.put("name", name);
+                map.put("group", group);
                 addUserPresenter.signUp(map, dialog);
             } else {
                 map.put("id", String.valueOf(userBean.getId()));
-                addUserPresenter.editUser(map, dialog);
+                if(TextUtils.isEmpty(group)){
+                    reGroupLists(0);
+                }else{
+                    map.put("group", group);
+                    addUserPresenter.editUser(map, dialog);
+                }
+
             }
         }
     }
@@ -223,21 +239,63 @@ public class AddUser extends BaseView implements AddUserManage.View {
             }
         }
     }
-
     @Override
     public void signUp(String result) {
         Toast.makeText(this, result, Toast.LENGTH_SHORT).show();
         EventBus.getDefault().post(new UserEvent(1));
         finish();
     }
-
     @Override
     public void editUser(String result) {
         Toast.makeText(this, result, Toast.LENGTH_SHORT).show();
         EventBus.getDefault().post(new UserEvent(1));
         finish();
     }
-
+    private void reGroupLists(final int type){
+        MyHttp http=MyHttp.getInstance();
+        String token=SharedPreferencesUtil.Obtain(this,"token","").toString();
+        http.send(http.getHttpService().getGroupLists(token),new CommonObserver(new HttpResult<HttpBean<List<UserRole>>>() {
+            @Override
+            public void OnSuccess(HttpBean<List<UserRole>> httpBean) {
+                if(httpBean.getStatus().getCode()==200){
+                    userRoles = (ArrayList<UserRole>) httpBean.getData();
+                    if (userBean != null) {
+                        for (int j = 0; j < userRoles.size(); j++) {
+                            if (userRoles.get(j).getName().equals(userBean.getGroup())) {
+                                group = String.valueOf(userRoles.get(j).getId());
+                            }
+                        }
+                    }
+                    if(type==0){
+                        map.put("group", group);
+                        addUserPresenter.editUser(map, dialog);
+                    }else{
+                        selectPermission();
+                    }
+                }else if(httpBean.getStatus().getCode()==600){
+                    LoginUtil.autoLogin(AddUser.this, new LoginCall() {
+                        @Override
+                        public void autoLogin(String token) {
+                           reGroupLists(type);
+                        }
+                    });
+                }
+                else{
+                    Toast.makeText(AddUser.this,httpBean.getStatus().getMsg(),Toast.LENGTH_SHORT).show();
+                    if(type==0&&dialog!=null){
+                        dialog.dismiss();
+                    }
+                }
+            }
+            @Override
+            public void OnFail(String msg) {
+                Toast.makeText(AddUser.this,msg,Toast.LENGTH_SHORT).show();
+                if(type==0&&dialog!=null){
+                    dialog.dismiss();
+                }
+            }
+        }));
+    }
     @Override
     public void getGroupLists(HttpBean<List<UserRole>> httpBean) {
         userRoles = (ArrayList<UserRole>) httpBean.getData();

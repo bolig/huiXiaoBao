@@ -1,5 +1,4 @@
 package com.dhitoshi.xfrs.huixiaobao.Bean;
-
 import android.os.Parcel;
 import android.os.Parcelable;
 

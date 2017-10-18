@@ -213,7 +213,10 @@
         <activity
             android:name=".view.BulkImportResult"
             android:screenOrientation="portrait" />
-        <activity android:name=".view.LoadWeb"></activity>
+        <activity android:name=".view.LoadWeb"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+
+            ></activity>
     </application>
 
 </manifest>

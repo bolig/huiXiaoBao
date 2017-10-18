@@ -4,12 +4,14 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dhitoshi.xfrs.huixiaobao.Bean.AreaBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.KidBean;
@@ -79,6 +81,10 @@ public class PopupArea {
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(TextUtils.isEmpty(name)){
+                    Toast.makeText(context,"请选择部门",Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 areaCallback.getArea(id,name);
                 popupWindow.dismiss();
             }

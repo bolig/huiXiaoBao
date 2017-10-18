@@ -24,16 +24,21 @@ import com.dhitoshi.xfrs.huixiaobao.Bean.VisitBean;
 import com.dhitoshi.xfrs.huixiaobao.Dialog.LoadingDialog;
 import com.dhitoshi.xfrs.huixiaobao.Interface.DateCallBack;
 import com.dhitoshi.xfrs.huixiaobao.Interface.ItemClick;
+import com.dhitoshi.xfrs.huixiaobao.Interface.LoginCall;
 import com.dhitoshi.xfrs.huixiaobao.Interface.QueryManage;
 import com.dhitoshi.xfrs.huixiaobao.R;
 import com.dhitoshi.xfrs.huixiaobao.adapter.LocationAdapter;
 import com.dhitoshi.xfrs.huixiaobao.adapter.PositionAdapter;
 import com.dhitoshi.xfrs.huixiaobao.adapter.SexAdapter;
+import com.dhitoshi.xfrs.huixiaobao.common.CommonObserver;
 import com.dhitoshi.xfrs.huixiaobao.common.SelectDateDialog;
 import com.dhitoshi.xfrs.huixiaobao.common.SelectDialog;
 import com.dhitoshi.xfrs.huixiaobao.common.SerializableMap;
+import com.dhitoshi.xfrs.huixiaobao.http.HttpResult;
+import com.dhitoshi.xfrs.huixiaobao.http.MyHttp;
 import com.dhitoshi.xfrs.huixiaobao.presenter.QueryPresenter;
 import com.dhitoshi.xfrs.huixiaobao.utils.ActivityManagerUtil;
+import com.dhitoshi.xfrs.huixiaobao.utils.LoginUtil;
 import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
 
 import java.util.ArrayList;
@@ -153,7 +158,11 @@ public class Query extends BaseView implements QueryManage.View{
                 selectSex();
                 break;
             case R.id.query_position:
-                selectPosition();
+                if(null==positions){
+                    reListForSearch(0);
+                }else {
+                    selectPosition();
+                }
                 break;
             case R.id.createtime_start:
                 selectCreateStart();
@@ -162,13 +171,27 @@ public class Query extends BaseView implements QueryManage.View{
                 selectCreateEnd();
                 break;
             case R.id.query_sales:
-                selectSales();
+                if(null==salesmen){
+                    reListForSearch(1);
+                }else {
+                    selectSales();
+                }
                 break;
             case R.id.buy_address:
+                if(null==saleaddresses){
+                    reListForSearch(2);
+                }else {
+                    selectSales();
+                }
                 selectBuyAddress();
                 break;
             case R.id.buy_item:
-                selectBuyItem();
+                if(null==items){
+                    reListForSearch(13);
+                }else {
+                    selectBuyItem();
+                }
+
                 break;
             case R.id.buytime_start:
                 selectBuyStart();
@@ -494,6 +517,42 @@ public class Query extends BaseView implements QueryManage.View{
                     break;
             }
         }
+    }
+    private void reListForSearch(final int type){
+        MyHttp http=MyHttp.getInstance();
+        String token=SharedPreferencesUtil.Obtain(this,"token","").toString();
+        http.send(http.getHttpService().getListForSearch(token),new CommonObserver(new HttpResult<HttpBean<InfoQuery>>() {
+            @Override
+            public void OnSuccess(HttpBean<InfoQuery> httpBean) {
+                if(httpBean.getStatus().getCode()==200){
+                    items= (ArrayList<ProductBean>) httpBean.getData().getItem();
+                    positions=httpBean.getData().getPosition();
+                    saleaddresses=httpBean.getData().getSaleaddress();
+                    salesmen= (ArrayList<BaseBean>) httpBean.getData().getSalesman();
+                    if (type==0){
+                        selectPosition();
+                    }else if(type==1){
+                        selectSales();
+                    }else if(type==2){
+                        selectBuyAddress();
+                    }else{
+                        selectBuyItem();
+                    }
+
+                }else if(httpBean.getStatus().getCode()==600){
+                    LoginUtil.autoLogin(Query.this, new LoginCall() {
+                        @Override
+                        public void autoLogin(String token) {
+                            reListForSearch(type);
+                        }
+                    });
+                }
+            }
+            @Override
+            public void OnFail(String msg) {
+                Toast.makeText(Query.this,msg,Toast.LENGTH_SHORT).show();
+            }
+        }));
     }
     @Override
     public void getListForSearch(HttpBean<InfoQuery> httpBean) {

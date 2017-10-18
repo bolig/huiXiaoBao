@@ -1,6 +1,8 @@
 package com.dhitoshi.xfrs.huixiaobao.view;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -16,12 +18,17 @@ import com.dhitoshi.xfrs.huixiaobao.Event.SpendEvent;
 import com.dhitoshi.xfrs.huixiaobao.Interface.AddSpendManage;
 import com.dhitoshi.xfrs.huixiaobao.Interface.DateCallBack;
 import com.dhitoshi.xfrs.huixiaobao.Interface.ItemClick;
+import com.dhitoshi.xfrs.huixiaobao.Interface.LoginCall;
 import com.dhitoshi.xfrs.huixiaobao.R;
 import com.dhitoshi.xfrs.huixiaobao.adapter.LocationAdapter;
+import com.dhitoshi.xfrs.huixiaobao.common.CommonObserver;
 import com.dhitoshi.xfrs.huixiaobao.common.SelectDateDialog;
 import com.dhitoshi.xfrs.huixiaobao.common.SelectDialog;
+import com.dhitoshi.xfrs.huixiaobao.http.HttpResult;
+import com.dhitoshi.xfrs.huixiaobao.http.MyHttp;
 import com.dhitoshi.xfrs.huixiaobao.presenter.AddSpendPresenter;
 import com.dhitoshi.xfrs.huixiaobao.utils.ActivityManagerUtil;
+import com.dhitoshi.xfrs.huixiaobao.utils.LoginUtil;
 import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
 import org.greenrobot.eventbus.EventBus;
 import java.util.ArrayList;
@@ -77,6 +84,7 @@ public class AddSpend extends BaseView implements AddSpendManage.View{
     private ArrayList<BaseBean> salesman;
     private int userId;
     private int type=0;
+    private LoadingDialog dialog;
     private Map<String,String> map;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,7 +94,6 @@ public class AddSpend extends BaseView implements AddSpendManage.View{
         initViews();
         ActivityManagerUtil.addDestoryActivity(this,"AddSpend");
     }
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -140,13 +147,28 @@ public class AddSpend extends BaseView implements AddSpendManage.View{
                 selectDate();
                 break;
             case R.id.spend_product:
-                selectProduct();
+                if(null==item){
+                    reListForSpending(0);
+                }else{
+                    selectProduct();
+                }
+
                 break;
             case R.id.spend_location:
-                selectLocation();
+                if(null==saleaddress){
+                    reListForSpending(1);
+                }else{
+                    selectLocation();
+                }
+
                 break;
             case R.id.spend_saleMan:
-                selectSaleMan();
+                if(null==salesman){
+                    reListForSpending(2);
+                }else{
+                    selectSaleMan();
+                }
+
                 break;
             case R.id.right_text:
                 commit();
@@ -160,15 +182,7 @@ public class AddSpend extends BaseView implements AddSpendManage.View{
            if(!createtime.isEmpty()){
                map.put("createtime",createtime);
            }
-           if(!productId.isEmpty()){
-               map.put("itemid",productId);
-           }
-           if(!addressId.isEmpty()){
-               map.put("buyaddress",addressId);
-           }
-           if(!saleManId.isEmpty()){
-               map.put("salemanid",saleManId);
-           }
+
            if(!price.isEmpty()){
                map.put("cost",price);
            }
@@ -193,16 +207,38 @@ public class AddSpend extends BaseView implements AddSpendManage.View{
            if(!notes.isEmpty()){
                map.put("notes",notes);
            }
-           LoadingDialog dialog = LoadingDialog.build(this).setLoadingTitle("提交中");
+           dialog = LoadingDialog.build(this).setLoadingTitle("提交中");
            dialog.show();
            String token= SharedPreferencesUtil.Obtain(this,"token","").toString();
            map.put("token",token);
            if(null==spendBean){
                map.put("userid",String.valueOf(userId));
+               if(!productId.isEmpty()){
+                   map.put("itemid",productId);
+               }
+               if(!addressId.isEmpty()){
+                   map.put("buyaddress",addressId);
+               }
+               if(!saleManId.isEmpty()){
+                   map.put("salemanid",saleManId);
+               }
                addSpendPresenter.addSpend(map,dialog);
            }else{
                map.put("id",String.valueOf(spendBean.getId()));
-               addSpendPresenter.editSpend(map,dialog);
+               if(TextUtils.isEmpty(productId)&&!TextUtils.isEmpty(spendBean.getItem_name())){
+                   reListForSpending(3);
+               }else if(TextUtils.isEmpty(addressId)&&!TextUtils.isEmpty(spendBean.getBuyaddress())){
+                   reListForSpending(3);
+               }else if(TextUtils.isEmpty(saleManId)&&!TextUtils.isEmpty(spendBean.getSaleman_name())){
+                   reListForSpending(3);
+               }
+               else{
+                   map.put("itemid",productId);
+                   map.put("buyaddress",addressId);
+                   map.put("salemanid",saleManId);
+                   addSpendPresenter.editSpend(map,dialog);
+               }
+
            }
        }
     }
@@ -269,7 +305,7 @@ public class AddSpend extends BaseView implements AddSpendManage.View{
     @Override
     public void editSpend(String result) {
         Toast.makeText(this,result, Toast.LENGTH_SHORT).show();
-        if(type==1){
+        if(type==0){
             EventBus.getDefault().post(new SpendEvent(1));
         }else{
             EventBus.getDefault().post(new QueryResultEvent(1));
@@ -299,6 +335,73 @@ public class AddSpend extends BaseView implements AddSpendManage.View{
                 }
             }
         }
+    }
+    private void reListForSpending(final int type){
+        MyHttp http=MyHttp.getInstance();
+        String token=SharedPreferencesUtil.Obtain(this,"token","").toString();
+        http.send(http.getHttpService().getListForSpending(token),new CommonObserver(new HttpResult<HttpBean<InfoAddSpendBean>>() {
+            @Override
+            public void OnSuccess(HttpBean<InfoAddSpendBean> httpBean) {
+                if(httpBean.getStatus().getCode()==200){
+                    item= (ArrayList<ProductBean>) httpBean.getData().getItem();
+                    saleaddress=httpBean.getData().getSaleaddress();
+                    salesman= (ArrayList<BaseBean>) httpBean.getData().getSalesman();
+                    if(spendBean!=null){
+                        for (int i = 0; i < item.size(); i++) {
+                            if(item.get(i).getName().equals(spendBean.getItem_name())){
+                                productId=String.valueOf(item.get(i).getId());
+                            }
+                        }
+                        for (int j = 0; j < saleaddress.size(); j++) {
+                            if(saleaddress.get(j).getName().equals(spendBean.getBuyaddress())){
+                                addressId=String.valueOf(saleaddress.get(j).getId());
+                            }
+                        }
+                        for (int k = 0; k < salesman.size(); k++) {
+                            if(salesman.get(k).getName().equals(spendBean.getSaleman_name())){
+                                saleManId=String.valueOf(salesman.get(k).getId());
+                            }
+                        }
+                    }
+                    switch (type){
+                        case 0:
+                            selectProduct();
+                            break;
+                        case 1:
+                            selectLocation();
+                            break;
+                        case 2:
+                            selectSaleMan();
+                            break;
+                        case 3:
+                            map.put("itemid",productId);
+                            map.put("buyaddress",addressId);
+                            map.put("salemanid",saleManId);
+                            addSpendPresenter.editSpend(map,dialog);
+                            break;
+                    }
+                }else if(httpBean.getStatus().getCode()==600){
+                    LoginUtil.autoLogin(AddSpend.this, new LoginCall() {
+                        @Override
+                        public void autoLogin(String token) {
+                            reListForSpending(type);
+                        }
+                    });
+                }else{
+                    Toast.makeText(AddSpend.this,httpBean.getStatus().getMsg(),Toast.LENGTH_SHORT).show();
+                    if(type==3&&dialog!=null){
+                        dialog.dismiss();
+                    }
+                }
+            }
+            @Override
+            public void OnFail(String msg) {
+               Toast.makeText(AddSpend.this,msg,Toast.LENGTH_SHORT).show();
+                if(type==3&&dialog!=null){
+                    dialog.dismiss();
+                }
+            }
+        }));
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

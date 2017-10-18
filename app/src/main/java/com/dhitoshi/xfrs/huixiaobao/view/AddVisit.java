@@ -1,6 +1,7 @@
 package com.dhitoshi.xfrs.huixiaobao.view;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -15,12 +16,17 @@ import com.dhitoshi.xfrs.huixiaobao.Event.VisitEvent;
 import com.dhitoshi.xfrs.huixiaobao.Interface.AddVisitManage;
 import com.dhitoshi.xfrs.huixiaobao.Interface.DateCallBack;
 import com.dhitoshi.xfrs.huixiaobao.Interface.ItemClick;
+import com.dhitoshi.xfrs.huixiaobao.Interface.LoginCall;
 import com.dhitoshi.xfrs.huixiaobao.R;
 import com.dhitoshi.xfrs.huixiaobao.adapter.CommonAdapter;
+import com.dhitoshi.xfrs.huixiaobao.common.CommonObserver;
 import com.dhitoshi.xfrs.huixiaobao.common.SelectDateDialog;
 import com.dhitoshi.xfrs.huixiaobao.common.SelectDialog;
+import com.dhitoshi.xfrs.huixiaobao.http.HttpResult;
+import com.dhitoshi.xfrs.huixiaobao.http.MyHttp;
 import com.dhitoshi.xfrs.huixiaobao.presenter.AddVisitPresenter;
 import com.dhitoshi.xfrs.huixiaobao.utils.ActivityManagerUtil;
+import com.dhitoshi.xfrs.huixiaobao.utils.LoginUtil;
 import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
 import org.greenrobot.eventbus.EventBus;
 import java.util.ArrayList;
@@ -62,6 +68,7 @@ public class AddVisit extends BaseView implements AddVisitManage.View{
     private AddVisitPresenter addVisitPresenter;
     private int type=1;
     private Map<String,String> map;
+    private LoadingDialog dialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -119,7 +126,11 @@ public class AddVisit extends BaseView implements AddVisitManage.View{
                 commit();
                 break;
             case R.id.visit_salesman:
-                selectSalesMan();
+                if(null==feedman){
+                    reListForVisit(0);
+                }else{
+                    selectSalesMan();
+                }
                 break;
             case R.id.visit_date:
                 selectDate();
@@ -128,7 +139,11 @@ public class AddVisit extends BaseView implements AddVisitManage.View{
                 selectNextDate();
                 break;
             case R.id.visit_type:
-                selectType();
+                if(null==feedtypes){
+                    reListForVisit(1);
+                }else{
+                    selectType();
+                }
                 break;
         }
     }
@@ -183,12 +198,6 @@ public class AddVisit extends BaseView implements AddVisitManage.View{
             if(!nexttime.isEmpty()){
                 map.put("nexttime",nexttime);
             }
-            if(!feedman.isEmpty()){
-                map.put("feedman",feedman);
-            }
-            if(!feedtype.isEmpty()){
-                map.put("feedtype",feedtype);
-            }
             if(!feedbody.isEmpty()){
                 map.put("feedbody",feedbody);
             }
@@ -198,16 +207,31 @@ public class AddVisit extends BaseView implements AddVisitManage.View{
             if(!notes.isEmpty()){
                 map.put("notes",notes);
             }
-            LoadingDialog dialog = LoadingDialog.build(this).setLoadingTitle("提交中");
+            dialog = LoadingDialog.build(this).setLoadingTitle("提交中");
             dialog.show();
             String token= SharedPreferencesUtil.Obtain(this,"token","").toString();
             map.put("token",token);
             if(visitBean==null){
                 map.put("userid",String.valueOf(userId));
+                if(!feedman.isEmpty()){
+                    map.put("feedman",feedman);
+                }
+                if(!feedtype.isEmpty()){
+                    map.put("feedtype",feedtype);
+                }
                 addVisitPresenter.addVisit(map,dialog);
             }else{
                 map.put("id",String.valueOf(visitBean.getId()));
-                addVisitPresenter.editVisit(map,dialog);
+                if(!TextUtils.isEmpty(visitBean.getFeedman_name())&&TextUtils.isEmpty(feedman)){
+                    reListForVisit(2);
+                }else if(!TextUtils.isEmpty(visitBean.getFeedtype())&&TextUtils.isEmpty(feedtype)){
+                    reListForVisit(2);
+                }else {
+                    map.put("feedman",feedman);
+                    map.put("feedtype",feedtype);
+                    addVisitPresenter.editVisit(map,dialog);
+                }
+
             }
         }
     }
@@ -240,6 +264,60 @@ public class AddVisit extends BaseView implements AddVisitManage.View{
             EventBus.getDefault().post(new VisitEvent(1));
         }
         finish();
+    }
+    private void reListForVisit(final int type){
+        MyHttp http=MyHttp.getInstance();
+        String token=SharedPreferencesUtil.Obtain(this,"token","").toString();
+        http.send(http.getHttpService().getListForVisit(token),new CommonObserver(new HttpResult<HttpBean<InfoAddVisitBean>>() {
+            @Override
+            public void OnSuccess(HttpBean<InfoAddVisitBean> httpBean) {
+                if(httpBean.getStatus().getCode()==200) {
+                    feedmen= (ArrayList<BaseBean>) httpBean.getData().getFeedman();
+                    feedtypes=httpBean.getData().getFeedtype();
+                    if(visitBean!=null){
+                        for (int i = 0; i < feedmen.size(); i++) {
+                            if(feedmen.get(i).getName().equals(visitBean.getFeedman_name())){
+                                feedman=String.valueOf(feedmen.get(i).getId());
+                            }
+                        }
+                        for (int j = 0; j < feedtypes.size(); j++) {
+                            if(feedtypes.get(j).getName().equals(visitBean.getFeedtype())){
+                                feedtype=String.valueOf(feedtypes.get(j).getId());
+                            }
+                        }
+                    }
+                    if(type==0){
+                        selectSalesMan();
+                    }else if(type==1){
+                        selectType();
+                    }else{
+                        map.put("feedman",feedman);
+                        map.put("feedtype",feedtype);
+                        addVisitPresenter.editVisit(map,dialog);
+                    }
+                }else if(httpBean.getStatus().getCode()==600){
+                    LoginUtil.autoLogin(AddVisit.this, new LoginCall() {
+                        @Override
+                        public void autoLogin(String token) {
+                           reListForVisit(type);
+                        }
+                    });
+                }else{
+                    Toast.makeText(AddVisit.this,httpBean.getStatus().getMsg(),Toast.LENGTH_SHORT).show();
+                    if(type==2){
+                        dialog.dismiss();
+                    }
+                }
+            }
+
+            @Override
+            public void OnFail(String msg) {
+                Toast.makeText(AddVisit.this,msg,Toast.LENGTH_SHORT).show();
+                if(type==2){
+                    dialog.dismiss();
+                }
+            }
+        }));
     }
     @Override
     public void getListForVisit(HttpBean<InfoAddVisitBean> httpBean) {

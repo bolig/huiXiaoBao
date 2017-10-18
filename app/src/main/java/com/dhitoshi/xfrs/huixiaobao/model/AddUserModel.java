@@ -107,7 +107,7 @@ public class AddUserModel implements AddUserManage.Model {
             }
             @Override
             public void OnFail(String msg) {
-                Toast.makeText(context,msg,Toast.LENGTH_SHORT).show();
+
             }
         }));
     }

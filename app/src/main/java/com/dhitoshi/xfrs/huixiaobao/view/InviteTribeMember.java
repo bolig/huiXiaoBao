@@ -1,16 +1,17 @@
 package com.dhitoshi.xfrs.huixiaobao.view;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Toast;
-
 import com.alibaba.mobileim.YWAPI;
 import com.alibaba.mobileim.YWIMKit;
+import com.alibaba.mobileim.channel.event.IWxCallback;
+import com.alibaba.mobileim.contact.IYWContact;
 import com.alibaba.mobileim.gingko.model.tribe.YWTribeType;
 import com.alibaba.mobileim.tribe.IYWTribeService;
+import com.alibaba.mobileim.ui.contact.component.ComparableContact;
+import com.alibaba.mobileim.utility.IMNotificationUtils;
 import com.dhitoshi.refreshlayout.SmartRefreshLayout;
 import com.dhitoshi.refreshlayout.api.RefreshLayout;
 import com.dhitoshi.refreshlayout.listener.OnRefreshListener;
@@ -21,7 +22,6 @@ import com.dhitoshi.xfrs.huixiaobao.Interface.ItemClick;
 import com.dhitoshi.xfrs.huixiaobao.Interface.LoginCall;
 import com.dhitoshi.xfrs.huixiaobao.R;
 import com.dhitoshi.xfrs.huixiaobao.adapter.AddTribeNumberAdapter;
-import com.dhitoshi.xfrs.huixiaobao.adapter.ContactInfoAdapter;
 import com.dhitoshi.xfrs.huixiaobao.common.CommonObserver;
 import com.dhitoshi.xfrs.huixiaobao.common.MyDecoration;
 import com.dhitoshi.xfrs.huixiaobao.common.TribeConstants;
@@ -30,8 +30,8 @@ import com.dhitoshi.xfrs.huixiaobao.http.MyHttp;
 import com.dhitoshi.xfrs.huixiaobao.utils.LoginUtil;
 import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
 
+import java.util.ArrayList;
 import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -47,6 +47,7 @@ public class InviteTribeMember extends BaseView {
     private long mTribeId;
     private List<ChatContact> chatContacts;
     private AddTribeNumberAdapter adapter;
+    private  List<IYWContact> list;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,7 +59,6 @@ public class InviteTribeMember extends BaseView {
         mTribeId = getIntent().getLongExtra(TribeConstants.TRIBE_ID, 0);
         initTitle();
     }
-
     private void initTitle() {
         initBaseViews();
         setTitle("添加群成员");
@@ -74,6 +74,7 @@ public class InviteTribeMember extends BaseView {
                 GetUsers(token);
             }
         });
+        list=new ArrayList<>();
     }
     private void GetUsers(String token){
         final MyHttp http=MyHttp.getInstance();
@@ -88,6 +89,13 @@ public class InviteTribeMember extends BaseView {
                     adapter.addItemClickListener(new ItemClick<ChatContact>() {
                         @Override
                         public void onItemClick(View view, ChatContact chatContact, int position) {
+                            if(chatContact.isSelected()){
+                                remove(chatContact.getNick().isEmpty()?chatContact.getUserid():chatContact.getNick());
+                            }else{
+                                String showName=chatContact.getNick().isEmpty()?chatContact.getUserid():chatContact.getNick();
+                                ComparableContact contact=new ComparableContact(showName,chatContact.getUserid(),"","24607089");
+                                list.add(contact);
+                            }
                             chatContacts.get(position).setSelected(!chatContact.isSelected());
                             adapter.notifyDataSetChanged();
                         }
@@ -95,6 +103,13 @@ public class InviteTribeMember extends BaseView {
                     adapter.addCheckBoxClick(new CheckBoxBulkClick() {
                         @Override
                         public void check(boolean isChecked, String name, String idcard, int position) {
+                            if(isChecked){
+                                remove(name.isEmpty()?idcard:name);
+                            }else{
+                                String showName=name.isEmpty()?idcard:name;
+                                ComparableContact contact=new ComparableContact(showName,idcard,"","24607089");
+                                list.add(contact);
+                            }
                             chatContacts.get(position).setSelected(!isChecked);
                             adapter.notifyDataSetChanged();
                         }
@@ -118,38 +133,43 @@ public class InviteTribeMember extends BaseView {
             }
         }));
     }
+    private void remove(String name){
+        int size=list.size();
+        for (int i = 0; i < size; i++) {
+            if(list.get(i).getShowName().equals(name)){
+                list.remove(i);
+            }
+        }
+    }
     private void add() {
         final YWTribeType tribeType = mTribeService.getTribe(mTribeId).getTribeType();
-//        ContactsAdapter adapter = mFragment.getContactsAdapter();
-//        List<IYWContact> list = adapter.getSelectedList();
-//        if (list != null && list.size() > 0) {
-//            mTribeService.inviteMembers(mTribeId, list, new IWxCallback() {
-//                @Override
-//                public void onSuccess(Object... result) {
-//                    Integer retCode = (Integer) result[0];
-//                    if (retCode == 0) {
-//                        if (tribeType == YWTribeType.CHATTING_GROUP) {
-//                            IMNotificationUtils.getInstance().showToast(InviteTribeMember.this, "添加群成员成功！");
-//                        } else {
-//                            IMNotificationUtils.getInstance().showToast(InviteTribeMember.this, "群邀请发送成功！");
-//                        }
-//                        finish();
-//                    }
-//                }
-//
-//                @Override
-//                public void onError(int code, String info) {
-//                    IMNotificationUtils.getInstance().showToast(InviteTribeMember.this, "添加群成员失败，code = " + code + ", info = " + info);
-//                }
-//
-//                @Override
-//                public void onProgress(int progress) {
-//
-//                }
-//            });
-//        }
-    }
+        if (list != null && list.size() > 0) {
+            mTribeService.inviteMembers(mTribeId, list, new IWxCallback() {
+                @Override
+                public void onSuccess(Object... result) {
+                    Integer retCode = (Integer) result[0];
+                    if (retCode == 0) {
+                        if (tribeType == YWTribeType.CHATTING_GROUP) {
+                            IMNotificationUtils.getInstance().showToast(InviteTribeMember.this, "添加群成员成功！");
+                        } else {
+                            IMNotificationUtils.getInstance().showToast(InviteTribeMember.this, "群邀请发送成功！");
+                        }
+                        finish();
+                    }
+                }
 
+                @Override
+                public void onError(int code, String info) {
+                    IMNotificationUtils.getInstance().showToast(InviteTribeMember.this, "添加群成员失败，code = " + code + ", info = " + info);
+                }
+
+                @Override
+                public void onProgress(int progress) {
+
+                }
+            });
+        }
+    }
     @OnClick(R.id.right_text)
     public void onViewClicked() {
         add();

@@ -2,6 +2,7 @@ package com.dhitoshi.xfrs.huixiaobao.view;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -18,12 +19,17 @@ import com.dhitoshi.xfrs.huixiaobao.Event.QueryResultEvent;
 import com.dhitoshi.xfrs.huixiaobao.Interface.AddMeetingManage;
 import com.dhitoshi.xfrs.huixiaobao.Interface.DateCallBack;
 import com.dhitoshi.xfrs.huixiaobao.Interface.ItemClick;
+import com.dhitoshi.xfrs.huixiaobao.Interface.LoginCall;
 import com.dhitoshi.xfrs.huixiaobao.R;
 import com.dhitoshi.xfrs.huixiaobao.adapter.CommonAdapter;
+import com.dhitoshi.xfrs.huixiaobao.common.CommonObserver;
 import com.dhitoshi.xfrs.huixiaobao.common.SelectDateDialog;
 import com.dhitoshi.xfrs.huixiaobao.common.SelectDialog;
+import com.dhitoshi.xfrs.huixiaobao.http.HttpResult;
+import com.dhitoshi.xfrs.huixiaobao.http.MyHttp;
 import com.dhitoshi.xfrs.huixiaobao.presenter.AddMeetingPresenter;
 import com.dhitoshi.xfrs.huixiaobao.utils.ActivityManagerUtil;
+import com.dhitoshi.xfrs.huixiaobao.utils.LoginUtil;
 import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
 import org.greenrobot.eventbus.EventBus;
 import java.util.ArrayList;
@@ -64,6 +70,7 @@ public class AddMeeting extends BaseView implements AddMeetingManage.View {
     private ArrayList<BaseBean> salesmen;
     private int from=0;
     private Map<String,String> map;
+    private  LoadingDialog dialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -128,13 +135,25 @@ public class AddMeeting extends BaseView implements AddMeetingManage.View {
                 selectMeetDate();
                 break;
             case R.id.meet_type:
-                selectMeetType();
+                if(types==null){
+                    reListForMeeting(0);
+                }else{
+                    selectMeetType();
+                }
                 break;
             case R.id.meet_salesman:
-                selectMeetSalesMan();
+                if(types==null){
+                    reListForMeeting(1);
+                }else{
+                    selectMeetSalesMan();
+                }
                 break;
             case R.id.meet_clientType:
-                selectMeetClientType();
+                if(types==null){
+                    reListForMeeting(2);
+                }else{
+                    selectMeetClientType();
+                }
                 break;
         }
     }
@@ -146,34 +165,46 @@ public class AddMeeting extends BaseView implements AddMeetingManage.View {
             if(!createtime.isEmpty()){
                 map.put("createtime",createtime);
             }
-            if(!salesman.isEmpty()){
-                map.put("salesman",salesman);
-            }
             if(!body.isEmpty()){
                 map.put("body",body);
             }
-            if(!type.isEmpty()){
-                map.put("type",type);
-            }
-            if(!usertype.isEmpty()){
-                map.put("usertype",usertype);
-            }
+
             if(!attend.isEmpty()){
                 map.put("attend",attend);
             }
             if(!notes.isEmpty()){
                 map.put("notes",notes);
             }
-            LoadingDialog dialog = LoadingDialog.build(this).setLoadingTitle("提交中");
+            dialog = LoadingDialog.build(this).setLoadingTitle("提交中");
             dialog.show();
             String token= SharedPreferencesUtil.Obtain(this,"token","").toString();
             map.put("token",token);
             if(meetBean==null){
+                if(!type.isEmpty()){
+                    map.put("type",type);
+                }
+                if(!usertype.isEmpty()){
+                    map.put("usertype",usertype);
+                }
+                if(!salesman.isEmpty()){
+                    map.put("salesman",salesman);
+                }
                 map.put("userid",String.valueOf(userId));
                 addMeetingPresenter.addMeeting(map,dialog);
             }else {
                 map.put("id",String.valueOf(meetBean.getId()));
-                addMeetingPresenter.editMeeting(map,dialog);
+                if(!TextUtils.isEmpty(meetBean.getType())&&TextUtils.isEmpty(type)){
+                    reListForMeeting(3);
+                }else if(!TextUtils.isEmpty(meetBean.getSalesman())&&TextUtils.isEmpty(salesman)){
+                    reListForMeeting(3);
+                }else if(!TextUtils.isEmpty(meetBean.getUsertype())&&TextUtils.isEmpty(usertype)){
+                    reListForMeeting(3);
+                }else {
+                    map.put("type",type);
+                    map.put("usertype",usertype);
+                    map.put("salesman",salesman);
+                    addMeetingPresenter.editMeeting(map,dialog);
+                }
             }
         }
     }
@@ -250,6 +281,73 @@ public class AddMeeting extends BaseView implements AddMeetingManage.View {
         }
 
         finish();
+    }
+    private void reListForMeeting(final int location){
+        MyHttp http=MyHttp.getInstance();
+        String token=SharedPreferencesUtil.Obtain(this,"token","").toString();
+        http.send(http.getHttpService().getListForMeeting(token),new CommonObserver(new HttpResult<HttpBean<InfoAddMeetBean>>() {
+            @Override
+            public void OnSuccess(HttpBean<InfoAddMeetBean> httpBean) {
+                if(httpBean.getStatus().getCode()==200) {
+                    usertypes = httpBean.getData().getUsertype();
+                    types = httpBean.getData().getType();
+                    salesmen = (ArrayList<BaseBean>) httpBean.getData().getSalesman();
+                    if(meetBean!=null){
+                        for (int i = 0; i < usertypes.size(); i++) {
+                            if(usertypes.get(i).getName().equals(meetBean.getUsertype())){
+                                usertype=String.valueOf(usertypes.get(i).getId());
+                            }
+                        }
+                        for (int j = 0; j < types.size(); j++) {
+                            if(types.get(j).getName().equals(meetBean.getType())){
+                                type=String.valueOf(types.get(j).getId());
+                            }
+                        }
+                        for (int k = 0; k < salesmen.size(); k++) {
+                            if(salesmen.get(k).getName().equals(meetBean.getSalesman())){
+                                salesman=String.valueOf(salesmen.get(k).getId());
+                            }
+                        }
+                    }
+                    switch (location){
+                        case 0:
+                            selectMeetType();
+                            break;
+                        case 1:
+                            selectMeetSalesMan();
+                            break;
+                        case 2:
+                            selectMeetClientType();
+                            break;
+                        case 3:
+                            map.put("type",type);
+                            map.put("usertype",usertype);
+                            map.put("salesman",salesman);
+                            addMeetingPresenter.editMeeting(map,dialog);
+                            break;
+                    }
+                }else if(httpBean.getStatus().getCode()==600){
+                    LoginUtil.autoLogin(AddMeeting.this, new LoginCall() {
+                        @Override
+                        public void autoLogin(String token) {
+                            reListForMeeting(location);
+                        }
+                    });
+                }else{
+                    Toast.makeText(AddMeeting.this,httpBean.getStatus().getMsg(),Toast.LENGTH_SHORT).show();
+                    if(location==3&&dialog!=null){
+                        dialog.dismiss();
+                    }
+                }
+            }
+            @Override
+            public void OnFail(String msg) {
+                Toast.makeText(AddMeeting.this,msg,Toast.LENGTH_SHORT).show();
+                if(location==3&&dialog!=null){
+                    dialog.dismiss();
+                }
+            }
+        }));
     }
     @Override
     public void getListForMeeting(HttpBean<InfoAddMeetBean> httpBean) {

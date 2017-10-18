@@ -7,27 +7,38 @@
     android:orientation="vertical"
     >
     <include layout="@layout/toolbar"></include>
-    <com.dhitoshi.refreshlayout.SmartRefreshLayout
-        android:id="@+id/smartRefreshLayout"
+    <RelativeLayout
+        android:id="@+id/nonVideoLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:srlPrimaryColor="@color/colorPrimary"
-        app:srlAccentColor="@android:color/white"
-        app:srlEnableHeaderTranslationContent="true"
-        app:srlEnableLoadmore="true"
-        app:srlEnableAutoLoadmore="false"
-        app:srlHeaderHeight="50dp"
         >
-        <com.dhitoshi.refreshlayout.header.CircleHeader
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            />
-        <WebView
-            android:id="@+id/webView"
+        <com.dhitoshi.refreshlayout.SmartRefreshLayout
+            android:id="@+id/smartRefreshLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            app:srlPrimaryColor="@color/colorPrimary"
+            app:srlAccentColor="@android:color/white"
+            app:srlEnableHeaderTranslationContent="true"
+            app:srlEnableLoadmore="true"
+            app:srlEnableAutoLoadmore="false"
+            app:srlHeaderHeight="50dp"
             >
-        </WebView>
-    </com.dhitoshi.refreshlayout.SmartRefreshLayout>
-
+            <com.dhitoshi.refreshlayout.header.CircleHeader
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+            <com.dhitoshi.xfrs.huixiaobao.common.VideoEnabledWebView
+                android:id="@+id/webView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                >
+            </com.dhitoshi.xfrs.huixiaobao.common.VideoEnabledWebView>
+        </com.dhitoshi.refreshlayout.SmartRefreshLayout>
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/videoLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+    </RelativeLayout>
 </LinearLayout>

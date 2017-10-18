@@ -1,6 +1,8 @@
 package com.dhitoshi.xfrs.huixiaobao.view;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -16,12 +18,17 @@ import com.dhitoshi.xfrs.huixiaobao.Event.QueryResultEvent;
 import com.dhitoshi.xfrs.huixiaobao.Interface.AddGiftManage;
 import com.dhitoshi.xfrs.huixiaobao.Interface.DateCallBack;
 import com.dhitoshi.xfrs.huixiaobao.Interface.ItemClick;
+import com.dhitoshi.xfrs.huixiaobao.Interface.LoginCall;
 import com.dhitoshi.xfrs.huixiaobao.R;
 import com.dhitoshi.xfrs.huixiaobao.adapter.DialogAdapter;
+import com.dhitoshi.xfrs.huixiaobao.common.CommonObserver;
 import com.dhitoshi.xfrs.huixiaobao.common.SelectDateDialog;
 import com.dhitoshi.xfrs.huixiaobao.common.SelectDialog;
+import com.dhitoshi.xfrs.huixiaobao.http.HttpResult;
+import com.dhitoshi.xfrs.huixiaobao.http.MyHttp;
 import com.dhitoshi.xfrs.huixiaobao.presenter.AddGiftPresenter;
 import com.dhitoshi.xfrs.huixiaobao.utils.ActivityManagerUtil;
+import com.dhitoshi.xfrs.huixiaobao.utils.LoginUtil;
 import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
 
 import org.greenrobot.eventbus.EventBus;
@@ -61,6 +68,7 @@ public class AddGift extends BaseView implements AddGiftManage.View{
     private AddGiftPresenter addGiftPresenter;
     private Map<String,String> map;
     private int type=0;
+    private LoadingDialog dialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -116,13 +124,25 @@ public class AddGift extends BaseView implements AddGiftManage.View{
                 selectGiftDate();
                 break;
             case R.id.gift_name:
-                selectGiftName();
+                if(null==item){
+                    reListForGift(0);
+                }else{
+                    selectGiftName();
+                }
                 break;
             case R.id.gift_address:
-                selectGiftAddress();
+                if(null==addresses){
+                    reListForGift(1);
+                }else{
+                    selectGiftAddress();
+                }
                 break;
             case R.id.gift_salesman:
-                selectGiftSalesman();
+                if(null==salesmen){
+                    reListForGift(2);
+                }else{
+                    selectGiftSalesman();
+                }
                 break;
         }
     }
@@ -134,31 +154,43 @@ public class AddGift extends BaseView implements AddGiftManage.View{
             if(!createtime.isEmpty()){
                 map.put("createtime",createtime);
             }
-            if(!saleaddress.isEmpty()){
-                map.put("saleaddress",saleaddress);
-            }
-            if(!gift.isEmpty()){
-                map.put("gift",gift);
-            }
             if(!num.isEmpty()){
                 map.put("num",num);
-            }
-            if(!salesman.isEmpty()){
-                map.put("salesman",salesman);
             }
             if(!notes.isEmpty()){
                 map.put("notes",notes);
             }
-            LoadingDialog dialog = LoadingDialog.build(this).setLoadingTitle("提交中");
+            dialog = LoadingDialog.build(this).setLoadingTitle("提交中");
             dialog.show();
             String token= SharedPreferencesUtil.Obtain(this,"token","").toString();
             map.put("token",token);
             if(null==giftBean){
                 map.put("userid",String.valueOf(userId));
+                if(!saleaddress.isEmpty()){
+                    map.put("saleaddress",saleaddress);
+                }
+                if(!gift.isEmpty()){
+                    map.put("gift",gift);
+                }
+                if(!salesman.isEmpty()){
+                    map.put("salesman",salesman);
+                }
                 addGiftPresenter.addGift(map,dialog);
             }else{
                 map.put("id",String.valueOf(giftBean.getId()));
-                addGiftPresenter.editGift(map,dialog);
+                if(!TextUtils.isEmpty(giftBean.getGift())&&TextUtils.isEmpty(gift)){
+                    reListForGift(3);
+                }else if(!TextUtils.isEmpty(giftBean.getSaleaddress())&&TextUtils.isEmpty(saleaddress)){
+                    reListForGift(3);
+                }else if(!TextUtils.isEmpty(giftBean.getSalesman())&&TextUtils.isEmpty(salesman)){
+                    reListForGift(3);
+                }else{
+                    map.put("saleaddress",saleaddress);
+                    map.put("gift",gift);
+                    map.put("salesman",salesman);
+                    addGiftPresenter.editGift(map,dialog);
+                }
+
             }
         }
     }
@@ -223,6 +255,70 @@ public class AddGift extends BaseView implements AddGiftManage.View{
             EventBus.getDefault().post(new GiftEvent(1));
         }
         finish();
+    }
+    private void reListForGift(final int type){
+        MyHttp http=MyHttp.getInstance();
+        String token=SharedPreferencesUtil.Obtain(this,"token","").toString();
+        http.send(http.getHttpService().getListForGift(token),new CommonObserver(new HttpResult<HttpBean<InfoAddGiftBean>>() {
+            @Override
+            public void OnSuccess(HttpBean<InfoAddGiftBean> httpBean) {
+                if(httpBean.getStatus().getCode()==200){
+                    item= (ArrayList<GiftBean>) httpBean.getData().getGift();
+                    addresses=httpBean.getData().getSaleaddress();
+                    salesmen= (ArrayList<BaseBean>) httpBean.getData().getSalesman();
+                    if(giftBean!=null){
+                        for (int j = 0; j < addresses.size(); j++) {
+                            if(addresses.get(j).getName().equals(giftBean.getSaleaddress())){
+                                saleaddress=String.valueOf(addresses.get(j).getId());
+                            }
+                        }
+                        for (int k = 0; k < salesmen.size(); k++) {
+                            if(salesmen.get(k).getName().equals(giftBean.getSalesman())){
+                                salesman=String.valueOf(salesmen.get(k).getId());
+                            }
+                        }
+                    }
+                    switch (type){
+                        case 0:
+                            selectGiftName();
+                            break;
+                        case 1:
+                            selectGiftAddress();
+                            break;
+                        case 2:
+                            selectGiftSalesman();
+                            break;
+                        case 3:
+                            map.put("saleaddress",saleaddress);
+                            map.put("gift",gift);
+                            map.put("salesman",salesman);
+                            addGiftPresenter.editGift(map,dialog);
+                            break;
+
+                    }
+                }else if(httpBean.getStatus().getCode()==600){
+                    LoginUtil.autoLogin(AddGift.this, new LoginCall() {
+                        @Override
+                        public void autoLogin(String token) {
+                           reListForGift(type);
+                        }
+                    });
+                }else{
+                    Toast.makeText(AddGift.this,httpBean.getStatus().getMsg(),Toast.LENGTH_SHORT).show();
+                    if(type==3&&dialog!=null){
+                        dialog.dismiss();
+                    }
+                }
+            }
+
+            @Override
+            public void OnFail(String msg) {
+                Toast.makeText(AddGift.this,msg,Toast.LENGTH_SHORT).show();
+                if(type==3&&dialog!=null){
+                    dialog.dismiss();
+                }
+            }
+        }));
     }
     @Override
     public void getListForGift(HttpBean<InfoAddGiftBean> httpBean) {
