@@ -185,9 +185,15 @@ public class AddGift extends BaseView implements AddGiftManage.View{
                 }else if(!TextUtils.isEmpty(giftBean.getSalesman())&&TextUtils.isEmpty(salesman)){
                     reListForGift(3);
                 }else{
-                    map.put("saleaddress",saleaddress);
-                    map.put("gift",gift);
-                    map.put("salesman",salesman);
+                    if(!saleaddress.isEmpty()){
+                        map.put("saleaddress",saleaddress);
+                    }
+                    if(!gift.isEmpty()){
+                        map.put("gift",gift);
+                    }
+                    if(!salesman.isEmpty()){
+                        map.put("salesman",salesman);
+                    }
                     addGiftPresenter.editGift(map,dialog);
                 }
 
@@ -289,9 +295,15 @@ public class AddGift extends BaseView implements AddGiftManage.View{
                             selectGiftSalesman();
                             break;
                         case 3:
-                            map.put("saleaddress",saleaddress);
-                            map.put("gift",gift);
-                            map.put("salesman",salesman);
+                            if(!saleaddress.isEmpty()){
+                                map.put("saleaddress",saleaddress);
+                            }
+                            if(!gift.isEmpty()){
+                                map.put("gift",gift);
+                            }
+                            if(!salesman.isEmpty()){
+                                map.put("salesman",salesman);
+                            }
                             addGiftPresenter.editGift(map,dialog);
                             break;
 

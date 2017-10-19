@@ -137,65 +137,6 @@
                 android:layout_height="0.5dp"
                 android:layout_marginLeft="20dp"
                 android:background="#D9D9D9"></View>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                >
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:text="开通CRM"
-                    android:textColor="#666666"
-                    android:textSize="14dp"
-                    />
-                <CheckBox
-                    android:id="@+id/fast_crm"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/check"
-                    android:button="@null"
-                    android:layout_gravity="center_vertical"
-                    />
-            </LinearLayout>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_marginLeft="20dp"
-                android:background="#D9D9D9"></View>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                >
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:text="开通APP"
-                    android:textColor="#666666"
-                    android:textSize="14dp"
-                    />
-                <CheckBox
-                    android:id="@+id/fast_app"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/check"
-                    android:button="@null"
-                    android:layout_gravity="center_vertical"
-                    />
-            </LinearLayout>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_marginLeft="20dp"
-                android:background="#D9D9D9"></View>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

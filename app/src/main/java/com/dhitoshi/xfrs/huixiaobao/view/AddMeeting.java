@@ -200,9 +200,15 @@ public class AddMeeting extends BaseView implements AddMeetingManage.View {
                 }else if(!TextUtils.isEmpty(meetBean.getUsertype())&&TextUtils.isEmpty(usertype)){
                     reListForMeeting(3);
                 }else {
-                    map.put("type",type);
-                    map.put("usertype",usertype);
-                    map.put("salesman",salesman);
+                    if(!type.isEmpty()){
+                        map.put("type",type);
+                    }
+                    if(!usertype.isEmpty()){
+                        map.put("usertype",usertype);
+                    }
+                    if(!salesman.isEmpty()){
+                        map.put("salesman",salesman);
+                    }
                     addMeetingPresenter.editMeeting(map,dialog);
                 }
             }
@@ -320,9 +326,15 @@ public class AddMeeting extends BaseView implements AddMeetingManage.View {
                             selectMeetClientType();
                             break;
                         case 3:
-                            map.put("type",type);
-                            map.put("usertype",usertype);
-                            map.put("salesman",salesman);
+                            if(!type.isEmpty()){
+                                map.put("type",type);
+                            }
+                            if(!usertype.isEmpty()){
+                                map.put("usertype",usertype);
+                            }
+                            if(!salesman.isEmpty()){
+                                map.put("salesman",salesman);
+                            }
                             addMeetingPresenter.editMeeting(map,dialog);
                             break;
                     }

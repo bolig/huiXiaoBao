@@ -233,9 +233,15 @@ public class AddSpend extends BaseView implements AddSpendManage.View{
                    reListForSpending(3);
                }
                else{
-                   map.put("itemid",productId);
-                   map.put("buyaddress",addressId);
-                   map.put("salemanid",saleManId);
+                   if(!productId.isEmpty()){
+                       map.put("itemid",productId);
+                   }
+                   if(!addressId.isEmpty()){
+                       map.put("buyaddress",addressId);
+                   }
+                   if(!saleManId.isEmpty()){
+                       map.put("salemanid",saleManId);
+                   }
                    addSpendPresenter.editSpend(map,dialog);
                }
 
@@ -374,9 +380,15 @@ public class AddSpend extends BaseView implements AddSpendManage.View{
                             selectSaleMan();
                             break;
                         case 3:
-                            map.put("itemid",productId);
-                            map.put("buyaddress",addressId);
-                            map.put("salemanid",saleManId);
+                            if(!productId.isEmpty()){
+                                map.put("itemid",productId);
+                            }
+                            if(!addressId.isEmpty()){
+                                map.put("buyaddress",addressId);
+                            }
+                            if(!saleManId.isEmpty()){
+                                map.put("salemanid",saleManId);
+                            }
                             addSpendPresenter.editSpend(map,dialog);
                             break;
                     }

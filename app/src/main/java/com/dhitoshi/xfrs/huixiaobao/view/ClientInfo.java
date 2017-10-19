@@ -12,6 +12,8 @@ import com.dhitoshi.bottombar.BottomBar;
 import com.dhitoshi.bottombar.OnTabSelectListener;
 import com.dhitoshi.xfrs.huixiaobao.Bean.ClientBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.Menu;
+import com.dhitoshi.xfrs.huixiaobao.Event.ClientInfoEvent;
+import com.dhitoshi.xfrs.huixiaobao.Event.InfoEvent;
 import com.dhitoshi.xfrs.huixiaobao.Interface.MenuItemClick;
 import com.dhitoshi.xfrs.huixiaobao.R;
 import com.dhitoshi.xfrs.huixiaobao.adapter.ViewPagerAdapter;
@@ -24,6 +26,10 @@ import com.dhitoshi.xfrs.huixiaobao.fragment.Relation;
 import com.dhitoshi.xfrs.huixiaobao.fragment.Spending;
 import com.dhitoshi.xfrs.huixiaobao.fragment.Visit;
 import com.dhitoshi.xfrs.huixiaobao.utils.ActivityManagerUtil;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,6 +62,7 @@ public class ClientInfo extends BaseView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.client_info);
         ButterKnife.bind(this);
+        EventBus.getDefault().register(this);
         InitViews();
         initEvents();
         ActivityManagerUtil.addDestoryActivity(this,"ClientInfo");
@@ -64,6 +71,7 @@ public class ClientInfo extends BaseView {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        EventBus.getDefault().unregister(this);
         ActivityManagerUtil.destoryActivity("ClientInfo");
     }
 
@@ -179,6 +187,14 @@ public class ClientInfo extends BaseView {
                 it=new Intent(this,AddMeeting.class);
                 it.putExtra("id",id);
                 startActivity(it);
+                break;
+        }
+    }
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventMainThread(ClientInfoEvent event) {
+        switch (event.getState()) {
+            case 1:
+                clientBean = event.getClientBean();
                 break;
         }
     }

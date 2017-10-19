@@ -33,8 +33,8 @@
         android:layout_height="match_parent"
         android:layout_alignParentRight="true"
         android:layout_gravity="right"
-        android:padding="15dp"
-
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
         />
 </android.support.v7.widget.Toolbar>
 

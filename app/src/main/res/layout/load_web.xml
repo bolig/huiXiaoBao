@@ -2,38 +2,35 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_height="match_parent"
     android:orientation="vertical"
     >
-    <include layout="@layout/toolbar"></include>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+        <include layout="@layout/toolbar"></include>
+        <ProgressBar
+            android:id="@+id/progress"
+            android:layout_width="match_parent"
+            android:layout_height="4dp"
+            android:progressDrawable="@drawable/progress"
+            style="@android:style/Widget.ProgressBar.Horizontal"
+            />
+    </LinearLayout>
+
     <RelativeLayout
         android:id="@+id/nonVideoLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
-        <com.dhitoshi.refreshlayout.SmartRefreshLayout
-            android:id="@+id/smartRefreshLayout"
+        <com.dhitoshi.xfrs.huixiaobao.common.VideoEnabledWebView
+            android:id="@+id/webView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:srlPrimaryColor="@color/colorPrimary"
-            app:srlAccentColor="@android:color/white"
-            app:srlEnableHeaderTranslationContent="true"
-            app:srlEnableLoadmore="true"
-            app:srlEnableAutoLoadmore="false"
-            app:srlHeaderHeight="50dp"
             >
-            <com.dhitoshi.refreshlayout.header.CircleHeader
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                />
-            <com.dhitoshi.xfrs.huixiaobao.common.VideoEnabledWebView
-                android:id="@+id/webView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                >
-            </com.dhitoshi.xfrs.huixiaobao.common.VideoEnabledWebView>
-        </com.dhitoshi.refreshlayout.SmartRefreshLayout>
+        </com.dhitoshi.xfrs.huixiaobao.common.VideoEnabledWebView>
     </RelativeLayout>
     <RelativeLayout
         android:id="@+id/videoLayout"

@@ -1,5 +1,4 @@
 package com.dhitoshi.xfrs.huixiaobao.view;
-
 import android.content.Intent;
 import android.net.http.SslError;
 import android.os.Build;
@@ -13,55 +12,47 @@ import android.webkit.SslErrorHandler;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
-
-import com.dhitoshi.refreshlayout.SmartRefreshLayout;
-import com.dhitoshi.refreshlayout.api.RefreshLayout;
-import com.dhitoshi.refreshlayout.listener.OnRefreshListener;
 import com.dhitoshi.xfrs.huixiaobao.R;
 import com.dhitoshi.xfrs.huixiaobao.common.VideoEnabledWebChromeClient;
 import com.dhitoshi.xfrs.huixiaobao.common.VideoEnabledWebView;
-
+import com.dhitoshi.xfrs.huixiaobao.utils.ActivityManagerUtil;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class LoadWeb extends BaseView {
     @BindView(R.id.webView)
     VideoEnabledWebView webView;
-    @BindView(R.id.smartRefreshLayout)
-    SmartRefreshLayout smartRefreshLayout;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.nonVideoLayout)
     RelativeLayout nonVideoLayout;
     @BindView(R.id.videoLayout)
     RelativeLayout videoLayout;
+    @BindView(R.id.progress)
+    ProgressBar progress;
     private String url = "";
     private String title = "";
     private VideoEnabledWebChromeClient webChromeClient;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.load_web);
         ButterKnife.bind(this);
         initViews();
+        ActivityManagerUtil.addDestoryActivity(this, "LoadWeb");
     }
-
     private void initViews() {
         initBaseViews();
         Intent it = getIntent();
         url = it.getStringExtra("url");
-        smartRefreshLayout.autoRefresh();
-        smartRefreshLayout.setEnableLoadmore(false);
-        smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
-            @Override
-            public void onRefresh(RefreshLayout refreshlayout) {
-                webView.loadUrl(url);
-            }
-        });
+        webView.loadUrl(url);
         title = it.getStringExtra("title");
         setTitle(title);
+        setRightIcon(R.drawable.ic_refresh);
+        webView.getSettings().setDomStorageEnabled(true);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setUseWideViewPort(true);//关键点
         webView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
@@ -71,13 +62,18 @@ public class LoadWeb extends BaseView {
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
                 if (newProgress == 100) {
-                    smartRefreshLayout.finishRefresh();
+                    progress.setVisibility(View.GONE);
+                } else {
+                    if (progress.getVisibility() == View.GONE) {
+                        progress.setVisibility(View.VISIBLE);
+                    }
+                    progress.setProgress(newProgress);
                 }
                 super.onProgressChanged(view, newProgress);
             }
             @Override
             public void onReceivedTitle(WebView view, String title) {
-               setTitle(title);
+                setTitle(title);
             }
         };
         webChromeClient.setOnToggledFullscreen(new VideoEnabledWebChromeClient.ToggledFullscreenCallback() {
@@ -106,6 +102,11 @@ public class LoadWeb extends BaseView {
         });
         webView.setWebChromeClient(webChromeClient);
         webView.setWebViewClient(new MyWebViewClient());
+    }
+
+    @OnClick(R.id.right_icon)
+    public void onViewClicked() {
+        webView.reload();
     }
 
     private class MyWebViewClient extends WebViewClient {
@@ -140,10 +141,18 @@ public class LoadWeb extends BaseView {
         }
         return super.onOptionsItemSelected(item);
     }
-
+    @Override
+    public void onBackPressed() {
+        if (webView.canGoBack()) {
+            webView.goBack();
+        } else {
+            super.onBackPressed();
+        }
+    }
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        ActivityManagerUtil.destoryActivity("LoadWeb");
         if (webView != null) {
             webView.loadDataWithBaseURL(null, "", "text/html", "utf-8", null);
             webView.clearHistory();
@@ -151,6 +160,5 @@ public class LoadWeb extends BaseView {
             webView.destroy();
             webView = null;
         }
-
     }
 }

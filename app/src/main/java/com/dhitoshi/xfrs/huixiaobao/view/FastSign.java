@@ -43,16 +43,10 @@ public class FastSign extends BaseView implements FastSignManage.View{
     TextView fastArea;
     @BindView(R.id.fast_permission)
     TextView fastPermission;
-    @BindView(R.id.fast_crm)
-    CheckBox fastCrm;
-    @BindView(R.id.fast_app)
-    CheckBox fastApp;
     private String name;
     private String area;
     private String group;
     private String password;
-    private String CRM;
-    private String APP;
     private  String token;
     private Map<String, String> map;
     private ArrayList<UserRole> userRoles;
@@ -114,8 +108,8 @@ public class FastSign extends BaseView implements FastSignManage.View{
             }
             map.put("area", area);
             map.put("group", group);
-            map.put("CRM", CRM);
-            map.put("APP", APP);
+            map.put("CRM", "1");
+            map.put("APP", "1");
             token= SharedPreferencesUtil.Obtain(this,"tooken","").toString();
             map.put("token",token);
             LoadingDialog dialog = LoadingDialog.build(this).setLoadingTitle("提交中");
@@ -128,8 +122,6 @@ public class FastSign extends BaseView implements FastSignManage.View{
     private boolean juge() {
         name = userNames.getText().toString();
         password = fastPassword.getText().toString();
-        CRM = fastCrm.isChecked() ? "1" : "0";
-        APP = fastApp.isChecked() ? "1" : "0";
         if (name.isEmpty()) {
             Toast.makeText(this, "请填写用户名", Toast.LENGTH_SHORT).show();
             return false;

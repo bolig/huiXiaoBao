@@ -27,6 +27,7 @@ import com.dhitoshi.xfrs.huixiaobao.Bean.SexBean;
 import com.dhitoshi.xfrs.huixiaobao.Dialog.HeadPopup;
 import com.dhitoshi.xfrs.huixiaobao.Dialog.LoadingDialog;
 import com.dhitoshi.xfrs.huixiaobao.Event.ClientEvent;
+import com.dhitoshi.xfrs.huixiaobao.Event.ClientInfoEvent;
 import com.dhitoshi.xfrs.huixiaobao.Event.InfoEvent;
 import com.dhitoshi.xfrs.huixiaobao.Interface.AddClientManage;
 import com.dhitoshi.xfrs.huixiaobao.Interface.DateCallBack;
@@ -187,7 +188,7 @@ public class AddClient extends BaseView implements AddClientManage.View {
     private void initClientInfo() {
         name = clientBean.getName();
         clientName.setText(clientBean.getName());
-        sex = clientBean.getSex().equals("男") ? "1" : "0";
+        sex = clientBean.getSex().equals("男") ? "0" : "1";
         clientSex.setText(clientBean.getSex());
         clientSex.setTextColor(getResources().getColor(R.color.colorPrimary));
         birthday = clientBean.getBirthday();
@@ -252,6 +253,8 @@ public class AddClient extends BaseView implements AddClientManage.View {
     public void editClient(HttpBean<ClientBean> httpBean) {
         Toast.makeText(this, httpBean.getStatus().getMsg(), Toast.LENGTH_SHORT).show();
         EventBus.getDefault().post(new InfoEvent(1, httpBean.getData()));
+        EventBus.getDefault().post(new ClientInfoEvent(1, httpBean.getData()));
+        EventBus.getDefault().post(new ClientEvent(1));
         finish();
     }
     //获取添加客户所需列表
@@ -268,8 +271,9 @@ public class AddClient extends BaseView implements AddClientManage.View {
                         if (clientBean.getHobby().get(i).getHobbyname().equals(hobbys.get(j).getName())) {
                             if (hobby.isEmpty()) {
                                 hobby += String.valueOf(hobbys.get(j).getId());
+                            }else{
+                                hobby += "," + String.valueOf(hobbys.get(j).getId());
                             }
-                            hobby += "," + String.valueOf(hobbys.get(j).getId());
                         }
                     }
                 }
@@ -280,8 +284,10 @@ public class AddClient extends BaseView implements AddClientManage.View {
                         if (clientBean.getIll().get(i).getIllname().equals(ills.get(j).getName())) {
                             if (ill.isEmpty()) {
                                 ill += String.valueOf(ills.get(j).getId());
+                            }else{
+                                ill += "," + String.valueOf(ills.get(j).getId());
                             }
-                            ill += "," + String.valueOf(ills.get(j).getId());
+
                         }
                     }
                 }
@@ -391,10 +397,18 @@ public class AddClient extends BaseView implements AddClientManage.View {
                     reInfoForAdd(4);
                 }
                 else {
-                    map.put("hobby", hobby);
-                    map.put("ill", ill);
-                    map.put("position", workPosition);
-                    map.put("type", type);
+                    if (!hobby.isEmpty()) {
+                        map.put("hobby", hobby);
+                    }
+                    if (!ill.isEmpty()) {
+                        map.put("ill", ill);
+                    }
+                    if (!workPosition.isEmpty()) {
+                        map.put("position", workPosition);
+                    }
+                    if (!type.isEmpty()) {
+                        map.put("type", type);
+                    }
                     addClientPresenter.editClient(map, dialog);
                 }
 
@@ -794,8 +808,10 @@ public class AddClient extends BaseView implements AddClientManage.View {
                                     if (clientBean.getHobby().get(i).getHobbyname().equals(hobbys.get(j).getName())) {
                                         if (hobby.isEmpty()) {
                                             hobby += String.valueOf(hobbys.get(j).getId());
+                                        }else{
+                                            hobby += "," + String.valueOf(hobbys.get(j).getId());
                                         }
-                                        hobby += "," + String.valueOf(hobbys.get(j).getId());
+
                                     }
                                 }
                             }
@@ -806,8 +822,9 @@ public class AddClient extends BaseView implements AddClientManage.View {
                                     if (clientBean.getIll().get(i).getIllname().equals(ills.get(j).getName())) {
                                         if (ill.isEmpty()) {
                                             ill += String.valueOf(ills.get(j).getId());
+                                        }else{
+                                            ill += "," + String.valueOf(ills.get(j).getId());
                                         }
-                                        ill += "," + String.valueOf(ills.get(j).getId());
                                     }
                                 }
                             }
@@ -837,10 +854,18 @@ public class AddClient extends BaseView implements AddClientManage.View {
                             selectIll();
                             break;
                         case 4:
-                            map.put("hobby", hobby);
-                            map.put("ill", ill);
-                            map.put("position", workPosition);
-                            map.put("type", type);
+                            if (!hobby.isEmpty()) {
+                                map.put("hobby", hobby);
+                            }
+                            if (!ill.isEmpty()) {
+                                map.put("ill", ill);
+                            }
+                            if (!workPosition.isEmpty()) {
+                                map.put("position", workPosition);
+                            }
+                            if (!type.isEmpty()) {
+                                map.put("type", type);
+                            }
                             addClientPresenter.editClient(map, dialog);
                             break;
                     }

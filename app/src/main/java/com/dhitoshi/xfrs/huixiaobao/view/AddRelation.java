@@ -115,7 +115,7 @@ public class AddRelation extends BaseView implements AddRelationManage.View{
         name=relationBean.getName();
         relationName.setText(relationBean.getName());
         relationName.setTextColor(getResources().getColor(R.color.colorPrimary));
-        sex=relationBean.getSex().equals("男")?"1":"0";
+        sex=relationBean.getSex().equals("男")?"0":"1";
         relationSex.setText(relationBean.getSex());
         relationSex.setTextColor(getResources().getColor(R.color.colorPrimary));
         relationRelation.setText(relationBean.getRelation());
@@ -282,8 +282,12 @@ public class AddRelation extends BaseView implements AddRelationManage.View{
                 }else if(!TextUtils.isEmpty(relationBean.getPosition())&&TextUtils.isEmpty(workPosition)){
                     reListForRelation(2);
                 }else{
-                    map.put("relation",relation);
-                    map.put("position",workPosition);
+                    if(!relation.isEmpty()){
+                        map.put("relation",relation);
+                    }
+                    if(!workPosition.isEmpty()){
+                        map.put("position",workPosition);
+                    }
                     addRelationPresenter.editRelation(map,dialog);
                 }
 
@@ -355,8 +359,12 @@ public class AddRelation extends BaseView implements AddRelationManage.View{
                     }else if(type==1){
                         SelectPosition();
                     }else{
-                        map.put("relation",relation);
-                        map.put("position",workPosition);
+                        if(!relation.isEmpty()){
+                            map.put("relation",relation);
+                        }
+                        if(!workPosition.isEmpty()){
+                            map.put("position",workPosition);
+                        }
                         addRelationPresenter.editRelation(map,dialog);
                     }
                 }else if(httpBean.getStatus().getCode()==600){

@@ -227,8 +227,12 @@ public class AddVisit extends BaseView implements AddVisitManage.View{
                 }else if(!TextUtils.isEmpty(visitBean.getFeedtype())&&TextUtils.isEmpty(feedtype)){
                     reListForVisit(2);
                 }else {
-                    map.put("feedman",feedman);
-                    map.put("feedtype",feedtype);
+                    if(!feedman.isEmpty()){
+                        map.put("feedman",feedman);
+                    }
+                    if(!feedtype.isEmpty()){
+                        map.put("feedtype",feedtype);
+                    }
                     addVisitPresenter.editVisit(map,dialog);
                 }
 
@@ -291,8 +295,12 @@ public class AddVisit extends BaseView implements AddVisitManage.View{
                     }else if(type==1){
                         selectType();
                     }else{
-                        map.put("feedman",feedman);
-                        map.put("feedtype",feedtype);
+                        if(!feedman.isEmpty()){
+                            map.put("feedman",feedman);
+                        }
+                        if(!feedtype.isEmpty()){
+                            map.put("feedtype",feedtype);
+                        }
                         addVisitPresenter.editVisit(map,dialog);
                     }
                 }else if(httpBean.getStatus().getCode()==600){

@@ -154,6 +154,8 @@ public class Info extends Fragment {
         switch (event.getState()) {
             case 1:
                 clientBean = event.getClientBean();
+                hobby="";
+                ill="";
                 initViews();
                 break;
         }
