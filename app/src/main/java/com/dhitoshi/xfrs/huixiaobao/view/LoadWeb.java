@@ -21,7 +21,6 @@ import com.dhitoshi.xfrs.huixiaobao.utils.ActivityManagerUtil;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
 public class LoadWeb extends BaseView {
     @BindView(R.id.webView)
     VideoEnabledWebView webView;
@@ -103,30 +102,25 @@ public class LoadWeb extends BaseView {
         webView.setWebChromeClient(webChromeClient);
         webView.setWebViewClient(new MyWebViewClient());
     }
-
     @OnClick(R.id.right_icon)
     public void onViewClicked() {
         webView.reload();
     }
-
     private class MyWebViewClient extends WebViewClient {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             view.loadUrl(url);
             return true;
         }
-
         @Override
         public void onPageFinished(WebView view, String url) {
             super.onPageFinished(view, url);
         }
-
         @Override
         public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
             handler.proceed();  // 接受所有网站的证书
         }
     }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {

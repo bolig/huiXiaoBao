@@ -2,6 +2,7 @@ package com.dhitoshi.xfrs.huixiaobao.app;
 import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 import com.alibaba.mobileim.aop.Pointcut;
@@ -21,11 +22,8 @@ class ConversationListUICustom extends IMConversationListUI {
     }
     @Override
     public View getCustomEmptyViewInConversationUI(Context context) {
-        TextView textView = new TextView(context);
-        textView.setText("还没有会话哦，快去找人聊聊吧!");
-        textView.setGravity(Gravity.CENTER);
-        textView.setTextSize(18);
-        return textView;
+        View view= LayoutInflater.from(context).inflate(R.layout.empty,null);
+        return view;
     }
     @Override
     public int getTribeConversationHead(Fragment fragment, YWConversation conversation) {

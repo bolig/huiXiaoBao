@@ -38,7 +38,6 @@ import com.dhitoshi.xfrs.huixiaobao.http.MyHttp;
 import com.dhitoshi.xfrs.huixiaobao.utils.ActivityManagerUtil;
 import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
 import com.dhitoshi.xfrs.huixiaobao.utils.SystemBarTintManager;
-
 import java.util.ArrayList;
 import java.util.List;
 import butterknife.BindView;
@@ -47,7 +46,6 @@ import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.OnShowRationale;
 import permissions.dispatcher.PermissionRequest;
 import permissions.dispatcher.RuntimePermissions;
-
 @RuntimePermissions
 public class Theme extends AppCompatActivity {
     @BindView(R.id.theme_viewpager)
@@ -84,18 +82,20 @@ public class Theme extends AppCompatActivity {
                                 String activityName=getTopActivityName(Theme.this);
                                 activityName=activityName.substring(activityName.lastIndexOf(".")+1,activityName.length());
                                 Activity localActivity= ActivityManagerUtil.getCurrentActivity(activityName);
-                                UpdateDialog dialog=new UpdateDialog(localActivity);
-                                dialog.setUpdateTitle("慧销宝"+httpBean.getData().getName()+"更新啦");
-                                dialog.setContent(httpBean.getData().getDescription());
-                                dialog.setVersionName(httpBean.getData().getName());
-                                dialog.setUrl(httpBean.getData().getUrl());
-                                dialog.show();
-                                dialog.addUpdateClick(new UpdateClick() {
-                                    @Override
-                                    public void update(String apkUri, String versionName) {
-                                        ThemePermissionsDispatcher.updateWithCheck(Theme.this,apkUri,versionName);
-                                    }
-                                });
+                                if(localActivity!=null){
+                                    UpdateDialog dialog=new UpdateDialog(localActivity);
+                                    dialog.setUpdateTitle("慧销宝"+httpBean.getData().getName()+"更新啦");
+                                    dialog.setContent(httpBean.getData().getDescription());
+                                    dialog.setVersionName(httpBean.getData().getName());
+                                    dialog.setUrl(httpBean.getData().getUrl());
+                                    dialog.show();
+                                    dialog.addUpdateClick(new UpdateClick() {
+                                        @Override
+                                        public void update(String apkUri, String versionName) {
+                                            ThemePermissionsDispatcher.updateWithCheck(Theme.this,apkUri,versionName);
+                                        }
+                                    });
+                                }
                             }
                         };
                         handler.postDelayed(runnable,3000);
