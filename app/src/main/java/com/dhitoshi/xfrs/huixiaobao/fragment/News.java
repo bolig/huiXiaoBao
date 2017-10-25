@@ -1,5 +1,6 @@
 package com.dhitoshi.xfrs.huixiaobao.fragment;
 import android.content.Intent;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatImageView;
@@ -156,7 +157,18 @@ public class News extends Fragment {
         if (mPopupWindow == null) {
             mPopupWindow = new PopupWindow(view, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         }
+        mPopupWindow.setFocusable(true);
+        mPopupWindow.setOutsideTouchable(true);
+        mPopupWindow.setBackgroundDrawable(new BitmapDrawable());
         mPopupWindow.showAtLocation(v, Gravity.BOTTOM, 0, 0);
+        mPopupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                WindowManager.LayoutParams params=getActivity().getWindow().getAttributes();
+                params.alpha=1f;
+                getActivity().getWindow().setAttributes(params);
+            }
+        });
     }
     private void hidePopupWindow() {
         if (mPopupWindow != null) {
