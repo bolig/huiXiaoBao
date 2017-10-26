@@ -68,14 +68,14 @@ public class PopupArea {
         View shade=view.findViewById(R.id.shade);
         popupWindow = new PopupWindow(view, WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
         popupWindow.setAnimationStyle(R.style.anim_style);
-        popupWindow.setFocusable(true);
+        popupWindow.setFocusable(false);
         popupWindow.setOutsideTouchable(true);
         // 这个是为了点击“返回Back”也能使其消失，并且并不会影响你的背景
         popupWindow.setBackgroundDrawable(new ColorDrawable(0x40000000));
         shade.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                popupWindow.dismiss();
+                dismiss.dismiss();
             }
         });
         ok.setOnClickListener(new View.OnClickListener() {
@@ -124,12 +124,6 @@ public class PopupArea {
         } else {
             popupWindow.showAtLocation(parent, Gravity.NO_GRAVITY, 0,parent.getHeight()+location[1]);
         }
-        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
-            @Override
-            public void onDismiss() {
-                dismiss.dismiss();
-            }
-        });
     }
     public  void dismisss(){
         if(null!=popupWindow){

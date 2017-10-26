@@ -221,6 +221,14 @@ public class Client extends BaseFragment implements ClientManage.View, View.OnTo
                 roleText.setTextColor(Color.parseColor("#666666"));
                 screen_oldPosition = -1;
             } else {
+                if (screen_oldPosition == 1) {
+                    typeText.setCompoundDrawables(null, null, down, null);
+                    typeText.setTextColor(Color.parseColor("#666666"));
+                }
+                else if (screen_oldPosition == 2) {
+                    sortText.setCompoundDrawables(null, null, down, null);
+                    sortText.setTextColor(Color.parseColor("#666666"));
+                }
                 roleText.setCompoundDrawables(null, null, up, null);
                 roleText.setTextColor(Color.parseColor("#34B1FF"));
                 screen_oldPosition = 0;
@@ -234,6 +242,7 @@ public class Client extends BaseFragment implements ClientManage.View, View.OnTo
                         roleText.setCompoundDrawables(null, null, down, null);
                         roleText.setTextColor(Color.parseColor("#666666"));
                         screen_oldPosition = -1;
+                        popupArea.dismisss();
                     }
                 });
                 popupArea.addAreaClick(new AreaCallback() {
@@ -241,14 +250,21 @@ public class Client extends BaseFragment implements ClientManage.View, View.OnTo
                     public void getArea(String id, String areaName) {
                         area = id;
                         roleText.setText(areaName);
+                        roleText.setCompoundDrawables(null, null, down, null);
+                        roleText.setTextColor(Color.parseColor("#666666"));
+                        screen_oldPosition = -1;
                         smartRefreshLayout.autoRefresh();
                     }
                 });
             } else {
-                if (!popupArea.isShowing()) {
-                    popupArea.show();
-                } else {
-                    popupArea.dismisss();
+                if(0!=screen_oldPosition){
+                    popupScreen.dismisss();
+                }else {
+                    if (!popupArea.isShowing()) {
+                        popupArea.show();
+                    } else {
+                        popupArea.dismisss();
+                    }
                 }
             }
         }
@@ -272,6 +288,14 @@ public class Client extends BaseFragment implements ClientManage.View, View.OnTo
                     typeText.setTextColor(Color.parseColor("#666666"));
                     screen_oldPosition = -1;
                 } else {
+                    if (screen_oldPosition == 2) {
+                        sortText.setCompoundDrawables(null, null, down, null);
+                        sortText.setTextColor(Color.parseColor("#666666"));
+                    }
+                    else if (screen_oldPosition == 0) {
+                        roleText.setCompoundDrawables(null, null, down, null);
+                        roleText.setTextColor(Color.parseColor("#666666"));
+                    }
                     typeText.setCompoundDrawables(null, null, up, null);
                     typeText.setTextColor(Color.parseColor("#34B1FF"));
                     screen_oldPosition = 1;
@@ -282,6 +306,14 @@ public class Client extends BaseFragment implements ClientManage.View, View.OnTo
                     sortText.setTextColor(Color.parseColor("#666666"));
                     screen_oldPosition = -1;
                 } else {
+                    if (screen_oldPosition == 1) {
+                        typeText.setCompoundDrawables(null, null, down, null);
+                        typeText.setTextColor(Color.parseColor("#666666"));
+                    }
+                    else if (screen_oldPosition == 0) {
+                        roleText.setCompoundDrawables(null, null, down, null);
+                        roleText.setTextColor(Color.parseColor("#666666"));
+                    }
                     sortText.setCompoundDrawables(null, null, up, null);
                     sortText.setTextColor(Color.parseColor("#34B1FF"));
                     screen_oldPosition = 2;
@@ -301,16 +333,21 @@ public class Client extends BaseFragment implements ClientManage.View, View.OnTo
                         sortText.setCompoundDrawables(null, null, down, null);
                         sortText.setTextColor(Color.parseColor("#666666"));
                         screen_oldPosition = -1;
+                        popupScreen.dismisss();
                     }
                 });
             } else {
-                if (!popupScreen.isShowing()) {
-                    typeAdapter.setSelected(typeText.getText().toString());
-                    orderByAdapter.setSelected(sortText.getText().toString());
-                    popupScreen.setResource(type == 1 ? typeAdapter : orderByAdapter);
-                    popupScreen.show();
-                } else {
+                if(type!=screen_oldPosition){
                     popupScreen.dismisss();
+                }else{
+                    if (!popupScreen.isShowing()) {
+                        typeAdapter.setSelected(typeText.getText().toString());
+                        orderByAdapter.setSelected(sortText.getText().toString());
+                        popupScreen.setResource(type == 1 ? typeAdapter : orderByAdapter);
+                        popupScreen.show();
+                    } else {
+                        popupScreen.dismisss();
+                    }
                 }
             }
         }
@@ -419,6 +456,9 @@ public class Client extends BaseFragment implements ClientManage.View, View.OnTo
             @Override
             public void onItemClick(View view, CustomerTypeBean customerTypeBean, int position) {
                 popupScreen.dismisss();
+                typeText.setCompoundDrawables(null, null, down, null);
+                typeText.setTextColor(Color.parseColor("#666666"));
+                screen_oldPosition = -1;
                 typeText.setText(customerTypeBean.getName());
                 type = String.valueOf(customerTypeBean.getId());
                 smartRefreshLayout.autoRefresh();
@@ -430,6 +470,9 @@ public class Client extends BaseFragment implements ClientManage.View, View.OnTo
             @Override
             public void onItemClick(View view, OrderBean orderBean, int position) {
                 popupScreen.dismisss();
+                sortText.setCompoundDrawables(null, null, down, null);
+                sortText.setTextColor(Color.parseColor("#666666"));
+                screen_oldPosition = -1;
                 sortText.setText(orderBean.getName());
                 order = String.valueOf(orderBean.getId());
                 smartRefreshLayout.autoRefresh();
@@ -470,6 +513,9 @@ public class Client extends BaseFragment implements ClientManage.View, View.OnTo
                         @Override
                         public void onItemClick(View view, CustomerTypeBean customerTypeBean, int position) {
                             popupScreen.dismisss();
+                            typeText.setCompoundDrawables(null, null, down, null);
+                            typeText.setTextColor(Color.parseColor("#666666"));
+                            screen_oldPosition = -1;
                             typeText.setText(customerTypeBean.getName());
                             type = String.valueOf(customerTypeBean.getId());
                             smartRefreshLayout.autoRefresh();
@@ -481,6 +527,9 @@ public class Client extends BaseFragment implements ClientManage.View, View.OnTo
                         @Override
                         public void onItemClick(View view, OrderBean orderBean, int position) {
                             popupScreen.dismisss();
+                            sortText.setCompoundDrawables(null, null, down, null);
+                            sortText.setTextColor(Color.parseColor("#666666"));
+                            screen_oldPosition = -1;
                             sortText.setText(orderBean.getName());
                             order = String.valueOf(orderBean.getId());
                             smartRefreshLayout.autoRefresh();
