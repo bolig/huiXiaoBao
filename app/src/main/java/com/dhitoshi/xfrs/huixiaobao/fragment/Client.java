@@ -258,7 +258,7 @@ public class Client extends BaseFragment implements ClientManage.View, View.OnTo
                 });
             } else {
                 if(0!=screen_oldPosition){
-                    popupScreen.dismisss();
+                    popupArea.dismisss();
                 }else {
                     if (!popupArea.isShowing()) {
                         popupArea.show();
