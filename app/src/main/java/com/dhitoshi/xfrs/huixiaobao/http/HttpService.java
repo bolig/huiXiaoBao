@@ -174,6 +174,12 @@ public interface HttpService {
     //获取版本情况
     @GET("getVersion")
     Observable<HttpBean<VersionBean>> getVersion();
+
+
+
+
+
+
     //更改密码
     @POST("resetPassword")
     Observable<HttpBean<Object>> resetPassword(@QueryMap Map<String,String> map);

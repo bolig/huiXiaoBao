@@ -42,7 +42,6 @@ import java.util.List;
 public class TribeInfo extends BaseView {
     private static final int SET_MSG_REC_TYPE_REQUEST_CODE = 10000;
     private static final int EDIT_MY_TRIBE_NICK_REQUEST_CODE = 10001;
-    private static final int SET_TRIBE_CHECK_MODE_REQUEST_CODE = 10002;
     private YWIMKit mIMKit;
     private IYWTribeService mTribeService;
     private YWTribe mTribe;
@@ -53,29 +52,18 @@ public class TribeInfo extends BaseView {
     private IYWTribeChangeListener mTribeChangedListener;
     private Handler mHandler = new Handler(Looper.getMainLooper());
     private TextView mTribeName;
-    private TextView mTribeMaster;  //群主
     private TextView mTribeDesc;
     private TextView mMemberCount;
     private TextView mQuiteTribe;
     private TextView mMangeTribeMembers;
     private TextView mMyTribeNick;
     private RelativeLayout mMangeTribeMembersLayout;
-    private RelativeLayout mEditTribeInfoLayout;
     private RelativeLayout mEditMyTribeProfileLayout;
-    private RelativeLayout mTribeMsgRecTypeLayout;
-    private TextView mTribeMsgRecType;
-    private ImageView mAtMsgRecSwitch;
-    private RelativeLayout mTribeCheckModeLayout;
-    private TextView mTribeCheckMode;
-    private TextView mCLearTribeMsgs;
-    private int mMsgRecFlag = YWProfileSettingsConstants.TRIBE_MSG_REJ;
-    private int mAtMsgRecFlag = YWProfileSettingsConstants.TRIBE_AT_MSG_REC;
+
     private Handler uiHandler = new Handler(Looper.getMainLooper());
     private IYWConversationService conversationService;
     private YWConversation conversation;
     private YWTribeMember mLoginUser;
-    private RelativeLayout enableAtAllLayout;
-    private ImageView enableAtAllSwitch;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -103,7 +91,6 @@ public class TribeInfo extends BaseView {
         mTribeName = (TextView) findViewById(R.id.tribe_name);
         final TextView tribeId = (TextView) findViewById(R.id.tribe_id);
         tribeId.setText("群号 " + mTribeId);
-        mTribeMaster = (TextView) findViewById(R.id.tribe_master);
         mTribeDesc = (TextView) findViewById(R.id.tribe_description);
         mMemberCount = (TextView) findViewById(R.id.member_count);
         mMangeTribeMembers = (TextView) findViewById(R.id.manage_tribe_members);
@@ -116,16 +103,16 @@ public class TribeInfo extends BaseView {
                 startActivity(intent);
             }
         });
-        mEditTribeInfoLayout = (RelativeLayout) findViewById(R.id.edit_tribe_info_layout);
-        mEditTribeInfoLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(TribeInfo.this, EditTribeInfo.class);
-                intent.putExtra(TribeConstants.TRIBE_ID, mTribeId);
-                intent.putExtra(TribeConstants.TRIBE_OP, TribeConstants.TRIBE_EDIT);
-                startActivity(intent);
-            }
-        });
+//        mEditTribeInfoLayout = (RelativeLayout) findViewById(R.id.edit_tribe_info_layout);
+//        mEditTribeInfoLayout.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(TribeInfo.this, EditTribeInfo.class);
+//                intent.putExtra(TribeConstants.TRIBE_ID, mTribeId);
+//                intent.putExtra(TribeConstants.TRIBE_OP, TribeConstants.TRIBE_EDIT);
+//                startActivity(intent);
+//            }
+//        });
 
         mMyTribeNick = (TextView) findViewById(R.id.my_tribe_nick);
         mMyTribeNick.setText(getLoginUserTribeNick());
@@ -139,64 +126,8 @@ public class TribeInfo extends BaseView {
                 startActivityForResult(intent, EDIT_MY_TRIBE_NICK_REQUEST_CODE);
             }
         });
-        mTribeMsgRecTypeLayout = (RelativeLayout) findViewById(R.id.tribe_msg_rec_type_layout);
-        mTribeMsgRecType = (TextView) findViewById(R.id.tribe_msg_rec_type);
-        mAtMsgRecSwitch = (ImageView) findViewById(R.id.receive_tribe_at_msg);
-
-        mTribeMsgRecTypeLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = TribeMsgRecTypeSet.getTribeMsgRecTypeSetActivityIntent(TribeInfo.this, mMsgRecFlag);
-                startActivityForResult(intent, SET_MSG_REC_TYPE_REQUEST_CODE);
-            }
-        });
-
-        mAtMsgRecSwitch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mMsgRecFlag != YWProfileSettingsConstants.TRIBE_MSG_REJ) {
-                    IMNotificationUtils.getInstance().showToast("接收群消息时不能屏蔽群@消息哦!", TribeInfo.this);
-                } else {
-                    if (mAtMsgRecFlag == YWProfileSettingsConstants.TRIBE_AT_MSG_REC) {
-                        setMsgRecType(YWProfileSettingsConstants.TRIBE_MSG_REJ);
-                        setAtMsgRecType(YWProfileSettingsConstants.TRIBE_AT_MSG_REJ);
-                    } else {
-                        setAtMsgRecType(YWProfileSettingsConstants.TRIBE_AT_MSG_REC);
-                    }
-                }
-            }
-        });
-        mTribeCheckModeLayout = (RelativeLayout) findViewById(R.id.tribe_verify_layout);
-        mTribeCheckMode = (TextView) findViewById(R.id.tribe_verify);
-        mTribeCheckModeLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(TribeInfo.this, SetTribeCheckMode.class);
-                intent.putExtra(TribeConstants.TRIBE_CHECK_MODE, mTribe.getTribeCheckMode().type);
-                intent.putExtra(TribeConstants.TRIBE_ID, mTribe.getTribeId());
-                startActivityForResult(intent, SET_TRIBE_CHECK_MODE_REQUEST_CODE);
-            }
-        });
-        mCLearTribeMsgs = (TextView) findViewById(R.id.clear_tribe_msg);
-        mCLearTribeMsgs.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                clearMsgRecord();
-            }
-        });
         mQuiteTribe = (TextView) findViewById(R.id.quite_tribe);
-        enableAtAllLayout = (RelativeLayout) findViewById(R.id.config_at_all_for_normal_members_layout);
-        enableAtAllSwitch = (ImageView) findViewById(R.id.config_at_all_switch);
-        enableAtAllSwitch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(mTribe.isEnableAtAll()) {
-                    mTribeService.disableAtAllForNormalMembers(mTribeId, new ConfigAtAllCallback());
-                } else {
-                    mTribeService.enableAtAllForNormalMembers(mTribeId, new ConfigAtAllCallback());
-                }
-            }
-        });
+
     }
 
     /**
@@ -208,31 +139,9 @@ public class TribeInfo extends BaseView {
         if (mTribe == null) {
             mTribe = mTribeService.getTribe(mTribeId);
         }
-        if (mTribe != null) {
-            mMsgRecFlag = mTribe.getMsgRecType();
-            mAtMsgRecFlag = mTribe.getAtFlag();
-        }
-        if (mAtMsgRecFlag == YWProfileSettingsConstants.TRIBE_AT_MSG_REJ) {
-            mAtMsgRecSwitch.setImageResource(R.mipmap.off_switch);
-        } else {
-            mAtMsgRecSwitch.setImageResource(R.mipmap.on_switch);
-        }
-        setMsgRecTypeLabel(mMsgRecFlag);
     }
 
-    private void setMsgRecTypeLabel(int flag) {
-        switch (flag) {
-            case YWProfileSettingsConstants.TRIBE_MSG_REC:
-                mTribeMsgRecType.setText("接收并提醒");
-                break;
-            case YWProfileSettingsConstants.TRIBE_MSG_REC_NOT_REMIND:
-                mTribeMsgRecType.setText("接收不提醒");
-                break;
-            case YWProfileSettingsConstants.TRIBE_MSG_REJ:
-                mTribeMsgRecType.setText("不接收");
-                break;
-        }
-    }
+
     private void setMsgRecType(int msgRecType) {
         switch (msgRecType) {
             case YWProfileSettingsConstants.TRIBE_MSG_REC:
@@ -260,30 +169,15 @@ public class TribeInfo extends BaseView {
 
     private void updateView() {
         mTribeName.setText(mTribe.getTribeName());
-        IYWContact master = mTribe.getTribeMaster();
-        if (master != null) {
-            mTribeMaster.setText(master.getUserId());
-        }
+
         mTribeDesc.setText(mTribe.getTribeNotice());
         mMyTribeNick.setText(getLoginUserTribeNick());
         if (mTribeMemberCount > 0) {
             mMemberCount.setText(mTribeMemberCount + "人");
         }
-        mTribeCheckMode.setText(mTribe.getTribeCheckMode().description);
         initMsgRecFlags();
-        if(getLoginUserRole() == YWTribeRole.TRIBE_MANAGER.type || getLoginUserRole() == YWTribeRole.TRIBE_HOST.type) {
-            enableAtAllLayout.setVisibility(View.VISIBLE);
-            if(mTribe.isEnableAtAll()) {
-                enableAtAllSwitch.setImageResource(R.mipmap.on_switch);
-            } else {
-                enableAtAllSwitch.setImageResource(R.mipmap.off_switch);
-            }
-        } else {
-            enableAtAllLayout.setVisibility(View.GONE);
-        }
         if (getLoginUserRole() == YWTribeRole.TRIBE_HOST.type) {
             mMangeTribeMembers.setText("群成员管理");
-            mEditTribeInfoLayout.setVisibility(View.VISIBLE);
             mQuiteTribe.setText("解散群");
             mQuiteTribe.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -310,7 +204,6 @@ public class TribeInfo extends BaseView {
             });
         } else {
             mMangeTribeMembers.setText("群成员列表");
-            mEditTribeInfoLayout.setVisibility(View.GONE);
             mQuiteTribe.setText("退出群");
             mQuiteTribe.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -338,7 +231,6 @@ public class TribeInfo extends BaseView {
 
         if (!TextUtils.isEmpty(mTribeOp)) {
             mMangeTribeMembersLayout.setVisibility(View.GONE);
-            mEditTribeInfoLayout.setVisibility(View.GONE);
             mQuiteTribe.setText("加入群");
             mQuiteTribe.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -377,10 +269,8 @@ public class TribeInfo extends BaseView {
         } else {
             if (getLoginUserRole() == YWTribeRole.TRIBE_MEMBER.type) {
                 mMangeTribeMembersLayout.setVisibility(View.VISIBLE);
-                mEditTribeInfoLayout.setVisibility(View.GONE);
             } else {
                 mMangeTribeMembersLayout.setVisibility(View.VISIBLE);
-                mEditTribeInfoLayout.setVisibility(View.VISIBLE);
             }
         }
     }
@@ -654,9 +544,6 @@ public class TribeInfo extends BaseView {
             } else if (requestCode == SET_MSG_REC_TYPE_REQUEST_CODE) {
                 int flag = data.getIntExtra("Flag", mTribe.getMsgRecType());
                 setMsgRecType(flag);
-            } else if (requestCode == SET_TRIBE_CHECK_MODE_REQUEST_CODE){
-                final int checkMode = resultCode;
-                mTribeCheckMode.setText(YWTribeCheckMode.getEnumType(checkMode).description);
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
@@ -734,8 +621,6 @@ public class TribeInfo extends BaseView {
 
         @Override
         public void onSuccess(Object... result) {
-            mMsgRecFlag = mTribe.getMsgRecType();
-            mAtMsgRecFlag = mTribe.getAtFlag();
             uiHandler.post(new Runnable() {
                 @Override
                 public void run() {
@@ -743,57 +628,6 @@ public class TribeInfo extends BaseView {
                     IMNotificationUtils.getInstance().showToast("设置成功: atFlag:" + mTribe.getAtFlag() + " flag:" + mTribe.getMsgRecType(), TribeInfo.this);
                 }
             });
-        }
-    }
-
-    protected void clearMsgRecord() {
-        String message = "清空的消息再次漫游时不会出现。你确定要清空聊天消息吗？";
-        AlertDialog.Builder builder = new WxAlertDialog.Builder(TribeInfo.this);
-        builder.setMessage(message)
-                .setCancelable(false)
-                .setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        conversation.getMessageLoader().deleteAllMessage();
-                        IMNotificationUtils.getInstance().showToast("记录已清空", TribeInfo.this);
-                    }
-                })
-                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                                dialog.dismiss();
-                    }
-                });
-        builder.create().show();
-    }
-
-    private class ConfigAtAllCallback implements IWxCallback {
-        @Override
-        public void onSuccess(Object... result) {
-            uiHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    IMNotificationUtils.getInstance().showToast(TribeInfo.this, "设置成功：" + mTribe.isEnableAtAll());
-                    if(mTribe.isEnableAtAll()) {
-                        enableAtAllSwitch.setImageResource(R .mipmap.on_switch);
-                    } else {
-                        enableAtAllSwitch.setImageResource(R.mipmap.off_switch);
-                    }
-                }
-            });
-        }
-
-        @Override
-        public void onError(int code, String info) {
-            uiHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    IMNotificationUtils.getInstance().showToast(TribeInfo.this, "设置失败：" + mTribe.isEnableAtAll());
-                }
-            });
-        }
-
-        @Override
-        public void onProgress(int progress) {
-
         }
     }
 }

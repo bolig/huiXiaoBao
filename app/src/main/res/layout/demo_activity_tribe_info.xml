@@ -1,22 +1,21 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/aliwx_common_bg_white_color"
     android:fitsSystemWindows="true"
     >
     <include layout="@layout/toolbar"></include>
-    <include layout="@layout/aliwx_title_bar_shadow" />
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/toolbar">
+        android:layout_below="@+id/toolbar"
+        >
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            tools:context="com.taobao.openimui.tribe.TribeInfoActivity">
-
+            >
             <RelativeLayout
                 android:id="@+id/tribe_info"
                 android:layout_width="match_parent"
@@ -57,45 +56,6 @@
             </RelativeLayout>
 
             <LinearLayout
-                android:id="@+id/tribe_master_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/aliwx_white"
-                android:layout_below="@+id/tribe_info"
-                android:orientation="vertical">
-
-                <TextView
-                    style="@style/more_item_style"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginBottom="10dp"
-                    android:text="群主："/>
-
-                <TextView
-                    android:id="@+id/tribe_master"
-                    style="@style/more_item_style"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="20dp"
-                    android:textSize="@dimen/aliwx_font_second_grade"
-                    android:text="123" />
-            </LinearLayout>
-
-            <View
-                android:layout_width="fill_parent"
-                android:layout_height="1px"
-                android:layout_below="@+id/tribe_master_layout"
-                android:background="@color/more_line_color" />
-
-            <View
-                android:layout_width="fill_parent"
-                android:layout_height="1px"
-                android:layout_below="@+id/tribe_master_layout"
-                android:layout_marginTop="24dp"
-                android:background="@color/more_line_color" />
-
-            <LinearLayout
                 android:id="@+id/tribe_description_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -104,19 +64,24 @@
                 android:orientation="vertical">
 
                 <TextView
-                    style="@style/more_item_style"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:gravity="center_vertical"
+                    android:textColor="#ff333333"
+                    android:textSize="15sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
                     android:layout_marginBottom="10dp"
-                    android:text="群公告："/>
+                    android:text="群简介："/>
 
                 <TextView
                     android:id="@+id/tribe_description"
                     style="@style/more_item_style"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="20dp"
+                    android:layout_margin="10dp"
+                    android:padding="10dp"
                     android:textSize="@dimen/aliwx_font_second_grade"
                     android:text="群公告" />
             </LinearLayout>
@@ -145,7 +110,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="44dp"
                     android:layout_below="@+id/line1"
-                    android:text="我的群名片" />
+                    android:text="我的昵称" />
 
                 <TextView
                     android:id="@+id/my_tribe_nick"
@@ -178,7 +143,7 @@
                     style="@style/more_item_style"
                     android:layout_width="match_parent"
                     android:layout_height="44dp"
-                    android:text="管理群成员" />
+                    android:text="群成员管理" />
 
                 <TextView
                     android:id="@+id/member_count"
@@ -198,26 +163,6 @@
                     android:background="@color/more_line_color" />
             </RelativeLayout>
 
-            <RelativeLayout
-                android:id="@+id/edit_tribe_info_layout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:id="@+id/edit_tribe_info"
-                    style="@style/more_item_style"
-                    android:layout_width="match_parent"
-                    android:layout_height="44dp"
-                    android:drawableRight="@drawable/aliwx_arrow"
-                    android:text="编辑群信息" />
-
-                <View
-                    android:layout_width="fill_parent"
-                    android:layout_height="1px"
-                    android:layout_below="@+id/edit_tribe_info"
-                    android:background="@color/more_line_color" />
-            </RelativeLayout>
-
             <View
                 android:layout_width="fill_parent"
                 android:layout_height="1px"
@@ -228,28 +173,6 @@
                 android:layout_height="1px"
                 android:layout_marginTop="12dp"
                 android:background="@color/more_line_color" />
-
-            <RelativeLayout
-                android:id="@+id/personal_tribe_setting_layout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="gone">
-
-                <TextView
-                    android:id="@+id/personal_tribe_setting"
-                    style="@style/more_item_style"
-                    android:layout_width="match_parent"
-                    android:layout_height="44dp"
-                    android:drawableRight="@drawable/aliwx_arrow"
-                    android:visibility="visible"
-                    android:text="个人设置" />
-
-                <View
-                    android:layout_width="fill_parent"
-                    android:layout_height="1px"
-                    android:layout_below="@+id/personal_tribe_setting"
-                    android:background="@color/more_line_color" />
-            </RelativeLayout>
 
             <View
                 android:layout_width="fill_parent"
@@ -275,6 +198,7 @@
                     android:layout_height="match_parent"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="24dp"
+                    android:text="接收并推送"
                     android:gravity="center_vertical"/>
 
                 <View
@@ -303,7 +227,6 @@
                     android:text="接收群@消息"/>
 
                 <ImageView
-                    android:id="@+id/receive_tribe_at_msg"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_alignParentRight="true"
@@ -311,93 +234,6 @@
                     android:src="@mipmap/on_switch"/>
 
             </RelativeLayout>
-
-            <View
-                android:layout_width="fill_parent"
-                android:layout_height="1px"
-                android:background="@color/more_line_color" />
-
-            <RelativeLayout
-                android:id="@+id/tribe_verify_layout"
-                android:layout_width="match_parent"
-                android:layout_height="44dp"
-                android:background="@android:color/white">
-
-                <TextView
-                    style="@style/more_item_style"
-                    android:layout_width="match_parent"
-                    android:layout_height="44dp"
-                    android:drawableRight="@drawable/demo_edit_more"
-                    android:text="身份验证"/>
-
-                <TextView
-                    android:id="@+id/tribe_verify"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="24dp"
-                    android:gravity="center_vertical"/>
-
-                <View
-                    android:layout_width="fill_parent"
-                    android:layout_height="1px"
-                    android:layout_below="@id/tribe_verify"
-                    android:background="@color/more_line_color" />
-            </RelativeLayout>
-
-            <View
-                android:layout_width="fill_parent"
-                android:layout_height="1px"
-                android:background="@color/more_line_color" />
-
-            <RelativeLayout
-                android:id="@+id/config_at_all_for_normal_members_layout"
-                android:layout_width="match_parent"
-                android:layout_height="44dp"
-                android:layout_below="@id/tribe_msg_rec_type_layout"
-                android:layout_marginTop="12dp"
-                android:background="@android:color/white"
-                android:visibility="gone">
-                <View
-                    android:id="@+id/divider_line"
-                    android:layout_width="fill_parent"
-                    android:layout_height="1px"
-                    android:background="@color/more_line_color" />
-
-                <TextView
-                    style="@style/more_item_style"
-                    android:layout_below="@id/divider_line"
-                    android:layout_width="match_parent"
-                    android:layout_height="44dp"
-                    android:text="开放@all权限"/>
-
-                <ImageView
-                    android:id="@+id/config_at_all_switch"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="12dp"
-                    android:src="@mipmap/on_switch"/>
-
-            </RelativeLayout>
-
-            <View
-                android:layout_width="fill_parent"
-                android:layout_height="1px"
-                android:background="@color/more_line_color" />
-
-            <View
-                android:layout_width="fill_parent"
-                android:layout_height="1px"
-                android:layout_marginTop="12dp"
-                android:background="@color/more_line_color" />
-
-            <TextView
-                android:id="@+id/clear_tribe_msg"
-                android:layout_width="match_parent"
-                android:layout_height="44dp"
-                style="@style/more_item_style"
-                android:text="清空群聊天记录"/>
 
             <View
                 android:layout_width="fill_parent"

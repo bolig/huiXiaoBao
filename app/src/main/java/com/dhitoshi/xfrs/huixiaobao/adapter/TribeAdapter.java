@@ -82,10 +82,10 @@ public class TribeAdapter extends YWAsyncBaseAdapter {
         if (mList != null) {
             if (position == 0 && mList.getTribeList().size() > 0) {
                 holder.titleView.setVisibility(View.VISIBLE);
-                holder.titleView.setText("群");
+                holder.titleView.setText("企业内部群");
             } else if (position == mList.getTribeList().size()) {
                 holder.titleView.setVisibility(View.VISIBLE);
-                holder.titleView.setText("讨论组");
+                holder.titleView.setText("平台交流群");
             } else {
                 holder.titleView.setVisibility(View.GONE);
             }

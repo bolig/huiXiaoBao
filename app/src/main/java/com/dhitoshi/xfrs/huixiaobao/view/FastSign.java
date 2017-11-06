@@ -71,7 +71,6 @@ public class FastSign extends BaseView implements FastSignManage.View{
         setRightText("确定");
         setTitle("用户快速新增");
         fastSignPresenter=new FastSignPresenter(this,this);
-
         fastSignPresenter.getGroupLists(token);
     }
 

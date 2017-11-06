@@ -1,5 +1,4 @@
 package com.dhitoshi.xfrs.huixiaobao.fragment;
-
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;

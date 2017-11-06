@@ -77,9 +77,9 @@ public class EditTribeInfo extends BaseView {
         if (TextUtils.isEmpty(mTribeType)) {
             setTitle("编辑群信息");
         } else if (mTribeType.equals(YWTribeType.CHATTING_GROUP.toString())) {
-            setTitle("创建讨论组");
+            setTitle("创建平台交流群");
         } else if (mTribeType.equals(YWTribeType.CHATTING_TRIBE.toString())) {
-            setTitle("创建群组");
+            setTitle("创建企业内部群");
         }
         setRightText("提交");
     }

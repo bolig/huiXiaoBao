@@ -12,7 +12,7 @@
         android:layout_margin="@dimen/aliwx_column_up_unit_margin"
         android:gravity="center"
         android:textColor="@color/aliwx_common_text_color"
-        android:text="群组"/>
+        android:text="企业内部群"/>
 
     <View
         android:layout_width="fill_parent"
@@ -26,7 +26,7 @@
         android:layout_margin="@dimen/aliwx_column_up_unit_margin"
         android:gravity="center"
         android:textColor="@color/aliwx_common_text_color"
-        android:text="讨论组"/>
+        android:text="平台交流群"/>
     <View
         android:layout_width="fill_parent"
         android:layout_height="1px"
