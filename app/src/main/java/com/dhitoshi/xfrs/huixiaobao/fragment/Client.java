@@ -221,14 +221,6 @@ public class Client extends BaseFragment implements ClientManage.View, View.OnTo
                 roleText.setTextColor(Color.parseColor("#666666"));
                 screen_oldPosition = -1;
             } else {
-                if (screen_oldPosition == 1) {
-                    typeText.setCompoundDrawables(null, null, down, null);
-                    typeText.setTextColor(Color.parseColor("#666666"));
-                }
-                else if (screen_oldPosition == 2) {
-                    sortText.setCompoundDrawables(null, null, down, null);
-                    sortText.setTextColor(Color.parseColor("#666666"));
-                }
                 roleText.setCompoundDrawables(null, null, up, null);
                 roleText.setTextColor(Color.parseColor("#34B1FF"));
                 screen_oldPosition = 0;
@@ -257,14 +249,10 @@ public class Client extends BaseFragment implements ClientManage.View, View.OnTo
                     }
                 });
             } else {
-                if(0!=screen_oldPosition){
+                if (!popupArea.isShowing()) {
+                    popupArea.show();
+                } else {
                     popupArea.dismisss();
-                }else {
-                    if (!popupArea.isShowing()) {
-                        popupArea.show();
-                    } else {
-                        popupArea.dismisss();
-                    }
                 }
             }
         }
@@ -278,7 +266,7 @@ public class Client extends BaseFragment implements ClientManage.View, View.OnTo
         popupScreen(2);
     }
     //弹出筛选框(类型 排序)
-    private void popupScreen(final int type) {
+    private void popupScreen(final int type)  {
         if(null==typeAdapter||null==orderByAdapter){
             reSelectCustomer(type);
         }else{
@@ -288,14 +276,6 @@ public class Client extends BaseFragment implements ClientManage.View, View.OnTo
                     typeText.setTextColor(Color.parseColor("#666666"));
                     screen_oldPosition = -1;
                 } else {
-                    if (screen_oldPosition == 2) {
-                        sortText.setCompoundDrawables(null, null, down, null);
-                        sortText.setTextColor(Color.parseColor("#666666"));
-                    }
-                    else if (screen_oldPosition == 0) {
-                        roleText.setCompoundDrawables(null, null, down, null);
-                        roleText.setTextColor(Color.parseColor("#666666"));
-                    }
                     typeText.setCompoundDrawables(null, null, up, null);
                     typeText.setTextColor(Color.parseColor("#34B1FF"));
                     screen_oldPosition = 1;
@@ -306,14 +286,6 @@ public class Client extends BaseFragment implements ClientManage.View, View.OnTo
                     sortText.setTextColor(Color.parseColor("#666666"));
                     screen_oldPosition = -1;
                 } else {
-                    if (screen_oldPosition == 1) {
-                        typeText.setCompoundDrawables(null, null, down, null);
-                        typeText.setTextColor(Color.parseColor("#666666"));
-                    }
-                    else if (screen_oldPosition == 0) {
-                        roleText.setCompoundDrawables(null, null, down, null);
-                        roleText.setTextColor(Color.parseColor("#666666"));
-                    }
                     sortText.setCompoundDrawables(null, null, up, null);
                     sortText.setTextColor(Color.parseColor("#34B1FF"));
                     screen_oldPosition = 2;
@@ -337,17 +309,13 @@ public class Client extends BaseFragment implements ClientManage.View, View.OnTo
                     }
                 });
             } else {
-                if(type!=screen_oldPosition){
+                if (!popupScreen.isShowing()) {
+                    typeAdapter.setSelected(typeText.getText().toString());
+                    orderByAdapter.setSelected(sortText.getText().toString());
+                    popupScreen.setResource(type == 1 ? typeAdapter : orderByAdapter);
+                    popupScreen.show();
+                } else {
                     popupScreen.dismisss();
-                }else{
-                    if (!popupScreen.isShowing()) {
-                        typeAdapter.setSelected(typeText.getText().toString());
-                        orderByAdapter.setSelected(sortText.getText().toString());
-                        popupScreen.setResource(type == 1 ? typeAdapter : orderByAdapter);
-                        popupScreen.show();
-                    } else {
-                        popupScreen.dismisss();
-                    }
                 }
             }
         }

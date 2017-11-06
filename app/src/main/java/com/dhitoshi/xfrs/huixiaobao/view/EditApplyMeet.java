@@ -81,7 +81,7 @@ public class EditApplyMeet extends BaseView {
                 break;
         }
     }
-    @OnClick({R.id.more_info, R.id.to_enter, R.id.to_attend})
+    @OnClick({R.id.more_info, R.id.to_enter, R.id.to_attend,R.id.more_video})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.more_info:
@@ -96,6 +96,9 @@ public class EditApplyMeet extends BaseView {
                 }else {
                     startActivity(new Intent(this,AttendMeet.class).putExtra("start",ownMeetBean.getStarttime()).putExtra("days",ownMeetBean.getDays()).putExtra("id", String.valueOf(ownMeetBean.getId())));
                 }
+                break;
+            case R.id.more_video:
+
                 break;
         }
     }
