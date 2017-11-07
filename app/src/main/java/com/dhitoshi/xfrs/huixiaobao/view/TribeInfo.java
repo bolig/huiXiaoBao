@@ -59,10 +59,10 @@ public class TribeInfo extends BaseView {
     private TextView mMyTribeNick;
     private RelativeLayout mMangeTribeMembersLayout;
     private RelativeLayout mEditMyTribeProfileLayout;
-
+    private RelativeLayout mEditTribeInfoLayout;
     private Handler uiHandler = new Handler(Looper.getMainLooper());
     private IYWConversationService conversationService;
-    private YWConversation conversation;
+
     private YWTribeMember mLoginUser;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +74,6 @@ public class TribeInfo extends BaseView {
         String userId = SharedPreferencesUtil.Obtain(this, "account", "").toString().split("@")[0];
         mIMKit = YWAPI.getIMKitInstance(userId, "24607089");
         conversationService = mIMKit.getConversationService();
-        conversation = conversationService.getTribeConversation(mTribeId);
         mTribeService = mIMKit.getTribeService();
         initTribeChangedListener();
         initTribeInfo();
@@ -103,16 +102,16 @@ public class TribeInfo extends BaseView {
                 startActivity(intent);
             }
         });
-//        mEditTribeInfoLayout = (RelativeLayout) findViewById(R.id.edit_tribe_info_layout);
-//        mEditTribeInfoLayout.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(TribeInfo.this, EditTribeInfo.class);
-//                intent.putExtra(TribeConstants.TRIBE_ID, mTribeId);
-//                intent.putExtra(TribeConstants.TRIBE_OP, TribeConstants.TRIBE_EDIT);
-//                startActivity(intent);
-//            }
-//        });
+        mEditTribeInfoLayout = (RelativeLayout) findViewById(R.id.tribe_info);
+        mEditTribeInfoLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(TribeInfo.this, EditTribeInfo.class);
+                intent.putExtra(TribeConstants.TRIBE_ID, mTribeId);
+                intent.putExtra(TribeConstants.TRIBE_OP, TribeConstants.TRIBE_EDIT);
+                startActivity(intent);
+            }
+        });
 
         mMyTribeNick = (TextView) findViewById(R.id.my_tribe_nick);
         mMyTribeNick.setText(getLoginUserTribeNick());

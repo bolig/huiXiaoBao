@@ -282,4 +282,9 @@ public interface HttpService {
     //修改参会客户信息
     @POST("Meeting/customerEdit")
     Observable<HttpBean<Object>> editCustomer(@QueryMap Map<String,String> map);
+    //创建群组
+    @POST("index.php/tribe/add")
+    Observable<HttpBean<Object>> addTribe(@QueryMap Map<String,String> map);
+
+
 }
