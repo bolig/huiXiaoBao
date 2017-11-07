@@ -17,6 +17,9 @@ import com.alibaba.mobileim.gingko.model.tribe.YWTribeType;
 import com.alibaba.mobileim.tribe.IYWTribeService;
 import com.alibaba.mobileim.tribe.YWTribeCreationParam;
 import com.alibaba.mobileim.utility.IMNotificationUtils;
+import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
+import com.dhitoshi.xfrs.huixiaobao.Bean.TribeBean;
+import com.dhitoshi.xfrs.huixiaobao.Interface.TribeManage;
 import com.dhitoshi.xfrs.huixiaobao.R;
 import com.dhitoshi.xfrs.huixiaobao.common.TribeConstants;
 import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
@@ -27,7 +30,7 @@ import java.util.List;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class EditTribeInfo extends BaseView {
+public class EditTribeInfo extends BaseView implements TribeManage.View{
 
     private YWIMKit mIMKit;
     private IYWTribeService mTribeService;
@@ -150,6 +153,16 @@ public class EditTribeInfo extends BaseView {
         } else if (mTribeType.equals(YWTribeType.CHATTING_TRIBE.toString())) {
             createTribe(YWTribeType.CHATTING_TRIBE);
         }
+    }
+
+    @Override
+    public void addTribe(HttpBean<TribeBean> httpBean) {
+
+    }
+
+    @Override
+    public void editTribe(HttpBean<TribeBean> httpBean) {
+
     }
 
     class ModifyTribeInfoCallback implements IWxCallback {

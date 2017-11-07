@@ -28,6 +28,7 @@ import com.dhitoshi.xfrs.huixiaobao.Bean.RemindBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.ResourceBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.ScreenBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.SpendBean;
+import com.dhitoshi.xfrs.huixiaobao.Bean.TribeBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.UserBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.UserRole;
 import com.dhitoshi.xfrs.huixiaobao.Bean.VersionBean;
@@ -284,7 +285,11 @@ public interface HttpService {
     Observable<HttpBean<Object>> editCustomer(@QueryMap Map<String,String> map);
     //创建群组
     @POST("index.php/tribe/add")
-    Observable<HttpBean<Object>> addTribe(@QueryMap Map<String,String> map);
-
-
+    Observable<HttpBean<TribeBean>> addTribe(@QueryMap Map<String,String> map);
+    //编辑群组
+    @POST("index.php/tribe/edit")
+    Observable<HttpBean<TribeBean>> editTribe(@QueryMap Map<String,String> map);
+    //解散群组
+    @POST("index.php/tribe/dismiss")
+    Observable<HttpBean<TribeBean>> dismissTribe(@QueryMap Map<String,String> map);
 }
