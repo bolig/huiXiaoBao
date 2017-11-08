@@ -24,6 +24,7 @@ import com.dhitoshi.xfrs.huixiaobao.common.OnTabSelectListener;
 import com.dhitoshi.xfrs.huixiaobao.common.SegmentTabLayout;
 import com.dhitoshi.xfrs.huixiaobao.common.TribeConstants;
 import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
+import com.dhitoshi.xfrs.huixiaobao.view.EditTribe;
 import com.dhitoshi.xfrs.huixiaobao.view.EditTribeInfo;
 import com.dhitoshi.xfrs.huixiaobao.view.SearchTribe;
 
@@ -126,10 +127,9 @@ public class News extends Fragment {
             @Override
             public void onClick(View v) {
                 hidePopupWindow();
-                Intent intent = new Intent(getActivity(), EditTribeInfo.class);
-                intent.putExtra(TribeConstants.TRIBE_OP, TribeConstants.TRIBE_CREATE);
-                intent.putExtra(TribeConstants.TRIBE_TYPE, YWTribeType.CHATTING_TRIBE.toString());
-                startActivityForResult(intent, 0);
+                Intent intent = new Intent(getActivity(), EditTribe.class);
+                intent.putExtra("type", 0);
+                startActivity(intent);
             }
         });
         //创建讨论组
@@ -138,10 +138,9 @@ public class News extends Fragment {
             @Override
             public void onClick(View v) {
                 hidePopupWindow();
-                Intent intent = new Intent(getActivity(), EditTribeInfo.class);
-                intent.putExtra(TribeConstants.TRIBE_OP, TribeConstants.TRIBE_CREATE);
-                intent.putExtra(TribeConstants.TRIBE_TYPE, YWTribeType.CHATTING_GROUP.toString());
-                startActivityForResult(intent, 0);
+                Intent intent = new Intent(getActivity(), EditTribe.class);
+                intent.putExtra("type", 1);
+                startActivity(intent);
             }
         });
         TextView cancel = (TextView) view.findViewById(R.id.cancel_button);

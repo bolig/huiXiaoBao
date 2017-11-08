@@ -22,6 +22,7 @@ import com.dhitoshi.xfrs.huixiaobao.Bean.TribeBean;
 import com.dhitoshi.xfrs.huixiaobao.Interface.TribeManage;
 import com.dhitoshi.xfrs.huixiaobao.R;
 import com.dhitoshi.xfrs.huixiaobao.common.TribeConstants;
+import com.dhitoshi.xfrs.huixiaobao.presenter.TribePresenter;
 import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
 
 import java.util.ArrayList;
@@ -42,7 +43,7 @@ public class EditTribeInfo extends BaseView implements TribeManage.View{
     private String oldTribeName;
     private String oldTribeNotice;
     private ModifyTribeInfoCallback callback;
-
+    private TribePresenter tribePresenter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,8 +72,8 @@ public class EditTribeInfo extends BaseView implements TribeManage.View{
             mTribeName.setText(tribe.getTribeName());
             mTribeNotice.setText(tribe.getTribeNotice());
         }
-
         initTitle();
+        tribePresenter=new TribePresenter(this,this);
     }
 
     private void initTitle() {
@@ -154,12 +155,12 @@ public class EditTribeInfo extends BaseView implements TribeManage.View{
             createTribe(YWTribeType.CHATTING_TRIBE);
         }
     }
-
+    //创建群组
     @Override
     public void addTribe(HttpBean<TribeBean> httpBean) {
 
     }
-
+    //编辑群组资料
     @Override
     public void editTribe(HttpBean<TribeBean> httpBean) {
 

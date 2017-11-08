@@ -216,7 +216,8 @@
         <activity
             android:name=".view.LoadWeb"
             android:configChanges="keyboardHidden|orientation|screenSize" />
-        <activity android:name=".view.Document"></activity>
+        <activity android:name=".view.Document" />
+        <activity android:name=".view.EditTribe"></activity>
     </application>
 
 </manifest>

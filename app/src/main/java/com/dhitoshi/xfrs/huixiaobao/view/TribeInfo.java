@@ -106,9 +106,9 @@ public class TribeInfo extends BaseView {
         mEditTribeInfoLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(TribeInfo.this, EditTribeInfo.class);
-                intent.putExtra(TribeConstants.TRIBE_ID, mTribeId);
-                intent.putExtra(TribeConstants.TRIBE_OP, TribeConstants.TRIBE_EDIT);
+                Intent intent = new Intent(TribeInfo.this, EditTribe.class);
+                intent.putExtra("tribeId", mTribeId);
+                intent.putExtra("type", 2);
                 startActivity(intent);
             }
         });
