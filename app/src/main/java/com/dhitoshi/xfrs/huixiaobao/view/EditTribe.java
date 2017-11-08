@@ -66,7 +66,7 @@ public class EditTribe extends BaseView implements TribeManage.View {
     public void addTribe(HttpBean<TribeBean> httpBean) {
         Toast.makeText(this, httpBean.getStatus().getMsg(), Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(EditTribe.this, TribeInfo.class);
-        intent.putExtra(TribeConstants.TRIBE_ID, httpBean.getData().getId());
+        intent.putExtra(TribeConstants.TRIBE_ID, Long.parseLong(httpBean.getData().getTribe_number()));
         startActivity(intent);
         finish();
     }
@@ -100,7 +100,7 @@ public class EditTribe extends BaseView implements TribeManage.View {
         }
         map.put("name",name);
         map.put("description",description);
-        map.put("id",String.valueOf(tribeId));
+        map.put("tribe_id",String.valueOf(tribeId));
         if(null==dialog){
             dialog = LoadingDialog.build(this).setLoadingTitle("提交中");
         }
