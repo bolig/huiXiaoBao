@@ -9,7 +9,13 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
 import com.alibaba.mobileim.YWAPI;
+import com.alibaba.mobileim.YWIMCore;
 import com.alibaba.mobileim.YWIMKit;
+import com.alibaba.mobileim.conversation.YWConversation;
+import com.alibaba.mobileim.kit.chat.ChattingFragment;
+import com.alibaba.mobileim.lib.presenter.conversation.TribeConversation;
+import com.alibaba.mobileim.ui.atmessage.AtMsgListActivity;
+import com.alibaba.mobileim.utility.UserContext;
 import com.dhitoshi.xfrs.huixiaobao.R;
 import com.dhitoshi.xfrs.huixiaobao.common.TribeConstants;
 import com.dhitoshi.xfrs.huixiaobao.utils.ActivityManagerUtil;
@@ -24,6 +30,8 @@ public class TribeChat extends AppCompatActivity {
     private YWIMKit mIMKit;
     private long target;
     private String name = "";
+    private Intent intent;
+    private YWIMCore imCore;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +42,7 @@ public class TribeChat extends AppCompatActivity {
         name = getIntent().getStringExtra("name");
         String userId = SharedPreferencesUtil.Obtain(this, "account", "").toString().split("@")[0];
         mIMKit = YWAPI.getIMKitInstance(userId, "24607089");
+        imCore = mIMKit.getIMCore();
         FragmentManager fm = getSupportFragmentManager();
         title.setText(name);
         Fragment fragment = mIMKit.getTribeChattingFragment(target);
@@ -66,9 +75,19 @@ public class TribeChat extends AppCompatActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.at:
+                intent = new Intent(this, AtMsgList.class);
+                Bundle bundle = new Bundle();
+                YWConversation conversation = imCore.getConversationService().getTribeConversation(target);
+                bundle.putString("conversationId", conversation.getConversationId());
+                bundle.putLong("extraTribeId",target);
+                String userId = ((TribeConversation)conversation).mWxAccount.getLid();
+                bundle.putString("extraUserId", userId);
+                intent.putExtra("bundle", bundle);
+                intent.putExtra("user_context", new UserContext(userId,"24607089"));
+                startActivity(intent);
                 break;
             case R.id.tribeInfo:
-                Intent intent = new Intent(this, TribeInfo.class);
+                intent = new Intent(this, TribeInfo.class);
                 intent.putExtra(TribeConstants.TRIBE_ID, target);
                 startActivity(intent);
                 break;

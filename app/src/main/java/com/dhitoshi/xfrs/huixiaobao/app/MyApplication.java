@@ -29,6 +29,7 @@ public class MyApplication extends Application {
         AdviceBinder.bindAdvice(PointCutEnum.CONVERSATION_FRAGMENT_UI_POINTCUT, ConversationListUICustom.class);
         AdviceBinder.bindAdvice(PointCutEnum.CONVERSATION_FRAGMENT_OPERATION_POINTCUT, ConversationListOperationCustom.class);
         AdviceBinder.bindAdvice(PointCutEnum.NOTIFICATION_POINTCUT, HXBNotification.class);
+        CrashHandler.getInstance().init(this);
     }
     @Override
     protected void attachBaseContext(Context base) {

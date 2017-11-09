@@ -89,13 +89,11 @@ public class SearchTribe extends BaseView {
             }
         });
     }
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
         ActivityManagerUtil.destoryActivity("SearchTribe");
     }
-
     private void startTribeInfoActivity(String tribeOp) {
         Intent intent = new Intent(this, TribeInfo.class);
         intent.putExtra(TribeConstants.TRIBE_ID, mTribeId);
@@ -104,7 +102,6 @@ public class SearchTribe extends BaseView {
         }
         startActivity(intent);
     }
-
     private void initTitle() {
         initBaseViews();
         setTitle("搜索加入群");
