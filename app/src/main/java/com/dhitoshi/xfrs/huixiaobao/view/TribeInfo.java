@@ -48,7 +48,7 @@ public class TribeInfo extends BaseView {
     private long mTribeId;
     private String mTribeOp;
     private int mTribeMemberCount;
-    List<YWTribeMember> mList = new ArrayList<YWTribeMember>();
+    List<YWTribeMember> mList = new ArrayList<>();
     private IYWTribeChangeListener mTribeChangedListener;
     private Handler mHandler = new Handler(Looper.getMainLooper());
     private TextView mTribeName;
