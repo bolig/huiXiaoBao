@@ -173,16 +173,10 @@
             android:name=".view.TribeInfo"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".view.EditTribeInfo"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".view.TribeMembers"
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.EditMyTribeProfile"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".view.SetTribeCheckMode"
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.TribeChat"
@@ -216,7 +210,7 @@
         <activity android:name=".view.Document" />
         <activity android:name=".view.EditTribe" />
         <activity android:name=".view.AtMsgList" />
-        <activity android:name=".view.TribeInfoView"></activity>
+        <activity android:name=".view.TribeCompany"></activity>
     </application>
 
 </manifest>

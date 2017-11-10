@@ -1,20 +1,23 @@
 package com.dhitoshi.xfrs.huixiaobao.view;
+
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
+
 import com.alibaba.mobileim.YWAPI;
 import com.alibaba.mobileim.YWIMKit;
 import com.alibaba.mobileim.channel.WxThreadHandler;
 import com.alibaba.mobileim.channel.event.IWxCallback;
 import com.alibaba.mobileim.contact.IYWContact;
+import com.alibaba.mobileim.fundamental.widget.WxAlertDialog;
 import com.alibaba.mobileim.fundamental.widget.YWAlertDialog;
+import com.alibaba.mobileim.fundamental.widget.refreshlist.PullToRefreshBase;
 import com.alibaba.mobileim.fundamental.widget.refreshlist.PullToRefreshListView;
 import com.alibaba.mobileim.fundamental.widget.refreshlist.YWPullToRefreshBase;
 import com.alibaba.mobileim.gingko.model.tribe.YWTribe;
@@ -39,21 +42,18 @@ import java.util.List;
 import java.util.Set;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
 public class TribeMembers extends BaseView implements AdapterView.OnItemLongClickListener {
-
-    private static final int REQUEST_CODE = 1;
     private YWIMKit mIMKit;
     private IYWTribeService mTribeService;
     private IYWTribeChangeListener mTribeChangedListener;
     private long mTribeId;
     private PullToRefreshListView mPullToRefreshListView;
     private ListView mListView;
-    private List<YWTribeMember> mList = new ArrayList<YWTribeMember>();
+    private List<YWTribeMember> mList = new ArrayList<>();
     private YWTribeMember myself;
     private TribeMembersAdapter mAdapter;
-    private TextView mAddTribeMembers;
     private Handler mHandler = new Handler(Looper.getMainLooper());
+    private int tribeType=-1;
     /**
      * 用于筛选需要处理的ProfileUpdate通知
      */
@@ -67,10 +67,8 @@ public class TribeMembers extends BaseView implements AdapterView.OnItemLongClic
         ButterKnife.bind(this);
         init();
     }
-
     private void init() {
         initTitle();
-
         mPullToRefreshListView = (PullToRefreshListView) findViewById(R.id.tribe_members_list);
         mPullToRefreshListView.setMode(YWPullToRefreshBase.Mode.PULL_DOWN_TO_REFRESH);
         mPullToRefreshListView.setShowIndicator(false);
@@ -86,29 +84,16 @@ public class TribeMembers extends BaseView implements AdapterView.OnItemLongClic
         });
         mListView = mPullToRefreshListView.getRefreshableView();
         mListView.setOnItemLongClickListener(this);
-
         mList = new ArrayList<>();
         mAdapter = new TribeMembersAdapter(this, mList);
         mListView.setAdapter(mAdapter);
-
         Intent intent = getIntent();
         mTribeId = intent.getLongExtra(TribeConstants.TRIBE_ID, 0);
+        tribeType = intent.getIntExtra("tribeType", -1);
         String userId = SharedPreferencesUtil.Obtain(this, "account", "").toString().split("@")[0];
         mIMKit = YWAPI.getIMKitInstance(userId, "24607089");
         mTribeService = mIMKit.getTribeService();
-
         getTribeMembers();
-
-        mAddTribeMembers = (TextView) findViewById(R.id.add_tribe_members);
-        mAddTribeMembers.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(TribeMembers.this, InviteTribeMember.class);
-                intent.putExtra(TribeConstants.TRIBE_ID, mTribeId);
-                startActivity(intent);
-            }
-        });
-        mAddTribeMembers.setVisibility(View.GONE);
         initTribeChangedListener();
         initContactProfileUpdateListener();
         addListeners();
@@ -117,7 +102,7 @@ public class TribeMembers extends BaseView implements AdapterView.OnItemLongClic
     private void initTitle() {
         initBaseViews();
         setTitle("群成员列表");
-        setRightText("管理");
+        setRightText("添加");
     }
 
     private void initContactProfileUpdateListener() {
@@ -140,7 +125,7 @@ public class TribeMembers extends BaseView implements AdapterView.OnItemLongClic
 
     private void doPreloadContactProfiles(final List<YWTribeMember> members) {
         int length = Math.min(members.size(), IMConstants.PRELOAD_PROFILE_NUM);
-        ArrayList<IYWContact> contacts = new ArrayList<IYWContact>();
+        ArrayList<IYWContact> contacts = new ArrayList<>();
 
 
         for (int i = 0; i < length; i++) {
@@ -241,10 +226,7 @@ public class TribeMembers extends BaseView implements AdapterView.OnItemLongClic
             }
         });
     }
-
-    /**
-     * 刷新当前列表
-     */
+    //刷新当前列表
     private void refreshAdapter() {
         mHandler.post(new Runnable() {
             @Override
@@ -264,6 +246,7 @@ public class TribeMembers extends BaseView implements AdapterView.OnItemLongClic
 
     @Override
     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+        Log.e("TAG","点击长按");
         final int pos = position - mListView.getHeaderViewsCount();
         final YWTribeMember member = mList.get(pos);
         YWTribe tribe = mTribeService.getTribe(mTribeId);
@@ -311,12 +294,7 @@ public class TribeMembers extends BaseView implements AdapterView.OnItemLongClic
                 .create().show();
         return true;
     }
-
-    /**
-     * 判断当前登录用户在群组中的身份
-     *
-     * @return
-     */
+    //判断当前登录用户在群组中的身份
     private int getLoginUserRole() {
         int role = YWTribeMember.ROLE_NORMAL;
         String loginUser = mIMKit.getIMCore().getLoginUserId();
@@ -342,7 +320,6 @@ public class TribeMembers extends BaseView implements AdapterView.OnItemLongClic
         }
         return items;
     }
-
     private void initTribeChangedListener() {
         mTribeChangedListener = new IYWTribeChangeListener() {
             @Override
@@ -408,48 +385,21 @@ public class TribeMembers extends BaseView implements AdapterView.OnItemLongClic
             }
         };
     }
-
     private void openTribeListFragment() {
         EventBus.getDefault().post(new NewsEvent(1));
         ActivityManagerUtil.destoryActivity("SearchTribe");
         finish();
     }
-    private void inviteTribeMembers(List<IYWContact> contacts) {
-        mTribeService.inviteMembers(mTribeId, contacts, new IWxCallback() {
-            @Override
-            public void onSuccess(Object... result) {
-                Integer retCode = (Integer) result[0];
-                if (retCode == 0) {
-                    YWTribe tribe = mTribeService.getTribe(mTribeId);
-                    if (tribe.getTribeType() == YWTribeType.CHATTING_GROUP) {
-                        IMNotificationUtils.getInstance().showToast(TribeMembers.this, "添加群成员成功！");
-                    } else {
-                        IMNotificationUtils.getInstance().showToast(TribeMembers.this, "群邀请发送成功！");
-                    }
-                    finish();
-                }
-            }
-
-            @Override
-            public void onError(int code, String info) {
-                IMNotificationUtils.getInstance().showToast(TribeMembers.this, "添加群成员失败，code = " + code + ", info = " + info);
-            }
-
-            @Override
-            public void onProgress(int progress) {
-
-            }
-        });
-    }
-
     @OnClick(R.id.right_text)
     public void onViewClicked() {
-        YWTribe tribe = mTribeService.getTribe(mTribeId);
         //群的普通成员没有加入权限，所以因此加入view
         if (getLoginUserRole() == YWTribeMember.ROLE_NORMAL) {
             IMNotificationUtils.getInstance().showToast(TribeMembers.this, "您不是群主，没有管理权限~");
         } else {
-            mAddTribeMembers.setVisibility(View.VISIBLE);
+            Class c=tribeType==0?InviteTribeMember.class:InviteTribeMember.class;
+            Intent intent = new Intent(TribeMembers.this, c);
+            intent.putExtra(TribeConstants.TRIBE_ID, mTribeId);
+            startActivity(intent);
         }
     }
 }

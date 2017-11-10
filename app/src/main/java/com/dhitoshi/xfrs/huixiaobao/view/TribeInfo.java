@@ -87,9 +87,11 @@ public class TribeInfo extends BaseView {
         mMangeTribeMembersLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(TribeInfo.this, TribeMembers.class);
-                intent.putExtra(TribeConstants.TRIBE_ID, mTribeId);
-                startActivity(intent);
+            Intent intent = new Intent(TribeInfo.this, TribeMembers.class);
+            intent.putExtra(TribeConstants.TRIBE_ID, mTribeId);
+            intent.putExtra("tribeType",mTribe.getTribeType().type);
+            startActivity(intent);
+
             }
         });
         mEditTribeInfoLayout = (RelativeLayout) findViewById(R.id.tribe_info);

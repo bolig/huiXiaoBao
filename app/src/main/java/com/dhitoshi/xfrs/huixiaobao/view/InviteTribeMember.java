@@ -14,9 +14,12 @@ import com.alibaba.mobileim.ui.contact.component.ComparableContact;
 import com.alibaba.mobileim.utility.IMNotificationUtils;
 import com.dhitoshi.refreshlayout.SmartRefreshLayout;
 import com.dhitoshi.refreshlayout.api.RefreshLayout;
+import com.dhitoshi.refreshlayout.listener.OnLoadmoreListener;
 import com.dhitoshi.refreshlayout.listener.OnRefreshListener;
 import com.dhitoshi.xfrs.huixiaobao.Bean.ChatContact;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
+import com.dhitoshi.xfrs.huixiaobao.Bean.HttpPageBeanTwo;
+import com.dhitoshi.xfrs.huixiaobao.Bean.TribeMemberBean;
 import com.dhitoshi.xfrs.huixiaobao.Interface.CheckBoxBulkClick;
 import com.dhitoshi.xfrs.huixiaobao.Interface.ItemClick;
 import com.dhitoshi.xfrs.huixiaobao.Interface.LoginCall;
@@ -35,6 +38,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static com.alibaba.mobileim.channel.itf.mimsc.VideoMsg.FIELDS.size;
 import static com.dhitoshi.xfrs.huixiaobao.app.MyApplication.getContext;
 
 public class InviteTribeMember extends BaseView {
@@ -45,9 +50,10 @@ public class InviteTribeMember extends BaseView {
     private YWIMKit mIMKit;
     private IYWTribeService mTribeService;
     private long mTribeId;
-    private List<ChatContact> chatContacts;
+    private List<TribeMemberBean> tribeMembers;
     private AddTribeNumberAdapter adapter;
     private  List<IYWContact> list;
+    private int page=1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,32 +77,49 @@ public class InviteTribeMember extends BaseView {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
                 String token = SharedPreferencesUtil.Obtain(getContext(), "token", "").toString();
-                GetUsers(token);
+                String area_id = SharedPreferencesUtil.Obtain(getContext(), "areId", "").toString();
+                page=1;
+                GetUsers(token,area_id,String.valueOf(page));
+            }
+        });
+        smartRefreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
+            @Override
+            public void onLoadmore(RefreshLayout refreshlayout) {
+                String token = SharedPreferencesUtil.Obtain(getContext(), "token", "").toString();
+                String area_id = SharedPreferencesUtil.Obtain(getContext(), "areId", "").toString();
+                ++page;
+                GetUsers(token,area_id,String.valueOf(page));
             }
         });
         list=new ArrayList<>();
     }
-    private void GetUsers(String token){
+    private void GetUsers(String token, final String area_id, final String page){
         final MyHttp http=MyHttp.getInstance();
-        http.send(http.getHttpService().GetUsers(token),new CommonObserver(new HttpResult<HttpBean<List<ChatContact>>>() {
+        http.send(http.getHttpService().userList(token,area_id,page),new CommonObserver(new HttpResult<HttpPageBeanTwo<TribeMemberBean>>() {
             @Override
-            public void OnSuccess(HttpBean<List<ChatContact>> httpBean) {
+            public void OnSuccess(HttpPageBeanTwo<TribeMemberBean> httpBean) {
                 smartRefreshLayout.finishRefresh();
                 if(httpBean.getStatus().getCode()==200){
-                    chatContacts=httpBean.getData();
-                    adapter=new AddTribeNumberAdapter(chatContacts,getContext());
+                    tribeMembers=httpBean.getData();
+                    int size = tribeMembers.size();
+                    if (size >= 10 && size % 10 == 0) {
+                        smartRefreshLayout.setEnableLoadmore(true);
+                    } else {
+                        smartRefreshLayout.setEnableLoadmore(false);
+                    }
+                    adapter=new AddTribeNumberAdapter(tribeMembers,getContext());
                     recyclerView.setAdapter(adapter);
-                    adapter.addItemClickListener(new ItemClick<ChatContact>() {
+                    adapter.addItemClickListener(new ItemClick<TribeMemberBean>() {
                         @Override
-                        public void onItemClick(View view, ChatContact chatContact, int position) {
-                            if(chatContact.isSelected()){
-                                remove(chatContact.getNick().isEmpty()?chatContact.getUserid():chatContact.getNick());
+                        public void onItemClick(View view, TribeMemberBean tribeMemberBean, int position) {
+                            if(tribeMemberBean.isSelected()){
+                                remove(tribeMemberBean.getTruename().isEmpty()?tribeMemberBean.getName():tribeMemberBean.getName());
                             }else{
-                                String showName=chatContact.getNick().isEmpty()?chatContact.getUserid():chatContact.getNick();
-                                ComparableContact contact=new ComparableContact(showName,chatContact.getUserid(),"","24607089");
+                                String showName=tribeMemberBean.getTruename().isEmpty()?tribeMemberBean.getName():tribeMemberBean.getName();
+                                ComparableContact contact=new ComparableContact(showName,tribeMemberBean.getName(),"","24607089");
                                 list.add(contact);
                             }
-                            chatContacts.get(position).setSelected(!chatContact.isSelected());
+                            tribeMembers.get(position).setSelected(!tribeMemberBean.isSelected());
                             adapter.notifyDataSetChanged();
                         }
                     });
@@ -110,7 +133,7 @@ public class InviteTribeMember extends BaseView {
                                 ComparableContact contact=new ComparableContact(showName,idcard,"","24607089");
                                 list.add(contact);
                             }
-                            chatContacts.get(position).setSelected(!isChecked);
+                            tribeMembers.get(position).setSelected(!isChecked);
                             adapter.notifyDataSetChanged();
                         }
                     });
@@ -118,7 +141,7 @@ public class InviteTribeMember extends BaseView {
                     LoginUtil.autoLogin(getContext(), new LoginCall() {
                         @Override
                         public void autoLogin(String token) {
-                            GetUsers(token);
+                            GetUsers(token,area_id,page);
                         }
                     });
                 }
@@ -160,7 +183,7 @@ public class InviteTribeMember extends BaseView {
 
                 @Override
                 public void onError(int code, String info) {
-                    IMNotificationUtils.getInstance().showToast(InviteTribeMember.this, "添加群成员失败，code = " + code + ", info = " + info);
+                    IMNotificationUtils.getInstance().showToast(InviteTribeMember.this, "添加群成员失败");
                 }
 
                 @Override

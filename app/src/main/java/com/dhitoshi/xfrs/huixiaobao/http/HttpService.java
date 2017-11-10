@@ -30,6 +30,7 @@ import com.dhitoshi.xfrs.huixiaobao.Bean.ResourceBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.ScreenBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.SpendBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.TribeBean;
+import com.dhitoshi.xfrs.huixiaobao.Bean.TribeMemberBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.UserBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.UserRole;
 import com.dhitoshi.xfrs.huixiaobao.Bean.VersionBean;
@@ -295,8 +296,8 @@ public interface HttpService {
     Observable<HttpBean<TribeBean>> dismissTribe(@QueryMap Map<String,String> map);
     //公司列表
     @POST("index.php/area/companyList")
-    Observable<HttpPageBeanTwo<BaseBean>> getCompanyList(@QueryMap Map<String,String> map);
+    Observable<HttpPageBeanTwo<BaseBean>> getCompanyList(@Query("token") String token, @Query("page") String page);
     //根据公司获取用户列表
     @POST("index.php/user/list")
-    Observable<HttpPageBeanTwo<BaseBean>> getUserList(@QueryMap Map<String,String> map);
+    Observable<HttpPageBeanTwo<TribeMemberBean>> userList(@Query("token") String token, @Query("area_id") String area_id, @Query("page") String page);
 }
