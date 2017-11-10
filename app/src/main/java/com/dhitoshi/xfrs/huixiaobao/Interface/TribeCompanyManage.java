@@ -6,7 +6,7 @@ import com.dhitoshi.xfrs.huixiaobao.Bean.HttpPageBeanTwo;
  * Created by dxs on 2017/11/10.
  */
 
-public class TribeCompanyManage {
+public interface TribeCompanyManage {
     interface View{
         void getCompanyList(HttpPageBeanTwo<BaseBean> httpPageBeanTwo);
     }
