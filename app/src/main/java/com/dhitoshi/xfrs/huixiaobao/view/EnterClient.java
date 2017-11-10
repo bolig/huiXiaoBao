@@ -15,7 +15,7 @@ import com.dhitoshi.refreshlayout.listener.OnRefreshListener;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.MeetClientBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.Menu;
-import com.dhitoshi.xfrs.huixiaobao.Bean.PageBean;
+import com.dhitoshi.xfrs.huixiaobao.Bean.HttpPageBean;
 import com.dhitoshi.xfrs.huixiaobao.Event.MeetClientEvent;
 import com.dhitoshi.xfrs.huixiaobao.Interface.MeetClientManage;
 import com.dhitoshi.xfrs.huixiaobao.Interface.MenuItemClick;
@@ -170,7 +170,7 @@ public class EnterClient extends BaseView implements MeetClientManage.View {
         menus.add(menu);
     }
     @Override
-    public void getCustomerList(HttpBean<PageBean<MeetClientBean>> httpBean) {
+    public void getCustomerList(HttpBean<HttpPageBean<MeetClientBean>> httpBean) {
         meetClientBeens.addAll(httpBean.getData().getList());
         int size = meetClientBeens.size();
         if (size >= 10 && size % 10 == 0) {

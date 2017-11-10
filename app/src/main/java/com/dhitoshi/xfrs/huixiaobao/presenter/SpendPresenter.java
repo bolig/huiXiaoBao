@@ -3,7 +3,7 @@ import android.content.Context;
 
 import com.dhitoshi.refreshlayout.SmartRefreshLayout;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
-import com.dhitoshi.xfrs.huixiaobao.Bean.PageBean;
+import com.dhitoshi.xfrs.huixiaobao.Bean.HttpPageBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.SpendBean;
 import com.dhitoshi.xfrs.huixiaobao.Interface.Callback;
 import com.dhitoshi.xfrs.huixiaobao.Interface.SpendManage;
@@ -22,9 +22,9 @@ public class SpendPresenter implements SpendManage.Prsenter{
     }
     @Override
     public void getSpendingLists(String token,String userid, String page, SmartRefreshLayout smartRefreshLayout) {
-        spendModel.getSpendingLists(token,userid, page,smartRefreshLayout, new Callback<HttpBean<PageBean<SpendBean>>>() {
+        spendModel.getSpendingLists(token,userid, page,smartRefreshLayout, new Callback<HttpBean<HttpPageBean<SpendBean>>>() {
             @Override
-            public void get(HttpBean<PageBean<SpendBean>> httpBean) {
+            public void get(HttpBean<HttpPageBean<SpendBean>> httpBean) {
                 view.getSpendingLists(httpBean.getData());
             }
         });

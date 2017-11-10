@@ -4,7 +4,7 @@ import android.widget.Toast;
 
 import com.dhitoshi.refreshlayout.SmartRefreshLayout;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
-import com.dhitoshi.xfrs.huixiaobao.Bean.PageBean;
+import com.dhitoshi.xfrs.huixiaobao.Bean.HttpPageBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.ProductBean;
 import com.dhitoshi.xfrs.huixiaobao.Dialog.LoadingDialog;
 import com.dhitoshi.xfrs.huixiaobao.Interface.Callback;
@@ -15,7 +15,6 @@ import com.dhitoshi.xfrs.huixiaobao.http.HttpResult;
 import com.dhitoshi.xfrs.huixiaobao.http.MyHttp;
 import com.dhitoshi.xfrs.huixiaobao.utils.LoginUtil;
 
-import java.util.List;
 /**
  * Created by dxs on 2017/9/16.
  */
@@ -26,11 +25,11 @@ public class ProductModel implements ProductManage.Model{
         this.context = context;
     }
     @Override
-    public void getItem(String token,String page,final SmartRefreshLayout smartRefreshLayout, final Callback<HttpBean<PageBean<ProductBean>>> callback) {
+    public void getItem(String token,String page,final SmartRefreshLayout smartRefreshLayout, final Callback<HttpBean<HttpPageBean<ProductBean>>> callback) {
         MyHttp http=MyHttp.getInstance();
-        http.send(http.getHttpService().getItem(token,page),new CommonObserver(new HttpResult<HttpBean<PageBean<ProductBean>>>() {
+        http.send(http.getHttpService().getItem(token,page),new CommonObserver(new HttpResult<HttpBean<HttpPageBean<ProductBean>>>() {
             @Override
-            public void OnSuccess(HttpBean<PageBean<ProductBean>> httpBean) {
+            public void OnSuccess(HttpBean<HttpPageBean<ProductBean>> httpBean) {
                 smartRefreshLayout.finishRefresh();
                 if(httpBean.getStatus().getCode()==200){
                     callback.get(httpBean);

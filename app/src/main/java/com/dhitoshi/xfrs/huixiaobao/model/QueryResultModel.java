@@ -7,7 +7,7 @@ import com.dhitoshi.xfrs.huixiaobao.Bean.ClientBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.GiftBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.MeetBean;
-import com.dhitoshi.xfrs.huixiaobao.Bean.PageBean;
+import com.dhitoshi.xfrs.huixiaobao.Bean.HttpPageBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.QueryResultBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.RelationBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.SpendBean;
@@ -31,11 +31,11 @@ public class QueryResultModel implements QueryResultManage.Model{
         this.context = context;
     }
     @Override
-    public void getSearchOne(final Map<String, String> map, final SmartRefreshLayout smartRefreshLayout, final Callback<HttpBean<PageBean<QueryResultBean<ClientBean>>>> callback) {
+    public void getSearchOne(final Map<String, String> map, final SmartRefreshLayout smartRefreshLayout, final Callback<HttpBean<HttpPageBean<QueryResultBean<ClientBean>>>> callback) {
         final MyHttp http=MyHttp.getInstance();
-        http.send(http.getHttpService().getSearchOne(map),new CommonObserver(new HttpResult<HttpBean<PageBean<QueryResultBean<ClientBean>>>>() {
+        http.send(http.getHttpService().getSearchOne(map),new CommonObserver(new HttpResult<HttpBean<HttpPageBean<QueryResultBean<ClientBean>>>>() {
             @Override
-            public void OnSuccess(HttpBean<PageBean<QueryResultBean<ClientBean>>> httpBean) {
+            public void OnSuccess(HttpBean<HttpPageBean<QueryResultBean<ClientBean>>> httpBean) {
                 smartRefreshLayout.finishRefresh();
                 smartRefreshLayout.finishLoadmore();
                 if(httpBean.getStatus().getCode()==200){
@@ -61,11 +61,11 @@ public class QueryResultModel implements QueryResultManage.Model{
         }));
     }
     @Override
-    public void getSearchTwo(final Map<String, String> map, final SmartRefreshLayout smartRefreshLayout, final Callback<HttpBean<PageBean<QueryResultBean<SpendBean>>>> callback) {
+    public void getSearchTwo(final Map<String, String> map, final SmartRefreshLayout smartRefreshLayout, final Callback<HttpBean<HttpPageBean<QueryResultBean<SpendBean>>>> callback) {
         final MyHttp http=MyHttp.getInstance();
-        http.send(http.getHttpService().getSearchTwo(map),new CommonObserver(new HttpResult<HttpBean<PageBean<QueryResultBean<SpendBean>>>>() {
+        http.send(http.getHttpService().getSearchTwo(map),new CommonObserver(new HttpResult<HttpBean<HttpPageBean<QueryResultBean<SpendBean>>>>() {
             @Override
-            public void OnSuccess(HttpBean<PageBean<QueryResultBean<SpendBean>>> httpBean) {
+            public void OnSuccess(HttpBean<HttpPageBean<QueryResultBean<SpendBean>>> httpBean) {
                 smartRefreshLayout.finishRefresh();
                 smartRefreshLayout.finishLoadmore();
                 if(httpBean.getStatus().getCode()==200){
@@ -92,11 +92,11 @@ public class QueryResultModel implements QueryResultManage.Model{
         }));
     }
     @Override
-    public void getSearchThree(final Map<String, String> map, final SmartRefreshLayout smartRefreshLayout, final Callback<HttpBean<PageBean<QueryResultBean<VisitBean>>>> callback) {
+    public void getSearchThree(final Map<String, String> map, final SmartRefreshLayout smartRefreshLayout, final Callback<HttpBean<HttpPageBean<QueryResultBean<VisitBean>>>> callback) {
         final MyHttp http=MyHttp.getInstance();
-        http.send(http.getHttpService().getSearchThree(map),new CommonObserver(new HttpResult<HttpBean<PageBean<QueryResultBean<VisitBean>>>>() {
+        http.send(http.getHttpService().getSearchThree(map),new CommonObserver(new HttpResult<HttpBean<HttpPageBean<QueryResultBean<VisitBean>>>>() {
             @Override
-            public void OnSuccess(HttpBean<PageBean<QueryResultBean<VisitBean>>> httpBean) {
+            public void OnSuccess(HttpBean<HttpPageBean<QueryResultBean<VisitBean>>> httpBean) {
                 smartRefreshLayout.finishRefresh();
                 smartRefreshLayout.finishLoadmore();
                 if(httpBean.getStatus().getCode()==200){
@@ -123,11 +123,11 @@ public class QueryResultModel implements QueryResultManage.Model{
         }));
     }
     @Override
-    public void getSearchFour(final Map<String, String> map, final SmartRefreshLayout smartRefreshLayout, final Callback<HttpBean<PageBean<QueryResultBean<RelationBean>>>> callback) {
+    public void getSearchFour(final Map<String, String> map, final SmartRefreshLayout smartRefreshLayout, final Callback<HttpBean<HttpPageBean<QueryResultBean<RelationBean>>>> callback) {
         final MyHttp http=MyHttp.getInstance();
-        http.send(http.getHttpService().getSearchFour(map),new CommonObserver(new HttpResult<HttpBean<PageBean<QueryResultBean<RelationBean>>>>() {
+        http.send(http.getHttpService().getSearchFour(map),new CommonObserver(new HttpResult<HttpBean<HttpPageBean<QueryResultBean<RelationBean>>>>() {
             @Override
-            public void OnSuccess(HttpBean<PageBean<QueryResultBean<RelationBean>>> httpBean) {
+            public void OnSuccess(HttpBean<HttpPageBean<QueryResultBean<RelationBean>>> httpBean) {
                 smartRefreshLayout.finishRefresh();
                 smartRefreshLayout.finishLoadmore();
                 if(httpBean.getStatus().getCode()==200){
@@ -154,11 +154,11 @@ public class QueryResultModel implements QueryResultManage.Model{
         }));
     }
     @Override
-    public void getSearchFive(final Map<String, String> map, final SmartRefreshLayout smartRefreshLayout, final Callback<HttpBean<PageBean<QueryResultBean<GiftBean>>>> callback) {
+    public void getSearchFive(final Map<String, String> map, final SmartRefreshLayout smartRefreshLayout, final Callback<HttpBean<HttpPageBean<QueryResultBean<GiftBean>>>> callback) {
         final MyHttp http=MyHttp.getInstance();
-        http.send(http.getHttpService().getSearchFive(map),new CommonObserver(new HttpResult<HttpBean<PageBean<QueryResultBean<GiftBean>>>>() {
+        http.send(http.getHttpService().getSearchFive(map),new CommonObserver(new HttpResult<HttpBean<HttpPageBean<QueryResultBean<GiftBean>>>>() {
             @Override
-            public void OnSuccess(HttpBean<PageBean<QueryResultBean<GiftBean>>> httpBean) {
+            public void OnSuccess(HttpBean<HttpPageBean<QueryResultBean<GiftBean>>> httpBean) {
                 smartRefreshLayout.finishRefresh();
                 smartRefreshLayout.finishLoadmore();
                 if(httpBean.getStatus().getCode()==200){
@@ -185,11 +185,11 @@ public class QueryResultModel implements QueryResultManage.Model{
         }));
     }
     @Override
-    public void getSearchSix(final Map<String, String> map, final SmartRefreshLayout smartRefreshLayout, final Callback<HttpBean<PageBean<QueryResultBean<MeetBean>>>> callback) {
+    public void getSearchSix(final Map<String, String> map, final SmartRefreshLayout smartRefreshLayout, final Callback<HttpBean<HttpPageBean<QueryResultBean<MeetBean>>>> callback) {
         final MyHttp http=MyHttp.getInstance();
-        http.send(http.getHttpService().getSearchSix(map),new CommonObserver(new HttpResult<HttpBean<PageBean<QueryResultBean<MeetBean>>>>() {
+        http.send(http.getHttpService().getSearchSix(map),new CommonObserver(new HttpResult<HttpBean<HttpPageBean<QueryResultBean<MeetBean>>>>() {
             @Override
-            public void OnSuccess(HttpBean<PageBean<QueryResultBean<MeetBean>>> httpBean) {
+            public void OnSuccess(HttpBean<HttpPageBean<QueryResultBean<MeetBean>>> httpBean) {
                 smartRefreshLayout.finishRefresh();
                 smartRefreshLayout.finishLoadmore();
                 if(httpBean.getStatus().getCode()==200){

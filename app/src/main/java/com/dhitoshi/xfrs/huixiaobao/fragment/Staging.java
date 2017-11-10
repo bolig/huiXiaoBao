@@ -13,18 +13,15 @@ import com.dhitoshi.refreshlayout.SmartRefreshLayout;
 import com.dhitoshi.refreshlayout.api.RefreshLayout;
 import com.dhitoshi.refreshlayout.listener.OnLoadmoreListener;
 import com.dhitoshi.refreshlayout.listener.OnRefreshListener;
-import com.dhitoshi.xfrs.huixiaobao.Bean.ApplyMeetBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.OwnMeetBean;
-import com.dhitoshi.xfrs.huixiaobao.Bean.PageBean;
+import com.dhitoshi.xfrs.huixiaobao.Bean.HttpPageBean;
 import com.dhitoshi.xfrs.huixiaobao.Interface.ItemClick;
 import com.dhitoshi.xfrs.huixiaobao.Interface.StagingManage;
 import com.dhitoshi.xfrs.huixiaobao.R;
-import com.dhitoshi.xfrs.huixiaobao.adapter.ApplyAdapter;
 import com.dhitoshi.xfrs.huixiaobao.adapter.OwnMeetAdapter;
 import com.dhitoshi.xfrs.huixiaobao.presenter.StagingPresenter;
 import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
-import com.dhitoshi.xfrs.huixiaobao.view.ApplyMeetingInfo;
 import com.dhitoshi.xfrs.huixiaobao.view.EditApplyMeet;
 
 import java.util.ArrayList;
@@ -96,7 +93,7 @@ public class Staging extends BaseFragment implements StagingManage.View {
     }
 
     @Override
-    public void getListForNow(HttpBean<PageBean<OwnMeetBean>> httpBean) {
+    public void getListForNow(HttpBean<HttpPageBean<OwnMeetBean>> httpBean) {
         ownMeetBeens.addAll(httpBean.getData().getList());
         int size = ownMeetBeens.size();
         if (size >= 10 && size % 10 == 0) {

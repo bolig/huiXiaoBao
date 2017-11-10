@@ -38,8 +38,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
-
-import static com.dhitoshi.xfrs.huixiaobao.R.id.smartRefreshLayout;
 //消息页面
 public class News extends Fragment {
     @BindView(R.id.segement)
@@ -182,6 +180,9 @@ public class News extends Fragment {
         switch (event.getState()) {
             case 1:
                 newsViewpager.setCurrentItem(2);
+                segement.setCurrentTab(2);
+                groupSearch.setVisibility(View.VISIBLE);
+                groupAdd.setVisibility(View.VISIBLE);
                 break;
         }
     }

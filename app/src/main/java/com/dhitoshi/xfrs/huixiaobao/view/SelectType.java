@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -15,7 +14,7 @@ import com.dhitoshi.refreshlayout.listener.OnLoadmoreListener;
 import com.dhitoshi.refreshlayout.listener.OnRefreshListener;
 import com.dhitoshi.xfrs.huixiaobao.Bean.BaseBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
-import com.dhitoshi.xfrs.huixiaobao.Bean.PageBean;
+import com.dhitoshi.xfrs.huixiaobao.Bean.HttpPageBean;
 import com.dhitoshi.xfrs.huixiaobao.Interface.CheckBoxClick;
 import com.dhitoshi.xfrs.huixiaobao.Interface.ItemClick;
 import com.dhitoshi.xfrs.huixiaobao.R;
@@ -89,9 +88,9 @@ public class SelectType extends BaseView {
     private void getItemType(int page) {
         MyHttp http = MyHttp.getInstance();
         String token= SharedPreferencesUtil.Obtain(this,"token","").toString();
-        http.send(http.getHttpService().getItemType(token,String.valueOf(page)), new CommonObserver(new HttpResult<HttpBean<PageBean<BaseBean>>>() {
+        http.send(http.getHttpService().getItemType(token,String.valueOf(page)), new CommonObserver(new HttpResult<HttpBean<HttpPageBean<BaseBean>>>() {
             @Override
-            public void OnSuccess(HttpBean<PageBean<BaseBean>> httpBean) {
+            public void OnSuccess(HttpBean<HttpPageBean<BaseBean>> httpBean) {
                 smartRefreshLayout.finishRefresh();
                 if (httpBean.getStatus().getCode() == 200) {
                     initData(httpBean.getData().getList());

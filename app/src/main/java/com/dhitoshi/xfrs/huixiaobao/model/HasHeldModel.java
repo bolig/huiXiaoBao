@@ -5,11 +5,10 @@ import android.widget.Toast;
 import com.dhitoshi.refreshlayout.SmartRefreshLayout;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.OwnMeetBean;
-import com.dhitoshi.xfrs.huixiaobao.Bean.PageBean;
+import com.dhitoshi.xfrs.huixiaobao.Bean.HttpPageBean;
 import com.dhitoshi.xfrs.huixiaobao.Interface.Callback;
 import com.dhitoshi.xfrs.huixiaobao.Interface.HasHeldManage;
 import com.dhitoshi.xfrs.huixiaobao.Interface.LoginCall;
-import com.dhitoshi.xfrs.huixiaobao.Interface.StagingManage;
 import com.dhitoshi.xfrs.huixiaobao.common.CommonObserver;
 import com.dhitoshi.xfrs.huixiaobao.http.HttpResult;
 import com.dhitoshi.xfrs.huixiaobao.http.MyHttp;
@@ -25,11 +24,11 @@ public class HasHeldModel implements HasHeldManage.Model {
         this.context = context;
     }
     @Override
-    public void getListForPast(String token, final String page, final SmartRefreshLayout smartRefreshLayout, final Callback<HttpBean<PageBean<OwnMeetBean>>> callback) {
+    public void getListForPast(String token, final String page, final SmartRefreshLayout smartRefreshLayout, final Callback<HttpBean<HttpPageBean<OwnMeetBean>>> callback) {
         MyHttp http=MyHttp.getInstance();
-        http.send(http.getHttpService().getListForPast(token, page),new CommonObserver(new HttpResult<HttpBean<PageBean<OwnMeetBean>>>() {
+        http.send(http.getHttpService().getListForPast(token, page),new CommonObserver(new HttpResult<HttpBean<HttpPageBean<OwnMeetBean>>>() {
             @Override
-            public void OnSuccess(HttpBean<PageBean<OwnMeetBean>> httpBean) {
+            public void OnSuccess(HttpBean<HttpPageBean<OwnMeetBean>> httpBean) {
                 smartRefreshLayout.finishRefresh();
                 smartRefreshLayout.finishLoadmore();
                 if(httpBean.getStatus().getCode()==200){

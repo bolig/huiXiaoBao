@@ -4,7 +4,7 @@ import android.widget.Toast;
 import com.dhitoshi.refreshlayout.SmartRefreshLayout;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.MeetClientBean;
-import com.dhitoshi.xfrs.huixiaobao.Bean.PageBean;
+import com.dhitoshi.xfrs.huixiaobao.Bean.HttpPageBean;
 import com.dhitoshi.xfrs.huixiaobao.Interface.Callback;
 import com.dhitoshi.xfrs.huixiaobao.Interface.LoginCall;
 import com.dhitoshi.xfrs.huixiaobao.Interface.MeetClientManage;
@@ -22,11 +22,11 @@ public class MeetClientModel implements MeetClientManage.Model{
         this.context = context;
     }
     @Override
-    public void getCustomerList(final Map<String, String> map, final SmartRefreshLayout smartRefreshLayout, final Callback<HttpBean<PageBean<MeetClientBean>>> callback) {
+    public void getCustomerList(final Map<String, String> map, final SmartRefreshLayout smartRefreshLayout, final Callback<HttpBean<HttpPageBean<MeetClientBean>>> callback) {
         MyHttp http=MyHttp.getInstance();
-        http.send(http.getHttpService().getCustomerList(map),new CommonObserver(new HttpResult<HttpBean<PageBean<MeetClientBean>>>() {
+        http.send(http.getHttpService().getCustomerList(map),new CommonObserver(new HttpResult<HttpBean<HttpPageBean<MeetClientBean>>>() {
             @Override
-            public void OnSuccess(HttpBean<PageBean<MeetClientBean>> httpBean) {
+            public void OnSuccess(HttpBean<HttpPageBean<MeetClientBean>> httpBean) {
                 smartRefreshLayout.finishLoadmore();
                 smartRefreshLayout.finishRefresh();
                 if(httpBean.getStatus().getCode()==200){

@@ -5,10 +5,8 @@ import android.widget.Toast;
 import com.dhitoshi.refreshlayout.SmartRefreshLayout;
 import com.dhitoshi.xfrs.huixiaobao.Bean.ApplyMeetBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
-import com.dhitoshi.xfrs.huixiaobao.Bean.OwnMeetBean;
-import com.dhitoshi.xfrs.huixiaobao.Bean.PageBean;
+import com.dhitoshi.xfrs.huixiaobao.Bean.HttpPageBean;
 import com.dhitoshi.xfrs.huixiaobao.Interface.Callback;
-import com.dhitoshi.xfrs.huixiaobao.Interface.HasHeldManage;
 import com.dhitoshi.xfrs.huixiaobao.Interface.LoginCall;
 import com.dhitoshi.xfrs.huixiaobao.Interface.OnGoingManage;
 import com.dhitoshi.xfrs.huixiaobao.common.CommonObserver;
@@ -26,11 +24,11 @@ public class OnGoingModel implements OnGoingManage.Model {
         this.context = context;
     }
     @Override
-    public void getMeetForNow(String token, final String page, final SmartRefreshLayout smartRefreshLayout, final Callback<HttpBean<PageBean<ApplyMeetBean>>> callback) {
+    public void getMeetForNow(String token, final String page, final SmartRefreshLayout smartRefreshLayout, final Callback<HttpBean<HttpPageBean<ApplyMeetBean>>> callback) {
         MyHttp http=MyHttp.getInstance();
-        http.send(http.getHttpService().getMeetForNow(token, page),new CommonObserver(new HttpResult<HttpBean<PageBean<ApplyMeetBean>>>() {
+        http.send(http.getHttpService().getMeetForNow(token, page),new CommonObserver(new HttpResult<HttpBean<HttpPageBean<ApplyMeetBean>>>() {
             @Override
-            public void OnSuccess(HttpBean<PageBean<ApplyMeetBean>> httpBean) {
+            public void OnSuccess(HttpBean<HttpPageBean<ApplyMeetBean>> httpBean) {
                 smartRefreshLayout.finishRefresh();
                 smartRefreshLayout.finishLoadmore();
                 if(httpBean.getStatus().getCode()==200){

@@ -6,7 +6,6 @@
     android:fitsSystemWindows="true"
     >
     <include layout="@layout/toolbar"/>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -22,9 +21,10 @@
             android:paddingLeft="20dp"
             android:singleLine="true"
             android:background="@null"
+            android:inputType="number"
             android:textSize="@dimen/aliwx_second_text_size"
-            android:hint="搜索群id"/>
-
+            android:hint="搜索群id"
+            />
         <ImageView
             android:id="@+id/search_tribe"
             android:layout_width="wrap_content"
@@ -33,9 +33,9 @@
             android:layout_alignParentRight="true"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
-            android:src="@drawable/aliwx_search_icon" />
+            android:src="@drawable/aliwx_search_icon"
+            />
     </LinearLayout>
-    <include layout="@layout/aliwx_title_bar_shadow" />
     <ProgressBar
         android:id="@+id/progress"
         android:layout_width="20dip"

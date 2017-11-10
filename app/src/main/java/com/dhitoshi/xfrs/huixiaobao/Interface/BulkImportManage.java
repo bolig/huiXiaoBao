@@ -3,7 +3,7 @@ import com.dhitoshi.refreshlayout.SmartRefreshLayout;
 import com.dhitoshi.xfrs.huixiaobao.Bean.BulkImportBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.ClientBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
-import com.dhitoshi.xfrs.huixiaobao.Bean.PageBean;
+import com.dhitoshi.xfrs.huixiaobao.Bean.HttpPageBean;
 import com.dhitoshi.xfrs.huixiaobao.Dialog.LoadingDialog;
 
 import java.util.Map;
@@ -14,11 +14,11 @@ import java.util.Map;
 
 public interface BulkImportManage {
     interface View{
-        void getClientList(PageBean<ClientBean> pageBean);
+        void getClientList(HttpPageBean<ClientBean> httpPageBean);
         void addCustomerAll(HttpBean<BulkImportBean> httpBean);
     }
     interface Model{
-        void getClientList(Map<String,String> map,SmartRefreshLayout smartRefreshLayout, Callback<HttpBean<PageBean<ClientBean>>> callback);
+        void getClientList(Map<String,String> map,SmartRefreshLayout smartRefreshLayout, Callback<HttpBean<HttpPageBean<ClientBean>>> callback);
         void addCustomerAll(Map<String,String> map, LoadingDialog dialog, Callback<HttpBean<BulkImportBean>> callback);
     }
     interface Presenter{

@@ -14,7 +14,7 @@ import com.dhitoshi.refreshlayout.api.RefreshLayout;
 import com.dhitoshi.refreshlayout.listener.OnLoadmoreListener;
 import com.dhitoshi.refreshlayout.listener.OnRefreshListener;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
-import com.dhitoshi.xfrs.huixiaobao.Bean.PageBean;
+import com.dhitoshi.xfrs.huixiaobao.Bean.HttpPageBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.ProductBean;
 import com.dhitoshi.xfrs.huixiaobao.Dialog.LoadingDialog;
 import com.dhitoshi.xfrs.huixiaobao.Event.ProductEvent;
@@ -104,7 +104,7 @@ public class Product extends BaseView implements ProductManage.View {
     }
 
     @Override
-    public void getItem(HttpBean<PageBean<ProductBean>> httpBean) {
+    public void getItem(HttpBean<HttpPageBean<ProductBean>> httpBean) {
         products.addAll(httpBean.getData().getList());
         int size = products.size();
         if (size >= 10 && size % 10 == 0) {

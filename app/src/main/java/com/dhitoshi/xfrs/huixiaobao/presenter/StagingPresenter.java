@@ -5,7 +5,7 @@ import android.content.Context;
 import com.dhitoshi.refreshlayout.SmartRefreshLayout;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.OwnMeetBean;
-import com.dhitoshi.xfrs.huixiaobao.Bean.PageBean;
+import com.dhitoshi.xfrs.huixiaobao.Bean.HttpPageBean;
 import com.dhitoshi.xfrs.huixiaobao.Interface.Callback;
 import com.dhitoshi.xfrs.huixiaobao.Interface.StagingManage;
 import com.dhitoshi.xfrs.huixiaobao.model.StagingModel;
@@ -22,9 +22,9 @@ public class StagingPresenter implements StagingManage.Presenter{
     }
     @Override
     public void getListForNow(String token, String page, SmartRefreshLayout smartRefreshLayout) {
-        model.getListForNow(token, page, smartRefreshLayout, new Callback<HttpBean<PageBean<OwnMeetBean>>>() {
+        model.getListForNow(token, page, smartRefreshLayout, new Callback<HttpBean<HttpPageBean<OwnMeetBean>>>() {
             @Override
-            public void get(HttpBean<PageBean<OwnMeetBean>> httpBean) {
+            public void get(HttpBean<HttpPageBean<OwnMeetBean>> httpBean) {
                 view.getListForNow(httpBean);
             }
         });

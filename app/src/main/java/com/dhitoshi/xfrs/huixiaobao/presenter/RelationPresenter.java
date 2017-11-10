@@ -3,7 +3,7 @@ import android.content.Context;
 
 import com.dhitoshi.refreshlayout.SmartRefreshLayout;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
-import com.dhitoshi.xfrs.huixiaobao.Bean.PageBean;
+import com.dhitoshi.xfrs.huixiaobao.Bean.HttpPageBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.RelationBean;
 import com.dhitoshi.xfrs.huixiaobao.Interface.Callback;
 import com.dhitoshi.xfrs.huixiaobao.Interface.RelationManage;
@@ -20,9 +20,9 @@ public class RelationPresenter implements RelationManage.Prsenter{
     }
     @Override
     public void getRelationLists(String token,String userid, String page, SmartRefreshLayout smartRefreshLayout) {
-        relationModel.getRelationLists(token,userid, page,smartRefreshLayout, new Callback<HttpBean<PageBean<RelationBean>>>() {
+        relationModel.getRelationLists(token,userid, page,smartRefreshLayout, new Callback<HttpBean<HttpPageBean<RelationBean>>>() {
             @Override
-            public void get(HttpBean<PageBean<RelationBean>> httpBean) {
+            public void get(HttpBean<HttpPageBean<RelationBean>> httpBean) {
                 view.getRelationLists(httpBean.getData());
             }
         });

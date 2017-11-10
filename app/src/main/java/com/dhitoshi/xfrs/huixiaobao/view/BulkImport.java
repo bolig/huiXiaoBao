@@ -3,9 +3,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
-import android.widget.CheckBox;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 import com.dhitoshi.refreshlayout.SmartRefreshLayout;
@@ -15,7 +13,7 @@ import com.dhitoshi.refreshlayout.listener.OnRefreshListener;
 import com.dhitoshi.xfrs.huixiaobao.Bean.BulkImportBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.ClientBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
-import com.dhitoshi.xfrs.huixiaobao.Bean.PageBean;
+import com.dhitoshi.xfrs.huixiaobao.Bean.HttpPageBean;
 import com.dhitoshi.xfrs.huixiaobao.Dialog.LoadingDialog;
 import com.dhitoshi.xfrs.huixiaobao.Event.MeetClientEvent;
 import com.dhitoshi.xfrs.huixiaobao.Interface.BulkImportManage;
@@ -122,8 +120,8 @@ public class BulkImport extends BaseView implements BulkImportManage.View{
         bulkImportPresenter.addCustomerAll(map,dialog);
     }
     @Override
-    public void getClientList(PageBean<ClientBean> pageBean) {
-        clients.addAll(pageBean.getList());
+    public void getClientList(HttpPageBean<ClientBean> httpPageBean) {
+        clients.addAll(httpPageBean.getList());
         int size = clients.size();
         if (size >= 10 && size % 10 == 0) {
             smartRefreshLayout.setEnableLoadmore(true);

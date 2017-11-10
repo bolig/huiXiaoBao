@@ -4,7 +4,7 @@ import android.widget.Toast;
 
 import com.dhitoshi.refreshlayout.SmartRefreshLayout;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
-import com.dhitoshi.xfrs.huixiaobao.Bean.PageBean;
+import com.dhitoshi.xfrs.huixiaobao.Bean.HttpPageBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.SpendBean;
 import com.dhitoshi.xfrs.huixiaobao.Interface.Callback;
 import com.dhitoshi.xfrs.huixiaobao.Interface.LoginCall;
@@ -23,11 +23,11 @@ public class SpendModel implements SpendManage.Model{
         this.context = context;
     }
     @Override
-    public void getSpendingLists(final String token, final String userid, final String page, final SmartRefreshLayout smartRefreshLayout, final Callback<HttpBean<PageBean<SpendBean>>> callback) {
+    public void getSpendingLists(final String token, final String userid, final String page, final SmartRefreshLayout smartRefreshLayout, final Callback<HttpBean<HttpPageBean<SpendBean>>> callback) {
         MyHttp http=MyHttp.getInstance();
-        http.send(http.getHttpService().getSpendingLists(token,userid, page),new CommonObserver(new HttpResult<HttpBean<PageBean<SpendBean>>>() {
+        http.send(http.getHttpService().getSpendingLists(token,userid, page),new CommonObserver(new HttpResult<HttpBean<HttpPageBean<SpendBean>>>() {
             @Override
-            public void OnSuccess(HttpBean<PageBean<SpendBean>> httpBean) {
+            public void OnSuccess(HttpBean<HttpPageBean<SpendBean>> httpBean) {
                 smartRefreshLayout.finishRefresh();
                 smartRefreshLayout.finishLoadmore();
                 if(httpBean.getStatus().getCode()==200){

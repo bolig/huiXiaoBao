@@ -13,7 +13,7 @@ import com.dhitoshi.refreshlayout.SmartRefreshLayout;
 import com.dhitoshi.refreshlayout.api.RefreshLayout;
 import com.dhitoshi.refreshlayout.listener.OnLoadmoreListener;
 import com.dhitoshi.refreshlayout.listener.OnRefreshListener;
-import com.dhitoshi.xfrs.huixiaobao.Bean.PageBean;
+import com.dhitoshi.xfrs.huixiaobao.Bean.HttpPageBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.RelationBean;
 import com.dhitoshi.xfrs.huixiaobao.Event.RelationEvent;
 import com.dhitoshi.xfrs.huixiaobao.Interface.ItemClick;
@@ -110,8 +110,8 @@ public class Relation extends BaseFragment implements RelationManage.View {
     }
 
     @Override
-    public void getRelationLists(PageBean<RelationBean> pageBean) {
-        relations.addAll(pageBean.getList());
+    public void getRelationLists(HttpPageBean<RelationBean> httpPageBean) {
+        relations.addAll(httpPageBean.getList());
         int size = relations.size();
         if (size >= 10 && size % 10 == 0) {
             smartRefreshLayout.setEnableLoadmore(true);

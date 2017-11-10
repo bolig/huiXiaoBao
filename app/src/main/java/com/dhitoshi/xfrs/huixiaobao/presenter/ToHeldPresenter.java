@@ -4,7 +4,7 @@ import android.content.Context;
 import com.dhitoshi.refreshlayout.SmartRefreshLayout;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.OwnMeetBean;
-import com.dhitoshi.xfrs.huixiaobao.Bean.PageBean;
+import com.dhitoshi.xfrs.huixiaobao.Bean.HttpPageBean;
 import com.dhitoshi.xfrs.huixiaobao.Interface.Callback;
 import com.dhitoshi.xfrs.huixiaobao.Interface.ToHeldManage;
 import com.dhitoshi.xfrs.huixiaobao.model.ToHeldModel;
@@ -21,9 +21,9 @@ public class ToHeldPresenter implements ToHeldManage.Presenter{
     }
     @Override
     public void getListForFuture(String token, String page, SmartRefreshLayout smartRefreshLayout) {
-        model.getListForFuture(token, page, smartRefreshLayout, new Callback<HttpBean<PageBean<OwnMeetBean>>>() {
+        model.getListForFuture(token, page, smartRefreshLayout, new Callback<HttpBean<HttpPageBean<OwnMeetBean>>>() {
             @Override
-            public void get(HttpBean<PageBean<OwnMeetBean>> httpBean) {
+            public void get(HttpBean<HttpPageBean<OwnMeetBean>> httpBean) {
                 view.getListForFuture(httpBean);
             }
         });

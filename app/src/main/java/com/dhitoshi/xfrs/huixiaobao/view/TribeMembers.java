@@ -1,12 +1,9 @@
 package com.dhitoshi.xfrs.huixiaobao.view;
-
-import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
@@ -17,7 +14,6 @@ import com.alibaba.mobileim.YWIMKit;
 import com.alibaba.mobileim.channel.WxThreadHandler;
 import com.alibaba.mobileim.channel.event.IWxCallback;
 import com.alibaba.mobileim.contact.IYWContact;
-import com.alibaba.mobileim.contact.YWContactFactory;
 import com.alibaba.mobileim.fundamental.widget.YWAlertDialog;
 import com.alibaba.mobileim.fundamental.widget.refreshlist.PullToRefreshListView;
 import com.alibaba.mobileim.fundamental.widget.refreshlist.YWPullToRefreshBase;
@@ -36,9 +32,7 @@ import com.dhitoshi.xfrs.huixiaobao.adapter.TribeMembersAdapter;
 import com.dhitoshi.xfrs.huixiaobao.common.TribeConstants;
 import com.dhitoshi.xfrs.huixiaobao.utils.ActivityManagerUtil;
 import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
-
 import org.greenrobot.eventbus.EventBus;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -59,8 +53,6 @@ public class TribeMembers extends BaseView implements AdapterView.OnItemLongClic
     private YWTribeMember myself;
     private TribeMembersAdapter mAdapter;
     private TextView mAddTribeMembers;
-    private EditText mUserId;
-    private EditText mAppKey;
     private Handler mHandler = new Handler(Looper.getMainLooper());
     /**
      * 用于筛选需要处理的ProfileUpdate通知
@@ -454,8 +446,8 @@ public class TribeMembers extends BaseView implements AdapterView.OnItemLongClic
     public void onViewClicked() {
         YWTribe tribe = mTribeService.getTribe(mTribeId);
         //群的普通成员没有加入权限，所以因此加入view
-        if (tribe.getTribeType() == YWTribeType.CHATTING_TRIBE && getLoginUserRole() == YWTribeMember.ROLE_NORMAL) {
-            IMNotificationUtils.getInstance().showToast(TribeMembers.this, "您不是群管理员，没有管理权限~");
+        if (getLoginUserRole() == YWTribeMember.ROLE_NORMAL) {
+            IMNotificationUtils.getInstance().showToast(TribeMembers.this, "您不是群主，没有管理权限~");
         } else {
             mAddTribeMembers.setVisibility(View.VISIBLE);
         }

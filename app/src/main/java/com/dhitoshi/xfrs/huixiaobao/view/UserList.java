@@ -15,7 +15,7 @@ import com.dhitoshi.refreshlayout.listener.OnLoadmoreListener;
 import com.dhitoshi.refreshlayout.listener.OnRefreshListener;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.Menu;
-import com.dhitoshi.xfrs.huixiaobao.Bean.PageBean;
+import com.dhitoshi.xfrs.huixiaobao.Bean.HttpPageBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.UserBean;
 import com.dhitoshi.xfrs.huixiaobao.Event.UserEvent;
 import com.dhitoshi.xfrs.huixiaobao.Interface.ItemClick;
@@ -152,7 +152,7 @@ public class UserList extends BaseView implements UserManage.View {
     }
 
     @Override
-    public void getUserList(HttpBean<PageBean<UserBean>> httpBean) {
+    public void getUserList(HttpBean<HttpPageBean<UserBean>> httpBean) {
         userBeens.addAll(httpBean.getData().getList());
         int size = userBeens.size();
         if (size >= 10 && size % 10 == 0) {

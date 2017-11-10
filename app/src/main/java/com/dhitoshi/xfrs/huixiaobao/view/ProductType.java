@@ -14,7 +14,7 @@ import com.dhitoshi.refreshlayout.listener.OnLoadmoreListener;
 import com.dhitoshi.refreshlayout.listener.OnRefreshListener;
 import com.dhitoshi.xfrs.huixiaobao.Bean.BaseBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
-import com.dhitoshi.xfrs.huixiaobao.Bean.PageBean;
+import com.dhitoshi.xfrs.huixiaobao.Bean.HttpPageBean;
 import com.dhitoshi.xfrs.huixiaobao.Dialog.LoadingDialog;
 import com.dhitoshi.xfrs.huixiaobao.Event.ProductTypeEvent;
 import com.dhitoshi.xfrs.huixiaobao.Interface.DeleteCallback;
@@ -106,7 +106,7 @@ public class ProductType extends BaseView implements ProductTypeManage.View {
     }
 
     @Override
-    public void getItemType(HttpBean<PageBean<BaseBean>> httpBean) {
+    public void getItemType(HttpBean<HttpPageBean<BaseBean>> httpBean) {
         productTypes.addAll(httpBean.getData().getList());
         int size = productTypes.size();
         if (size >= 10 && size % 10 == 0) {

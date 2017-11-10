@@ -3,7 +3,7 @@ import android.content.Context;
 import android.widget.Toast;
 import com.dhitoshi.refreshlayout.SmartRefreshLayout;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
-import com.dhitoshi.xfrs.huixiaobao.Bean.PageBean;
+import com.dhitoshi.xfrs.huixiaobao.Bean.HttpPageBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.RelationBean;
 import com.dhitoshi.xfrs.huixiaobao.Interface.Callback;
 import com.dhitoshi.xfrs.huixiaobao.Interface.LoginCall;
@@ -23,11 +23,11 @@ public class RelationModel implements RelationManage.Model{
         this.context = context;
     }
     @Override
-    public void getRelationLists(final String token, final String userid, final String page, final SmartRefreshLayout smartRefreshLayout, final Callback<HttpBean<PageBean<RelationBean>>> callback) {
+    public void getRelationLists(final String token, final String userid, final String page, final SmartRefreshLayout smartRefreshLayout, final Callback<HttpBean<HttpPageBean<RelationBean>>> callback) {
         MyHttp http=MyHttp.getInstance();
-        http.send(http.getHttpService().getRelationLists(token,userid, page),new CommonObserver(new HttpResult<HttpBean<PageBean<RelationBean>>>() {
+        http.send(http.getHttpService().getRelationLists(token,userid, page),new CommonObserver(new HttpResult<HttpBean<HttpPageBean<RelationBean>>>() {
             @Override
-            public void OnSuccess(HttpBean<PageBean<RelationBean>> httpBean) {
+            public void OnSuccess(HttpBean<HttpPageBean<RelationBean>> httpBean) {
                 smartRefreshLayout.finishRefresh();
                 smartRefreshLayout.finishLoadmore();
                 if(httpBean.getStatus().getCode()==200){

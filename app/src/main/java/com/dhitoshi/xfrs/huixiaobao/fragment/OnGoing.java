@@ -14,7 +14,7 @@ import com.dhitoshi.refreshlayout.listener.OnLoadmoreListener;
 import com.dhitoshi.refreshlayout.listener.OnRefreshListener;
 import com.dhitoshi.xfrs.huixiaobao.Bean.ApplyMeetBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
-import com.dhitoshi.xfrs.huixiaobao.Bean.PageBean;
+import com.dhitoshi.xfrs.huixiaobao.Bean.HttpPageBean;
 import com.dhitoshi.xfrs.huixiaobao.Interface.ItemClick;
 import com.dhitoshi.xfrs.huixiaobao.Interface.OnGoingManage;
 import com.dhitoshi.xfrs.huixiaobao.R;
@@ -22,7 +22,6 @@ import com.dhitoshi.xfrs.huixiaobao.adapter.ApplyAdapter;
 import com.dhitoshi.xfrs.huixiaobao.presenter.OnGoingPresenter;
 import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
 import com.dhitoshi.xfrs.huixiaobao.view.ApplyMeetingInfo;
-import com.dhitoshi.xfrs.huixiaobao.view.EditApplyMeet;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -98,7 +97,7 @@ public class OnGoing extends BaseFragment implements OnGoingManage.View {
     }
 
     @Override
-    public void getMeetForNow(HttpBean<PageBean<ApplyMeetBean>> httpBean) {
+    public void getMeetForNow(HttpBean<HttpPageBean<ApplyMeetBean>> httpBean) {
         applyMeetBeens.addAll(httpBean.getData().getList());
         int size = applyMeetBeens.size();
         if (size >= 10 && size % 10 == 0) {

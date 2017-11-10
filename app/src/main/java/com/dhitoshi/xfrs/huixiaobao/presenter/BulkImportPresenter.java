@@ -4,7 +4,7 @@ import com.dhitoshi.refreshlayout.SmartRefreshLayout;
 import com.dhitoshi.xfrs.huixiaobao.Bean.BulkImportBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.ClientBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
-import com.dhitoshi.xfrs.huixiaobao.Bean.PageBean;
+import com.dhitoshi.xfrs.huixiaobao.Bean.HttpPageBean;
 import com.dhitoshi.xfrs.huixiaobao.Dialog.LoadingDialog;
 import com.dhitoshi.xfrs.huixiaobao.Interface.BulkImportManage;
 import com.dhitoshi.xfrs.huixiaobao.Interface.Callback;
@@ -23,9 +23,9 @@ public class BulkImportPresenter implements BulkImportManage.Presenter{
     }
     @Override
     public void getClientList(Map<String, String> map, SmartRefreshLayout smartRefreshLayout) {
-        model.getClientList(map, smartRefreshLayout, new Callback<HttpBean<PageBean<ClientBean>>>() {
+        model.getClientList(map, smartRefreshLayout, new Callback<HttpBean<HttpPageBean<ClientBean>>>() {
             @Override
-            public void get(HttpBean<PageBean<ClientBean>> httpBean) {
+            public void get(HttpBean<HttpPageBean<ClientBean>> httpBean) {
                 view.getClientList(httpBean.getData());
             }
         });

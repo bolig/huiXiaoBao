@@ -185,9 +185,6 @@
             android:name=".view.SetTribeCheckMode"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".view.TribeMsgRecTypeSet"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".view.TribeChat"
             android:screenOrientation="portrait" />
 
@@ -218,7 +215,8 @@
             android:configChanges="keyboardHidden|orientation|screenSize" />
         <activity android:name=".view.Document" />
         <activity android:name=".view.EditTribe" />
-        <activity android:name=".view.AtMsgList"></activity>
+        <activity android:name=".view.AtMsgList" />
+        <activity android:name=".view.TribeInfoView"></activity>
     </application>
 
 </manifest>

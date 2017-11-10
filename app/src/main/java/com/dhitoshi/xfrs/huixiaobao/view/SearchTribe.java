@@ -101,6 +101,7 @@ public class SearchTribe extends BaseView {
             intent.putExtra(TribeConstants.TRIBE_OP, tribeOp);
         }
         startActivity(intent);
+        finish();
     }
     private void initTitle() {
         initBaseViews();

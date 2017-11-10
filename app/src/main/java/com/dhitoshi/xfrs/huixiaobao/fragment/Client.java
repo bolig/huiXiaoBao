@@ -24,7 +24,7 @@ import com.dhitoshi.xfrs.huixiaobao.Bean.CustomerTypeBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.Menu;
 import com.dhitoshi.xfrs.huixiaobao.Bean.OrderBean;
-import com.dhitoshi.xfrs.huixiaobao.Bean.PageBean;
+import com.dhitoshi.xfrs.huixiaobao.Bean.HttpPageBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.ScreenBean;
 import com.dhitoshi.xfrs.huixiaobao.Event.ClientEvent;
 import com.dhitoshi.xfrs.huixiaobao.Interface.AreaCallback;
@@ -390,8 +390,8 @@ public class Client extends BaseFragment implements ClientManage.View, View.OnTo
     }
     //获取客户列表
     @Override
-    public void getClientList(PageBean<ClientBean> pageBean) {
-        clients.addAll(pageBean.getList());
+    public void getClientList(HttpPageBean<ClientBean> httpPageBean) {
+        clients.addAll(httpPageBean.getList());
         int size = clients.size();
         if (size >= 10 && size % 10 == 0) {
             smartRefreshLayout.setEnableLoadmore(true);

@@ -5,19 +5,15 @@ import android.widget.Toast;
 
 import com.dhitoshi.refreshlayout.SmartRefreshLayout;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
-import com.dhitoshi.xfrs.huixiaobao.Bean.PageBean;
-import com.dhitoshi.xfrs.huixiaobao.Bean.ProductBean;
+import com.dhitoshi.xfrs.huixiaobao.Bean.HttpPageBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.UserBean;
 import com.dhitoshi.xfrs.huixiaobao.Interface.Callback;
 import com.dhitoshi.xfrs.huixiaobao.Interface.LoginCall;
-import com.dhitoshi.xfrs.huixiaobao.Interface.ProductManage;
 import com.dhitoshi.xfrs.huixiaobao.Interface.UserManage;
 import com.dhitoshi.xfrs.huixiaobao.common.CommonObserver;
 import com.dhitoshi.xfrs.huixiaobao.http.HttpResult;
 import com.dhitoshi.xfrs.huixiaobao.http.MyHttp;
 import com.dhitoshi.xfrs.huixiaobao.utils.LoginUtil;
-
-import java.util.List;
 
 /**
  * Created by dxs on 2017/9/16.
@@ -29,11 +25,11 @@ public class UserModel implements UserManage.Model{
         this.context = context;
     }
     @Override
-    public void getUserList(String token, final String page, final SmartRefreshLayout smartRefreshLayout, final Callback<HttpBean<PageBean<UserBean>>> callback) {
+    public void getUserList(String token, final String page, final SmartRefreshLayout smartRefreshLayout, final Callback<HttpBean<HttpPageBean<UserBean>>> callback) {
         MyHttp http=MyHttp.getInstance();
-        http.send(http.getHttpService().getUserList(token,page),new CommonObserver(new HttpResult<HttpBean<PageBean<UserBean>>>() {
+        http.send(http.getHttpService().getUserList(token,page),new CommonObserver(new HttpResult<HttpBean<HttpPageBean<UserBean>>>() {
             @Override
-            public void OnSuccess(HttpBean<PageBean<UserBean>> httpBean) {
+            public void OnSuccess(HttpBean<HttpPageBean<UserBean>> httpBean) {
                 smartRefreshLayout.finishRefresh();
                 smartRefreshLayout.finishLoadmore();
                 if(httpBean.getStatus().getCode()==200){

@@ -30,12 +30,10 @@ public class BaseBean implements Parcelable {
     }
     public BaseBean() {
     }
-
     public BaseBean(int id, String name) {
         this.id = id;
         this.name = name;
     }
-
     protected BaseBean(Parcel in) {
         this.id = in.readInt();
         this.name = in.readString();

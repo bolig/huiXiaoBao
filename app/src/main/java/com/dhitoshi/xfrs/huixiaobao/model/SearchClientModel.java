@@ -4,7 +4,7 @@ import android.widget.Toast;
 import com.dhitoshi.refreshlayout.SmartRefreshLayout;
 import com.dhitoshi.xfrs.huixiaobao.Bean.ClientBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
-import com.dhitoshi.xfrs.huixiaobao.Bean.PageBean;
+import com.dhitoshi.xfrs.huixiaobao.Bean.HttpPageBean;
 import com.dhitoshi.xfrs.huixiaobao.Interface.Callback;
 import com.dhitoshi.xfrs.huixiaobao.Interface.LoginCall;
 import com.dhitoshi.xfrs.huixiaobao.Interface.SearchClientManage;
@@ -22,11 +22,11 @@ public class SearchClientModel implements SearchClientManage.Model{
         this.context = context;
     }
     @Override
-    public void searchClientList(final String token, final String search, final String page, final SmartRefreshLayout smartRefreshLayout, final Callback<HttpBean<PageBean<ClientBean>>> callback) {
+    public void searchClientList(final String token, final String search, final String page, final SmartRefreshLayout smartRefreshLayout, final Callback<HttpBean<HttpPageBean<ClientBean>>> callback) {
         MyHttp http=MyHttp.getInstance();
-        http.send(http.getHttpService().searchClientList(token,search, page),new CommonObserver(new HttpResult<HttpBean<PageBean<ClientBean>>>() {
+        http.send(http.getHttpService().searchClientList(token,search, page),new CommonObserver(new HttpResult<HttpBean<HttpPageBean<ClientBean>>>() {
             @Override
-            public void OnSuccess(HttpBean<PageBean<ClientBean>> httpBean) {
+            public void OnSuccess(HttpBean<HttpPageBean<ClientBean>> httpBean) {
                 smartRefreshLayout.finishRefresh();
                 if(httpBean.getStatus().getCode()==200){
                     callback.get(httpBean);

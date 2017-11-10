@@ -14,7 +14,7 @@ import com.dhitoshi.refreshlayout.api.RefreshLayout;
 import com.dhitoshi.refreshlayout.listener.OnLoadmoreListener;
 import com.dhitoshi.refreshlayout.listener.OnRefreshListener;
 import com.dhitoshi.xfrs.huixiaobao.Bean.GiftBean;
-import com.dhitoshi.xfrs.huixiaobao.Bean.PageBean;
+import com.dhitoshi.xfrs.huixiaobao.Bean.HttpPageBean;
 import com.dhitoshi.xfrs.huixiaobao.Event.GiftEvent;
 import com.dhitoshi.xfrs.huixiaobao.Interface.GiftManage;
 import com.dhitoshi.xfrs.huixiaobao.Interface.ItemClick;
@@ -112,8 +112,8 @@ public class Gift extends BaseFragment implements GiftManage.View {
     }
 
     @Override
-    public void getGiftLists(PageBean<GiftBean> pageBean) {
-        gifts.addAll(pageBean.getList());
+    public void getGiftLists(HttpPageBean<GiftBean> httpPageBean) {
+        gifts.addAll(httpPageBean.getList());
         int size = gifts.size();
         empty.setVisibility(gifts.size()==0?View.VISIBLE:View.GONE);
         if (size >= 10 && size % 10 == 0) {

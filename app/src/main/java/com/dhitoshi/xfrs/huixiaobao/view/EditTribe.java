@@ -96,8 +96,8 @@ public class EditTribe extends BaseView implements TribeManage.View {
         if(null==map){
             map=new HashMap<>();
         }
-        map.put("name",name);
-        map.put("description",description);
+        map.put("name",tribeName.getText().toString());
+        map.put("description",tribeDescription.getText().toString());
         map.put("tribe_id",String.valueOf(tribeId));
         if(null==dialog){
             dialog = LoadingDialog.build(this).setLoadingTitle("提交中");

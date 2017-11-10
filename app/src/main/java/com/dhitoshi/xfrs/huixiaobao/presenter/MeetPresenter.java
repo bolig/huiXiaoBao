@@ -4,7 +4,7 @@ import android.content.Context;
 import com.dhitoshi.refreshlayout.SmartRefreshLayout;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.MeetBean;
-import com.dhitoshi.xfrs.huixiaobao.Bean.PageBean;
+import com.dhitoshi.xfrs.huixiaobao.Bean.HttpPageBean;
 import com.dhitoshi.xfrs.huixiaobao.Interface.Callback;
 import com.dhitoshi.xfrs.huixiaobao.Interface.MeetingManage;
 import com.dhitoshi.xfrs.huixiaobao.model.MeetModel;
@@ -20,9 +20,9 @@ public class MeetPresenter implements MeetingManage.Prsenter{
     }
     @Override
     public void getMeetingLists(String token,String userid, String page, SmartRefreshLayout smartRefreshLayout) {
-        meetModel.getMeetingLists(token,userid, page,smartRefreshLayout, new Callback<HttpBean<PageBean<MeetBean>>>() {
+        meetModel.getMeetingLists(token,userid, page,smartRefreshLayout, new Callback<HttpBean<HttpPageBean<MeetBean>>>() {
             @Override
-            public void get(HttpBean<PageBean<MeetBean>> httpBean) {
+            public void get(HttpBean<HttpPageBean<MeetBean>> httpBean) {
                 view.getMeetingLists(httpBean.getData());
             }
         });

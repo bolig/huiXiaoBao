@@ -5,7 +5,7 @@ import com.dhitoshi.refreshlayout.SmartRefreshLayout;
 import com.dhitoshi.xfrs.huixiaobao.Bean.BulkImportBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.ClientBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
-import com.dhitoshi.xfrs.huixiaobao.Bean.PageBean;
+import com.dhitoshi.xfrs.huixiaobao.Bean.HttpPageBean;
 import com.dhitoshi.xfrs.huixiaobao.Dialog.LoadingDialog;
 import com.dhitoshi.xfrs.huixiaobao.Interface.BulkImportManage;
 import com.dhitoshi.xfrs.huixiaobao.Interface.Callback;
@@ -15,8 +15,6 @@ import com.dhitoshi.xfrs.huixiaobao.http.HttpResult;
 import com.dhitoshi.xfrs.huixiaobao.http.MyHttp;
 import com.dhitoshi.xfrs.huixiaobao.utils.LoginUtil;
 import java.util.Map;
-
-import static com.dhitoshi.xfrs.huixiaobao.R.id.smartRefreshLayout;
 
 /**
  * Created by dxs on 2017/9/9.
@@ -28,11 +26,11 @@ public class BulkImportModel implements BulkImportManage.Model {
         this.context = context;
     }
     @Override
-    public void getClientList(final Map<String, String> map, final SmartRefreshLayout smartRefreshLayout, final Callback<HttpBean<PageBean<ClientBean>>> callback) {
+    public void getClientList(final Map<String, String> map, final SmartRefreshLayout smartRefreshLayout, final Callback<HttpBean<HttpPageBean<ClientBean>>> callback) {
         MyHttp http=MyHttp.getInstance();
-        http.send(http.getHttpService().getClientList(map),new CommonObserver(new HttpResult<HttpBean<PageBean<ClientBean>>>() {
+        http.send(http.getHttpService().getClientList(map),new CommonObserver(new HttpResult<HttpBean<HttpPageBean<ClientBean>>>() {
             @Override
-            public void OnSuccess(HttpBean<PageBean<ClientBean>> httpBean) {
+            public void OnSuccess(HttpBean<HttpPageBean<ClientBean>> httpBean) {
                 smartRefreshLayout.finishRefresh();
                 smartRefreshLayout.finishLoadmore();
                 if (httpBean.getStatus().getCode()==200){

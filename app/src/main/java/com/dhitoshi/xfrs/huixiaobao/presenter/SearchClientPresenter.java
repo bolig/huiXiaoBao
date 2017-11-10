@@ -3,7 +3,7 @@ import android.content.Context;
 import com.dhitoshi.refreshlayout.SmartRefreshLayout;
 import com.dhitoshi.xfrs.huixiaobao.Bean.ClientBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
-import com.dhitoshi.xfrs.huixiaobao.Bean.PageBean;
+import com.dhitoshi.xfrs.huixiaobao.Bean.HttpPageBean;
 import com.dhitoshi.xfrs.huixiaobao.Interface.Callback;
 import com.dhitoshi.xfrs.huixiaobao.Interface.SearchClientManage;
 import com.dhitoshi.xfrs.huixiaobao.model.SearchClientModel;
@@ -21,9 +21,9 @@ public class SearchClientPresenter implements SearchClientManage.Prsenter{
     }
     @Override
     public void searchClientList(String token,String search, String page, SmartRefreshLayout smartRefreshLayout) {
-        model.searchClientList(token,search, page, smartRefreshLayout, new Callback<HttpBean<PageBean<ClientBean>>>() {
+        model.searchClientList(token,search, page, smartRefreshLayout, new Callback<HttpBean<HttpPageBean<ClientBean>>>() {
             @Override
-            public void get(HttpBean<PageBean<ClientBean>> httpBean) {
+            public void get(HttpBean<HttpPageBean<ClientBean>> httpBean) {
                 view.searchClientList(httpBean.getData());
             }
         });

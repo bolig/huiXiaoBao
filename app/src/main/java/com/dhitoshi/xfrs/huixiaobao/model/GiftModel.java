@@ -5,7 +5,7 @@ import android.widget.Toast;
 import com.dhitoshi.refreshlayout.SmartRefreshLayout;
 import com.dhitoshi.xfrs.huixiaobao.Bean.GiftBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
-import com.dhitoshi.xfrs.huixiaobao.Bean.PageBean;
+import com.dhitoshi.xfrs.huixiaobao.Bean.HttpPageBean;
 import com.dhitoshi.xfrs.huixiaobao.Interface.Callback;
 import com.dhitoshi.xfrs.huixiaobao.Interface.GiftManage;
 import com.dhitoshi.xfrs.huixiaobao.Interface.LoginCall;
@@ -25,11 +25,11 @@ public class GiftModel implements GiftManage.Model{
         this.context = context;
     }
     @Override
-    public void getGiftLists(final String token, final String userid, final String page, final SmartRefreshLayout smartRefreshLayout, final Callback<HttpBean<PageBean<GiftBean>>> callback) {
+    public void getGiftLists(final String token, final String userid, final String page, final SmartRefreshLayout smartRefreshLayout, final Callback<HttpBean<HttpPageBean<GiftBean>>> callback) {
         MyHttp http=MyHttp.getInstance();
-        http.send(http.getHttpService().getGiftLists(token,userid, page),new CommonObserver(new HttpResult<HttpBean<PageBean<GiftBean>>>() {
+        http.send(http.getHttpService().getGiftLists(token,userid, page),new CommonObserver(new HttpResult<HttpBean<HttpPageBean<GiftBean>>>() {
             @Override
-            public void OnSuccess(HttpBean<PageBean<GiftBean>> httpBean) {
+            public void OnSuccess(HttpBean<HttpPageBean<GiftBean>> httpBean) {
                 smartRefreshLayout.finishRefresh();
                 smartRefreshLayout.finishLoadmore();
                 if(httpBean.getStatus().getCode()==200){

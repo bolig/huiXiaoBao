@@ -13,14 +13,13 @@ import com.dhitoshi.refreshlayout.listener.OnLoadmoreListener;
 import com.dhitoshi.refreshlayout.listener.OnRefreshListener;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.OwnMeetBean;
-import com.dhitoshi.xfrs.huixiaobao.Bean.PageBean;
+import com.dhitoshi.xfrs.huixiaobao.Bean.HttpPageBean;
 import com.dhitoshi.xfrs.huixiaobao.Interface.HasHeldManage;
 import com.dhitoshi.xfrs.huixiaobao.Interface.ItemClick;
 import com.dhitoshi.xfrs.huixiaobao.R;
 import com.dhitoshi.xfrs.huixiaobao.adapter.OwnMeetAdapter;
 import com.dhitoshi.xfrs.huixiaobao.presenter.HasHeldPresenter;
 import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
-import com.dhitoshi.xfrs.huixiaobao.view.ApplyMeetingInfo;
 import com.dhitoshi.xfrs.huixiaobao.view.EditApplyMeet;
 
 import java.util.ArrayList;
@@ -94,7 +93,7 @@ public class HasHeld extends BaseFragment implements HasHeldManage.View{
     }
 
     @Override
-    public void getListForPast(HttpBean<PageBean<OwnMeetBean>> httpBean) {
+    public void getListForPast(HttpBean<HttpPageBean<OwnMeetBean>> httpBean) {
         ownMeetBeens=httpBean.getData().getList();
         int size = ownMeetBeens.size();
         if (size >= 10 && size % 10 == 0) {

@@ -5,12 +5,9 @@ import android.content.Context;
 import com.dhitoshi.refreshlayout.SmartRefreshLayout;
 import com.dhitoshi.xfrs.huixiaobao.Bean.ApplyMeetBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
-import com.dhitoshi.xfrs.huixiaobao.Bean.OwnMeetBean;
-import com.dhitoshi.xfrs.huixiaobao.Bean.PageBean;
+import com.dhitoshi.xfrs.huixiaobao.Bean.HttpPageBean;
 import com.dhitoshi.xfrs.huixiaobao.Interface.Callback;
-import com.dhitoshi.xfrs.huixiaobao.Interface.HasHeldManage;
 import com.dhitoshi.xfrs.huixiaobao.Interface.OnGoingManage;
-import com.dhitoshi.xfrs.huixiaobao.model.HasHeldModel;
 import com.dhitoshi.xfrs.huixiaobao.model.OnGoingModel;
 
 /**
@@ -26,9 +23,9 @@ public class OnGoingPresenter implements OnGoingManage.Presenter{
     }
     @Override
     public void getMeetForNow(String token, String page, SmartRefreshLayout smartRefreshLayout) {
-        model.getMeetForNow(token, page, smartRefreshLayout, new Callback<HttpBean<PageBean<ApplyMeetBean>>>() {
+        model.getMeetForNow(token, page, smartRefreshLayout, new Callback<HttpBean<HttpPageBean<ApplyMeetBean>>>() {
             @Override
-            public void get(HttpBean<PageBean<ApplyMeetBean>> httpBean) {
+            public void get(HttpBean<HttpPageBean<ApplyMeetBean>> httpBean) {
                 view.getMeetForNow(httpBean);
             }
         });

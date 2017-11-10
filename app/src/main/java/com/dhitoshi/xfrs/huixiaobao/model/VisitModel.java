@@ -4,7 +4,7 @@ import android.widget.Toast;
 
 import com.dhitoshi.refreshlayout.SmartRefreshLayout;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
-import com.dhitoshi.xfrs.huixiaobao.Bean.PageBean;
+import com.dhitoshi.xfrs.huixiaobao.Bean.HttpPageBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.VisitBean;
 import com.dhitoshi.xfrs.huixiaobao.Interface.Callback;
 import com.dhitoshi.xfrs.huixiaobao.Interface.LoginCall;
@@ -24,11 +24,11 @@ public class VisitModel implements VisitManage.Model{
         this.context = context;
     }
     @Override
-    public void getFeedbackLists(final String token, final String userid, final String page, final SmartRefreshLayout smartRefreshLayout, final Callback<HttpBean<PageBean<VisitBean>>> callback) {
+    public void getFeedbackLists(final String token, final String userid, final String page, final SmartRefreshLayout smartRefreshLayout, final Callback<HttpBean<HttpPageBean<VisitBean>>> callback) {
         MyHttp http=MyHttp.getInstance();
-        http.send(http.getHttpService().getFeedbackLists(token,userid, page),new CommonObserver(new HttpResult<HttpBean<PageBean<VisitBean>>>() {
+        http.send(http.getHttpService().getFeedbackLists(token,userid, page),new CommonObserver(new HttpResult<HttpBean<HttpPageBean<VisitBean>>>() {
             @Override
-            public void OnSuccess(HttpBean<PageBean<VisitBean>> httpBean) {
+            public void OnSuccess(HttpBean<HttpPageBean<VisitBean>> httpBean) {
                 smartRefreshLayout.finishRefresh();
                 smartRefreshLayout.finishLoadmore();
                 if(httpBean.getStatus().getCode()==200){

@@ -21,7 +21,7 @@ import com.dhitoshi.refreshlayout.api.RefreshLayout;
 import com.dhitoshi.refreshlayout.listener.OnLoadmoreListener;
 import com.dhitoshi.refreshlayout.listener.OnRefreshListener;
 import com.dhitoshi.xfrs.huixiaobao.Bean.ClientBean;
-import com.dhitoshi.xfrs.huixiaobao.Bean.PageBean;
+import com.dhitoshi.xfrs.huixiaobao.Bean.HttpPageBean;
 import com.dhitoshi.xfrs.huixiaobao.Interface.ItemClick;
 import com.dhitoshi.xfrs.huixiaobao.Interface.SearchClientManage;
 import com.dhitoshi.xfrs.huixiaobao.R;
@@ -130,8 +130,8 @@ public class SearchClient extends AppCompatActivity implements SearchClientManag
     }
 
     @Override
-    public void searchClientList(PageBean<ClientBean> pageBean) {
-        clients.addAll(pageBean.getList());
+    public void searchClientList(HttpPageBean<ClientBean> httpPageBean) {
+        clients.addAll(httpPageBean.getList());
         int size = clients.size();
         empty.setVisibility(clients.size() == 0 ? View.VISIBLE : View.GONE);
         if (size >= 10 && size % 10 == 0) {

@@ -3,7 +3,7 @@ import android.content.Context;
 import com.dhitoshi.refreshlayout.SmartRefreshLayout;
 import com.dhitoshi.xfrs.huixiaobao.Bean.BaseBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
-import com.dhitoshi.xfrs.huixiaobao.Bean.PageBean;
+import com.dhitoshi.xfrs.huixiaobao.Bean.HttpPageBean;
 import com.dhitoshi.xfrs.huixiaobao.Dialog.LoadingDialog;
 import com.dhitoshi.xfrs.huixiaobao.Interface.Callback;
 import com.dhitoshi.xfrs.huixiaobao.Interface.ProductTypeManage;
@@ -20,9 +20,9 @@ public class ProductTypePresenter implements ProductTypeManage.Presenter{
     }
     @Override
     public void getItemType(String token,String page,SmartRefreshLayout smartRefreshLayout) {
-       model.getItemType(token,page,smartRefreshLayout, new Callback<HttpBean<PageBean<BaseBean>>>() {
+       model.getItemType(token,page,smartRefreshLayout, new Callback<HttpBean<HttpPageBean<BaseBean>>>() {
            @Override
-           public void get(HttpBean<PageBean<BaseBean>> httpBean) {
+           public void get(HttpBean<HttpPageBean<BaseBean>> httpBean) {
                view.getItemType(httpBean);
            }
        });

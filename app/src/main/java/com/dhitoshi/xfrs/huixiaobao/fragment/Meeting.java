@@ -14,7 +14,7 @@ import com.dhitoshi.refreshlayout.api.RefreshLayout;
 import com.dhitoshi.refreshlayout.listener.OnLoadmoreListener;
 import com.dhitoshi.refreshlayout.listener.OnRefreshListener;
 import com.dhitoshi.xfrs.huixiaobao.Bean.MeetBean;
-import com.dhitoshi.xfrs.huixiaobao.Bean.PageBean;
+import com.dhitoshi.xfrs.huixiaobao.Bean.HttpPageBean;
 import com.dhitoshi.xfrs.huixiaobao.Event.MeetingEvent;
 import com.dhitoshi.xfrs.huixiaobao.Interface.ItemClick;
 import com.dhitoshi.xfrs.huixiaobao.Interface.MeetingManage;
@@ -111,8 +111,8 @@ public class Meeting extends BaseFragment implements MeetingManage.View {
     }
 
     @Override
-    public void getMeetingLists(PageBean<MeetBean> pageBean) {
-        meets.addAll(pageBean.getList());
+    public void getMeetingLists(HttpPageBean<MeetBean> httpPageBean) {
+        meets.addAll(httpPageBean.getList());
         int size = meets.size();
         if (size >= 10 && size % 10 == 0) {
             smartRefreshLayout.setEnableLoadmore(true);

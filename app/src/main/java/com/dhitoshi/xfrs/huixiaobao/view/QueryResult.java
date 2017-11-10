@@ -14,12 +14,11 @@ import com.dhitoshi.xfrs.huixiaobao.Bean.ClientBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.GiftBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.MeetBean;
-import com.dhitoshi.xfrs.huixiaobao.Bean.PageBean;
+import com.dhitoshi.xfrs.huixiaobao.Bean.HttpPageBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.QueryResultBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.RelationBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.SpendBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.VisitBean;
-import com.dhitoshi.xfrs.huixiaobao.Event.ClientEvent;
 import com.dhitoshi.xfrs.huixiaobao.Event.QueryResultEvent;
 import com.dhitoshi.xfrs.huixiaobao.Interface.ItemClick;
 import com.dhitoshi.xfrs.huixiaobao.Interface.QueryResultManage;
@@ -183,7 +182,7 @@ public class QueryResult extends BaseView implements QueryResultManage.View {
     }
 
     @Override
-    public void getSearchOne(HttpBean<PageBean<QueryResultBean<ClientBean>>> httpBean) {
+    public void getSearchOne(HttpBean<HttpPageBean<QueryResultBean<ClientBean>>> httpBean) {
         clients.addAll(httpBean.getData().getList());
         int size = clients.size();
         if (size >= 10 && size % 10 == 0) {
@@ -233,7 +232,7 @@ public class QueryResult extends BaseView implements QueryResultManage.View {
     }
 
     @Override
-    public void getSearchTwo(final HttpBean<PageBean<QueryResultBean<SpendBean>>> httpBean) {
+    public void getSearchTwo(final HttpBean<HttpPageBean<QueryResultBean<SpendBean>>> httpBean) {
         int size=httpBean.getData().getList().size();
         for (int i = 0; i < size; i++) {
             spends.addAll(httpBean.getData().getList().get(i).getResult());
@@ -264,7 +263,7 @@ public class QueryResult extends BaseView implements QueryResultManage.View {
     }
 
     @Override
-    public void getSearchThree(HttpBean<PageBean<QueryResultBean<VisitBean>>> httpBean) {
+    public void getSearchThree(HttpBean<HttpPageBean<QueryResultBean<VisitBean>>> httpBean) {
         int size=httpBean.getData().getList().size();
         for (int i = 0; i < size; i++) {
             visits.addAll(httpBean.getData().getList().get(i).getResult());
@@ -295,7 +294,7 @@ public class QueryResult extends BaseView implements QueryResultManage.View {
     }
 
     @Override
-    public void getSearchFour(HttpBean<PageBean<QueryResultBean<RelationBean>>> httpBean) {
+    public void getSearchFour(HttpBean<HttpPageBean<QueryResultBean<RelationBean>>> httpBean) {
         int size=httpBean.getData().getList().size();
         for (int i = 0; i < size; i++) {
             relations.addAll(httpBean.getData().getList().get(i).getResult());
@@ -327,7 +326,7 @@ public class QueryResult extends BaseView implements QueryResultManage.View {
     }
 
     @Override
-    public void getSearchFive(HttpBean<PageBean<QueryResultBean<GiftBean>>> httpBean) {
+    public void getSearchFive(HttpBean<HttpPageBean<QueryResultBean<GiftBean>>> httpBean) {
         int size=httpBean.getData().getList().size();
         for (int i = 0; i < size; i++) {
             gifts.addAll(httpBean.getData().getList().get(i).getResult());
@@ -358,7 +357,7 @@ public class QueryResult extends BaseView implements QueryResultManage.View {
     }
 
     @Override
-    public void getSearchSix(HttpBean<PageBean<QueryResultBean<MeetBean>>> httpBean) {
+    public void getSearchSix(HttpBean<HttpPageBean<QueryResultBean<MeetBean>>> httpBean) {
         int size=httpBean.getData().getList().size();
         for (int i = 0; i < size; i++) {
             meets.addAll(httpBean.getData().getList().get(i).getResult());

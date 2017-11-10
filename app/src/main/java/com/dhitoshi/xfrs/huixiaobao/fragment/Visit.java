@@ -13,7 +13,7 @@ import com.dhitoshi.refreshlayout.SmartRefreshLayout;
 import com.dhitoshi.refreshlayout.api.RefreshLayout;
 import com.dhitoshi.refreshlayout.listener.OnLoadmoreListener;
 import com.dhitoshi.refreshlayout.listener.OnRefreshListener;
-import com.dhitoshi.xfrs.huixiaobao.Bean.PageBean;
+import com.dhitoshi.xfrs.huixiaobao.Bean.HttpPageBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.VisitBean;
 import com.dhitoshi.xfrs.huixiaobao.Event.VisitEvent;
 import com.dhitoshi.xfrs.huixiaobao.Interface.ItemClick;
@@ -110,8 +110,8 @@ public class Visit extends BaseFragment implements VisitManage.View {
     }
 
     @Override
-    public void getFeedbackLists(PageBean<VisitBean> pageBean) {
-        visits.addAll(pageBean.getList());
+    public void getFeedbackLists(HttpPageBean<VisitBean> httpPageBean) {
+        visits.addAll(httpPageBean.getList());
         int size = visits.size();
         if (size >= 10 && size % 10 == 0) {
             smartRefreshLayout.setEnableLoadmore(true);

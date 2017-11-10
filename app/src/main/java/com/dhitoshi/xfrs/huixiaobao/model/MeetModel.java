@@ -5,7 +5,7 @@ import android.widget.Toast;
 import com.dhitoshi.refreshlayout.SmartRefreshLayout;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.MeetBean;
-import com.dhitoshi.xfrs.huixiaobao.Bean.PageBean;
+import com.dhitoshi.xfrs.huixiaobao.Bean.HttpPageBean;
 import com.dhitoshi.xfrs.huixiaobao.Interface.Callback;
 import com.dhitoshi.xfrs.huixiaobao.Interface.LoginCall;
 import com.dhitoshi.xfrs.huixiaobao.Interface.MeetingManage;
@@ -25,11 +25,11 @@ public class MeetModel implements MeetingManage.Model{
     }
 
     @Override
-    public void getMeetingLists(final String token, final String userid, final String page, final SmartRefreshLayout smartRefreshLayout, final Callback<HttpBean<PageBean<MeetBean>>> callback) {
+    public void getMeetingLists(final String token, final String userid, final String page, final SmartRefreshLayout smartRefreshLayout, final Callback<HttpBean<HttpPageBean<MeetBean>>> callback) {
         MyHttp http=MyHttp.getInstance();
-        http.send(http.getHttpService().getMeetingLists(token,userid, page),new CommonObserver(new HttpResult<HttpBean<PageBean<MeetBean>>>() {
+        http.send(http.getHttpService().getMeetingLists(token,userid, page),new CommonObserver(new HttpResult<HttpBean<HttpPageBean<MeetBean>>>() {
             @Override
-            public void OnSuccess(HttpBean<PageBean<MeetBean>> httpBean) {
+            public void OnSuccess(HttpBean<HttpPageBean<MeetBean>> httpBean) {
                 smartRefreshLayout.finishRefresh();
                 smartRefreshLayout.finishLoadmore();
                 if(httpBean.getStatus().getCode()==200){

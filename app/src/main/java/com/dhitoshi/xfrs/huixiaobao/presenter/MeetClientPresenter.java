@@ -3,7 +3,7 @@ import android.content.Context;
 import com.dhitoshi.refreshlayout.SmartRefreshLayout;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HttpBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.MeetClientBean;
-import com.dhitoshi.xfrs.huixiaobao.Bean.PageBean;
+import com.dhitoshi.xfrs.huixiaobao.Bean.HttpPageBean;
 import com.dhitoshi.xfrs.huixiaobao.Interface.Callback;
 import com.dhitoshi.xfrs.huixiaobao.Interface.MeetClientManage;
 import com.dhitoshi.xfrs.huixiaobao.model.MeetClientModel;
@@ -24,9 +24,9 @@ public class MeetClientPresenter implements MeetClientManage.Presenter{
 
     @Override
     public void getCustomerList(Map<String, String> map, SmartRefreshLayout smartRefreshLayout) {
-        model.getCustomerList(map, smartRefreshLayout, new Callback<HttpBean<PageBean<MeetClientBean>>>() {
+        model.getCustomerList(map, smartRefreshLayout, new Callback<HttpBean<HttpPageBean<MeetClientBean>>>() {
             @Override
-            public void get(HttpBean<PageBean<MeetClientBean>> httpBean) {
+            public void get(HttpBean<HttpPageBean<MeetClientBean>> httpBean) {
                 view.getCustomerList(httpBean);
             }
         });
