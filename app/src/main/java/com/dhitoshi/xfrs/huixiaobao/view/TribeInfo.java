@@ -406,7 +406,14 @@ public class TribeInfo extends BaseView {
             }
             @Override
             public void onUserRemoved(YWTribe tribe, YWTribeMember user) {
-                openTribeListFragment();
+                mTribeMemberCount = tribe.getMemberCount();
+                mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        updateTribeMemberCount();
+                    }
+                });
+//              openTribeListFragment();
             }
             @Override
             public void onTribeDestroyed(YWTribe tribe) {

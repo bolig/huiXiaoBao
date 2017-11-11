@@ -177,7 +177,6 @@ public class Theme extends AppCompatActivity {
         });
         String userId = SharedPreferencesUtil.Obtain(this, "account", "").toString().split("@")[0];
         mIMKit = YWAPI.getIMKitInstance(userId, "24607089");
-        themeBottomBar.getTabWithId(R.id.tab_news).setBadgeCount(mIMKit.getConversationService().getAllUnreadCount());
     }
     private List<Fragment> getThemeFragments() {
         themeFragments = new ArrayList<>();

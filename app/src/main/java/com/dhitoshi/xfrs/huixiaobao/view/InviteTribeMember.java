@@ -77,7 +77,7 @@ public class InviteTribeMember extends BaseView implements InviteMemberManage.Vi
         presenter=new InviteMemberPresenter(this,this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.addItemDecoration(new MyDecoration(this, LinearLayoutManager.HORIZONTAL, R.drawable.divider_line));
-        smartRefreshLayout.setEnableLoadmore(false);
+        smartRefreshLayout.autoRefresh();
         smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
@@ -166,7 +166,7 @@ public class InviteTribeMember extends BaseView implements InviteMemberManage.Vi
                         } else {
                             IMNotificationUtils.getInstance().showToast(InviteTribeMember.this, "群邀请发送成功！");
                         }
-                        if (type==0){
+                        if (type==1){
                             ActivityManagerUtil.destoryActivity("TribeCompany");
                         }
                         finish();

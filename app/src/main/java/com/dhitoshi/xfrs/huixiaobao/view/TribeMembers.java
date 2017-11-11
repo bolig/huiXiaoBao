@@ -247,7 +247,6 @@ public class TribeMembers extends BaseView implements AdapterView.OnItemLongClic
 
     @Override
     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-        Log.e("TAG","点击长按");
         final int pos = position - mListView.getHeaderViewsCount();
         final YWTribeMember member = mList.get(pos);
         YWTribe tribe = mTribeService.getTribe(mTribeId);
@@ -347,7 +346,7 @@ public class TribeMembers extends BaseView implements AdapterView.OnItemLongClic
             public void onUserRemoved(YWTribe tribe, YWTribeMember user) {
                 //只有被踢出群的用户会收到该回调，即如果收到该回调表示自己被踢出群了
                 mTribeService.clearTribeSystemMessages(tribe.getTribeId());
-                openTribeListFragment();
+                //openTribeListFragment();
             }
 
             @Override
