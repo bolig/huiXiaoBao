@@ -207,10 +207,15 @@
         <activity
             android:name=".view.LoadWeb"
             android:configChanges="keyboardHidden|orientation|screenSize" />
-        <activity android:name=".view.Document" />
-        <activity android:name=".view.EditTribe" />
-        <activity android:name=".view.AtMsgList" />
-        <activity android:name=".view.TribeCompany"></activity>
+        <activity
+            android:name=".view.Document"
+            android:screenOrientation="portrait" />
+        <activity android:name=".view.EditTribe"
+            android:screenOrientation="portrait" />
+        <activity android:name=".view.AtMsgList"
+            android:screenOrientation="portrait" />
+        <activity android:name=".view.TribeCompany"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

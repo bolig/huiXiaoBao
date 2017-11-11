@@ -291,9 +291,6 @@ public interface HttpService {
     //编辑群组
     @POST("index.php/tribe/edit")
     Observable<HttpBean<TribeBean>> editTribe(@QueryMap Map<String,String> map);
-    //解散群组
-    @POST("index.php/tribe/dismiss")
-    Observable<HttpBean<TribeBean>> dismissTribe(@QueryMap Map<String,String> map);
     //公司列表
     @POST("index.php/area/companyList")
     Observable<HttpPageBeanTwo<BaseBean>> getCompanyList(@Query("token") String token, @Query("page") String page);

@@ -30,6 +30,7 @@ import com.alibaba.mobileim.tribe.IYWTribeService;
 import com.alibaba.mobileim.utility.IMConstants;
 import com.alibaba.mobileim.utility.IMNotificationUtils;
 import com.dhitoshi.xfrs.huixiaobao.Event.NewsEvent;
+import com.dhitoshi.xfrs.huixiaobao.Interface.TribeCompanyManage;
 import com.dhitoshi.xfrs.huixiaobao.R;
 import com.dhitoshi.xfrs.huixiaobao.adapter.TribeMembersAdapter;
 import com.dhitoshi.xfrs.huixiaobao.common.TribeConstants;
@@ -396,7 +397,7 @@ public class TribeMembers extends BaseView implements AdapterView.OnItemLongClic
         if (getLoginUserRole() == YWTribeMember.ROLE_NORMAL) {
             IMNotificationUtils.getInstance().showToast(TribeMembers.this, "您不是群主，没有管理权限~");
         } else {
-            Class c=tribeType==0?InviteTribeMember.class:InviteTribeMember.class;
+            Class c=tribeType==0?InviteTribeMember.class:TribeCompany.class;
             Intent intent = new Intent(TribeMembers.this, c);
             intent.putExtra(TribeConstants.TRIBE_ID, mTribeId);
             startActivity(intent);
