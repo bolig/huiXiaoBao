@@ -210,12 +210,16 @@
         <activity
             android:name=".view.Document"
             android:screenOrientation="portrait" />
-        <activity android:name=".view.EditTribe"
+        <activity
+            android:name=".view.EditTribe"
             android:screenOrientation="portrait" />
-        <activity android:name=".view.AtMsgList"
+        <activity
+            android:name=".view.AtMsgList"
             android:screenOrientation="portrait" />
-        <activity android:name=".view.TribeCompany"
-            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".view.TribeCompany"
+            android:screenOrientation="portrait" />
+        <activity android:name=".view.MeetingVideo"></activity>
     </application>
 
 </manifest>

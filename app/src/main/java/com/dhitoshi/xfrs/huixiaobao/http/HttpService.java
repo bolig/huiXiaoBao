@@ -34,6 +34,7 @@ import com.dhitoshi.xfrs.huixiaobao.Bean.TribeMemberBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.UserBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.UserRole;
 import com.dhitoshi.xfrs.huixiaobao.Bean.VersionBean;
+import com.dhitoshi.xfrs.huixiaobao.Bean.VideoBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.VisitBean;
 import java.util.List;
 import java.util.Map;
@@ -297,4 +298,6 @@ public interface HttpService {
     //根据公司获取用户列表
     @POST("index.php/user/list")
     Observable<HttpPageBeanTwo<TribeMemberBean>> userList(@Query("token") String token, @Query("area_id") String area_id, @Query("page") String page);
+    @POST("index.php/meeting/videoList")
+    Observable<HttpPageBeanTwo<VideoBean>> getVideoList(@Query("token") String token, @Query("meeting_id") String meeting_id, @Query("page") String page);
 }

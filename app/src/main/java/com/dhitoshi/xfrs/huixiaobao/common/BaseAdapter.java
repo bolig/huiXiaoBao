@@ -4,10 +4,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.dhitoshi.xfrs.huixiaobao.Interface.ItemClick;
 import com.dhitoshi.xfrs.huixiaobao.R;
+import com.dhitoshi.xfrs.huixiaobao.utils.DensityUtil;
+
 import java.util.List;
 /**
  * Created by dxs on 2017/8/21.
@@ -50,4 +53,10 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseRecyclerHo
         this.itemClick = itemClick;
     }
     public  abstract  void covert(BaseRecyclerHolder holder,List<T> mList, int position);
+    public void setMargin(RecyclerView.ViewHolder holder){
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        int d= DensityUtil.dp2px(10);
+        layoutParams.setMargins(d, d,d,d);//4个参数按顺序分别是左上右下
+        holder.itemView.setLayoutParams(layoutParams);
+    }
 }

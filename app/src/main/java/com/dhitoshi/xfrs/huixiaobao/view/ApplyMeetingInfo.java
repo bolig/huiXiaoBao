@@ -80,7 +80,7 @@ public class ApplyMeetingInfo extends BaseView {
                 startActivity(new Intent(this, Apply.class).putExtra("id", applyMeetBean.getId()));
                 break;
             case R.id.more_video:
-                startActivity(new Intent(this,Document.class));
+                startActivity(new Intent(this,Document.class).putExtra("id", applyMeetBean.getId()));
                 break;
         }
     }

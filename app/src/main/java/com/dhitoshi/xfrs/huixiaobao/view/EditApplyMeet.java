@@ -98,7 +98,7 @@ public class EditApplyMeet extends BaseView {
                 }
                 break;
             case R.id.more_video:
-                startActivity(new Intent(this,Document.class));
+                startActivity(new Intent(this,Document.class).putExtra("id", ownMeetBean.getId()));
                 break;
         }
     }

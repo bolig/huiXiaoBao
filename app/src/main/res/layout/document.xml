@@ -5,9 +5,12 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:fitsSystemWindows="true"
+    android:gravity="center_horizontal"
+    android:layout_marginBottom="10dp"
     >
     <include layout="@layout/toolbar"></include>
     <ImageView
+        android:id="@+id/document_video"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_weight="1"
@@ -15,20 +18,22 @@
         android:src="@drawable/sp_click"
         />
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:clickable="true"
-        android:layout_gravity="center"
-        android:src="@drawable/tw_click"
-        />
-    <ImageView
+        android:id="@+id/document_audio"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:clickable="true"
         android:layout_gravity="center"
         android:src="@drawable/yp_click"
+        />
+    <ImageView
+        android:id="@+id/document_graphic"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:clickable="true"
+        android:layout_gravity="center"
+        android:src="@drawable/tw_click"
         />
 </LinearLayout>
 

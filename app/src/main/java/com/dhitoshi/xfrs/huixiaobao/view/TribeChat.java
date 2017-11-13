@@ -75,7 +75,7 @@ public class TribeChat extends AppCompatActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.at:
-                intent = new Intent(this, AtMsgList.class);
+                intent = new Intent(this, AtMsgListActivity.class);
                 Bundle bundle = new Bundle();
                 YWConversation conversation = imCore.getConversationService().getTribeConversation(target);
                 bundle.putString("conversationId", conversation.getConversationId());
