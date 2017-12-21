@@ -39,6 +39,7 @@ public class MeetingVideo extends BaseView implements MeetingVideoManage.View{
     private int page=1;
     private List<VideoBean> videos;
     private VideoAdapter adapter;
+    private VideoBean video;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,7 +89,9 @@ public class MeetingVideo extends BaseView implements MeetingVideoManage.View{
             adapter.addItemClickListener(new ItemClick<VideoBean>() {
                 @Override
                 public void onItemClick(View view, VideoBean videoBean, int position) {
-                    verifyAlert(videoBean.getPassword(),videoBean.getVideo_url());
+                String token= SharedPreferencesUtil.Obtain(MeetingVideo.this,"token","").toString();
+                video=videoBean;
+                presenter.getPlayCount(token,String.valueOf(videoBean.getId()));
                 }
             });
         } else {
@@ -102,7 +105,13 @@ public class MeetingVideo extends BaseView implements MeetingVideoManage.View{
     }
     @Override
     public void getPlayCount(PlayCountBean bean) {
-
+        if(bean.getIs_play()==1){
+            verifyAlert(video.getPassword(),video.getVideo_url());
+            String token= SharedPreferencesUtil.Obtain(MeetingVideo.this,"token","").toString();
+            presenter.setPlayCount(token,String.valueOf(video.getId()));
+        }else{
+            Toast.makeText(this,"播放次数已经超过最大次数",Toast.LENGTH_SHORT).show();
+        }
     }
     private void verifyAlert(final String s, final String url) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);

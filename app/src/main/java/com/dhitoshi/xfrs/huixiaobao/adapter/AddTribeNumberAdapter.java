@@ -43,7 +43,7 @@ public class AddTribeNumberAdapter extends BaseAdapter<TribeMemberBean> {
         iv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                click.check(item.isSelected(),item.getTruename(),item.getName(),position);
+                click.check(item.isSelected(),item.getTruename(),item.getId()+"",position);
             }
         });
     }
