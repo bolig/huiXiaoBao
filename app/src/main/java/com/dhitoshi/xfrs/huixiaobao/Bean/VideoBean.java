@@ -22,6 +22,16 @@ public class VideoBean {
     private int hot;
     private int create_time;
     private String video_url;
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    private String password;
     public int getId() {
         return id;
     }

@@ -11,14 +11,10 @@ import com.dhitoshi.xfrs.huixiaobao.R;
 
 public class BaseRecyclerHolder extends RecyclerView.ViewHolder {
     SparseArray<View> mView;
-    private int itemLength=0;
     private Context context;
-    private  View item;
     public BaseRecyclerHolder(View itemView, int itemLength, Context context) {
         super(itemView);
-        this.item=itemView;
         this.context=context;
-        this.itemLength=itemLength;
         mView=new SparseArray<>(itemLength);
     }
     public static BaseRecyclerHolder getBaseRecyclerHolder(View itemView, int itemLength, Context context) {

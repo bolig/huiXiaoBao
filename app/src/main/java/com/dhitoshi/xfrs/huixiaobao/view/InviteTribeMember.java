@@ -5,6 +5,8 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
+
 import com.alibaba.mobileim.YWAPI;
 import com.alibaba.mobileim.YWIMKit;
 import com.alibaba.mobileim.channel.event.IWxCallback;
@@ -19,18 +21,27 @@ import com.dhitoshi.refreshlayout.listener.OnLoadmoreListener;
 import com.dhitoshi.refreshlayout.listener.OnRefreshListener;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HttpPageBeanTwo;
 import com.dhitoshi.xfrs.huixiaobao.Bean.TribeMemberBean;
+import com.dhitoshi.xfrs.huixiaobao.Bean.VideoBean;
 import com.dhitoshi.xfrs.huixiaobao.Interface.CheckBoxBulkClick;
 import com.dhitoshi.xfrs.huixiaobao.Interface.InviteMemberManage;
 import com.dhitoshi.xfrs.huixiaobao.Interface.ItemClick;
+import com.dhitoshi.xfrs.huixiaobao.Interface.LoginCall;
 import com.dhitoshi.xfrs.huixiaobao.R;
 import com.dhitoshi.xfrs.huixiaobao.adapter.AddTribeNumberAdapter;
+import com.dhitoshi.xfrs.huixiaobao.common.CommonObserver;
 import com.dhitoshi.xfrs.huixiaobao.common.MyDecoration;
 import com.dhitoshi.xfrs.huixiaobao.common.TribeConstants;
+import com.dhitoshi.xfrs.huixiaobao.http.HttpResult;
+import com.dhitoshi.xfrs.huixiaobao.http.MyHttp;
 import com.dhitoshi.xfrs.huixiaobao.presenter.InviteMemberPresenter;
 import com.dhitoshi.xfrs.huixiaobao.utils.ActivityManagerUtil;
+import com.dhitoshi.xfrs.huixiaobao.utils.LoginUtil;
 import com.dhitoshi.xfrs.huixiaobao.utils.SharedPreferencesUtil;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -52,6 +63,7 @@ public class InviteTribeMember extends BaseView implements InviteMemberManage.Vi
     private String areaId;
     private InviteMemberPresenter presenter;
     private int type=1;//0-内部群 1-平台群
+    private Map<String, String> map;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -184,6 +196,38 @@ public class InviteTribeMember extends BaseView implements InviteMemberManage.Vi
                 }
             });
         }
+    }
+    private void invite(){
+        MyHttp http=MyHttp.getInstance();
+        if(map==null){
+            map=new HashMap<>();
+        }
+        map.put("tribe_id",String.valueOf(mTribeId));
+        map.put("token",SharedPreferencesUtil.Obtain(this,"token","").toString());
+        map.put("uids","");
+        http.send(http.getHttpService().invite(map),new CommonObserver(new HttpResult<HttpPageBeanTwo<VideoBean>>() {
+            @Override
+            public void OnSuccess(HttpPageBeanTwo<VideoBean> httpPageBeanTwo) {
+                if(httpPageBeanTwo.getStatus().getCode()==200){
+
+                }else if(httpPageBeanTwo.getStatus().getCode()==600){
+                    LoginUtil.autoLogin(InviteTribeMember.this, new LoginCall() {
+                        @Override
+                        public void autoLogin(String token) {
+                            map.put("token",token);
+                            invite();
+                        }
+                    });
+                }
+                else{
+                    Toast.makeText(InviteTribeMember.this,httpPageBeanTwo.getStatus().getMsg(),Toast.LENGTH_SHORT).show();
+                }
+            }
+            @Override
+            public void OnFail(String msg) {
+                Toast.makeText(InviteTribeMember.this,msg,Toast.LENGTH_SHORT).show();
+            }
+        }));
     }
 
     @OnClick(R.id.right_text)

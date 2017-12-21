@@ -22,6 +22,7 @@ import com.dhitoshi.xfrs.huixiaobao.Bean.MeetClientBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.MoreMeetInfoBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.OwnMeetBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.HttpPageBean;
+import com.dhitoshi.xfrs.huixiaobao.Bean.PlayCountBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.ProductBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.QueryResultBean;
 import com.dhitoshi.xfrs.huixiaobao.Bean.RelationBean;
@@ -292,12 +293,27 @@ public interface HttpService {
     //编辑群组
     @POST("index.php/tribe/edit")
     Observable<HttpBean<TribeBean>> editTribe(@QueryMap Map<String,String> map);
+    //拉人入群
+    @POST("index.php/tribe/invite")
+    Observable<HttpBean<Object>> invite(@QueryMap Map<String,String> map);
     //公司列表
     @POST("index.php/area/companyList")
     Observable<HttpPageBeanTwo<BaseBean>> getCompanyList(@Query("token") String token, @Query("page") String page);
     //根据公司获取用户列表
     @POST("index.php/user/list")
     Observable<HttpPageBeanTwo<TribeMemberBean>> userList(@Query("token") String token, @Query("area_id") String area_id, @Query("page") String page);
+    //获取视频列表
     @POST("index.php/meeting/videoList")
     Observable<HttpPageBeanTwo<VideoBean>> getVideoList(@Query("token") String token, @Query("meeting_id") String meeting_id, @Query("page") String page);
+    //获取视频列表
+    @POST("index.php/meeting/videoList")
+    Observable<HttpPageBeanTwo<VideoBean>> getVideoList(@QueryMap Map<String,String> map);
+    //记录播放次数
+    @POST("index.php/meeting/setPlayCount")
+    Observable<HttpBean<PlayCountBean>> setPlayCount(@Query("token") String token, @Query("video_id") String video_id);
+    //获取已播放次数
+    @POST("index.php/meeting/getPlayCount")
+    Observable<HttpBean<PlayCountBean>> getPlayCount(@Query("token") String token, @Query("video_id") String video_id);
+
+
 }

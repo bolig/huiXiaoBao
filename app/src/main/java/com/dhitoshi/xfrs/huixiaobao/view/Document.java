@@ -21,7 +21,7 @@ public class Document extends BaseView {
         setTitle("会议文档视频");
         id=getIntent().getIntExtra("id",0);
     }
-    @OnClick({R.id.document_video, R.id.document_graphic, R.id.document_audio})
+    @OnClick({R.id.document_video, R.id.document_graphic})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.document_video:
@@ -30,10 +30,6 @@ public class Document extends BaseView {
                 break;
             case R.id.document_graphic:
                 it=new Intent(this, LoadWeb.class).putExtra("url","http://119.29.144.125/hxb/public/houtai/user/tuwenlist.html").putExtra("title","图文列表");
-                startActivity(it);
-                break;
-            case R.id.document_audio:
-                it=new Intent(this, LoadWeb.class).putExtra("url","http://119.29.144.125:4000/audio").putExtra("title","audio");
                 startActivity(it);
                 break;
         }
