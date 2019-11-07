@@ -1,12 +1,10 @@
 apply plugin: 'com.android.application'
-
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.3"
+    compileSdkVersion 28
     defaultConfig {
         applicationId "com.dhitoshi.xfrs.huixiaobao"
         minSdkVersion 15
-        targetSdkVersion 25
+        targetSdkVersion 28
         versionCode 6
         versionName "1.0.6"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -18,12 +16,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    android.applicationVariants.all {
-        variant ->
-            variant.outputs.each {
-                    //默认生成的包名
-                output -> output.outputFile = new File(output.outputFile.parent, "慧销宝_v" + defaultConfig.versionName + "_" + defaultConfig.versionCode + ".apk");
-            }
+
+
+    configurations {
+        all*.exclude group: 'com.android.support', module: 'support-v13'
     }
 }
 
@@ -38,7 +34,7 @@ dependencies {
     compile project(':index')
 
     compile 'com.jakewharton:butterknife:8.8.1'
-    compile 'com.android.support:support-v4:25.3.1'
+    compile 'com.android.support:support-v4:28.0.0'
     compile 'com.alibaba.mobileim:IMCore:2.0.2.1@aar'
     compile 'com.alibaba.mobileim:IMKit:2.0.2.1@aar'
     compile 'com.squareup.retrofit2:retrofit:2.3.0'
